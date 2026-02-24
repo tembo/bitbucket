@@ -108,7 +108,7 @@ export const deleteAddon = <ThrowOnError extends boolean = false>(options?: Opti
  * Note that the scopes of the application cannot be increased
  * in the new descriptor nor reduced to none.
  */
-export const putAddon = <ThrowOnError extends boolean = false>(options?: Options<PutAddonData, ThrowOnError>) => {
+export const updateAddon = <ThrowOnError extends boolean = false>(options?: Options<PutAddonData, ThrowOnError>) => {
     return (options?.client ?? client).put<PutAddonResponses, PutAddonErrors, ThrowOnError>({
         security: [
             {
@@ -170,7 +170,7 @@ export const getAddonLinkers = <ThrowOnError extends boolean = false>(options?: 
  *
  * @deprecated
  */
-export const getAddonLinkersByLinkerKey = <ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyData, ThrowOnError>) => {
+export const getAddonLinker = <ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyData, ThrowOnError>) => {
     return (options.client ?? client).get<GetAddonLinkersByLinkerKeyResponses, GetAddonLinkersByLinkerKeyErrors, ThrowOnError>({
         security: [
             {
@@ -201,7 +201,7 @@ export const getAddonLinkersByLinkerKey = <ThrowOnError extends boolean = false>
  *
  * @deprecated
  */
-export const deleteAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
+export const deleteAddonLinkerValues = <ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteAddonLinkersByLinkerKeyValuesResponses, DeleteAddonLinkersByLinkerKeyValuesErrors, ThrowOnError>({
         security: [
             {
@@ -239,7 +239,7 @@ export const deleteAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean
  *
  * @deprecated
  */
-export const getAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
+export const getAddonLinkerValues = <ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetAddonLinkersByLinkerKeyValuesResponses, GetAddonLinkersByLinkerKeyValuesErrors, ThrowOnError>({
         security: [
             {
@@ -277,7 +277,7 @@ export const getAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean = 
  *
  * @deprecated
  */
-export const postAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean = false>(options: Options<PostAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
+export const createAddonLinkerValues = <ThrowOnError extends boolean = false>(options: Options<PostAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
     return (options.client ?? client).post<PostAddonLinkersByLinkerKeyValuesResponses, PostAddonLinkersByLinkerKeyValuesErrors, ThrowOnError>({
         security: [
             {
@@ -315,7 +315,7 @@ export const postAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean =
  *
  * @deprecated
  */
-export const putAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean = false>(options: Options<PutAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
+export const updateAddonLinkerValues = <ThrowOnError extends boolean = false>(options: Options<PutAddonLinkersByLinkerKeyValuesData, ThrowOnError>) => {
     return (options.client ?? client).put<PutAddonLinkersByLinkerKeyValuesResponses, PutAddonLinkersByLinkerKeyValuesErrors, ThrowOnError>({
         security: [
             {
@@ -346,7 +346,7 @@ export const putAddonLinkersByLinkerKeyValues = <ThrowOnError extends boolean = 
  *
  * @deprecated
  */
-export const deleteAddonLinkersByLinkerKeyValuesByValueId = <ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkersByLinkerKeyValuesByValueIdData, ThrowOnError>) => {
+export const deleteAddonLinkerValue = <ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkersByLinkerKeyValuesByValueIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses, DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors, ThrowOnError>({
         security: [
             {
@@ -377,7 +377,7 @@ export const deleteAddonLinkersByLinkerKeyValuesByValueId = <ThrowOnError extend
  *
  * @deprecated
  */
-export const getAddonLinkersByLinkerKeyValuesByValueId = <ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyValuesByValueIdData, ThrowOnError>) => {
+export const getAddonLinkerValue = <ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyValuesByValueIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetAddonLinkersByLinkerKeyValuesByValueIdResponses, GetAddonLinkersByLinkerKeyValuesByValueIdErrors, ThrowOnError>({
         security: [
             {
@@ -479,7 +479,7 @@ export const getHookEventsBySubjectType = <ThrowOnError extends boolean = false>
  *
  * @deprecated
  */
-export const getRepositories = <ThrowOnError extends boolean = false>(options?: Options<GetRepositoriesData, ThrowOnError>) => {
+export const listRepositories = <ThrowOnError extends boolean = false>(options?: Options<GetRepositoriesData, ThrowOnError>) => {
     return (options?.client ?? client).get<GetRepositoriesResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -515,7 +515,7 @@ export const getRepositories = <ThrowOnError extends boolean = false>(options?: 
  * This endpoint also supports filtering and sorting of the results. See
  * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
  */
-export const getRepositoriesByWorkspace = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceData, ThrowOnError>) => {
+export const listWorkspaceRepositories = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceResponses, GetRepositoriesByWorkspaceErrors, ThrowOnError>({
         security: [
             {
@@ -543,7 +543,7 @@ export const getRepositoriesByWorkspace = <ThrowOnError extends boolean = false>
  *
  * This does not affect its forks.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
+export const deleteRepository = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugResponses, DeleteRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError>({
         security: [
             {
@@ -569,7 +569,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boo
  *
  * Returns the object describing this repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
+export const getRepository = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugResponses, GetRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError>({
         security: [
             {
@@ -625,7 +625,7 @@ export const getRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boolea
  * Note: In the examples above, the workspace ID `teamsinspace`,
  * and/or the repository name `hablanding` can be replaced by UUIDs.
  */
-export const postRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
+export const createRepository = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugResponses, PostRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError>({
         security: [
             {
@@ -671,7 +671,7 @@ export const postRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boole
  * the new location will be returned in the `Location` header of the
  * response.
  */
-export const putRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
+export const updateRepository = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugResponses, PutRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError>({
         security: [
             {
@@ -702,7 +702,7 @@ export const putRepositoriesByWorkspaceByRepoSlug = <ThrowOnError extends boolea
  * Returns a paginated list of all branch restrictions on the
  * repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlugBranchRestrictions = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, ThrowOnError>) => {
+export const listBranchRestrictions = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses, GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors, ThrowOnError>({
         security: [
             {
@@ -772,7 +772,7 @@ export const getRepositoriesByWorkspaceByRepoSlugBranchRestrictions = <ThrowOnEr
  * Note that branch restrictions with overlapping matchers is allowed,
  * but the resulting behavior may be surprising.
  */
-export const postRepositoriesByWorkspaceByRepoSlugBranchRestrictions = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, ThrowOnError>) => {
+export const createBranchRestriction = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses, PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors, ThrowOnError>({
         security: [
             {
@@ -802,7 +802,7 @@ export const postRepositoriesByWorkspaceByRepoSlugBranchRestrictions = <ThrowOnE
  *
  * Deletes an existing branch restriction rule.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>) => {
+export const deleteBranchRestriction = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, ThrowOnError>({
         security: [
             {
@@ -828,7 +828,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById = <Th
  *
  * Returns a specific branch restriction rule.
  */
-export const getRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>) => {
+export const getBranchRestriction = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, ThrowOnError>({
         security: [
             {
@@ -858,7 +858,7 @@ export const getRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById = <Throw
  *
  * See [`POST`](/cloud/bitbucket/rest/api-group-branch-restrictions/#api-repositories-workspace-repo-slug-branch-restrictions-post) for details.
  */
-export const putRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>) => {
+export const updateBranchRestriction = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, ThrowOnError>({
         security: [
             {
@@ -904,7 +904,7 @@ export const putRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById = <Throw
  * 3. Always has a `branch_types` array which contains all enabled branch
  * types.
  */
-export const getRepositoriesByWorkspaceByRepoSlugBranchingModel = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchingModelData, ThrowOnError>) => {
+export const getBranchingModel = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchingModelData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses, GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors, ThrowOnError>({
         security: [
             {
@@ -942,7 +942,7 @@ export const getRepositoriesByWorkspaceByRepoSlugBranchingModel = <ThrowOnError 
  * wishing to see the branching model with its actual current branches may
  * find the [active model API](/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-branching-model-get) more useful.
  */
-export const getRepositoriesByWorkspaceByRepoSlugBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, ThrowOnError>) => {
+export const getBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses, GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors, ThrowOnError>({
         security: [
             {
@@ -1025,7 +1025,7 @@ export const getRepositoriesByWorkspaceByRepoSlugBranchingModelSettings = <Throw
  *
  * We have deprecated this side effect and will remove it on 1 August 2022.
  */
-export const putRepositoriesByWorkspaceByRepoSlugBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, ThrowOnError>) => {
+export const updateBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses, PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors, ThrowOnError>({
         security: [
             {
@@ -1051,7 +1051,7 @@ export const putRepositoriesByWorkspaceByRepoSlugBranchingModelSettings = <Throw
  *
  * Returns the specified commit.
  */
-export const getRepositoriesByWorkspaceByRepoSlugCommitByCommit = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData, ThrowOnError>) => {
+export const getCommit = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses, GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors, ThrowOnError>({
         security: [
             {
@@ -1082,7 +1082,7 @@ export const getRepositoriesByWorkspaceByRepoSlugCommitByCommit = <ThrowOnError 
  * publicly accessible to users does not give them the ability to approve
  * commits.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApprove = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, ThrowOnError>) => {
+export const deleteCommitApproval = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses, DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors, ThrowOnError>({
         security: [
             {
@@ -1113,7 +1113,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApprove = <Thr
  * publicly accessible to users does not give them the ability to approve
  * commits.
  */
-export const postRepositoriesByWorkspaceByRepoSlugCommitByCommitApprove = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, ThrowOnError>) => {
+export const approveCommit = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses, PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors, ThrowOnError>({
         security: [
             {
@@ -1144,7 +1144,7 @@ export const postRepositoriesByWorkspaceByRepoSlugCommitByCommitApprove = <Throw
  * The default sorting is oldest to newest and can be overridden with
  * the `sort` query parameter.
  */
-export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitComments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, ThrowOnError>) => {
+export const listCommitComments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -1180,7 +1180,7 @@ export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitComments = <Throw
  * "parent": {"id": 5728901}}'
  * ```
  */
-export const postRepositoriesByWorkspaceByRepoSlugCommitByCommitComments = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, ThrowOnError>) => {
+export const createCommitComment = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses, PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsErrors, ThrowOnError>({
         security: [
             {
@@ -1216,7 +1216,7 @@ export const postRepositoriesByWorkspaceByRepoSlugCommitByCommitComments = <Thro
  * `true` and the content is blanked out. The comment will continue to be
  * returned by the collections and self endpoints.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>) => {
+export const deleteCommitComment = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -1242,7 +1242,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByComm
  *
  * Returns the specified commit comment.
  */
-export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>) => {
+export const getCommitComment = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -1275,7 +1275,7 @@ export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByComment
  * -d '{"content": {"raw": "One more thing!"}'
  * ```
  */
-export const putRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>) => {
+export const updateCommitComment = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -1769,7 +1769,7 @@ export const createOrUpdateAnnotation = <ThrowOnError extends boolean = false>(o
  *
  * Returns all statuses (e.g. build results) for a specific commit.
  */
-export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitStatuses = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData, ThrowOnError>) => {
+export const listCommitStatuses = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses, GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors, ThrowOnError>({
         security: [
             {
@@ -1832,7 +1832,7 @@ export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitStatuses = <Throw
  * }'
  * ```
  */
-export const postRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuild = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData, ThrowOnError>) => {
+export const createCommitBuildStatus = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses, PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors, ThrowOnError>({
         security: [
             {
@@ -1862,7 +1862,7 @@ export const postRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuild = 
  *
  * Returns the specified build status for a commit.
  */
-export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, ThrowOnError>) => {
+export const getCommitBuildStatus = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses, GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors, ThrowOnError>({
         security: [
             {
@@ -1900,7 +1900,7 @@ export const getRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKe
  *
  * The `key` cannot be changed.
  */
-export const putRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, ThrowOnError>) => {
+export const updateCommitBuildStatus = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses, PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors, ThrowOnError>({
         security: [
             {
@@ -1974,7 +1974,7 @@ export const putRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKe
  * When the include and exclude parameters are more than can fit in a
  * query string, clients can use a `x-www-form-urlencoded` POST instead.
  */
-export const getRepositoriesByWorkspaceByRepoSlugCommits = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitsData, ThrowOnError>) => {
+export const listCommits = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugCommitsResponses, GetRepositoriesByWorkspaceByRepoSlugCommitsErrors, ThrowOnError>({
         security: [
             {
@@ -2004,7 +2004,7 @@ export const getRepositoriesByWorkspaceByRepoSlugCommits = <ThrowOnError extends
  *
  * **Note that this resource does NOT support new commit creation.**
  */
-export const postRepositoriesByWorkspaceByRepoSlugCommits = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitsData, ThrowOnError>) => {
+export const filterCommits = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugCommitsResponses, PostRepositoriesByWorkspaceByRepoSlugCommitsErrors, ThrowOnError>({
         security: [
             {
@@ -2067,7 +2067,7 @@ export const postRepositoriesByWorkspaceByRepoSlugCommits = <ThrowOnError extend
  * When the include and exclude parameters are more than can fit in a
  * query string, clients can use a `x-www-form-urlencoded` POST instead.
  */
-export const getRepositoriesByWorkspaceByRepoSlugCommitsByRevision = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, ThrowOnError>) => {
+export const listCommitsByRevision = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses, GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors, ThrowOnError>({
         security: [
             {
@@ -2097,7 +2097,7 @@ export const getRepositoriesByWorkspaceByRepoSlugCommitsByRevision = <ThrowOnErr
  *
  * **Note that this resource does NOT support new commit creation.**
  */
-export const postRepositoriesByWorkspaceByRepoSlugCommitsByRevision = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, ThrowOnError>) => {
+export const filterCommitsByRevision = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses, PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors, ThrowOnError>({
         security: [
             {
@@ -2126,7 +2126,7 @@ export const postRepositoriesByWorkspaceByRepoSlugCommitsByRevision = <ThrowOnEr
  * This resource is only available on repositories that have the issue
  * tracker enabled.
  */
-export const getRepositoriesByWorkspaceByRepoSlugComponents = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugComponentsData, ThrowOnError>) => {
+export const listComponents = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugComponentsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugComponentsResponses, GetRepositoriesByWorkspaceByRepoSlugComponentsErrors, ThrowOnError>({
         security: [
             {
@@ -2152,7 +2152,7 @@ export const getRepositoriesByWorkspaceByRepoSlugComponents = <ThrowOnError exte
  *
  * Returns the specified issue tracker component object.
  */
-export const getRepositoriesByWorkspaceByRepoSlugComponentsByComponentId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData, ThrowOnError>) => {
+export const getComponent = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses, GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors, ThrowOnError>({
         security: [
             {
@@ -2183,7 +2183,7 @@ export const getRepositoriesByWorkspaceByRepoSlugComponentsByComponentId = <Thro
  * as well as the default reviewers inherited from the project, use the
  * [effective-default-reveiwers](#api-repositories-workspace-repo-slug-effective-default-reviewers-get) endpoint.
  */
-export const getRepositoriesByWorkspaceByRepoSlugDefaultReviewers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData, ThrowOnError>) => {
+export const listDefaultReviewers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses, GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors, ThrowOnError>({
         security: [
             {
@@ -2209,7 +2209,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDefaultReviewers = <ThrowOnErro
  *
  * Removes a default reviewer from the repository.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>) => {
+export const deleteDefaultReviewer = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, ThrowOnError>({
         security: [
             {
@@ -2239,7 +2239,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUser
  * default reviewers list. A 404 indicates that that specified user is not
  * a default reviewer.
  */
-export const getRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>) => {
+export const getDefaultReviewer = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, ThrowOnError>({
         security: [
             {
@@ -2268,7 +2268,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernam
  *
  * This method is idempotent. Adding a user a second time has no effect.
  */
-export const putRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>) => {
+export const addDefaultReviewer = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, ThrowOnError>({
         security: [
             {
@@ -2294,7 +2294,7 @@ export const putRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernam
  *
  * Returns all deploy-keys belonging to a repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlugDeployKeys = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDeployKeysData, ThrowOnError>) => {
+export const listDeployKeys = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDeployKeysData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses, GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors, ThrowOnError>({
         security: [
             {
@@ -2335,7 +2335,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDeployKeys = <ThrowOnError exte
  * }'
  * ```
  */
-export const postRepositoriesByWorkspaceByRepoSlugDeployKeys = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugDeployKeysData, ThrowOnError>) => {
+export const createDeployKey = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugDeployKeysData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses, PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors, ThrowOnError>({
         security: [
             {
@@ -2361,7 +2361,7 @@ export const postRepositoriesByWorkspaceByRepoSlugDeployKeys = <ThrowOnError ext
  *
  * This deletes a deploy key from a repository.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>) => {
+export const deleteDeployKey = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -2387,7 +2387,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId = <ThrowOn
  *
  * Returns the deploy key belonging to a specific key.
  */
-export const getRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>) => {
+export const getDeployKey = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -2427,7 +2427,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId = <ThrowOnErr
  * }'
  * ```
  */
-export const putRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>) => {
+export const updateDeployKey = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -2652,7 +2652,7 @@ export const updateDeploymentVariable = <ThrowOnError extends boolean = false>(o
  * repository use. It is not decoded into unicode. As such, the
  * content-type is `text/plain`.
  */
-export const getRepositoriesByWorkspaceByRepoSlugDiffBySpec = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData, ThrowOnError>) => {
+export const getDiff = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugDiffBySpecResponses, GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors, ThrowOnError>({
         security: [
             {
@@ -2701,7 +2701,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDiffBySpec = <ThrowOnError exte
  * compare the first commit
  * * **Note**: This is the opposite of the order used in `git diff`.
  */
-export const getRepositoriesByWorkspaceByRepoSlugDiffstatBySpec = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData, ThrowOnError>) => {
+export const getDiffstat = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses, GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors, ThrowOnError>({
         security: [
             {
@@ -2727,7 +2727,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDiffstatBySpec = <ThrowOnError 
  *
  * Returns a list of download links associated with the repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlugDownloads = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDownloadsData, ThrowOnError>) => {
+export const listDownloads = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDownloadsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugDownloadsResponses, GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors, ThrowOnError>({
         security: [
             {
@@ -2762,7 +2762,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDownloads = <ThrowOnError exten
  * When a file is uploaded with the same name as an existing artifact,
  * then the existing file will be replaced.
  */
-export const postRepositoriesByWorkspaceByRepoSlugDownloads = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugDownloadsData, ThrowOnError>) => {
+export const createDownload = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugDownloadsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugDownloadsResponses, PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors, ThrowOnError>({
         security: [
             {
@@ -2788,7 +2788,7 @@ export const postRepositoriesByWorkspaceByRepoSlugDownloads = <ThrowOnError exte
  *
  * Deletes the specified download artifact from the repository.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilename = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, ThrowOnError>) => {
+export const deleteDownload = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses, DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors, ThrowOnError>({
         security: [
             {
@@ -2820,7 +2820,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilename = <Throw
  * $ curl -s -L https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/downloads/hello.txt
  * Hello World
  */
-export const getRepositoriesByWorkspaceByRepoSlugDownloadsByFilename = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, ThrowOnError>) => {
+export const getDownload = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, ThrowOnError>) => {
     return (options.client ?? client).get<unknown, GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors, ThrowOnError>({
         security: [
             {
@@ -2844,7 +2844,7 @@ export const getRepositoriesByWorkspaceByRepoSlugDownloadsByFilename = <ThrowOnE
 /**
  * Get the effective, or currently applied, branching model for a repository
  */
-export const getRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModel = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData, ThrowOnError>) => {
+export const getEffectiveBranchingModel = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses, GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors, ThrowOnError>({
         security: [
             {
@@ -2874,7 +2874,7 @@ export const getRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModel = <Thro
  * These are the users that are automatically added as reviewers on every
  * new pull request that is created.
  */
-export const getRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData, ThrowOnError>) => {
+export const listEffectiveDefaultReviewers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses, GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors, ThrowOnError>({
         security: [
             {
@@ -3060,7 +3060,7 @@ export const updateEnvironmentForRepository = <ThrowOnError extends boolean = fa
  * In the response you can see that the file was renamed to `README.rst`
  * by the commit made on 2011-05-16, and was previously named `README.txt`.
  */
-export const getRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPath = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData, ThrowOnError>) => {
+export const getFileHistory = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses, GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors, ThrowOnError>({
         security: [
             {
@@ -3087,7 +3087,7 @@ export const getRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPath = <Th
  * Returns a paginated list of all the forks of the specified
  * repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlugForks = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugForksData, ThrowOnError>) => {
+export const listForks = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugForksData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugForksResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -3169,7 +3169,7 @@ export const getRepositoriesByWorkspaceByRepoSlugForks = <ThrowOnError extends b
  * * parent
  * * full_name
  */
-export const postRepositoriesByWorkspaceByRepoSlugForks = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugForksData, ThrowOnError>) => {
+export const createFork = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugForksData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugForksResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -3199,7 +3199,7 @@ export const postRepositoriesByWorkspaceByRepoSlugForks = <ThrowOnError extends 
  *
  * Returns a paginated list of webhooks installed on this repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlugHooks = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugHooksData, ThrowOnError>) => {
+export const listRepoHooks = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugHooksData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugHooksResponses, GetRepositoriesByWorkspaceByRepoSlugHooksErrors, ThrowOnError>({
         security: [
             {
@@ -3257,7 +3257,7 @@ export const getRepositoriesByWorkspaceByRepoSlugHooks = <ThrowOnError extends b
  * Also note that the `url` must properly resolve and cannot be an
  * internal, non-routed address.
  */
-export const postRepositoriesByWorkspaceByRepoSlugHooks = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugHooksData, ThrowOnError>) => {
+export const createRepoHook = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugHooksData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugHooksResponses, PostRepositoriesByWorkspaceByRepoSlugHooksErrors, ThrowOnError>({
         security: [
             {
@@ -3284,7 +3284,7 @@ export const postRepositoriesByWorkspaceByRepoSlugHooks = <ThrowOnError extends 
  * Deletes the specified webhook subscription from the given
  * repository.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugHooksByUid = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>) => {
+export const deleteRepoHook = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, ThrowOnError>({
         security: [
             {
@@ -3311,7 +3311,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugHooksByUid = <ThrowOnError e
  * Returns the webhook with the specified id installed on the specified
  * repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlugHooksByUid = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>) => {
+export const getRepoHook = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, ThrowOnError>({
         security: [
             {
@@ -3354,7 +3354,7 @@ export const getRepositoriesByWorkspaceByRepoSlugHooksByUid = <ThrowOnError exte
  * hook's secret can be left unchanged by not passing the `secret` field in the
  * request.
  */
-export const putRepositoriesByWorkspaceByRepoSlugHooksByUid = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>) => {
+export const updateRepoHook = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, ThrowOnError>({
         security: [
             {
@@ -3380,7 +3380,7 @@ export const putRepositoriesByWorkspaceByRepoSlugHooksByUid = <ThrowOnError exte
  *
  * Returns the issues in the issue tracker.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssues = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesData, ThrowOnError>) => {
+export const listIssues = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesErrors, ThrowOnError>({
         security: [
             {
@@ -3412,7 +3412,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssues = <ThrowOnError extends 
  *
  * The authenticated user is used for the issue's `reporter` field.
  */
-export const postRepositoriesByWorkspaceByRepoSlugIssues = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesData, ThrowOnError>) => {
+export const createIssue = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugIssuesResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesErrors, ThrowOnError>({
         security: [
             {
@@ -3445,7 +3445,7 @@ export const postRepositoriesByWorkspaceByRepoSlugIssues = <ThrowOnError extends
  * When the job has been accepted, it will return a 202 (Accepted) along with a unique url to this job in the
  * 'Location' response header. This url is the endpoint for where the user can obtain their zip files."
  */
-export const postRepositoriesByWorkspaceByRepoSlugIssuesExport = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesExportData, ThrowOnError>) => {
+export const exportIssues = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesExportData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugIssuesExportResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors, ThrowOnError>({
         security: [
             {
@@ -3485,7 +3485,7 @@ export const postRepositoriesByWorkspaceByRepoSlugIssuesExport = <ThrowOnError e
  *
  * After it is finished, it becomes a 200 response with status `SUCCESS` or `FAILURE`.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZip = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipData, ThrowOnError>) => {
+export const getIssueExportZip = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipErrors, ThrowOnError>({
         security: [
             {
@@ -3518,7 +3518,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByT
  *
  * After it is finished, it becomes a 200 response with status `SUCCESS` or `FAILURE`.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesImport = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesImportData, ThrowOnError>) => {
+export const getIssueImportStatus = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesImportData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors, ThrowOnError>({
         security: [
             {
@@ -3552,7 +3552,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesImport = <ThrowOnError ex
  * $ curl -u <username> -X POST -F archive=@/path/to/file.zip https://api.bitbucket.org/2.0/repositories/<owner_username>/<repo_slug>/issues/import
  * ```
  */
-export const postRepositoriesByWorkspaceByRepoSlugIssuesImport = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesImportData, ThrowOnError>) => {
+export const importIssues = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesImportData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors, ThrowOnError>({
         security: [
             {
@@ -3579,7 +3579,7 @@ export const postRepositoriesByWorkspaceByRepoSlugIssuesImport = <ThrowOnError e
  * Deletes the specified issue. This requires write access to the
  * repository.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueId = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>) => {
+export const deleteIssue = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, ThrowOnError>({
         security: [
             {
@@ -3605,7 +3605,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueId = <ThrowOnEr
  *
  * Returns the specified issue.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>) => {
+export const getIssue = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, ThrowOnError>({
         security: [
             {
@@ -3656,7 +3656,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueId = <ThrowOnError
  * change record is created under the `/issues/123/changes` endpoint. It
  * also has a comment associated with the change.
  */
-export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>) => {
+export const updateIssue = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, ThrowOnError>({
         security: [
             {
@@ -3687,7 +3687,7 @@ export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueId = <ThrowOnError
  *
  * The files are always ordered by their upload date.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, ThrowOnError>) => {
+export const listIssueAttachments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors, ThrowOnError>({
         security: [
             {
@@ -3719,7 +3719,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachments = <T
  * When a file is uploaded with the same name as an existing attachment,
  * then the existing file will be replaced.
  */
-export const postRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachments = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, ThrowOnError>) => {
+export const createIssueAttachment = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors, ThrowOnError>({
         security: [
             {
@@ -3745,7 +3745,7 @@ export const postRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachments = <
  *
  * Deletes an attachment.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPath = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, ThrowOnError>) => {
+export const deleteIssueAttachment = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors, ThrowOnError>({
         security: [
             {
@@ -3778,7 +3778,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsBy
  * The redirect URL contains a one-time token that has a limited lifetime.
  * As a result, the link should not be persisted, stored, or shared.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPath = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, ThrowOnError>) => {
+export const getIssueAttachment = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, ThrowOnError>) => {
     return (options.client ?? client).get<unknown, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors, ThrowOnError>({
         security: [
             {
@@ -3836,7 +3836,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPat
  * The `changes.assignee` field is deprecated will disappear in the
  * future. Use `changes.assignee_account_id` instead.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChanges = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, ThrowOnError>) => {
+export const listIssueChanges = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors, ThrowOnError>({
         security: [
             {
@@ -3899,7 +3899,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChanges = <Throw
  * issue trackers require the caller to authenticate with an account that
  * has appropriate authorization.
  */
-export const postRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChanges = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, ThrowOnError>) => {
+export const createIssueChange = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors, ThrowOnError>({
         security: [
             {
@@ -3932,7 +3932,7 @@ export const postRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChanges = <Thro
  * This resource is only available on repositories that have the issue
  * tracker enabled.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdData, ThrowOnError>) => {
+export const getIssueChange = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors, ThrowOnError>({
         security: [
             {
@@ -3965,7 +3965,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeI
  * This endpoint also supports filtering and sorting of the results. See
  * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdComments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, ThrowOnError>) => {
+export const listIssueComments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -3998,7 +3998,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdComments = <Thro
  * -d '{"content": {"raw": "Lorem ipsum."}}'
  * ```
  */
-export const postRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdComments = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, ThrowOnError>) => {
+export const createIssueComment = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors, ThrowOnError>({
         security: [
             {
@@ -4028,7 +4028,7 @@ export const postRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdComments = <Thr
  *
  * Deletes the specified comment.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>) => {
+export const deleteIssueComment = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -4054,7 +4054,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCom
  *
  * Returns the specified issue comment object.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>) => {
+export const getIssueComment = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -4088,7 +4088,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommen
  * -d '{"content": {"raw": "Lorem ipsum."}'
  * ```
  */
-export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>) => {
+export const updateIssueComment = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -4118,7 +4118,7 @@ export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommen
  *
  * Retract your vote.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVote = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>) => {
+export const deleteIssueVote = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, ThrowOnError>({
         security: [
             {
@@ -4146,7 +4146,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVote = <Throw
  * A 204 status code indicates that the user has voted, while a 404
  * implies they haven't.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVote = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>) => {
+export const getIssueVote = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, ThrowOnError>({
         security: [
             {
@@ -4175,7 +4175,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVote = <ThrowOnE
  * To cast your vote, do an empty PUT. The 204 status code indicates that
  * the operation was successful.
  */
-export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVote = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>) => {
+export const addIssueVote = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, ThrowOnError>({
         security: [
             {
@@ -4201,7 +4201,7 @@ export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVote = <ThrowOnE
  *
  * Stop watching this issue.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatch = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>) => {
+export const unwatchIssue = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, ThrowOnError>({
         security: [
             {
@@ -4228,7 +4228,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatch = <Thro
  * Indicated whether or not the authenticated user is watching this
  * issue.
  */
-export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatch = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>) => {
+export const getIssueWatchStatus = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, ThrowOnError>({
         security: [
             {
@@ -4257,7 +4257,7 @@ export const getRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatch = <ThrowOn
  * To start watching this issue, do an empty PUT. The 204 status code
  * indicates that the operation was successful.
  */
-export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatch = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>) => {
+export const watchIssue = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, ThrowOnError>({
         security: [
             {
@@ -4287,7 +4287,7 @@ export const putRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatch = <ThrowOn
  * If more than one best common ancestor exists, only one will be returned. It is
  * unspecified which will be returned.
  */
-export const getRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspec = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData, ThrowOnError>) => {
+export const getMergeBase = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses, GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors, ThrowOnError>({
         security: [
             {
@@ -4316,7 +4316,7 @@ export const getRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspec = <ThrowOnEr
  * This resource is only available on repositories that have the issue
  * tracker enabled.
  */
-export const getRepositoriesByWorkspaceByRepoSlugMilestones = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMilestonesData, ThrowOnError>) => {
+export const listMilestones = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMilestonesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses, GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors, ThrowOnError>({
         security: [
             {
@@ -4342,7 +4342,7 @@ export const getRepositoriesByWorkspaceByRepoSlugMilestones = <ThrowOnError exte
  *
  * Returns the specified issue tracker milestone object.
  */
-export const getRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData, ThrowOnError>) => {
+export const getMilestone = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses, GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors, ThrowOnError>({
         security: [
             {
@@ -4366,7 +4366,7 @@ export const getRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneId = <Thro
 /**
  * Retrieve the inheritance state for repository settings
  */
-export const getRepositoriesByWorkspaceByRepoSlugOverrideSettings = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, ThrowOnError>) => {
+export const getOverrideSettings = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses, GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors, ThrowOnError>({
         security: [
             {
@@ -4391,7 +4391,7 @@ export const getRepositoriesByWorkspaceByRepoSlugOverrideSettings = <ThrowOnErro
  * Set the inheritance state for repository settings
  *
  */
-export const putRepositoriesByWorkspaceByRepoSlugOverrideSettings = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, ThrowOnError>) => {
+export const updateOverrideSettings = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses, PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors, ThrowOnError>({
         security: [
             {
@@ -4433,7 +4433,7 @@ export const putRepositoriesByWorkspaceByRepoSlugOverrideSettings = <ThrowOnErro
  * repository use. It is not decoded into unicode. As such, the
  * content-type is `text/plain`.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPatchBySpec = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData, ThrowOnError>) => {
+export const getPatch = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPatchBySpecResponses, GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors, ThrowOnError>({
         security: [
             {
@@ -4460,7 +4460,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPatchBySpec = <ThrowOnError ext
  * Returns a paginated list of explicit group permissions for the given repository.
  * This endpoint does not support BBQL features.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroups = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData, ThrowOnError>) => {
+export const listRepoPermissionGroups = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors, ThrowOnError>({
         security: [
             {
@@ -4490,7 +4490,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroups = <Thro
  *
  * The only authentication method supported for this endpoint is via app passwords.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlug = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
+export const deleteRepoPermissionGroup = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError>({
         security: [
             {
@@ -4525,7 +4525,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGro
  * * `read`
  * * `none`
  */
-export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlug = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
+export const getRepoPermissionGroup = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError>({
         security: [
             {
@@ -4561,7 +4561,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupS
  * * `write`
  * * `read`
  */
-export const putRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlug = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
+export const updateRepoPermissionGroup = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError>({
         security: [
             {
@@ -4592,7 +4592,7 @@ export const putRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupS
  * Returns a paginated list of explicit user permissions for the given repository.
  * This endpoint does not support BBQL features.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData, ThrowOnError>) => {
+export const listRepoPermissionUsers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors, ThrowOnError>({
         security: [
             {
@@ -4622,7 +4622,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsers = <Throw
  *
  * The only authentication method for this endpoint is via app passwords.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
+export const deleteRepoPermissionUser = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError>({
         security: [
             {
@@ -4657,7 +4657,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySele
  * * `read`
  * * `none`
  */
-export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
+export const getRepoPermissionUser = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError>({
         security: [
             {
@@ -4693,7 +4693,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelecte
  * * `write`
  * * `read`
  */
-export const putRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
+export const updateRepoPermissionUser = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError>({
         security: [
             {
@@ -6119,7 +6119,7 @@ export const updateRepositoryHostedPropertyValue = <ThrowOnError extends boolean
  * This endpoint also supports filtering and sorting of the results. See
  * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequests = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsData, ThrowOnError>) => {
+export const listPullRequests = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors, ThrowOnError>({
         security: [
             {
@@ -6210,7 +6210,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequests = <ThrowOnError ex
  * * `close_source_branch` - boolean that specifies if the source branch should be closed upon merging
  * * `draft` - boolean that specifies whether the pull request is a draft
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequests = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsData, ThrowOnError>) => {
+export const createPullRequest = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors, ThrowOnError>({
         security: [
             {
@@ -6525,7 +6525,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequests = <ThrowOnError e
  * }
  * ```
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsActivity = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData, ThrowOnError>) => {
+export const listPullRequestsActivity = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors, ThrowOnError>({
         security: [
             {
@@ -6551,7 +6551,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsActivity = <ThrowOn
  *
  * Returns the specified pull request.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, ThrowOnError>) => {
+export const getPullRequest = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors, ThrowOnError>({
         security: [
             {
@@ -6581,7 +6581,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestId = <
  *
  * Only open pull requests can be mutated.
  */
-export const putRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, ThrowOnError>) => {
+export const updatePullRequest = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses, PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors, ThrowOnError>({
         security: [
             {
@@ -6896,7 +6896,7 @@ export const putRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestId = <
  * }
  * ```
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivity = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityData, ThrowOnError>) => {
+export const getPullRequestActivity = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors, ThrowOnError>({
         security: [
             {
@@ -6923,7 +6923,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActi
  * Redact the authenticated user's approval of the specified pull
  * request.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApprove = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, ThrowOnError>) => {
+export const deletePullRequestApproval = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors, ThrowOnError>({
         security: [
             {
@@ -6949,7 +6949,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdA
  *
  * Approve the specified pull request as the authenticated user.
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApprove = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, ThrowOnError>) => {
+export const approvePullRequest = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors, ThrowOnError>({
         security: [
             {
@@ -6984,7 +6984,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApp
  * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more
  * details.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, ThrowOnError>) => {
+export const listPullRequestComments = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors, ThrowOnError>({
         security: [
             {
@@ -7012,7 +7012,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
  *
  * Returns the newly created pull request comment.
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComments = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, ThrowOnError>) => {
+export const createPullRequestComment = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors, ThrowOnError>({
         security: [
             {
@@ -7042,7 +7042,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCom
  *
  * Deletes a specific pull request comment.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>) => {
+export const deletePullRequestComment = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -7068,7 +7068,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdC
  *
  * Returns a specific pull request comment.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>) => {
+export const getPullRequestComment = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -7094,7 +7094,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
  *
  * Updates a specific pull request comment.
  */
-export const putRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>) => {
+export const updatePullRequestComment = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -7122,7 +7122,7 @@ export const putRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
 /**
  * Reopen a comment thread
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolve = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, ThrowOnError>) => {
+export const unresolvePullRequestComment = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors, ThrowOnError>({
         security: [
             {
@@ -7146,7 +7146,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdC
 /**
  * Resolve a comment thread
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolve = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, ThrowOnError>) => {
+export const resolvePullRequestComment = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors, ThrowOnError>({
         security: [
             {
@@ -7175,7 +7175,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCom
  * These are the commits that are being merged into the destination
  * branch when the pull requests gets accepted.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommits = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsData, ThrowOnError>) => {
+export const listPullRequestCommits = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors, ThrowOnError>({
         security: [
             {
@@ -7201,7 +7201,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
  *
  * Declines the pull request.
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDecline = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineData, ThrowOnError>) => {
+export const declinePullRequest = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors, ThrowOnError>({
         security: [
             {
@@ -7228,7 +7228,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDec
  * Redirects to the [repository diff](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diff-spec-get)
  * with the revspec that corresponds to the pull request.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiff = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffData, ThrowOnError>) => {
+export const getPullRequestDiff = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffData, ThrowOnError>) => {
     return (options.client ?? client).get<unknown, unknown, ThrowOnError>({
         security: [
             {
@@ -7255,7 +7255,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiff
  * Redirects to the [repository diffstat](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diffstat-spec-get)
  * with the revspec that corresponds to the pull request.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstat = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstatData, ThrowOnError>) => {
+export const getPullRequestDiffstat = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstatData, ThrowOnError>) => {
     return (options.client ?? client).get<unknown, unknown, ThrowOnError>({
         security: [
             {
@@ -7281,7 +7281,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiff
  *
  * Merges the pull request.
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerge = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeData, ThrowOnError>) => {
+export const mergePullRequest = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors, ThrowOnError>({
         security: [
             {
@@ -7357,7 +7357,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMer
  * }
  * ```
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdData, ThrowOnError>) => {
+export const getPullRequestMergeTaskStatus = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdErrors, ThrowOnError>({
         security: [
             {
@@ -7384,7 +7384,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerg
  * Redirects to the [repository patch](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-patch-spec-get)
  * with the revspec that corresponds to pull request.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatch = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatchData, ThrowOnError>) => {
+export const getPullRequestPatch = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatchData, ThrowOnError>) => {
     return (options.client ?? client).get<unknown, unknown, ThrowOnError>({
         security: [
             {
@@ -7408,7 +7408,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatc
 /**
  * Remove change request for a pull request
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChanges = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, ThrowOnError>) => {
+export const deletePullRequestChangeRequest = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors, ThrowOnError>({
         security: [
             {
@@ -7432,7 +7432,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdR
 /**
  * Request changes for a pull request
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChanges = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, ThrowOnError>) => {
+export const requestPullRequestChanges = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors, ThrowOnError>({
         security: [
             {
@@ -7459,7 +7459,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdReq
  * Returns all statuses (e.g. build results) for the given pull
  * request.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatuses = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesData, ThrowOnError>) => {
+export const listPullRequestStatuses = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors, ThrowOnError>({
         security: [
             {
@@ -7488,7 +7488,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStat
  * This endpoint supports filtering and sorting of the results by the 'task' field.
  * See [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, ThrowOnError>) => {
+export const listPullRequestTasks = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors, ThrowOnError>({
         security: [
             {
@@ -7519,7 +7519,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTask
  * Tasks can optionally be created in relation to a comment specified by the comment's ID which
  * will cause the task to appear below the comment on a pull request when viewed in Bitbucket.
  */
-export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, ThrowOnError>) => {
+export const createPullRequestTask = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors, ThrowOnError>({
         security: [
             {
@@ -7549,7 +7549,7 @@ export const postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTas
  *
  * Deletes a specific pull request task.
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>) => {
+export const deletePullRequestTask = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, ThrowOnError>({
         security: [
             {
@@ -7575,7 +7575,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdT
  *
  * Returns a specific pull request task.
  */
-export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>) => {
+export const getPullRequestTask = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, ThrowOnError>({
         security: [
             {
@@ -7601,7 +7601,7 @@ export const getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTask
  *
  * Updates a specific pull request task.
  */
-export const putRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>) => {
+export const updatePullRequestTask = <ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, ThrowOnError>({
         security: [
             {
@@ -7724,7 +7724,7 @@ export const updatePullRequestHostedPropertyValue = <ThrowOnError extends boolea
  * Sorting can be changed using the ?sort= query parameter. When using ?sort=name to explicitly sort on ref name,
  * Bitbucket will apply natural sorting and interpret numerical values as numbers instead of strings.
  */
-export const getRepositoriesByWorkspaceByRepoSlugRefs = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsData, ThrowOnError>) => {
+export const listRefs = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugRefsResponses, GetRepositoriesByWorkspaceByRepoSlugRefsErrors, ThrowOnError>({
         security: [
             {
@@ -7769,7 +7769,7 @@ export const getRepositoriesByWorkspaceByRepoSlugRefs = <ThrowOnError extends bo
  * Sorting can be changed using the ?q= query parameter. When using ?q=name to explicitly sort on ref name,
  * Bitbucket will apply natural sorting and interpret numerical values as numbers instead of strings.
  */
-export const getRepositoriesByWorkspaceByRepoSlugRefsBranches = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData, ThrowOnError>) => {
+export const listBranches = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses, GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors, ThrowOnError>({
         security: [
             {
@@ -7819,7 +7819,7 @@ export const getRepositoriesByWorkspaceByRepoSlugRefsBranches = <ThrowOnError ex
  * prefix is ambiguous. Using a full commit hash is the preferred
  * approach.
  */
-export const postRepositoriesByWorkspaceByRepoSlugRefsBranches = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData, ThrowOnError>) => {
+export const createBranch = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses, PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors, ThrowOnError>({
         security: [
             {
@@ -7851,7 +7851,7 @@ export const postRepositoriesByWorkspaceByRepoSlugRefsBranches = <ThrowOnError e
  * The branch name should not include any prefixes (e.g.
  * refs/heads).
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByName = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, ThrowOnError>) => {
+export const deleteBranch = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses, DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors, ThrowOnError>({
         security: [
             {
@@ -7884,7 +7884,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByName = <ThrowO
  * For Git, the branch name should not include any prefixes (e.g.
  * refs/heads).
  */
-export const getRepositoriesByWorkspaceByRepoSlugRefsBranchesByName = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, ThrowOnError>) => {
+export const getBranch = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses, GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors, ThrowOnError>({
         security: [
             {
@@ -7920,7 +7920,7 @@ export const getRepositoriesByWorkspaceByRepoSlugRefsBranchesByName = <ThrowOnEr
  * Sorting can be changed using the ?sort= query parameter. When using ?sort=name to explicitly sort on ref name,
  * Bitbucket will apply natural sorting and interpret numerical values as numbers instead of strings.
  */
-export const getRepositoriesByWorkspaceByRepoSlugRefsTags = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsTagsData, ThrowOnError>) => {
+export const listTags = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsTagsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses, GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors, ThrowOnError>({
         security: [
             {
@@ -7964,7 +7964,7 @@ export const getRepositoriesByWorkspaceByRepoSlugRefsTags = <ThrowOnError extend
  * hash, but it may return a 400 response if the provided prefix is
  * ambiguous. Using a full commit hash is the preferred approach.
  */
-export const postRepositoriesByWorkspaceByRepoSlugRefsTags = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugRefsTagsData, ThrowOnError>) => {
+export const createTag = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugRefsTagsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses, PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors, ThrowOnError>({
         security: [
             {
@@ -7996,7 +7996,7 @@ export const postRepositoriesByWorkspaceByRepoSlugRefsTags = <ThrowOnError exten
  *
  * The tag name should not include any prefixes (e.g. refs/tags).
  */
-export const deleteRepositoriesByWorkspaceByRepoSlugRefsTagsByName = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, ThrowOnError>) => {
+export const deleteTag = <ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses, DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors, ThrowOnError>({
         security: [
             {
@@ -8147,7 +8147,7 @@ export const deleteRepositoriesByWorkspaceByRepoSlugRefsTagsByName = <ThrowOnErr
  * }
  * ```
  */
-export const getRepositoriesByWorkspaceByRepoSlugRefsTagsByName = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, ThrowOnError>) => {
+export const getTag = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses, GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors, ThrowOnError>({
         security: [
             {
@@ -8180,7 +8180,7 @@ export const getRepositoriesByWorkspaceByRepoSlugRefsTagsByName = <ThrowOnError 
  *
  * To create new commits, [POST to this endpoint](#post)
  */
-export const getRepositoriesByWorkspaceByRepoSlugSrc = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugSrcData, ThrowOnError>) => {
+export const listSrcRoot = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugSrcData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugSrcResponses, GetRepositoriesByWorkspaceByRepoSlugSrcErrors, ThrowOnError>({
         security: [
             {
@@ -8329,7 +8329,7 @@ export const getRepositoriesByWorkspaceByRepoSlugSrc = <ThrowOnError extends boo
  * Note that this API does not support the creation or manipulation of
  * subrepos / submodules.
  */
-export const postRepositoriesByWorkspaceByRepoSlugSrc = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugSrcData, ThrowOnError>) => {
+export const createSrcFileCommit = <ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugSrcData, ThrowOnError>) => {
     return (options.client ?? client).post<PostRepositoriesByWorkspaceByRepoSlugSrcResponses, PostRepositoriesByWorkspaceByRepoSlugSrcErrors, ThrowOnError>({
         security: [
             {
@@ -8557,7 +8557,7 @@ export const postRepositoriesByWorkspaceByRepoSlugSrc = <ThrowOnError extends bo
  * See [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more
  * details.
  */
-export const getRepositoriesByWorkspaceByRepoSlugSrcByCommitByPath = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData, ThrowOnError>) => {
+export const getSrcFile = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses, GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors, ThrowOnError>({
         security: [
             {
@@ -8586,7 +8586,7 @@ export const getRepositoriesByWorkspaceByRepoSlugSrcByCommitByPath = <ThrowOnErr
  * This resource is only available on repositories that have the issue
  * tracker enabled.
  */
-export const getRepositoriesByWorkspaceByRepoSlugVersions = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugVersionsData, ThrowOnError>) => {
+export const listVersions = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugVersionsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugVersionsResponses, GetRepositoriesByWorkspaceByRepoSlugVersionsErrors, ThrowOnError>({
         security: [
             {
@@ -8612,7 +8612,7 @@ export const getRepositoriesByWorkspaceByRepoSlugVersions = <ThrowOnError extend
  *
  * Returns the specified issue tracker version object.
  */
-export const getRepositoriesByWorkspaceByRepoSlugVersionsByVersionId = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData, ThrowOnError>) => {
+export const getVersion = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses, GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors, ThrowOnError>({
         security: [
             {
@@ -8639,7 +8639,7 @@ export const getRepositoriesByWorkspaceByRepoSlugVersionsByVersionId = <ThrowOnE
  * Returns a paginated list of all the watchers on the specified
  * repository.
  */
-export const getRepositoriesByWorkspaceByRepoSlugWatchers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugWatchersData, ThrowOnError>) => {
+export const listRepoWatchers = <ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugWatchersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetRepositoriesByWorkspaceByRepoSlugWatchersResponses, unknown, ThrowOnError>({
         security: [
             {
@@ -8691,7 +8691,7 @@ export const getRepositoriesByWorkspaceByRepoSlugWatchers = <ThrowOnError extend
  *
  * @deprecated
  */
-export const getSnippets = <ThrowOnError extends boolean = false>(options?: Options<GetSnippetsData, ThrowOnError>) => {
+export const listSnippets = <ThrowOnError extends boolean = false>(options?: Options<GetSnippetsData, ThrowOnError>) => {
     return (options?.client ?? client).get<GetSnippetsResponses, GetSnippetsErrors, ThrowOnError>({
         security: [
             {
@@ -8864,7 +8864,7 @@ export const getSnippets = <ThrowOnError extends boolean = false>(options?: Opti
  * To create the snippet under a workspace, just append the workspace ID
  * to the URL. See [`/2.0/snippets/{workspace}`](/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-post).
  */
-export const postSnippets = <ThrowOnError extends boolean = false>(options: Options<PostSnippetsData, ThrowOnError>) => {
+export const createSnippet = <ThrowOnError extends boolean = false>(options: Options<PostSnippetsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostSnippetsResponses, PostSnippetsErrors, ThrowOnError>({
         security: [
             {
@@ -8896,7 +8896,7 @@ export const postSnippets = <ThrowOnError extends boolean = false>(options: Opti
  * by the snippet owner and only those that are owned by `{workspace}` are
  * returned.
  */
-export const getSnippetsByWorkspace = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceData, ThrowOnError>) => {
+export const listWorkspaceSnippets = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceResponses, GetSnippetsByWorkspaceErrors, ThrowOnError>({
         security: [
             {
@@ -8924,7 +8924,7 @@ export const getSnippetsByWorkspace = <ThrowOnError extends boolean = false>(opt
  * created under the workspace specified in the path parameter
  * `{workspace}`.
  */
-export const postSnippetsByWorkspace = <ThrowOnError extends boolean = false>(options: Options<PostSnippetsByWorkspaceData, ThrowOnError>) => {
+export const createWorkspaceSnippet = <ThrowOnError extends boolean = false>(options: Options<PostSnippetsByWorkspaceData, ThrowOnError>) => {
     return (options.client ?? client).post<PostSnippetsByWorkspaceResponses, PostSnippetsByWorkspaceErrors, ThrowOnError>({
         security: [
             {
@@ -8954,7 +8954,7 @@ export const postSnippetsByWorkspace = <ThrowOnError extends boolean = false>(op
  *
  * Deletes a snippet and returns an empty response.
  */
-export const deleteSnippetsByWorkspaceByEncodedId = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdData, ThrowOnError>) => {
+export const deleteSnippet = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteSnippetsByWorkspaceByEncodedIdResponses, DeleteSnippetsByWorkspaceByEncodedIdErrors, ThrowOnError>({
         security: [
             {
@@ -9165,7 +9165,7 @@ export const deleteSnippetsByWorkspaceByEncodedId = <ThrowOnError extends boolea
  * AqxFUD6OMxcvkO+UfKfkOyXfKdsv/AYCHMLVkHAFWgAAAABJRU5ErkJggg==
  * ------------------------------5957323a6b76--
  */
-export const getSnippetsByWorkspaceByEncodedId = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdData, ThrowOnError>) => {
+export const getSnippet = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdResponses, GetSnippetsByWorkspaceByEncodedIdErrors, ThrowOnError>({
         security: [
             {
@@ -9388,7 +9388,7 @@ export const getSnippetsByWorkspaceByEncodedId = <ThrowOnError extends boolean =
  * regardless of whether or not they are listed in `files`, as a
  * convenience to the client.
  */
-export const putSnippetsByWorkspaceByEncodedId = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdData, ThrowOnError>) => {
+export const updateSnippet = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutSnippetsByWorkspaceByEncodedIdResponses, PutSnippetsByWorkspaceByEncodedIdErrors, ThrowOnError>({
         security: [
             {
@@ -9420,7 +9420,7 @@ export const putSnippetsByWorkspaceByEncodedId = <ThrowOnError extends boolean =
  * The default sorting is oldest to newest and can be overridden with
  * the `sort` query parameter.
  */
-export const getSnippetsByWorkspaceByEncodedIdComments = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommentsData, ThrowOnError>) => {
+export const listSnippetComments = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommentsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdCommentsResponses, GetSnippetsByWorkspaceByEncodedIdCommentsErrors, ThrowOnError>({
         security: [
             {
@@ -9450,7 +9450,7 @@ export const getSnippetsByWorkspaceByEncodedIdComments = <ThrowOnError extends b
  *
  * To create a threaded reply to an existing comment, include `parent.id`.
  */
-export const postSnippetsByWorkspaceByEncodedIdComments = <ThrowOnError extends boolean = false>(options: Options<PostSnippetsByWorkspaceByEncodedIdCommentsData, ThrowOnError>) => {
+export const createSnippetComment = <ThrowOnError extends boolean = false>(options: Options<PostSnippetsByWorkspaceByEncodedIdCommentsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostSnippetsByWorkspaceByEncodedIdCommentsResponses, PostSnippetsByWorkspaceByEncodedIdCommentsErrors, ThrowOnError>({
         security: [
             {
@@ -9482,7 +9482,7 @@ export const postSnippetsByWorkspaceByEncodedIdComments = <ThrowOnError extends 
  *
  * Comments can only be removed by the comment author, snippet creator, or workspace admin.
  */
-export const deleteSnippetsByWorkspaceByEncodedIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>) => {
+export const deleteSnippetComment = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -9508,7 +9508,7 @@ export const deleteSnippetsByWorkspaceByEncodedIdCommentsByCommentId = <ThrowOnE
  *
  * Returns the specific snippet comment.
  */
-export const getSnippetsByWorkspaceByEncodedIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>) => {
+export const getSnippetComment = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -9538,7 +9538,7 @@ export const getSnippetsByWorkspaceByEncodedIdCommentsByCommentId = <ThrowOnErro
  *
  * Comments can only be updated by their author.
  */
-export const putSnippetsByWorkspaceByEncodedIdCommentsByCommentId = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>) => {
+export const updateSnippetComment = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, ThrowOnError>({
         security: [
             {
@@ -9568,7 +9568,7 @@ export const putSnippetsByWorkspaceByEncodedIdCommentsByCommentId = <ThrowOnErro
  *
  * Returns the changes (commits) made on this snippet.
  */
-export const getSnippetsByWorkspaceByEncodedIdCommits = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommitsData, ThrowOnError>) => {
+export const listSnippetCommits = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommitsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdCommitsResponses, GetSnippetsByWorkspaceByEncodedIdCommitsErrors, ThrowOnError>({
         security: [
             {
@@ -9594,7 +9594,7 @@ export const getSnippetsByWorkspaceByEncodedIdCommits = <ThrowOnError extends bo
  *
  * Returns the changes made on this snippet in this commit.
  */
-export const getSnippetsByWorkspaceByEncodedIdCommitsByRevision = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData, ThrowOnError>) => {
+export const getSnippetCommit = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses, GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors, ThrowOnError>({
         security: [
             {
@@ -9622,7 +9622,7 @@ export const getSnippetsByWorkspaceByEncodedIdCommitsByRevision = <ThrowOnError 
  * need for first having to retrieve the snippet itself and having to pull
  * out the versioned file links.
  */
-export const getSnippetsByWorkspaceByEncodedIdFilesByPath = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdFilesByPathData, ThrowOnError>) => {
+export const getSnippetFile = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdFilesByPathData, ThrowOnError>) => {
     return (options.client ?? client).get<unknown, GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors, ThrowOnError>({
         security: [
             {
@@ -9649,7 +9649,7 @@ export const getSnippetsByWorkspaceByEncodedIdFilesByPath = <ThrowOnError extend
  * Used to stop watching a specific snippet. Returns 204 (No Content)
  * to indicate success.
  */
-export const deleteSnippetsByWorkspaceByEncodedIdWatch = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>) => {
+export const unwatchSnippet = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteSnippetsByWorkspaceByEncodedIdWatchResponses, DeleteSnippetsByWorkspaceByEncodedIdWatchErrors, ThrowOnError>({
         security: [
             {
@@ -9680,7 +9680,7 @@ export const deleteSnippetsByWorkspaceByEncodedIdWatch = <ThrowOnError extends b
  *
  * Hitting this endpoint anonymously always returns a 404.
  */
-export const getSnippetsByWorkspaceByEncodedIdWatch = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>) => {
+export const getSnippetWatchStatus = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdWatchResponses, GetSnippetsByWorkspaceByEncodedIdWatchErrors, ThrowOnError>({
         security: [
             {
@@ -9706,7 +9706,7 @@ export const getSnippetsByWorkspaceByEncodedIdWatch = <ThrowOnError extends bool
  *
  * Used to start watching a specific snippet. Returns 204 (No Content).
  */
-export const putSnippetsByWorkspaceByEncodedIdWatch = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>) => {
+export const watchSnippet = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>) => {
     return (options.client ?? client).put<PutSnippetsByWorkspaceByEncodedIdWatchResponses, PutSnippetsByWorkspaceByEncodedIdWatchErrors, ThrowOnError>({
         security: [
             {
@@ -9734,7 +9734,7 @@ export const putSnippetsByWorkspaceByEncodedIdWatch = <ThrowOnError extends bool
  *
  * @deprecated
  */
-export const getSnippetsByWorkspaceByEncodedIdWatchers = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdWatchersData, ThrowOnError>) => {
+export const listSnippetWatchers = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdWatchersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdWatchersResponses, GetSnippetsByWorkspaceByEncodedIdWatchersErrors, ThrowOnError>({
         security: [
             {
@@ -9767,7 +9767,7 @@ export const getSnippetsByWorkspaceByEncodedIdWatchers = <ThrowOnError extends b
  * To delete a snippet, regardless of whether or not concurrent changes
  * are being made to it, use `DELETE /snippets/{encoded_id}` instead.
  */
-export const deleteSnippetsByWorkspaceByEncodedIdByNodeId = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>) => {
+export const deleteSnippetRevision = <ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses, DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors, ThrowOnError>({
         security: [
             {
@@ -9801,7 +9801,7 @@ export const deleteSnippetsByWorkspaceByEncodedIdByNodeId = <ThrowOnError extend
  *
  * Other than that, the two endpoints are identical in behavior.
  */
-export const getSnippetsByWorkspaceByEncodedIdByNodeId = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>) => {
+export const getSnippetRevision = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses, GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors, ThrowOnError>({
         security: [
             {
@@ -9840,7 +9840,7 @@ export const getSnippetsByWorkspaceByEncodedIdByNodeId = <ThrowOnError extends b
  *
  * Other than that, the two endpoints are identical in behavior.
  */
-export const putSnippetsByWorkspaceByEncodedIdByNodeId = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>) => {
+export const updateSnippetRevision = <ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses, PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors, ThrowOnError>({
         security: [
             {
@@ -9874,7 +9874,7 @@ export const putSnippetsByWorkspaceByEncodedIdByNodeId = <ThrowOnError extends b
  * Note that for text files, no character encoding is included as part of
  * the content type.
  */
-export const getSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPath = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData, ThrowOnError>) => {
+export const getSnippetRevisionFile = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathResponses, GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors, ThrowOnError>({
         security: [
             {
@@ -9918,7 +9918,7 @@ export const getSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPath = <ThrowOnErro
  * unspecified as Git does not track this, making it hard for
  * Bitbucket to reliably determine this.
  */
-export const getSnippetsByWorkspaceByEncodedIdByRevisionDiff = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData, ThrowOnError>) => {
+export const getSnippetDiff = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdByRevisionDiffResponses, GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors, ThrowOnError>({
         security: [
             {
@@ -9963,7 +9963,7 @@ export const getSnippetsByWorkspaceByEncodedIdByRevisionDiff = <ThrowOnError ext
  * unspecified as Git does not track this, making it hard for
  * Bitbucket to reliably determine this.
  */
-export const getSnippetsByWorkspaceByEncodedIdByRevisionPatch = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData, ThrowOnError>) => {
+export const getSnippetPatch = <ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData, ThrowOnError>) => {
     return (options.client ?? client).get<GetSnippetsByWorkspaceByEncodedIdByRevisionPatchResponses, GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors, ThrowOnError>({
         security: [
             {
@@ -10241,7 +10241,7 @@ export const getUserEmails = <ThrowOnError extends boolean = false>(options?: Op
  * Details describe whether the address has been confirmed by the user and
  * whether it is the user's primary address or not.
  */
-export const getUserEmailsByEmail = <ThrowOnError extends boolean = false>(options: Options<GetUserEmailsByEmailData, ThrowOnError>) => {
+export const getUserEmail = <ThrowOnError extends boolean = false>(options: Options<GetUserEmailsByEmailData, ThrowOnError>) => {
     return (options.client ?? client).get<GetUserEmailsByEmailResponses, GetUserEmailsByEmailErrors, ThrowOnError>({
         security: [
             {
@@ -10417,7 +10417,7 @@ export const getUserWorkspaces = <ThrowOnError extends boolean = false>(options?
  * [deprecation announcement](/cloud/bitbucket/deprecation-notice-collaborator-role/) for more details)
  * * `member`
  */
-export const getUserWorkspacesByWorkspacePermission = <ThrowOnError extends boolean = false>(options: Options<GetUserWorkspacesByWorkspacePermissionData, ThrowOnError>) => {
+export const getUserWorkspacePermission = <ThrowOnError extends boolean = false>(options: Options<GetUserWorkspacesByWorkspacePermissionData, ThrowOnError>) => {
     return (options.client ?? client).get<GetUserWorkspacesByWorkspacePermissionResponses, GetUserWorkspacesByWorkspacePermissionErrors, ThrowOnError>({
         security: [
             {
@@ -10449,7 +10449,7 @@ export const getUserWorkspacesByWorkspacePermission = <ThrowOnError extends bool
  * Note that the user object returned by this operation is changing significantly, due to privacy changes.
  * See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#changes-to-bitbucket-user-objects) for details.
  */
-export const getUsersBySelectedUser = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserData, ThrowOnError>) => {
+export const getUserProfile = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserData, ThrowOnError>) => {
     return (options.client ?? client).get<GetUsersBySelectedUserResponses, GetUsersBySelectedUserErrors, ThrowOnError>({
         security: [
             {
@@ -10477,7 +10477,7 @@ export const getUsersBySelectedUser = <ThrowOnError extends boolean = false>(opt
  * The `key` and `subkeys` fields can also be requested from the endpoint.
  * See [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.
  */
-export const getUsersBySelectedUserGpgKeys = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserGpgKeysData, ThrowOnError>) => {
+export const listUserGpgKeys = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserGpgKeysData, ThrowOnError>) => {
     return (options.client ?? client).get<GetUsersBySelectedUserGpgKeysResponses, GetUsersBySelectedUserGpgKeysErrors, ThrowOnError>({
         security: [
             {
@@ -10511,7 +10511,7 @@ export const getUsersBySelectedUserGpgKeys = <ThrowOnError extends boolean = fal
  * https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}/gpg-keys
  * ```
  */
-export const postUsersBySelectedUserGpgKeys = <ThrowOnError extends boolean = false>(options: Options<PostUsersBySelectedUserGpgKeysData, ThrowOnError>) => {
+export const createUserGpgKey = <ThrowOnError extends boolean = false>(options: Options<PostUsersBySelectedUserGpgKeysData, ThrowOnError>) => {
     return (options.client ?? client).post<PostUsersBySelectedUserGpgKeysResponses, PostUsersBySelectedUserGpgKeysErrors, ThrowOnError>({
         security: [
             {
@@ -10541,7 +10541,7 @@ export const postUsersBySelectedUserGpgKeys = <ThrowOnError extends boolean = fa
  *
  * Deletes a specific GPG public key from a user's account.
  */
-export const deleteUsersBySelectedUserGpgKeysByFingerprint = <ThrowOnError extends boolean = false>(options: Options<DeleteUsersBySelectedUserGpgKeysByFingerprintData, ThrowOnError>) => {
+export const deleteUserGpgKey = <ThrowOnError extends boolean = false>(options: Options<DeleteUsersBySelectedUserGpgKeysByFingerprintData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteUsersBySelectedUserGpgKeysByFingerprintResponses, DeleteUsersBySelectedUserGpgKeysByFingerprintErrors, ThrowOnError>({
         security: [
             {
@@ -10569,7 +10569,7 @@ export const deleteUsersBySelectedUserGpgKeysByFingerprint = <ThrowOnError exten
  * The `key` and `subkeys` fields can also be requested from the endpoint.
  * See [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.
  */
-export const getUsersBySelectedUserGpgKeysByFingerprint = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserGpgKeysByFingerprintData, ThrowOnError>) => {
+export const getUserGpgKey = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserGpgKeysByFingerprintData, ThrowOnError>) => {
     return (options.client ?? client).get<GetUsersBySelectedUserGpgKeysByFingerprintResponses, GetUsersBySelectedUserGpgKeysByFingerprintErrors, ThrowOnError>({
         security: [
             {
@@ -10870,7 +10870,7 @@ export const searchAccount = <ThrowOnError extends boolean = false>(options: Opt
  *
  * Returns a paginated list of the user's SSH public keys.
  */
-export const getUsersBySelectedUserSshKeys = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserSshKeysData, ThrowOnError>) => {
+export const listUserSshKeys = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserSshKeysData, ThrowOnError>) => {
     return (options.client ?? client).get<GetUsersBySelectedUserSshKeysResponses, GetUsersBySelectedUserSshKeysErrors, ThrowOnError>({
         security: [
             {
@@ -10902,7 +10902,7 @@ export const getUsersBySelectedUserSshKeys = <ThrowOnError extends boolean = fal
  * $ curl -X POST -H "Content-Type: application/json" -d '{"key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKqP3Cr632C2dNhhgKVcon4ldUSAeKiku2yP9O9/bDtY user@myhost"}' https://api.bitbucket.org/2.0/users/{ed08f5e1-605b-4f4a-aee4-6c97628a673e}/ssh-keys
  * ```
  */
-export const postUsersBySelectedUserSshKeys = <ThrowOnError extends boolean = false>(options: Options<PostUsersBySelectedUserSshKeysData, ThrowOnError>) => {
+export const createUserSshKey = <ThrowOnError extends boolean = false>(options: Options<PostUsersBySelectedUserSshKeysData, ThrowOnError>) => {
     return (options.client ?? client).post<PostUsersBySelectedUserSshKeysResponses, PostUsersBySelectedUserSshKeysErrors, ThrowOnError>({
         security: [
             {
@@ -10932,7 +10932,7 @@ export const postUsersBySelectedUserSshKeys = <ThrowOnError extends boolean = fa
  *
  * Deletes a specific SSH public key from a user's account.
  */
-export const deleteUsersBySelectedUserSshKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<DeleteUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>) => {
+export const deleteUserSshKey = <ThrowOnError extends boolean = false>(options: Options<DeleteUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteUsersBySelectedUserSshKeysByKeyIdResponses, DeleteUsersBySelectedUserSshKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -10958,7 +10958,7 @@ export const deleteUsersBySelectedUserSshKeysByKeyId = <ThrowOnError extends boo
  *
  * Returns a specific SSH public key belonging to a user.
  */
-export const getUsersBySelectedUserSshKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>) => {
+export const getUserSshKey = <ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetUsersBySelectedUserSshKeysByKeyIdResponses, GetUsersBySelectedUserSshKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -10992,7 +10992,7 @@ export const getUsersBySelectedUserSshKeysByKeyId = <ThrowOnError extends boolea
  * $ curl -X PUT -H "Content-Type: application/json" -d '{"label": "Work key"}' https://api.bitbucket.org/2.0/users/{ed08f5e1-605b-4f4a-aee4-6c97628a673e}/ssh-keys/{b15b6026-9c02-4626-b4ad-b905f99f763a}
  * ```
  */
-export const putUsersBySelectedUserSshKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<PutUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>) => {
+export const updateUserSshKey = <ThrowOnError extends boolean = false>(options: Options<PutUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutUsersBySelectedUserSshKeysByKeyIdResponses, PutUsersBySelectedUserSshKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -11038,7 +11038,7 @@ export const putUsersBySelectedUserSshKeysByKeyId = <ThrowOnError extends boolea
  *
  * @deprecated
  */
-export const getWorkspaces = <ThrowOnError extends boolean = false>(options?: Options<GetWorkspacesData, ThrowOnError>) => {
+export const listWorkspaces = <ThrowOnError extends boolean = false>(options?: Options<GetWorkspacesData, ThrowOnError>) => {
     return (options?.client ?? client).get<GetWorkspacesResponses, GetWorkspacesErrors, ThrowOnError>({
         security: [
             {
@@ -11064,7 +11064,7 @@ export const getWorkspaces = <ThrowOnError extends boolean = false>(options?: Op
  *
  * Returns the requested workspace.
  */
-export const getWorkspacesByWorkspace = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceData, ThrowOnError>) => {
+export const getWorkspace = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceResponses, GetWorkspacesByWorkspaceErrors, ThrowOnError>({
         security: [
             {
@@ -11090,7 +11090,7 @@ export const getWorkspacesByWorkspace = <ThrowOnError extends boolean = false>(o
  *
  * Returns a paginated list of webhooks installed on this workspace.
  */
-export const getWorkspacesByWorkspaceHooks = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceHooksData, ThrowOnError>) => {
+export const listWorkspaceHooks = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceHooksData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceHooksResponses, GetWorkspacesByWorkspaceHooksErrors, ThrowOnError>({
         security: [
             {
@@ -11152,7 +11152,7 @@ export const getWorkspacesByWorkspaceHooks = <ThrowOnError extends boolean = fal
  *
  * Only workspace owners can install webhooks on workspaces.
  */
-export const postWorkspacesByWorkspaceHooks = <ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceHooksData, ThrowOnError>) => {
+export const createWorkspaceHook = <ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceHooksData, ThrowOnError>) => {
     return (options.client ?? client).post<PostWorkspacesByWorkspaceHooksResponses, PostWorkspacesByWorkspaceHooksErrors, ThrowOnError>({
         security: [
             {
@@ -11178,7 +11178,7 @@ export const postWorkspacesByWorkspaceHooks = <ThrowOnError extends boolean = fa
  *
  * Deletes the specified webhook subscription from the given workspace.
  */
-export const deleteWorkspacesByWorkspaceHooksByUid = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceHooksByUidData, ThrowOnError>) => {
+export const deleteWorkspaceHook = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceHooksByUidData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteWorkspacesByWorkspaceHooksByUidResponses, DeleteWorkspacesByWorkspaceHooksByUidErrors, ThrowOnError>({
         security: [
             {
@@ -11205,7 +11205,7 @@ export const deleteWorkspacesByWorkspaceHooksByUid = <ThrowOnError extends boole
  * Returns the webhook with the specified id installed on the given
  * workspace.
  */
-export const getWorkspacesByWorkspaceHooksByUid = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceHooksByUidData, ThrowOnError>) => {
+export const getWorkspaceHook = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceHooksByUidData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceHooksByUidResponses, GetWorkspacesByWorkspaceHooksByUidErrors, ThrowOnError>({
         security: [
             {
@@ -11248,7 +11248,7 @@ export const getWorkspacesByWorkspaceHooksByUid = <ThrowOnError extends boolean 
  * hook's secret can be left unchanged by not passing the `secret` field in the
  * request.
  */
-export const putWorkspacesByWorkspaceHooksByUid = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceHooksByUidData, ThrowOnError>) => {
+export const updateWorkspaceHook = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceHooksByUidData, ThrowOnError>) => {
     return (options.client ?? client).put<PutWorkspacesByWorkspaceHooksByUidResponses, PutWorkspacesByWorkspaceHooksByUidErrors, ThrowOnError>({
         security: [
             {
@@ -11295,7 +11295,7 @@ export const putWorkspacesByWorkspaceHooksByUid = <ThrowOnError extends boolean 
  *
  * Once again, all query parameter values must be URL escaped.
  */
-export const getWorkspacesByWorkspaceMembers = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceMembersData, ThrowOnError>) => {
+export const listWorkspaceMembers = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceMembersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceMembersResponses, GetWorkspacesByWorkspaceMembersErrors, ThrowOnError>({
         security: [
             {
@@ -11323,7 +11323,7 @@ export const getWorkspacesByWorkspaceMembers = <ThrowOnError extends boolean = f
  * a `User` object for the member and a `Workspace` object
  * for the requested workspace.
  */
-export const getWorkspacesByWorkspaceMembersByMember = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceMembersByMemberData, ThrowOnError>) => {
+export const getWorkspaceMember = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceMembersByMemberData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceMembersByMemberResponses, GetWorkspacesByWorkspaceMembersByMemberErrors, ThrowOnError>({
         security: [
             {
@@ -11366,7 +11366,7 @@ export const getWorkspacesByWorkspaceMembersByMember = <ThrowOnError extends boo
  *
  * * `q=permission="owner"`
  */
-export const getWorkspacesByWorkspacePermissions = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsData, ThrowOnError>) => {
+export const listWorkspacePermissions = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspacePermissionsResponses, GetWorkspacesByWorkspacePermissionsErrors, ThrowOnError>({
         security: [
             {
@@ -11415,7 +11415,7 @@ export const getWorkspacesByWorkspacePermissions = <ThrowOnError extends boolean
  * Note that the query parameter values need to be URL escaped so that `=`
  * would become `%3D`.
  */
-export const getWorkspacesByWorkspacePermissionsRepositories = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsRepositoriesData, ThrowOnError>) => {
+export const listWorkspaceRepoPermissions = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsRepositoriesData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspacePermissionsRepositoriesResponses, GetWorkspacesByWorkspacePermissionsRepositoriesErrors, ThrowOnError>({
         security: [
             {
@@ -11463,7 +11463,7 @@ export const getWorkspacesByWorkspacePermissionsRepositories = <ThrowOnError ext
  * Note that the query parameter values need to be URL escaped so that `=`
  * would become `%3D`.
  */
-export const getWorkspacesByWorkspacePermissionsRepositoriesByRepoSlug = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData, ThrowOnError>) => {
+export const getWorkspaceRepoPermission = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses, GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors, ThrowOnError>({
         security: [
             {
@@ -11809,7 +11809,7 @@ export const updatePipelineVariableForWorkspace = <ThrowOnError extends boolean 
  *
  * Returns the list of projects in this workspace.
  */
-export const getWorkspacesByWorkspaceProjects = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsData, ThrowOnError>) => {
+export const listProjects = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsResponses, GetWorkspacesByWorkspaceProjectsErrors, ThrowOnError>({
         security: [
             {
@@ -11888,7 +11888,7 @@ export const getWorkspacesByWorkspaceProjects = <ThrowOnError extends boolean = 
  * }
  * ```
  */
-export const postWorkspacesByWorkspaceProjects = <ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceProjectsData, ThrowOnError>) => {
+export const createProject = <ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceProjectsData, ThrowOnError>) => {
     return (options.client ?? client).post<PostWorkspacesByWorkspaceProjectsResponses, PostWorkspacesByWorkspaceProjectsErrors, ThrowOnError>({
         security: [
             {
@@ -11927,7 +11927,7 @@ export const postWorkspacesByWorkspaceProjects = <ThrowOnError extends boolean =
  * $ curl -X DELETE https://api.bitbucket.org/2.0/workspaces/bbworkspace1/projects/PROJ
  * ```
  */
-export const deleteWorkspacesByWorkspaceProjectsByProjectKey = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>) => {
+export const deleteProject = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors, ThrowOnError>({
         security: [
             {
@@ -11953,7 +11953,7 @@ export const deleteWorkspacesByWorkspaceProjectsByProjectKey = <ThrowOnError ext
  *
  * Returns the requested project.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKey = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>) => {
+export const getProject = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyErrors, ThrowOnError>({
         security: [
             {
@@ -12000,7 +12000,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKey = <ThrowOnError extend
  * project is changed and is returned in the `Location` header of the
  * response.
  */
-export const putWorkspacesByWorkspaceProjectsByProjectKey = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>) => {
+export const updateProject = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>) => {
     return (options.client ?? client).put<PutWorkspacesByWorkspaceProjectsByProjectKeyResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyErrors, ThrowOnError>({
         security: [
             {
@@ -12045,7 +12045,7 @@ export const putWorkspacesByWorkspaceProjectsByProjectKey = <ThrowOnError extend
  * 3. Always has a `branch_types` array which contains all enabled branch
  * types.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyBranchingModel = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData, ThrowOnError>) => {
+export const getProjectBranchingModel = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors, ThrowOnError>({
         security: [
             {
@@ -12085,7 +12085,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyBranchingModel = <Throw
  * [active model API](#api-workspaces-workspace-projects-project-key-branching-model-get)
  * more useful.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, ThrowOnError>) => {
+export const getProjectBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors, ThrowOnError>({
         security: [
             {
@@ -12148,7 +12148,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettings 
  * `default_branch_deletion` property will leave it unchanged. Other values
  * would be ignored.
  */
-export const putWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, ThrowOnError>) => {
+export const updateProjectBranchingModelSettings = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, ThrowOnError>) => {
     return (options.client ?? client).put<PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors, ThrowOnError>({
         security: [
             {
@@ -12175,7 +12175,7 @@ export const putWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettings 
  * Return a list of all default reviewers for a project. This is a list of users that will be added as default
  * reviewers to pull requests for any repository within the project.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewers = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData, ThrowOnError>) => {
+export const listProjectDefaultReviewers = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors, ThrowOnError>({
         security: [
             {
@@ -12208,7 +12208,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewers = <Thr
  * HTTP/1.1 204
  * ```
  */
-export const deleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUser = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>) => {
+export const deleteProjectDefaultReviewer = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, ThrowOnError>({
         security: [
             {
@@ -12234,7 +12234,7 @@ export const deleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySe
  *
  * Returns the specified default reviewer.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUser = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>) => {
+export const getProjectDefaultReviewer = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, ThrowOnError>({
         security: [
             {
@@ -12261,7 +12261,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelec
  * Adds the specified user to the project's list of default reviewers. The method is
  * idempotent. Accepts an optional body containing the `uuid` of the user to be added.
  */
-export const putWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUser = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>) => {
+export const addProjectDefaultReviewer = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>) => {
     return (options.client ?? client).put<PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, ThrowOnError>({
         security: [
             {
@@ -12287,7 +12287,7 @@ export const putWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelec
  *
  * Returns all deploy keys belonging to a project.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyDeployKeys = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, ThrowOnError>) => {
+export const listProjectDeployKeys = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors, ThrowOnError>({
         security: [
             {
@@ -12325,7 +12325,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyDeployKeys = <ThrowOnEr
  * }'
  * ```
  */
-export const postWorkspacesByWorkspaceProjectsByProjectKeyDeployKeys = <ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, ThrowOnError>) => {
+export const createProjectDeployKey = <ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, ThrowOnError>) => {
     return (options.client ?? client).post<PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses, PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors, ThrowOnError>({
         security: [
             {
@@ -12351,7 +12351,7 @@ export const postWorkspacesByWorkspaceProjectsByProjectKeyDeployKeys = <ThrowOnE
  *
  * This deletes a deploy key from a project.
  */
-export const deleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, ThrowOnError>) => {
+export const deleteProjectDeployKey = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -12377,7 +12377,7 @@ export const deleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyId = 
  *
  * Returns the deploy key belonging to a specific key ID.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyId = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, ThrowOnError>) => {
+export const getProjectDeployKey = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors, ThrowOnError>({
         security: [
             {
@@ -12404,7 +12404,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyId = <Th
  * Returns a paginated list of explicit group permissions for the given project.
  * This endpoint does not support BBQL features.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroups = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsData, ThrowOnError>) => {
+export const listProjectPermissionGroups = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors, ThrowOnError>({
         security: [
             {
@@ -12432,7 +12432,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroups
  *
  * Only users with admin permission for the project may access this resource.
  */
-export const deleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlug = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
+export const deleteProjectPermissionGroup = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError>({
         security: [
             {
@@ -12468,7 +12468,7 @@ export const deleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGro
  * * `read`
  * * `none`
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlug = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
+export const getProjectPermissionGroup = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError>({
         security: [
             {
@@ -12506,7 +12506,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroups
  * * `write`
  * * `read`
  */
-export const putWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlug = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
+export const updateProjectPermissionGroup = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>) => {
     return (options.client ?? client).put<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError>({
         security: [
             {
@@ -12537,7 +12537,7 @@ export const putWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroups
  * Returns a paginated list of explicit user permissions for the given project.
  * This endpoint does not support BBQL features.
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsers = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersData, ThrowOnError>) => {
+export const listProjectPermissionUsers = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors, ThrowOnError>({
         security: [
             {
@@ -12568,7 +12568,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsers 
  * Due to security concerns, the JWT and OAuth authentication methods are unsupported.
  * This is to ensure integrations and add-ons are not allowed to change permissions.
  */
-export const deleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
+export const deleteProjectPermissionUser = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
     return (options.client ?? client).delete<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError>({
         security: [
             {
@@ -12604,7 +12604,7 @@ export const deleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUse
  * * `read`
  * * `none`
  */
-export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
+export const getProjectPermissionUser = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError>({
         security: [
             {
@@ -12643,7 +12643,7 @@ export const getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersB
  * * `write`
  * * `read`
  */
-export const putWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
+export const updateProjectPermissionUser = <ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>) => {
     return (options.client ?? client).put<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError>({
         security: [
             {
@@ -12681,7 +12681,7 @@ export const putWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersB
  * This endpoint also supports filtering and sorting of the results. See
  * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
  */
-export const getWorkspacesByWorkspacePullrequestsBySelectedUser = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePullrequestsBySelectedUserData, ThrowOnError>) => {
+export const listWorkspaceUserPullRequests = <ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePullrequestsBySelectedUserData, ThrowOnError>) => {
     return (options.client ?? client).get<GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses, GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors, ThrowOnError>({
         security: [
             {

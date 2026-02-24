@@ -12,7 +12,8 @@
   ],
   "scripts": {
     "build": "tsup",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "postprocess": "bun scripts/postprocess-sdk.ts"
   },
   "license": "MIT",
   "author": {

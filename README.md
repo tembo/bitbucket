@@ -68,17 +68,17 @@ Every endpoint in the [Bitbucket Cloud REST API](https://developer.atlassian.com
 
 ```ts
 import {
-  getRepositoriesByWorkspace,
-  getRepositoriesByWorkspaceByRepoSlug,
+  listWorkspaceRepositories,
+  getRepository,
 } from "@tembo-io/bitbucket";
 
 // List all repositories in a workspace
-const { data: repos } = await getRepositoriesByWorkspace({
+const { data: repos } = await listWorkspaceRepositories({
   path: { workspace: "my-workspace" },
 });
 
 // Get a specific repository
-const { data: repo } = await getRepositoriesByWorkspaceByRepoSlug({
+const { data: repo } = await getRepository({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
 });
 ```
@@ -87,30 +87,29 @@ const { data: repo } = await getRepositoriesByWorkspaceByRepoSlug({
 
 ```ts
 import {
-  getRepositoriesByWorkspaceByRepoSlugPullrequests,
-  postRepositoriesByWorkspaceByRepoSlugPullrequests,
-  postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerge,
+  listPullRequests,
+  createPullRequest,
+  mergePullRequest,
 } from "@tembo-io/bitbucket";
 
 // List pull requests
-const { data: prs } = await getRepositoriesByWorkspaceByRepoSlugPullrequests({
+const { data: prs } = await listPullRequests({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
   query: { state: "OPEN" },
 });
 
 // Create a pull request
-const { data: newPr } =
-  await postRepositoriesByWorkspaceByRepoSlugPullrequests({
-    path: { workspace: "my-workspace", repo_slug: "my-repo" },
-    body: {
-      title: "My feature",
-      source: { branch: { name: "feature-branch" } },
-      destination: { branch: { name: "main" } },
-    },
-  });
+const { data: newPr } = await createPullRequest({
+  path: { workspace: "my-workspace", repo_slug: "my-repo" },
+  body: {
+    title: "My feature",
+    source: { branch: { name: "feature-branch" } },
+    destination: { branch: { name: "main" } },
+  },
+});
 
 // Merge a pull request
-await postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerge({
+await mergePullRequest({
   path: {
     workspace: "my-workspace",
     repo_slug: "my-repo",
@@ -123,19 +122,18 @@ await postRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerge({
 
 ```ts
 import {
-  getRepositoriesByWorkspaceByRepoSlugRefsBranches,
-  postRepositoriesByWorkspaceByRepoSlugRefsBranches,
-  getRepositoriesByWorkspaceByRepoSlugRefsTags,
+  listBranches,
+  createBranch,
+  listTags,
 } from "@tembo-io/bitbucket";
 
 // List branches
-const { data: branches } =
-  await getRepositoriesByWorkspaceByRepoSlugRefsBranches({
-    path: { workspace: "my-workspace", repo_slug: "my-repo" },
-  });
+const { data: branches } = await listBranches({
+  path: { workspace: "my-workspace", repo_slug: "my-repo" },
+});
 
 // Create a branch
-await postRepositoriesByWorkspaceByRepoSlugRefsBranches({
+await createBranch({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
   body: {
     name: "new-branch",
@@ -144,7 +142,7 @@ await postRepositoriesByWorkspaceByRepoSlugRefsBranches({
 });
 
 // List tags
-const { data: tags } = await getRepositoriesByWorkspaceByRepoSlugRefsTags({
+const { data: tags } = await listTags({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
 });
 ```
@@ -180,20 +178,20 @@ const { data: pipelines } = await getPipelinesForRepository({
 ```ts
 import {
   getUserWorkspaces,
-  getWorkspacesByWorkspace,
-  getWorkspacesByWorkspaceMembers,
+  getWorkspace,
+  listWorkspaceMembers,
 } from "@tembo-io/bitbucket";
 
 // List your workspaces
 const { data: workspaces } = await getUserWorkspaces();
 
 // Get a specific workspace
-const { data: workspace } = await getWorkspacesByWorkspace({
+const { data: workspace } = await getWorkspace({
   path: { workspace: "my-workspace" },
 });
 
 // List workspace members
-const { data: members } = await getWorkspacesByWorkspaceMembers({
+const { data: members } = await listWorkspaceMembers({
   path: { workspace: "my-workspace" },
 });
 ```

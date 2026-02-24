@@ -1,0 +1,8 @@
+src/
+tsconfig.json
+tsup.config.ts
+CLAUDE.md
+.env
+*.test.ts
+node_modules/
+.git/

@@ -1,0 +1,39 @@
+{
+  "name": "tembo-bitbucket-client",
+  "version": "0.1.0",
+  "description": "TypeScript client for the Bitbucket Cloud REST API",
+  "type": "module",
+  "main": "./lib/index.js",
+  "files": [
+    "lib/",
+    "package.json",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "tsc": "tsc"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Darren Baldwin",
+    "email": "darren@tembo.io"
+  },
+  "keywords": [
+    "bitbucket",
+    "api",
+    "client",
+    "sdk",
+    "rest",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tembo/bitbucket"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}

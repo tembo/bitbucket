@@ -303,29 +303,41 @@ async function main() {
     process.exit(1);
   }
 
+  const isClassBased = content.includes("class BitbucketClient");
+
   let renamed = 0;
   let notFound = 0;
 
   for (const [oldName, newName] of Object.entries(RENAMES)) {
-    const pattern = `export const ${oldName} = `;
+    const pattern = isClassBased
+      ? `public ${oldName}<`
+      : `export const ${oldName} = `;
     if (!content.includes(pattern)) {
       console.warn(`  WARN: "${oldName}" not found in sdk.gen.ts`);
       notFound++;
       continue;
     }
-    content = content.replace(pattern, `export const ${newName} = `);
+    const replacement = isClassBased
+      ? `public ${newName}<`
+      : `export const ${newName} = `;
+    content = content.replace(pattern, replacement);
     renamed++;
   }
 
   await Bun.write(sdkPath, content);
 
-  console.log(`Renamed ${renamed} functions (${notFound} not found)`);
+  console.log(`Renamed ${renamed} methods (${notFound} not found)`);
+  console.log(`Mode: ${isClassBased ? "class-based" : "flat"}`);
 
-  const remaining = content.match(/export const \w+ByWorkspace\w* = /g);
+  const searchPattern = isClassBased
+    ? /public \w+ByWorkspace\w*</g
+    : /export const \w+ByWorkspace\w* = /g;
+  const remaining = content.match(searchPattern);
   if (remaining && remaining.length > 0) {
-    console.log(`\n${remaining.length} functions still have "ByWorkspace" in their name:`);
+    console.log(`\n${remaining.length} methods still have "ByWorkspace" in their name:`);
     for (const match of remaining) {
-      console.log(`  ${match.replace("export const ", "").replace(" = ", "")}`);
+      const name = match.replace("public ", "").replace("<", "").replace("export const ", "").replace(" = ", "");
+      console.log(`  ${name}`);
     }
   }
 }

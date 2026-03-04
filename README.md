@@ -1,6 +1,6 @@
 <h1 align="center">@tembo-io/bitbucket</h1>
 
-<p align="center">A fully typed TypeScript client for the <a href="https://developer.atlassian.com/cloud/bitbucket/rest/intro/">Bitbucket Cloud REST API</a>. Generated from the <a href="https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json?_v=2.300.151">official OpenAPI spec.</p>
+<p align="center">A fully typed TypeScript client for the <a href="https://developer.atlassian.com/cloud/bitbucket/rest/intro/">Bitbucket Cloud REST API</a>. Generated from the <a href="https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json">official OpenAPI spec</a> with clean, idiomatic method names.</p>
 
 ## Install
 
@@ -10,16 +10,21 @@ npm install @tembo-io/bitbucket
 
 ## Quick Start
 
-The package exports a pre-configured `client` instance pointing at `https://api.bitbucket.org/2.0`. Set your auth token once, then call any SDK function:
+Create a `BitbucketClient` instance and start making requests:
 
 ```ts
-import { client, getUser } from "@tembo-io/bitbucket";
+import { BitbucketClient } from "@tembo-io/bitbucket";
 
-client.setConfig({
-  auth: "your-access-token",
+const bitbucket = new BitbucketClient({
+  client: createClient(
+    createConfig({
+      baseUrl: "https://api.bitbucket.org/2.0",
+      auth: "your-access-token",
+    })
+  ),
 });
 
-const { data, error } = await getUser();
+const { data, error } = await bitbucket.getUser();
 
 if (error) {
   console.error(error);
@@ -28,78 +33,99 @@ if (error) {
 }
 ```
 
+Or use the default client and configure auth after:
+
+```ts
+import { BitbucketClient } from "@tembo-io/bitbucket";
+
+const bitbucket = new BitbucketClient();
+
+// The default client points at https://api.bitbucket.org/2.0
+// Configure auth on its underlying client:
+bitbucket.client.setConfig({
+  auth: "your-access-token",
+});
+
+const { data } = await bitbucket.getUser();
+```
+
 ## Authentication
 
-All SDK functions support Bearer token, Basic auth, and API key authentication. Pass `auth` when configuring the client:
+All methods support Bearer token, Basic auth, and API key authentication.
 
 **Bearer token (most common):**
 
 ```ts
-client.setConfig({
-  auth: "your-oauth-access-token",
+const bitbucket = new BitbucketClient({
+  client: createClient(
+    createConfig({
+      baseUrl: "https://api.bitbucket.org/2.0",
+      auth: "your-oauth-access-token",
+    })
+  ),
 });
 ```
 
 **Basic auth:**
 
 ```ts
-client.setConfig({
-  auth: `${username}:${appPassword}`,
+const bitbucket = new BitbucketClient({
+  client: createClient(
+    createConfig({
+      baseUrl: "https://api.bitbucket.org/2.0",
+      auth: `${username}:${appPassword}`,
+    })
+  ),
 });
 ```
 
 **Dynamic auth (e.g. refreshing tokens):**
 
 ```ts
-client.setConfig({
-  auth: (auth) => {
-    if (auth.scheme === "bearer") {
-      return getAccessToken();
-    }
-  },
+const bitbucket = new BitbucketClient({
+  client: createClient(
+    createConfig({
+      baseUrl: "https://api.bitbucket.org/2.0",
+      auth: (auth) => {
+        if (auth.scheme === "bearer") {
+          return getAccessToken();
+        }
+      },
+    })
+  ),
 });
 ```
 
 ## Usage
 
-Every endpoint in the [Bitbucket Cloud REST API](https://developer.atlassian.com/cloud/bitbucket/rest/intro/) has a corresponding typed function. Path and query parameters are passed via the `path` and `query` fields.
+Every endpoint in the [Bitbucket Cloud REST API](https://developer.atlassian.com/cloud/bitbucket/rest/intro/) has a corresponding typed method on `BitbucketClient`. Path and query parameters are passed via the `path` and `query` fields, and request bodies via `body`.
 
 ### Repositories
 
 ```ts
-import {
-  listWorkspaceRepositories,
-  getRepository,
-} from "@tembo-io/bitbucket";
-
-// List all repositories in a workspace
-const { data: repos } = await listWorkspaceRepositories({
+const { data: repos } = await bitbucket.listWorkspaceRepositories({
   path: { workspace: "my-workspace" },
 });
 
-// Get a specific repository
-const { data: repo } = await getRepository({
+const { data: repo } = await bitbucket.getRepository({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
+});
+
+const { data: newRepo } = await bitbucket.createRepository({
+  path: { workspace: "my-workspace", repo_slug: "my-new-repo" },
+  body: { scm: "git", is_private: true },
 });
 ```
 
 ### Pull Requests
 
 ```ts
-import {
-  listPullRequests,
-  createPullRequest,
-  mergePullRequest,
-} from "@tembo-io/bitbucket";
-
-// List pull requests
-const { data: prs } = await listPullRequests({
+const { data: prs } = await bitbucket.listPullRequests({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
   query: { state: "OPEN" },
 });
 
-// Create a pull request
-const { data: newPr } = await createPullRequest({
+const { data: newPr } = await bitbucket.createPullRequest({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
   body: {
     title: "My feature",
@@ -108,55 +134,66 @@ const { data: newPr } = await createPullRequest({
   },
 });
 
-// Merge a pull request
-await mergePullRequest({
-  path: {
-    workspace: "my-workspace",
-    repo_slug: "my-repo",
-    pull_request_id: 42,
-  },
+await bitbucket.approvePullRequest({
+  path: { workspace: "my-workspace", repo_slug: "my-repo", pull_request_id: 42 },
+});
+
+await bitbucket.mergePullRequest({
+  path: { workspace: "my-workspace", repo_slug: "my-repo", pull_request_id: 42 },
+});
+
+const { data: comments } = await bitbucket.listPullRequestComments({
+  path: { workspace: "my-workspace", repo_slug: "my-repo", pull_request_id: 42 },
+});
+
+await bitbucket.createPullRequestComment({
+  path: { workspace: "my-workspace", repo_slug: "my-repo", pull_request_id: 42 },
+  body: { content: { raw: "Looks good!" } },
 });
 ```
 
 ### Branches & Tags
 
 ```ts
-import {
-  listBranches,
-  createBranch,
-  listTags,
-} from "@tembo-io/bitbucket";
-
-// List branches
-const { data: branches } = await listBranches({
+const { data: branches } = await bitbucket.listBranches({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
 });
 
-// Create a branch
-await createBranch({
+await bitbucket.createBranch({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
-  body: {
-    name: "new-branch",
-    target: { hash: "main" },
-  },
+  body: { name: "new-branch", target: { hash: "main" } },
 });
 
-// List tags
-const { data: tags } = await listTags({
+const { data: tags } = await bitbucket.listTags({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
+});
+
+await bitbucket.createTag({
+  path: { workspace: "my-workspace", repo_slug: "my-repo" },
+  body: { name: "v1.0.0", target: { hash: "abc123" } },
+});
+```
+
+### Commits
+
+```ts
+const { data: commits } = await bitbucket.listCommits({
+  path: { workspace: "my-workspace", repo_slug: "my-repo" },
+});
+
+const { data: commit } = await bitbucket.getCommit({
+  path: { workspace: "my-workspace", repo_slug: "my-repo", commit: "abc123" },
+});
+
+await bitbucket.approveCommit({
+  path: { workspace: "my-workspace", repo_slug: "my-repo", commit: "abc123" },
 });
 ```
 
 ### Pipelines
 
 ```ts
-import {
-  createPipelineForRepository,
-  getPipelinesForRepository,
-} from "@tembo-io/bitbucket";
-
-// Trigger a pipeline
-const { data: pipeline } = await createPipelineForRepository({
+const { data: pipeline } = await bitbucket.createPipelineForRepository({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
   body: {
     target: {
@@ -167,31 +204,38 @@ const { data: pipeline } = await createPipelineForRepository({
   },
 });
 
-// List pipelines
-const { data: pipelines } = await getPipelinesForRepository({
+const { data: pipelines } = await bitbucket.getPipelinesForRepository({
   path: { workspace: "my-workspace", repo_slug: "my-repo" },
 });
 ```
 
-### Workspaces
+### Issues
 
 ```ts
-import {
-  getUserWorkspaces,
-  getWorkspace,
-  listWorkspaceMembers,
-} from "@tembo-io/bitbucket";
+const { data: issues } = await bitbucket.listIssues({
+  path: { workspace: "my-workspace", repo_slug: "my-repo" },
+});
 
-// List your workspaces
-const { data: workspaces } = await getUserWorkspaces();
+const { data: issue } = await bitbucket.createIssue({
+  path: { workspace: "my-workspace", repo_slug: "my-repo" },
+  body: { title: "Bug report", kind: "bug", priority: "major" },
+});
+```
 
-// Get a specific workspace
-const { data: workspace } = await getWorkspace({
+### Workspaces & Projects
+
+```ts
+const { data: workspaces } = await bitbucket.getUserWorkspaces();
+
+const { data: workspace } = await bitbucket.getWorkspace({
   path: { workspace: "my-workspace" },
 });
 
-// List workspace members
-const { data: members } = await listWorkspaceMembers({
+const { data: members } = await bitbucket.listWorkspaceMembers({
+  path: { workspace: "my-workspace" },
+});
+
+const { data: projects } = await bitbucket.listProjects({
   path: { workspace: "my-workspace" },
 });
 ```
@@ -199,59 +243,85 @@ const { data: members } = await listWorkspaceMembers({
 ### Current User
 
 ```ts
-import { getUser, getUserEmails } from "@tembo-io/bitbucket";
-
-const { data: me } = await getUser();
-const { data: emails } = await getUserEmails();
+const { data: me } = await bitbucket.getUser();
+const { data: emails } = await bitbucket.getUserEmails();
 ```
 
-## Custom Client
+## Multiple Clients
 
-If you need multiple clients (e.g. different auth per workspace), create your own instead of using the default:
+Create separate client instances for different workspaces or auth tokens:
 
 ```ts
-import { createClient, createConfig, getUser } from "@tembo-io/bitbucket";
+import { BitbucketClient } from "@tembo-io/bitbucket";
+import { createClient, createConfig } from "@tembo-io/bitbucket";
 
-const myClient = createClient(
-  createConfig({
+const workspace1 = new BitbucketClient({
+  client: createClient(createConfig({
     baseUrl: "https://api.bitbucket.org/2.0",
-    auth: "my-token",
-  })
-);
+    auth: "token-for-workspace-1",
+  })),
+});
 
-const { data } = await getUser({ client: myClient });
+const workspace2 = new BitbucketClient({
+  client: createClient(createConfig({
+    baseUrl: "https://api.bitbucket.org/2.0",
+    auth: "token-for-workspace-2",
+  })),
+});
 ```
 
 ## Error Handling
 
-By default, errors are returned in the response object. You can opt into throwing instead:
+By default, errors are returned in the response object alongside `data`:
 
 ```ts
-import { getUser } from "@tembo-io/bitbucket";
+const { data, error } = await bitbucket.getUser();
 
-// Default: errors returned as `error` field
-const { data, error } = await getUser();
+if (error) {
+  console.error(error);
+}
+```
 
-// Opt-in: throw on error
-const { data } = await getUser({ throwOnError: true });
+Opt into throwing on errors instead:
+
+```ts
+try {
+  const { data } = await bitbucket.getUser({ throwOnError: true });
+} catch (err) {
+  console.error(err);
+}
 ```
 
 ## Interceptors
 
-Add request/response interceptors for logging, retries, or custom headers:
+Add request, response, and error interceptors for logging, retries, or custom headers:
 
 ```ts
-import { client } from "@tembo-io/bitbucket";
+const bitbucket = new BitbucketClient();
 
-client.interceptors.request.use((request) => {
+bitbucket.client.interceptors.request.use((request) => {
   console.log("->", request.method, request.url);
   return request;
 });
 
-client.interceptors.response.use((response) => {
+bitbucket.client.interceptors.response.use((response) => {
   console.log("<-", response.status);
   return response;
 });
+
+bitbucket.client.interceptors.error.use((error) => {
+  console.error("!", error);
+  return error;
+});
+```
+
+## Development
+
+Regenerate the SDK from the latest Bitbucket OpenAPI spec and apply method name cleanup:
+
+```bash
+bun run generate
+bun run postprocess
 ```
 
 ## License

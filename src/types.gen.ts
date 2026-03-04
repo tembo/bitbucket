@@ -15,12 +15,10 @@ export type ClientOptions = {
  */
 export type ApplicationProperty = {
     _attributes?: Array<'public' | 'read_only'>;
-    [key: string]: unknown | Array<'public' | 'read_only'> | undefined;
+    [key: string]: unknown;
 };
 
-export type DeploymentEnvironment = _Object & {
-    type: 'deployment_environment';
-} & {
+export type DeploymentEnvironment = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the environment.
      */
@@ -29,7 +27,8 @@ export type DeploymentEnvironment = _Object & {
      * The name of the environment.
      */
     name?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'deployment_environment';
+    [key: string]: unknown;
 };
 
 /**
@@ -64,9 +63,7 @@ export type PaginatedEnvironments = {
     previous?: string;
 };
 
-export type DeploymentRelease = _Object & {
-    type: 'deployment_release';
-} & {
+export type DeploymentRelease = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the release.
      */
@@ -84,12 +81,11 @@ export type DeploymentRelease = _Object & {
      * The timestamp when the release was created.
      */
     created_on?: string;
-    [key: string]: unknown | string | Commit | undefined;
+    type: 'deployment_release';
+    [key: string]: unknown;
 };
 
-export type Deployment = _Object & {
-    type: 'deployment';
-} & {
+export type Deployment = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the deployment.
      */
@@ -97,16 +93,16 @@ export type Deployment = _Object & {
     state?: DeploymentState;
     environment?: DeploymentEnvironment;
     release?: DeploymentRelease;
-    [key: string]: unknown | string | DeploymentState | DeploymentEnvironment | DeploymentRelease | undefined;
-};
-
-export type DeploymentState = _Object & {
-    type: 'deployment_state';
-} & {
+    type: 'deployment';
     [key: string]: unknown;
 };
 
-export type DeploymentStateUndeployed = DeploymentState & {
+export type DeploymentState = Omit<Object, 'type'> & {
+    type: 'deployment_state';
+    [key: string]: unknown;
+};
+
+export type DeploymentStateUndeployed = Omit<DeploymentState, 'type'> & {
     /**
      * The name of deployment state (UNDEPLOYED).
      */
@@ -115,10 +111,11 @@ export type DeploymentStateUndeployed = DeploymentState & {
      * Link to trigger the deployment.
      */
     trigger_url?: string;
-    [key: string]: unknown | 'UNDEPLOYED' | string | undefined;
+    type: 'deployment_state_undeployed';
+    [key: string]: unknown;
 };
 
-export type DeploymentStateInProgress = DeploymentState & {
+export type DeploymentStateInProgress = Omit<DeploymentState, 'type'> & {
     /**
      * The name of deployment state (IN_PROGRESS).
      */
@@ -132,10 +129,11 @@ export type DeploymentStateInProgress = DeploymentState & {
      * The timestamp when the deployment was started.
      */
     start_date?: string;
-    [key: string]: unknown | 'IN_PROGRESS' | string | Account | undefined;
+    type: 'deployment_state_in_progress';
+    [key: string]: unknown;
 };
 
-export type DeploymentStateCompleted = DeploymentState & {
+export type DeploymentStateCompleted = Omit<DeploymentState, 'type'> & {
     /**
      * The name of deployment state (COMPLETED).
      */
@@ -154,37 +152,40 @@ export type DeploymentStateCompleted = DeploymentState & {
      * The timestamp when the deployment completed.
      */
     completion_date?: string;
-    [key: string]: unknown | 'COMPLETED' | string | Account | DeploymentStateCompletedStatus | undefined;
-};
-
-export type DeploymentStateCompletedStatus = _Object & {
-    type: 'deployment_state_completed_status';
-} & {
+    type: 'deployment_state_completed';
     [key: string]: unknown;
 };
 
-export type DeploymentStateCompletedStatusSuccessful = DeploymentStateCompletedStatus & {
+export type DeploymentStateCompletedStatus = Omit<Object, 'type'> & {
+    type: 'deployment_state_completed_status';
+    [key: string]: unknown;
+};
+
+export type DeploymentStateCompletedStatusSuccessful = Omit<DeploymentStateCompletedStatus, 'type'> & {
     /**
      * The name of the completed deployment status (SUCCESSFUL).
      */
     name?: 'SUCCESSFUL';
-    [key: string]: unknown | 'SUCCESSFUL' | undefined;
+    type: 'deployment_state_completed_status_successful';
+    [key: string]: unknown;
 };
 
-export type DeploymentStateCompletedStatusFailed = DeploymentStateCompletedStatus & {
+export type DeploymentStateCompletedStatusFailed = Omit<DeploymentStateCompletedStatus, 'type'> & {
     /**
      * The name of the completed deployment status (FAILED).
      */
     name?: 'FAILED';
-    [key: string]: unknown | 'FAILED' | undefined;
+    type: 'deployment_state_completed_status_failed';
+    [key: string]: unknown;
 };
 
-export type DeploymentStateCompletedStatusStopped = DeploymentStateCompletedStatus & {
+export type DeploymentStateCompletedStatusStopped = Omit<DeploymentStateCompletedStatus, 'type'> & {
     /**
      * The name of the completed deployment status (STOPPED).
      */
     name?: 'STOPPED';
-    [key: string]: unknown | 'STOPPED' | undefined;
+    type: 'deployment_state_completed_status_stopped';
+    [key: string]: unknown;
 };
 
 /**
@@ -219,9 +220,7 @@ export type PaginatedDeployments = {
     previous?: string;
 };
 
-export type DeploymentVariable = _Object & {
-    type: 'deployment_variable';
-} & {
+export type DeploymentVariable = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the variable.
      */
@@ -238,7 +237,8 @@ export type DeploymentVariable = _Object & {
      * If true, this variable will be treated as secured. The value will never be exposed in the logs or the REST API.
      */
     secured?: boolean;
-    [key: string]: unknown | string | boolean | undefined;
+    type: 'deployment_variable';
+    [key: string]: unknown;
 };
 
 /**
@@ -273,9 +273,7 @@ export type PaginatedDeploymentVariable = {
     previous?: string;
 };
 
-export type Report = _Object & {
-    type: 'report';
-} & {
+export type Report = Omit<Object, 'type'> & {
     /**
      * The UUID that can be used to identify the report.
      */
@@ -328,7 +326,8 @@ export type Report = _Object & {
      * The timestamp when the report was updated.
      */
     updated_on?: string;
-    [key: string]: unknown | string | boolean | 'SECURITY' | 'COVERAGE' | 'TEST' | 'BUG' | 'PASSED' | 'FAILED' | 'PENDING' | Array<ReportData> | undefined;
+    type: 'report';
+    [key: string]: unknown;
 };
 
 /**
@@ -353,9 +352,7 @@ export type ReportData = {
     };
 };
 
-export type ReportAnnotation = _Object & {
-    type: 'report_annotation';
-} & {
+export type ReportAnnotation = Omit<Object, 'type'> & {
     /**
      * ID of the annotation provided by the annotation creator. It can be used to identify the annotation as an alternative to it's generated uuid. It is not used by Bitbucket, but only by the annotation creator for updating or deleting this specific annotation. Needs to be unique.
      */
@@ -404,7 +401,8 @@ export type ReportAnnotation = _Object & {
      * The timestamp when the report was updated.
      */
     updated_on?: string;
-    [key: string]: unknown | string | 'VULNERABILITY' | 'CODE_SMELL' | 'BUG' | number | 'PASSED' | 'FAILED' | 'SKIPPED' | 'IGNORED' | 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | undefined;
+    type: 'report_annotation';
+    [key: string]: unknown;
 };
 
 /**
@@ -471,20 +469,17 @@ export type PaginatedAnnotations = {
     previous?: string;
 };
 
-export type PipelinesConfig = _Object & {
-    type: 'pipelines_config';
-} & {
+export type PipelinesConfig = Omit<Object, 'type'> & {
     /**
      * Whether Pipelines is enabled for the repository.
      */
     enabled?: boolean;
     repository?: Repository;
-    [key: string]: unknown | boolean | Repository | undefined;
+    type: 'pipelines_config';
+    [key: string]: unknown;
 };
 
-export type Pipeline = _Object & {
-    type: 'pipeline';
-} & {
+export type Pipeline = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the pipeline.
      */
@@ -519,30 +514,27 @@ export type Pipeline = _Object & {
      */
     configuration_sources?: Array<PipelineConfigurationSource>;
     links?: PipelinesPipelineLinks;
-    [key: string]: unknown | string | number | Account | Repository | PipelineTarget | PipelineTrigger | PipelineState | Array<PipelineVariable> | Array<PipelineConfigurationSource> | PipelinesPipelineLinks | undefined;
+    type: 'pipeline';
+    [key: string]: unknown;
 };
 
-export type PipelinesLinksSectionHref = _Object & {
-    type: 'pipelines_links_section_href';
-} & {
+export type PipelinesLinksSectionHref = Omit<Object, 'type'> & {
     /**
      * A link
      */
     href?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'pipelines_links_section_href';
+    [key: string]: unknown;
 };
 
-export type PipelinesPipelineLinks = _Object & {
-    type: 'pipelines_pipeline_links';
-} & {
+export type PipelinesPipelineLinks = Omit<Object, 'type'> & {
     self?: PipelinesLinksSectionHref;
     steps?: PipelinesLinksSectionHref;
-    [key: string]: unknown | PipelinesLinksSectionHref | undefined;
+    type: 'pipelines_pipeline_links';
+    [key: string]: unknown;
 };
 
-export type PipelineCache = _Object & {
-    type: 'pipeline_cache';
-} & {
+export type PipelineCache = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the pipeline cache.
      */
@@ -575,7 +567,8 @@ export type PipelineCache = _Object & {
      * The timestamp when the cache was created.
      */
     created_on?: string;
-    [key: string]: unknown | string | number | undefined;
+    type: 'pipeline_cache';
+    [key: string]: unknown;
 };
 
 /**
@@ -622,13 +615,12 @@ export type PipelineCacheContentUri = {
     uri?: string;
 };
 
-export type PipelineTarget = _Object & {
+export type PipelineTarget = Omit<Object, 'type'> & {
     type: 'pipeline_target';
-} & {
     [key: string]: unknown;
 };
 
-export type PipelineRefTarget = PipelineTarget & {
+export type PipelineRefTarget = Omit<PipelineTarget, 'type'> & {
     /**
      * The type of reference (branch/tag).
      */
@@ -639,147 +631,150 @@ export type PipelineRefTarget = PipelineTarget & {
     ref_name?: string;
     commit?: Commit;
     selector?: PipelineSelector;
-    [key: string]: unknown | 'branch' | 'tag' | 'named_branch' | 'bookmark' | string | Commit | PipelineSelector | undefined;
+    type: 'pipeline_ref_target';
+    [key: string]: unknown;
 };
 
-export type PipelineCommitTarget = PipelineTarget & {
+export type PipelineCommitTarget = Omit<PipelineTarget, 'type'> & {
     commit?: Commit;
     selector?: PipelineSelector;
-    [key: string]: unknown | Commit | PipelineSelector | undefined;
+    type: 'pipeline_commit_target';
+    [key: string]: unknown;
 };
 
-export type PipelineSelector = _Object & {
+export type PipelineSelector = Omit<Object, 'type'> & {
     type: 'pipeline_selector';
-} & {
-    /**
-     * The type of selector.
-     */
-    type?: 'branches' | 'tags' | 'bookmarks' | 'default' | 'custom';
     /**
      * The name of the matching pipeline definition.
      */
     pattern?: string;
-    [key: string]: unknown | 'branches' | 'tags' | 'bookmarks' | 'default' | 'custom' | string | undefined;
+    [key: string]: unknown;
 };
 
-export type PipelineTrigger = _Object & {
+export type PipelineTrigger = Omit<Object, 'type'> & {
     type: 'pipeline_trigger';
-} & {
     [key: string]: unknown;
 };
 
-export type PipelineTriggerPush = PipelineTrigger & {
+export type PipelineTriggerPush = Omit<PipelineTrigger, 'type'> & {
+    type: 'pipeline_trigger_push';
     [key: string]: unknown;
 };
 
-export type PipelineTriggerManual = PipelineTrigger & {
+export type PipelineTriggerManual = Omit<PipelineTrigger, 'type'> & {
+    type: 'pipeline_trigger_manual';
     [key: string]: unknown;
 };
 
-export type PipelineState = _Object & {
+export type PipelineState = Omit<Object, 'type'> & {
     type: 'pipeline_state';
-} & {
     [key: string]: unknown;
 };
 
-export type PipelineStatePending = PipelineState & {
+export type PipelineStatePending = Omit<PipelineState, 'type'> & {
     /**
      * The name of pipeline state (PENDING).
      */
     name?: 'PENDING';
-    [key: string]: unknown | 'PENDING' | undefined;
+    type: 'pipeline_state_pending';
+    [key: string]: unknown;
 };
 
-export type PipelineStateInProgress = PipelineState & {
+export type PipelineStateInProgress = Omit<PipelineState, 'type'> & {
     /**
      * The name of pipeline state (IN_PROGRESS).
      */
     name?: 'IN_PROGRESS';
     stage?: PipelineStateInProgressStage;
-    [key: string]: unknown | 'IN_PROGRESS' | PipelineStateInProgressStage | undefined;
-};
-
-export type PipelineStateInProgressStage = _Object & {
-    type: 'pipeline_state_in_progress_stage';
-} & {
+    type: 'pipeline_state_in_progress';
     [key: string]: unknown;
 };
 
-export type PipelineStateInProgressRunning = PipelineStateInProgressStage & {
+export type PipelineStateInProgressStage = Omit<Object, 'type'> & {
+    type: 'pipeline_state_in_progress_stage';
+    [key: string]: unknown;
+};
+
+export type PipelineStateInProgressRunning = Omit<PipelineStateInProgressStage, 'type'> & {
     /**
      * The name of the stage (RUNNING)
      */
     name?: 'RUNNING';
-    [key: string]: unknown | 'RUNNING' | undefined;
+    type: 'pipeline_state_in_progress_running';
+    [key: string]: unknown;
 };
 
-export type PipelineStateInProgressPaused = PipelineStateInProgressStage & {
+export type PipelineStateInProgressPaused = Omit<PipelineStateInProgressStage, 'type'> & {
     /**
      * The name of the stage (PAUSED)
      */
     name?: 'PAUSED';
-    [key: string]: unknown | 'PAUSED' | undefined;
+    type: 'pipeline_state_in_progress_paused';
+    [key: string]: unknown;
 };
 
-export type PipelineStateCompleted = PipelineState & {
+export type PipelineStateCompleted = Omit<PipelineState, 'type'> & {
     /**
      * The name of pipeline state (COMPLETED).
      */
     name?: 'COMPLETED';
     result?: PipelineStateCompletedResult;
-    [key: string]: unknown | 'COMPLETED' | PipelineStateCompletedResult | undefined;
-};
-
-export type PipelineStateCompletedResult = _Object & {
-    type: 'pipeline_state_completed_result';
-} & {
+    type: 'pipeline_state_completed';
     [key: string]: unknown;
 };
 
-export type PipelineStateCompletedError = PipelineStateCompletedResult & {
+export type PipelineStateCompletedResult = Omit<Object, 'type'> & {
+    type: 'pipeline_state_completed_result';
+    [key: string]: unknown;
+};
+
+export type PipelineStateCompletedError = Omit<PipelineStateCompletedResult, 'type'> & {
     /**
      * The name of the result (ERROR)
      */
     name?: 'ERROR';
     error?: PipelineError;
-    [key: string]: unknown | 'ERROR' | PipelineError | undefined;
+    type: 'pipeline_state_completed_error';
+    [key: string]: unknown;
 };
 
-export type PipelineStateCompletedFailed = PipelineStateCompletedResult & {
+export type PipelineStateCompletedFailed = Omit<PipelineStateCompletedResult, 'type'> & {
     /**
      * The name of the failed result (FAILED).
      */
     name?: 'FAILED';
-    [key: string]: unknown | 'FAILED' | undefined;
+    type: 'pipeline_state_completed_failed';
+    [key: string]: unknown;
 };
 
-export type PipelineStateCompletedStopped = PipelineStateCompletedResult & {
+export type PipelineStateCompletedStopped = Omit<PipelineStateCompletedResult, 'type'> & {
     /**
      * The name of the stopped result (STOPPED).
      */
     name?: 'STOPPED';
-    [key: string]: unknown | 'STOPPED' | undefined;
+    type: 'pipeline_state_completed_stopped';
+    [key: string]: unknown;
 };
 
-export type PipelineStateCompletedExpired = PipelineStateCompletedResult & {
+export type PipelineStateCompletedExpired = Omit<PipelineStateCompletedResult, 'type'> & {
     /**
      * The name of the stopped result (EXPIRED).
      */
     name?: 'EXPIRED';
-    [key: string]: unknown | 'EXPIRED' | undefined;
+    type: 'pipeline_state_completed_expired';
+    [key: string]: unknown;
 };
 
-export type PipelineStateCompletedSuccessful = PipelineStateCompletedResult & {
+export type PipelineStateCompletedSuccessful = Omit<PipelineStateCompletedResult, 'type'> & {
     /**
      * The name of the successful result (SUCCESSFUL).
      */
     name?: 'SUCCESSFUL';
-    [key: string]: unknown | 'SUCCESSFUL' | undefined;
+    type: 'pipeline_state_completed_successful';
+    [key: string]: unknown;
 };
 
-export type PipelineError = _Object & {
-    type: 'pipeline_error';
-} & {
+export type PipelineError = Omit<Object, 'type'> & {
     /**
      * The error key.
      */
@@ -788,12 +783,11 @@ export type PipelineError = _Object & {
      * The error message.
      */
     message?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'pipeline_error';
+    [key: string]: unknown;
 };
 
-export type PipelineSshPublicKey = _Object & {
-    type: 'pipeline_ssh_public_key';
-} & {
+export type PipelineSshPublicKey = Omit<Object, 'type'> & {
     /**
      * The type of the public key.
      */
@@ -810,12 +804,11 @@ export type PipelineSshPublicKey = _Object & {
      * The SHA-256 fingerprint of the public key.
      */
     sha256_fingerprint?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'pipeline_ssh_public_key';
+    [key: string]: unknown;
 };
 
-export type PipelineKnownHost = _Object & {
-    type: 'pipeline_known_host';
-} & {
+export type PipelineKnownHost = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the known host.
      */
@@ -825,12 +818,11 @@ export type PipelineKnownHost = _Object & {
      */
     hostname?: string;
     public_key?: PipelineSshPublicKey;
-    [key: string]: unknown | string | PipelineSshPublicKey | undefined;
+    type: 'pipeline_known_host';
+    [key: string]: unknown;
 };
 
-export type PipelineSshKeyPair = _Object & {
-    type: 'pipeline_ssh_key_pair';
-} & {
+export type PipelineSshKeyPair = Omit<Object, 'type'> & {
     /**
      * The SSH private key. This value will be empty when retrieving the SSH key pair.
      */
@@ -839,12 +831,11 @@ export type PipelineSshKeyPair = _Object & {
      * The SSH public key.
      */
     public_key?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'pipeline_ssh_key_pair';
+    [key: string]: unknown;
 };
 
-export type PipelineSchedule = _Object & {
-    type: 'pipeline_schedule';
-} & {
+export type PipelineSchedule = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the schedule.
      */
@@ -866,12 +857,11 @@ export type PipelineSchedule = _Object & {
      * The timestamp when the schedule was updated.
      */
     updated_on?: string;
-    [key: string]: unknown | string | boolean | PipelineRefTarget | undefined;
+    type: 'pipeline_schedule';
+    [key: string]: unknown;
 };
 
-export type PipelineSchedulePostRequestBody = _Object & {
-    type: 'pipeline_schedule_post_request_body';
-} & {
+export type PipelineSchedulePostRequestBody = Omit<Object, 'type'> & {
     /**
      * The target on which the schedule will be executed.
      */
@@ -894,27 +884,17 @@ export type PipelineSchedulePostRequestBody = _Object & {
      * The cron expression with second precision (7 fields) that the schedule applies. For example, for expression: 0 0 12 * * ? *, will execute at 12pm UTC every day.
      */
     cron_pattern: string;
-    [key: string]: unknown | {
-        selector: PipelineSelector;
-        /**
-         * The name of the reference.
-         */
-        ref_name: string;
-        /**
-         * The type of reference (branch only).
-         */
-        ref_type: 'branch';
-    } | boolean | string | undefined;
+    type: 'pipeline_schedule_post_request_body';
+    [key: string]: unknown;
 };
 
-export type PipelineSchedulePutRequestBody = _Object & {
-    type: 'pipeline_schedule_put_request_body';
-} & {
+export type PipelineSchedulePutRequestBody = Omit<Object, 'type'> & {
     /**
      * Whether the schedule is enabled.
      */
     enabled?: boolean;
-    [key: string]: unknown | boolean | undefined;
+    type: 'pipeline_schedule_put_request_body';
+    [key: string]: unknown;
 };
 
 /**
@@ -949,20 +929,21 @@ export type PaginatedPipelineSchedules = {
     previous?: string;
 };
 
-export type PipelineScheduleExecution = _Object & {
+export type PipelineScheduleExecution = Omit<Object, 'type'> & {
     type: 'pipeline_schedule_execution';
-} & {
     [key: string]: unknown;
 };
 
-export type PipelineScheduleExecutionExecuted = PipelineScheduleExecution & {
+export type PipelineScheduleExecutionExecuted = Omit<PipelineScheduleExecution, 'type'> & {
     pipeline?: Pipeline;
-    [key: string]: unknown | Pipeline | undefined;
+    type: 'pipeline_schedule_execution_executed';
+    [key: string]: unknown;
 };
 
-export type PipelineScheduleExecutionErrored = PipelineScheduleExecution & {
+export type PipelineScheduleExecutionErrored = Omit<PipelineScheduleExecution, 'type'> & {
     error?: PipelineError;
-    [key: string]: unknown | PipelineError | undefined;
+    type: 'pipeline_schedule_execution_errored';
+    [key: string]: unknown;
 };
 
 /**
@@ -997,19 +978,16 @@ export type PaginatedPipelineScheduleExecutions = {
     previous?: string;
 };
 
-export type PipelineBuildNumber = _Object & {
-    type: 'pipeline_build_number';
-} & {
+export type PipelineBuildNumber = Omit<Object, 'type'> & {
     /**
      * The next number that will be used as build number.
      */
     next?: number;
-    [key: string]: unknown | number | undefined;
+    type: 'pipeline_build_number';
+    [key: string]: unknown;
 };
 
-export type PipelineVariable = _Object & {
-    type: 'pipeline_variable';
-} & {
+export type PipelineVariable = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the variable.
      */
@@ -1026,12 +1004,11 @@ export type PipelineVariable = _Object & {
      * If true, this variable will be treated as secured. The value will never be exposed in the logs or the REST API.
      */
     secured?: boolean;
-    [key: string]: unknown | string | boolean | undefined;
+    type: 'pipeline_variable';
+    [key: string]: unknown;
 };
 
-export type PipelineStep = _Object & {
-    type: 'pipeline_step';
-} & {
+export type PipelineStep = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the step.
      */
@@ -1054,106 +1031,113 @@ export type PipelineStep = _Object & {
      * The list of build commands. These commands are executed in the build container.
      */
     script_commands?: Array<PipelineCommand>;
-    [key: string]: unknown | string | PipelineStepState | PipelineImage | Array<PipelineCommand> | Array<PipelineCommand> | undefined;
-};
-
-export type PipelineStepState = _Object & {
-    type: 'pipeline_step_state';
-} & {
+    type: 'pipeline_step';
     [key: string]: unknown;
 };
 
-export type PipelineStepStatePending = PipelineStepState & {
+export type PipelineStepState = Omit<Object, 'type'> & {
+    type: 'pipeline_step_state';
+    [key: string]: unknown;
+};
+
+export type PipelineStepStatePending = Omit<PipelineStepState, 'type'> & {
     /**
      * The name of pipeline step state (PENDING).
      */
     name?: 'PENDING';
-    [key: string]: unknown | 'PENDING' | undefined;
+    type: 'pipeline_step_state_pending';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateReady = PipelineStepState & {
+export type PipelineStepStateReady = Omit<PipelineStepState, 'type'> & {
     /**
      * The name of pipeline step state (READY).
      */
     name?: 'READY';
-    [key: string]: unknown | 'READY' | undefined;
+    type: 'pipeline_step_state_ready';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateInProgress = PipelineStepState & {
+export type PipelineStepStateInProgress = Omit<PipelineStepState, 'type'> & {
     /**
      * The name of pipeline step state (IN_PROGRESS).
      */
     name?: 'IN_PROGRESS';
-    [key: string]: unknown | 'IN_PROGRESS' | undefined;
+    type: 'pipeline_step_state_in_progress';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateCompleted = PipelineStepState & {
+export type PipelineStepStateCompleted = Omit<PipelineStepState, 'type'> & {
     /**
      * The name of pipeline step state (COMPLETED).
      */
     name?: 'COMPLETED';
     result?: PipelineStepStateCompletedResult;
-    [key: string]: unknown | 'COMPLETED' | PipelineStepStateCompletedResult | undefined;
-};
-
-export type PipelineStepStateCompletedResult = _Object & {
-    type: 'pipeline_step_state_completed_result';
-} & {
+    type: 'pipeline_step_state_completed';
     [key: string]: unknown;
 };
 
-export type PipelineStepStateCompletedError = PipelineStepStateCompletedResult & {
+export type PipelineStepStateCompletedResult = Omit<Object, 'type'> & {
+    type: 'pipeline_step_state_completed_result';
+    [key: string]: unknown;
+};
+
+export type PipelineStepStateCompletedError = Omit<PipelineStepStateCompletedResult, 'type'> & {
     /**
      * The name of the result (ERROR)
      */
     name?: 'ERROR';
     error?: PipelineStepError;
-    [key: string]: unknown | 'ERROR' | PipelineStepError | undefined;
+    type: 'pipeline_step_state_completed_error';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateCompletedFailed = PipelineStepStateCompletedResult & {
+export type PipelineStepStateCompletedFailed = Omit<PipelineStepStateCompletedResult, 'type'> & {
     /**
      * The name of the result (FAILED)
      */
     name?: 'FAILED';
-    [key: string]: unknown | 'FAILED' | undefined;
+    type: 'pipeline_step_state_completed_failed';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateCompletedStopped = PipelineStepStateCompletedResult & {
+export type PipelineStepStateCompletedStopped = Omit<PipelineStepStateCompletedResult, 'type'> & {
     /**
      * The name of the result (STOPPED)
      */
     name?: 'STOPPED';
-    [key: string]: unknown | 'STOPPED' | undefined;
+    type: 'pipeline_step_state_completed_stopped';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateCompletedNotRun = PipelineStepStateCompletedResult & {
+export type PipelineStepStateCompletedNotRun = Omit<PipelineStepStateCompletedResult, 'type'> & {
     /**
      * The name of the result (NOT_RUN)
      */
     name?: 'NOT_RUN';
-    [key: string]: unknown | 'NOT_RUN' | undefined;
+    type: 'pipeline_step_state_completed_not_run';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateCompletedExpired = PipelineStepStateCompletedResult & {
+export type PipelineStepStateCompletedExpired = Omit<PipelineStepStateCompletedResult, 'type'> & {
     /**
      * The name of the result (EXPIRED)
      */
     name?: 'EXPIRED';
-    [key: string]: unknown | 'EXPIRED' | undefined;
+    type: 'pipeline_step_state_completed_expired';
+    [key: string]: unknown;
 };
 
-export type PipelineStepStateCompletedSuccessful = PipelineStepStateCompletedResult & {
+export type PipelineStepStateCompletedSuccessful = Omit<PipelineStepStateCompletedResult, 'type'> & {
     /**
      * The name of the result (SUCCESSFUL)
      */
     name?: 'SUCCESSFUL';
-    [key: string]: unknown | 'SUCCESSFUL' | undefined;
+    type: 'pipeline_step_state_completed_successful';
+    [key: string]: unknown;
 };
 
-export type PipelineStepError = _Object & {
-    type: 'pipeline_step_error';
-} & {
+export type PipelineStepError = Omit<Object, 'type'> & {
     /**
      * The error key.
      */
@@ -1162,7 +1146,8 @@ export type PipelineStepError = _Object & {
      * The error message.
      */
     message?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'pipeline_step_error';
+    [key: string]: unknown;
 };
 
 /**
@@ -1347,9 +1332,7 @@ export type PipelineConfigurationSource = {
     uri: string;
 };
 
-export type PipelineRunner = _Object & {
-    type: 'pipeline_runner';
-} & {
+export type PipelineRunner = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the runner.
      */
@@ -1372,12 +1355,11 @@ export type PipelineRunner = _Object & {
      */
     updated_on?: string;
     oauth_client?: PipelineRunnerOauthClient;
-    [key: string]: unknown | string | Array<string> | PipelineRunnerState | PipelineRunnerOauthClient | undefined;
+    type: 'pipeline_runner';
+    [key: string]: unknown;
 };
 
-export type PipelineRunnerState = _Object & {
-    type: 'pipeline_runner_state';
-} & {
+export type PipelineRunnerState = Omit<Object, 'type'> & {
     /**
      * The current status of the runner.
      */
@@ -1391,12 +1373,11 @@ export type PipelineRunnerState = _Object & {
      * Whether the runner is cordoned (prevented from accepting new steps).
      */
     cordoned?: boolean;
-    [key: string]: unknown | 'UNREGISTERED' | 'ONLINE' | 'OFFLINE' | 'DISABLED' | 'ENABLED' | 'UNHEALTHY' | PipelineRunnerVersion | string | boolean | undefined;
+    type: 'pipeline_runner_state';
+    [key: string]: unknown;
 };
 
-export type PipelineRunnerVersion = _Object & {
-    type: 'pipeline_runner_version';
-} & {
+export type PipelineRunnerVersion = Omit<Object, 'type'> & {
     /**
      * The currently installed version of the runner.
      */
@@ -1405,12 +1386,11 @@ export type PipelineRunnerVersion = _Object & {
      * The current recommended version of the runner.
      */
     current?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'pipeline_runner_version';
+    [key: string]: unknown;
 };
 
-export type PipelineRunnerOauthClient = _Object & {
-    type: 'pipeline_runner_oauth_client';
-} & {
+export type PipelineRunnerOauthClient = Omit<Object, 'type'> & {
     /**
      * The OAuth client ID.
      */
@@ -1427,7 +1407,8 @@ export type PipelineRunnerOauthClient = _Object & {
      * The intended audience for the OAuth token.
      */
     audience?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'pipeline_runner_oauth_client';
+    [key: string]: unknown;
 };
 
 /**
@@ -1526,9 +1507,9 @@ export type PaginatedPullrequests = {
 /**
  * Base type for most resource objects. It defines the common `type` element that identifies an object's type. It also identifies the element as Swagger's `discriminator`.
  */
-export type _Object = {
+export type Object = {
     type: string;
-    [key: string]: unknown | string;
+    [key: string]: unknown;
 };
 
 /**
@@ -1677,7 +1658,7 @@ export type SubjectTypes = {
  *
  * Base type for most resource objects. It defines the common `type` element that identifies an object's type. It also identifies the element as Swagger's `discriminator`.
  */
-export type _Error = {
+export type Error = {
     type: string;
     error?: {
         message: string;
@@ -1689,16 +1670,7 @@ export type _Error = {
             [key: string]: unknown;
         };
     };
-    [key: string]: unknown | string | {
-        message: string;
-        detail?: string;
-        /**
-         * Optional structured data that is endpoint-specific.
-         */
-        data?: {
-            [key: string]: unknown;
-        };
-    } | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -1708,7 +1680,7 @@ export type _Error = {
  */
 export type AccountLinks = {
     avatar?: Link;
-    [key: string]: unknown | Link | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -1721,14 +1693,13 @@ export type Link = {
     name?: string;
 };
 
-export type Account = _Object & {
-    type: 'account';
-} & {
+export type Account = Omit<Object, 'type'> & {
     links?: AccountLinks;
     created_on?: string;
     display_name?: string;
     uuid?: string;
-    [key: string]: unknown | AccountLinks | string | undefined;
+    type: 'account';
+    [key: string]: unknown;
 };
 
 /**
@@ -1799,14 +1770,10 @@ export type RepositoryInheritanceState = {
     override_settings?: {
         [key: string]: unknown;
     };
-    [key: string]: unknown | string | {
-        [key: string]: unknown;
-    } | undefined;
+    [key: string]: unknown;
 };
 
-export type Repository = _Object & {
-    type: 'repository';
-} & {
+export type Repository = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -1941,98 +1908,49 @@ export type Repository = _Object & {
     fork_policy?: 'allow_forks' | 'no_public_forks' | 'no_forks';
     project?: Project;
     mainbranch?: Branch;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        avatar?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        pullrequests?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        commits?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        forks?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        watchers?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        downloads?: {
-            href?: string;
-            name?: string;
-        };
-        clone?: Array<{
-            href?: string;
-            name?: string;
-        }>;
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        hooks?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | boolean | Repository | 'git' | Account | number | 'allow_forks' | 'no_public_forks' | 'no_forks' | Project | Branch | undefined;
+    type: 'repository';
+    [key: string]: unknown;
 };
 
-export type ProjectBranchingModel = _Object & {
+export type ProjectBranchingModel = Omit<Object, 'type'> & {
+    /**
+     * The active branch types.
+     */
+    branch_types?: Array<{
+        /**
+         * The kind of branch.
+         */
+        kind: 'feature' | 'bugfix' | 'release' | 'hotfix';
+        /**
+         * The prefix for this branch type. A branch with this prefix will be classified as per `kind`. The prefix must be a valid prefix for a branch and must always exist. It cannot be blank, empty or `null`.
+         */
+        prefix: string;
+    }>;
+    development?: {
+        /**
+         * Name of the target branch. If inherited by a repository, it will default to the main branch if the specified branch does not exist.
+         */
+        name: string;
+        /**
+         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
+         */
+        use_mainbranch: boolean;
+    };
+    production?: {
+        /**
+         * Name of the target branch. If inherited by a repository, it will default to the main branch if the specified branch does not exist.
+         */
+        name: string;
+        /**
+         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
+         */
+        use_mainbranch: boolean;
+    };
     type: 'project_branching_model';
-} & {
+    [key: string]: unknown;
+};
+
+export type BranchingModel = Omit<Object, 'type'> & {
     /**
      * The active branch types.
      */
@@ -2047,8 +1965,9 @@ export type ProjectBranchingModel = _Object & {
         prefix: string;
     }>;
     development?: {
+        branch?: Branch;
         /**
-         * Name of the target branch. If inherited by a repository, it will default to the main branch if the specified branch does not exist.
+         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
          */
         name: string;
         /**
@@ -2057,8 +1976,9 @@ export type ProjectBranchingModel = _Object & {
         use_mainbranch: boolean;
     };
     production?: {
+        branch?: Branch;
         /**
-         * Name of the target branch. If inherited by a repository, it will default to the main branch if the specified branch does not exist.
+         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
          */
         name: string;
         /**
@@ -2066,109 +1986,11 @@ export type ProjectBranchingModel = _Object & {
          */
         use_mainbranch: boolean;
     };
-    [key: string]: unknown | Array<{
-        /**
-         * The kind of branch.
-         */
-        kind: 'feature' | 'bugfix' | 'release' | 'hotfix';
-        /**
-         * The prefix for this branch type. A branch with this prefix will be classified as per `kind`. The prefix must be a valid prefix for a branch and must always exist. It cannot be blank, empty or `null`.
-         */
-        prefix: string;
-    }> | {
-        /**
-         * Name of the target branch. If inherited by a repository, it will default to the main branch if the specified branch does not exist.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    } | {
-        /**
-         * Name of the target branch. If inherited by a repository, it will default to the main branch if the specified branch does not exist.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    } | undefined;
-};
-
-export type BranchingModel = _Object & {
     type: 'branching_model';
-} & {
-    /**
-     * The active branch types.
-     */
-    branch_types?: Array<{
-        /**
-         * The kind of branch.
-         */
-        kind: 'feature' | 'bugfix' | 'release' | 'hotfix';
-        /**
-         * The prefix for this branch type. A branch with this prefix will be classified as per `kind`. The prefix must be a valid prefix for a branch and must always exist. It cannot be blank, empty or `null`.
-         */
-        prefix: string;
-    }>;
-    development?: {
-        branch?: Branch;
-        /**
-         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    };
-    production?: {
-        branch?: Branch;
-        /**
-         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    };
-    [key: string]: unknown | Array<{
-        /**
-         * The kind of branch.
-         */
-        kind: 'feature' | 'bugfix' | 'release' | 'hotfix';
-        /**
-         * The prefix for this branch type. A branch with this prefix will be classified as per `kind`. The prefix must be a valid prefix for a branch and must always exist. It cannot be blank, empty or `null`.
-         */
-        prefix: string;
-    }> | {
-        branch?: Branch;
-        /**
-         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    } | {
-        branch?: Branch;
-        /**
-         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    } | undefined;
+    [key: string]: unknown;
 };
 
-export type BranchingModelSettings = _Object & {
-    type: 'branching_model_settings';
-} & {
+export type BranchingModelSettings = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -2226,65 +2048,11 @@ export type BranchingModelSettings = _Object & {
          */
         enabled?: boolean;
     };
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | Array<{
-        /**
-         * Whether the branch type is enabled or not. A disabled branch type may contain an invalid `prefix`.
-         */
-        enabled?: boolean;
-        /**
-         * The kind of the branch type.
-         */
-        kind: 'feature' | 'bugfix' | 'release' | 'hotfix';
-        /**
-         * The prefix for this branch type. A branch with this prefix will be classified as per `kind`. The `prefix` of an enabled branch type must be a valid branch prefix.Additionally, it cannot be blank, empty or `null`. The `prefix` for a disabled branch type can be empty or invalid.
-         */
-        prefix?: string;
-    }> | {
-        /**
-         * Indicates if the configured branch is valid, that is, if the configured branch actually exists currently. Is always `true` when `use_mainbranch` is `true` (even if the main branch does not exist). This field is read-only. This field is ignored when updating/creating settings.
-         */
-        is_valid?: boolean;
-        /**
-         * The configured branch. It must be `null` when `use_mainbranch` is `true`. Otherwise it must be a non-empty value. It is possible for the configured branch to not exist (e.g. it was deleted after the settings are set). In this case `is_valid` will be `false`. The branch must exist when updating/setting the `name` or an error will occur.
-         */
-        name?: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`). When `true` the `name` must be `null` or not provided. When `false` the `name` must contain a non-empty branch name.
-         */
-        use_mainbranch?: boolean;
-    } | {
-        /**
-         * Indicates if the configured branch is valid, that is, if the configured branch actually exists currently. Is always `true` when `use_mainbranch` is `true` (even if the main branch does not exist). This field is read-only. This field is ignored when updating/creating settings.
-         */
-        is_valid?: boolean;
-        /**
-         * The configured branch. It must be `null` when `use_mainbranch` is `true`. Otherwise it must be a non-empty value. It is possible for the configured branch to not exist (e.g. it was deleted after the settings are set). In this case `is_valid` will be `false`. The branch must exist when updating/setting the `name` or an error will occur.
-         */
-        name?: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`). When `true` the `name` must be `null` or not provided. When `false` the `name` must contain a non-empty branch name.
-         */
-        use_mainbranch?: boolean;
-        /**
-         * Indicates if branch is enabled or not.
-         */
-        enabled?: boolean;
-    } | undefined;
+    type: 'branching_model_settings';
+    [key: string]: unknown;
 };
 
-export type EffectiveRepoBranchingModel = _Object & {
-    type: 'effective_repo_branching_model';
-} & {
+export type EffectiveRepoBranchingModel = Omit<Object, 'type'> & {
     /**
      * The active branch types.
      */
@@ -2320,36 +2088,8 @@ export type EffectiveRepoBranchingModel = _Object & {
          */
         use_mainbranch: boolean;
     };
-    [key: string]: unknown | Array<{
-        /**
-         * The kind of branch.
-         */
-        kind: 'feature' | 'bugfix' | 'release' | 'hotfix';
-        /**
-         * The prefix for this branch type. A branch with this prefix will be classified as per `kind`. The prefix must be a valid prefix for a branch and must always exist. It cannot be blank, empty or `null`.
-         */
-        prefix: string;
-    }> | {
-        branch?: Branch;
-        /**
-         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    } | {
-        branch?: Branch;
-        /**
-         * Name of the target branch. Will be listed here even when the target branch does not exist. Will be `null` if targeting the main branch and the repository is empty.
-         */
-        name: string;
-        /**
-         * Indicates if the setting points at an explicit branch (`false`) or tracks the main branch (`true`).
-         */
-        use_mainbranch: boolean;
-    } | undefined;
+    type: 'effective_repo_branching_model';
+    [key: string]: unknown;
 };
 
 /**
@@ -2381,9 +2121,7 @@ export type PaginatedBranchrestrictions = {
     values?: Array<Branchrestriction>;
 };
 
-export type Comment = _Object & {
-    type: 'comment';
-} & {
+export type Comment = Omit<Object, 'type'> & {
     id?: number;
     created_on?: string;
     updated_on?: string;
@@ -2455,74 +2193,11 @@ export type Comment = _Object & {
             name?: string;
         };
     };
-    [key: string]: unknown | number | string | {
-        /**
-         * The text as it was typed by a user.
-         */
-        raw?: string;
-        /**
-         * The type of markup language the raw content is to be interpreted in.
-         */
-        markup?: 'markdown' | 'creole' | 'plaintext';
-        /**
-         * The user's content rendered as HTML.
-         */
-        html?: string;
-    } | Account | boolean | Comment | {
-        /**
-         * The comment's anchor line in the old version of the file. If the comment is a multi-line comment, this is the ending line number in the old version of the file.
-         */
-        from?: number;
-        /**
-         * The comment's anchor line in the new version of the file. If the comment is a multi-line comment, this is the ending line number in the new version of the file.
-         */
-        to?: number;
-        /**
-         * The starting line number in the old version of the file, if the comment is a multi-line comment. This is null otherwise.
-         */
-        start_from?: number;
-        /**
-         * The starting line number in the new version of the file, if the comment is a multi-line comment. This is null otherwise.
-         */
-        start_to?: number;
-        /**
-         * The path of the file this comment is anchored to.
-         */
-        path: string;
-    } | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        code?: {
-            href?: string;
-            name?: string;
-        };
-    } | undefined;
+    type: 'comment';
+    [key: string]: unknown;
 };
 
-export type Commitstatus = _Object & {
-    type: 'commitstatus';
-} & {
+export type Commitstatus = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -2578,26 +2253,8 @@ export type Commitstatus = _Object & {
     description?: string;
     created_on?: string;
     updated_on?: string;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        commit?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | 'FAILED' | 'INPROGRESS' | 'STOPPED' | 'SUCCESSFUL' | undefined;
+    type: 'commitstatus';
+    [key: string]: unknown;
 };
 
 /**
@@ -2640,7 +2297,7 @@ export type ExportOptions = {
     project_name?: string;
     send_email?: boolean;
     include_attachments?: boolean;
-    [key: string]: unknown | string | boolean | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -2726,81 +2383,10 @@ export type IssueChange = {
          */
         html?: string;
     };
-    [key: string]: unknown | string | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        issue?: {
-            href?: string;
-            name?: string;
-        };
-    } | Account | Issue | {
-        assignee?: {
-            old?: string;
-            new?: string;
-        };
-        state?: {
-            old?: string;
-            new?: string;
-        };
-        title?: {
-            old?: string;
-            new?: string;
-        };
-        kind?: {
-            old?: string;
-            new?: string;
-        };
-        milestone?: {
-            old?: string;
-            new?: string;
-        };
-        component?: {
-            old?: string;
-            new?: string;
-        };
-        priority?: {
-            old?: string;
-            new?: string;
-        };
-        version?: {
-            old?: string;
-            new?: string;
-        };
-        content?: {
-            old?: string;
-            new?: string;
-        };
-    } | {
-        /**
-         * The text as it was typed by a user.
-         */
-        raw?: string;
-        /**
-         * The type of markup language the raw content is to be interpreted in.
-         */
-        markup?: 'markdown' | 'creole' | 'plaintext';
-        /**
-         * The user's content rendered as HTML.
-         */
-        html?: string;
-    } | undefined;
+    [key: string]: unknown;
 };
 
-export type Issue = _Object & {
-    type: 'issue';
-} & {
+export type Issue = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -2886,75 +2472,8 @@ export type Issue = _Object & {
          */
         html?: string;
     };
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        comments?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        attachments?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        watch?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        vote?: {
-            href?: string;
-            name?: string;
-        };
-    } | number | Repository | string | Account | 'submitted' | 'new' | 'open' | 'resolved' | 'on hold' | 'invalid' | 'duplicate' | 'wontfix' | 'closed' | 'bug' | 'enhancement' | 'proposal' | 'task' | 'trivial' | 'minor' | 'major' | 'critical' | 'blocker' | Milestone | Version | Component | {
-        /**
-         * The text as it was typed by a user.
-         */
-        raw?: string;
-        /**
-         * The type of markup language the raw content is to be interpreted in.
-         */
-        markup?: 'markdown' | 'creole' | 'plaintext';
-        /**
-         * The user's content rendered as HTML.
-         */
-        html?: string;
-    } | undefined;
+    type: 'issue';
+    [key: string]: unknown;
 };
 
 /**
@@ -2986,9 +2505,7 @@ export type PaginatedComponents = {
     values?: Array<Component>;
 };
 
-export type IssueAttachment = _Object & {
-    type: 'issue_attachment';
-} & {
+export type IssueAttachment = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -3001,17 +2518,8 @@ export type IssueAttachment = _Object & {
         };
     };
     name?: string;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | undefined;
+    type: 'issue_attachment';
+    [key: string]: unknown;
 };
 
 /**
@@ -3188,9 +2696,7 @@ export type PaginatedVersions = {
     values?: Array<Version>;
 };
 
-export type Group = _Object & {
-    type: 'group';
-} & {
+export type Group = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -3225,26 +2731,8 @@ export type Group = _Object & {
      *
      */
     full_slug?: string;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-    } | Account | Workspace | string | undefined;
+    type: 'group';
+    [key: string]: unknown;
 };
 
 /**
@@ -3268,17 +2756,7 @@ export type ProjectGroupPermission = {
     permission?: 'read' | 'write' | 'create-repo' | 'admin' | 'none';
     group?: Group;
     project?: Project;
-    [key: string]: unknown | string | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | 'read' | 'write' | 'create-repo' | 'admin' | 'none' | Group | Project | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -3302,17 +2780,7 @@ export type RepositoryGroupPermission = {
     permission?: 'read' | 'write' | 'admin' | 'none';
     group?: Group;
     repository?: Repository;
-    [key: string]: unknown | string | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | 'read' | 'write' | 'admin' | 'none' | Group | Repository | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -3470,7 +2938,7 @@ export type RepositoryPermission = {
     permission?: 'read' | 'write' | 'admin' | 'none';
     user?: User;
     repository?: Repository;
-    [key: string]: unknown | string | 'read' | 'write' | 'admin' | 'none' | User | Repository | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -3494,17 +2962,7 @@ export type ProjectUserPermission = {
     permission?: 'read' | 'write' | 'create-repo' | 'admin' | 'none';
     user?: User;
     project?: Project;
-    [key: string]: unknown | string | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | 'read' | 'write' | 'create-repo' | 'admin' | 'none' | User | Project | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -3536,9 +2994,10 @@ export type PaginatedProjects = {
     values?: Array<Project>;
 };
 
-export type Team = Account & {
+export type Team = Omit<Account, 'type'> & {
     links?: TeamLinks;
-    [key: string]: unknown | TeamLinks | undefined;
+    type: 'team';
+    [key: string]: unknown;
 };
 
 export type TeamLinks = AccountLinks & {
@@ -3547,12 +3006,10 @@ export type TeamLinks = AccountLinks & {
     members?: Link;
     projects?: Link;
     repositories?: Link;
-    [key: string]: unknown | Link | undefined;
+    [key: string]: unknown;
 };
 
-export type Project = _Object & {
-    type: 'project';
-} & {
+export type Project = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -3602,26 +3059,8 @@ export type Project = _Object & {
      * Note that private projects cannot contain public repositories.
      */
     has_publicly_visible_repos?: boolean;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        avatar?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | Team | boolean | undefined;
+    type: 'project';
+    [key: string]: unknown;
 };
 
 /**
@@ -3636,7 +3075,7 @@ export type CommentResolution = {
      * The ISO8601 timestamp the resolution was created.
      */
     created_on?: string;
-    [key: string]: unknown | string | Account | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -3648,7 +3087,7 @@ export type DefaultReviewerAndType = {
     type: string;
     reviewer_type?: string;
     user?: User;
-    [key: string]: unknown | string | User | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -3738,9 +3177,7 @@ export type PaginatedTasks = {
     values?: Array<PullrequestCommentTask>;
 };
 
-export type Participant = _Object & {
-    type: 'participant';
-} & {
+export type Participant = Omit<Object, 'type'> & {
     user?: Account;
     role?: 'PARTICIPANT' | 'REVIEWER';
     approved?: boolean;
@@ -3749,7 +3186,8 @@ export type Participant = _Object & {
      * The ISO8601 timestamp of the participant's action. For approvers, this is the time of their approval. For commenters and pull request reviewers who are not approvers, this is the time they last commented, or null if they have not commented.
      */
     participated_on?: string;
-    [key: string]: unknown | Account | 'PARTICIPANT' | 'REVIEWER' | boolean | 'approved' | 'changes_requested' | string | undefined;
+    type: 'participant';
+    [key: string]: unknown;
 };
 
 /**
@@ -3771,7 +3209,7 @@ export type PullrequestMergeParameters = {
      * The merge strategy that will be used to merge the pull request.
      */
     merge_strategy?: 'merge_commit' | 'squash' | 'fast_forward' | 'squash_fast_forward' | 'rebase_fast_forward' | 'rebase_merge';
-    [key: string]: unknown | string | boolean | 'merge_commit' | 'squash' | 'fast_forward' | 'squash_fast_forward' | 'rebase_fast_forward' | 'rebase_merge' | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -3801,9 +3239,7 @@ export type PullrequestEndpoint = {
     };
 };
 
-export type Pullrequest = _Object & {
-    type: 'pullrequest';
-} & {
+export type Pullrequest = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -4033,156 +3469,8 @@ export type Pullrequest = _Object & {
      * A boolean flag indicating whether the pull request is queued
      */
     queued?: boolean;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        commits?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        approve?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        diff?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        diffstat?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        comments?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        activity?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        merge?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        decline?: {
-            href?: string;
-            name?: string;
-        };
-    } | number | string | {
-        title?: {
-            /**
-             * The text as it was typed by a user.
-             */
-            raw?: string;
-            /**
-             * The type of markup language the raw content is to be interpreted in.
-             */
-            markup?: 'markdown' | 'creole' | 'plaintext';
-            /**
-             * The user's content rendered as HTML.
-             */
-            html?: string;
-        };
-        description?: {
-            /**
-             * The text as it was typed by a user.
-             */
-            raw?: string;
-            /**
-             * The type of markup language the raw content is to be interpreted in.
-             */
-            markup?: 'markdown' | 'creole' | 'plaintext';
-            /**
-             * The user's content rendered as HTML.
-             */
-            html?: string;
-        };
-        reason?: {
-            /**
-             * The text as it was typed by a user.
-             */
-            raw?: string;
-            /**
-             * The type of markup language the raw content is to be interpreted in.
-             */
-            markup?: 'markdown' | 'creole' | 'plaintext';
-            /**
-             * The user's content rendered as HTML.
-             */
-            html?: string;
-        };
-    } | {
-        /**
-         * The text as it was typed by a user.
-         */
-        raw?: string;
-        /**
-         * The type of markup language the raw content is to be interpreted in.
-         */
-        markup?: 'markdown' | 'creole' | 'plaintext';
-        /**
-         * The user's content rendered as HTML.
-         */
-        html?: string;
-    } | 'OPEN' | 'DRAFT' | 'QUEUED' | 'MERGED' | 'DECLINED' | 'SUPERSEDED' | Account | PullrequestEndpoint | {
-        hash?: string;
-    } | number | boolean | Array<Account> | Array<Participant> | undefined;
+    type: 'pullrequest';
+    [key: string]: unknown;
 };
 
 export type PullrequestTask = Task & {
@@ -4208,20 +3496,17 @@ export type PullrequestTask = Task & {
     };
 };
 
-export type Author = _Object & {
-    type: 'author';
-} & {
+export type Author = Omit<Object, 'type'> & {
     /**
      * The raw author value from the repository. This may be the only value available if the author does not match a user in Bitbucket.
      */
     raw?: string;
     user?: Account;
-    [key: string]: unknown | string | Account | undefined;
+    type: 'author';
+    [key: string]: unknown;
 };
 
-export type BaseCommit = _Object & {
-    type: 'base_commit';
-} & {
+export type BaseCommit = Omit<Object, 'type'> & {
     hash?: string;
     date?: string;
     author?: Author;
@@ -4242,31 +3527,18 @@ export type BaseCommit = _Object & {
         html?: string;
     };
     parents?: Array<BaseCommit>;
-    [key: string]: unknown | string | string | Author | Committer | {
-        /**
-         * The text as it was typed by a user.
-         */
-        raw?: string;
-        /**
-         * The type of markup language the raw content is to be interpreted in.
-         */
-        markup?: 'markdown' | 'creole' | 'plaintext';
-        /**
-         * The user's content rendered as HTML.
-         */
-        html?: string;
-    } | Array<BaseCommit> | undefined;
+    type: 'base_commit';
+    [key: string]: unknown;
 };
 
-export type Committer = _Object & {
-    type: 'committer';
-} & {
+export type Committer = Omit<Object, 'type'> & {
     /**
      * The raw committer value from the repository. This may be the only value available if the committer does not match a user in Bitbucket.
      */
     raw?: string;
     user?: Account;
-    [key: string]: unknown | string | Account | undefined;
+    type: 'committer';
+    [key: string]: unknown;
 };
 
 /**
@@ -4344,7 +3616,7 @@ export type CommitFile = {
      * The escaped version of the path as it appears in a diff. If the path does not require escaping this will be the same as path.
      */
     escaped_path?: string;
-    [key: string]: unknown | string | Commit | 'link' | 'executable' | 'subrepository' | 'binary' | 'lfs' | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -4359,7 +3631,7 @@ export type Diffstat = {
     lines_removed?: number;
     old?: CommitFile;
     new?: CommitFile;
-    [key: string]: unknown | string | 'added' | 'removed' | 'modified' | 'renamed' | number | CommitFile | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -4461,7 +3733,7 @@ export type Treeentry = {
      */
     path?: string;
     commit?: Commit;
-    [key: string]: unknown | string | Commit | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -4534,35 +3806,7 @@ export type Ref = {
      */
     name?: string;
     target?: Commit;
-    [key: string]: unknown | string | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        commits?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-    } | Commit | undefined;
+    [key: string]: unknown;
 };
 
 /**
@@ -4652,9 +3896,7 @@ export type PaginatedSnippets = {
     values?: Array<Snippet>;
 };
 
-export type SnippetComment = _Object & {
-    type: 'snippet_comment';
-} & {
+export type SnippetComment = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -4676,31 +3918,11 @@ export type SnippetComment = _Object & {
         };
     };
     snippet?: Snippet;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-    } | Snippet | undefined;
+    type: 'snippet_comment';
+    [key: string]: unknown;
 };
 
-export type Snippet = _Object & {
-    type: 'snippet';
-} & {
+export type Snippet = Omit<Object, 'type'> & {
     id?: number;
     title?: string;
     /**
@@ -4712,12 +3934,11 @@ export type Snippet = _Object & {
     owner?: Account;
     creator?: Account;
     is_private?: boolean;
-    [key: string]: unknown | number | string | 'git' | Account | boolean | undefined;
+    type: 'snippet';
+    [key: string]: unknown;
 };
 
-export type DeployKey = _Object & {
-    type: 'deploy_key';
-} & {
+export type DeployKey = Omit<Object, 'type'> & {
     /**
      * The deploy key value.
      */
@@ -4745,22 +3966,11 @@ export type DeployKey = _Object & {
         };
     };
     owner?: Account;
-    [key: string]: unknown | string | Repository | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | Account | undefined;
+    type: 'deploy_key';
+    [key: string]: unknown;
 };
 
-export type GpgAccountKey = _Object & {
-    type: 'GPG_account_key';
-} & {
+export type GpgAccountKey = Omit<Object, 'type'> & {
     owner?: Account;
     /**
      * The GPG key value in X format.
@@ -4802,17 +4012,8 @@ export type GpgAccountKey = _Object & {
             name?: string;
         };
     };
-    [key: string]: unknown | Account | string | Array<GpgAccountKey> | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | undefined;
+    type: 'GPG_account_key';
+    [key: string]: unknown;
 };
 
 /**
@@ -4931,9 +4132,7 @@ export type PaginatedSshUserKeys = {
     values?: Array<SshAccountKey>;
 };
 
-export type ProjectDeployKey = _Object & {
-    type: 'project_deploy_key';
-} & {
+export type ProjectDeployKey = Omit<Object, 'type'> & {
     /**
      * The deploy key value.
      */
@@ -4961,22 +4160,11 @@ export type ProjectDeployKey = _Object & {
         };
     };
     created_by?: Account;
-    [key: string]: unknown | string | Project | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | Account | undefined;
+    type: 'project_deploy_key';
+    [key: string]: unknown;
 };
 
-export type SshKey = _Object & {
-    type: 'ssh_key';
-} & {
+export type SshKey = Omit<Object, 'type'> & {
     /**
      * The SSH key's immutable ID.
      */
@@ -5006,17 +4194,8 @@ export type SshKey = _Object & {
             name?: string;
         };
     };
-    [key: string]: unknown | string | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | undefined;
+    type: 'ssh_key';
+    [key: string]: unknown;
 };
 
 /**
@@ -5072,9 +4251,7 @@ export type PaginatedHookEvents = {
     values?: Array<HookEvent>;
 };
 
-export type WebhookSubscription = _Object & {
-    type: 'webhook_subscription';
-} & {
+export type WebhookSubscription = Omit<Object, 'type'> & {
     /**
      * The webhook's id
      */
@@ -5091,7 +4268,7 @@ export type WebhookSubscription = _Object & {
      * The type of entity. Set to either `repository` or `workspace` based on where the subscription is defined.
      */
     subject_type?: 'repository' | 'workspace';
-    subject?: _Object;
+    subject?: Object;
     active?: boolean;
     created_at?: string;
     /**
@@ -5106,7 +4283,8 @@ export type WebhookSubscription = _Object & {
      * The secret to associate with the hook. The secret is never returned via the API. As such, this field is only used during updates. The secret can be set to `null` or "" to remove the secret (or create a hook with no secret). Leaving out the secret field during updates will leave the secret unchanged. Leaving out the secret during creation will create a hook with no secret.
      */
     secret?: string;
-    [key: string]: unknown | string | 'repository' | 'workspace' | _Object | boolean | Array<'issue:comment_created' | 'issue:created' | 'issue:updated' | 'pipeline:span_created' | 'project:updated' | 'pullrequest:approved' | 'pullrequest:changes_request_created' | 'pullrequest:changes_request_removed' | 'pullrequest:comment_created' | 'pullrequest:comment_deleted' | 'pullrequest:comment_reopened' | 'pullrequest:comment_resolved' | 'pullrequest:comment_updated' | 'pullrequest:created' | 'pullrequest:fulfilled' | 'pullrequest:push' | 'pullrequest:rejected' | 'pullrequest:unapproved' | 'pullrequest:updated' | 'repo:commit_comment_created' | 'repo:commit_status_created' | 'repo:commit_status_updated' | 'repo:created' | 'repo:deleted' | 'repo:fork' | 'repo:imported' | 'repo:push' | 'repo:transfer' | 'repo:updated'> | string | undefined;
+    type: 'webhook_subscription';
+    [key: string]: unknown;
 };
 
 /**
@@ -5138,20 +4316,17 @@ export type PaginatedWebhookSubscriptions = {
     values?: Array<WebhookSubscription>;
 };
 
-export type WorkspaceAccess = _Object & {
-    type: 'workspace_access';
-} & {
+export type WorkspaceAccess = Omit<Object, 'type'> & {
     /**
      * The permission level the user has for the workspace. "True" if the user is an administrator, otherwise "False".
      */
     administrator?: string;
     workspace?: WorkspaceBase;
-    [key: string]: unknown | string | WorkspaceBase | undefined;
+    type: 'workspace_access';
+    [key: string]: unknown;
 };
 
-export type WorkspaceBase = _Object & {
-    type: 'workspace_base';
-} & {
+export type WorkspaceBase = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -5180,26 +4355,8 @@ export type WorkspaceBase = _Object & {
      * The short label that identifies this workspace.
      */
     slug?: string;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        avatar?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | undefined;
+    type: 'workspace_base';
+    [key: string]: unknown;
 };
 
 /**
@@ -5289,9 +4446,7 @@ export type PaginatedWorkspaces = {
     values?: Array<Workspace>;
 };
 
-export type WorkspaceMembership = _Object & {
-    type: 'workspace_membership';
-} & {
+export type WorkspaceMembership = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -5305,22 +4460,11 @@ export type WorkspaceMembership = _Object & {
     };
     user?: Account;
     workspace?: Workspace;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | Account | Workspace | undefined;
+    type: 'workspace_membership';
+    [key: string]: unknown;
 };
 
-export type Workspace = _Object & {
-    type: 'workspace';
-} & {
+export type Workspace = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -5426,83 +4570,11 @@ export type Workspace = _Object & {
     forking_mode?: 'allow_forks' | 'internal_only';
     created_on?: string;
     updated_on?: string;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        avatar?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        members?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        owners?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        projects?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        repositories?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        snippets?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | boolean | 'allow_forks' | 'internal_only' | undefined;
+    type: 'workspace';
+    [key: string]: unknown;
 };
 
-export type AppUser = Account & {
+export type AppUser = Omit<Account, 'type'> & {
     /**
      * The user's Atlassian account ID.
      */
@@ -5515,17 +4587,18 @@ export type AppUser = Account & {
      * The kind of App User.
      */
     kind?: string;
-    [key: string]: unknown | string | undefined;
+    type: 'app_user';
+    [key: string]: unknown;
 };
 
 export type UserLinks = AccountLinks & {
     self?: Link;
     html?: Link;
     repositories?: Link;
-    [key: string]: unknown | Link | undefined;
+    [key: string]: unknown;
 };
 
-export type User = Account & {
+export type User = Omit<Account, 'type'> & {
     links?: UserLinks;
     /**
      * The user's Atlassian account ID.
@@ -5541,12 +4614,11 @@ export type User = Account & {
      */
     nickname?: string;
     is_staff?: boolean;
-    [key: string]: unknown | UserLinks | string | boolean | undefined;
+    type: 'user';
+    [key: string]: unknown;
 };
 
-export type Branchrestriction = _Object & {
-    type: 'branchrestriction';
-} & {
+export type Branchrestriction = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -5592,7 +4664,12 @@ export type Branchrestriction = _Object & {
     value?: number;
     users?: Array<Account>;
     groups?: Array<Group>;
-    [key: string]: unknown | {
+    type: 'branchrestriction';
+    [key: string]: unknown;
+};
+
+export type Component = Omit<Object, 'type'> & {
+    links?: {
         /**
          * Link
          *
@@ -5602,75 +4679,38 @@ export type Branchrestriction = _Object & {
             href?: string;
             name?: string;
         };
-    } | number | 'push' | 'delete' | 'force' | 'restrict_merges' | 'require_tasks_to_be_completed' | 'require_approvals_to_merge' | 'require_review_group_approvals_to_merge' | 'require_default_reviewer_approvals_to_merge' | 'require_no_changes_requested' | 'require_passing_builds_to_merge' | 'require_commits_behind' | 'reset_pullrequest_approvals_on_change' | 'smart_reset_pullrequest_approvals' | 'reset_pullrequest_changes_requested_on_change' | 'require_all_dependencies_merged' | 'enforce_merge_checks' | 'allow_auto_merge_when_builds_pass' | 'require_all_comments_resolved' | 'branching_model' | 'glob' | 'feature' | 'bugfix' | 'release' | 'hotfix' | 'development' | 'production' | string | Array<Account> | Array<Group> | undefined;
-};
-
-export type Component = _Object & {
+    };
+    name?: string;
+    id?: number;
     type: 'component';
-} & {
-    links?: {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    };
-    name?: string;
-    id?: number;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | number | undefined;
+    [key: string]: unknown;
 };
 
-export type IssueComment = Comment & {
+export type IssueComment = Omit<Comment, 'type'> & {
     issue?: Issue;
-    [key: string]: unknown | Issue | undefined;
+    type: 'issue_comment';
+    [key: string]: unknown;
 };
 
-export type Milestone = _Object & {
+export type Milestone = Omit<Object, 'type'> & {
+    links?: {
+        /**
+         * Link
+         *
+         * A link to a resource related to this object.
+         */
+        self?: {
+            href?: string;
+            name?: string;
+        };
+    };
+    name?: string;
+    id?: number;
     type: 'milestone';
-} & {
-    links?: {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    };
-    name?: string;
-    id?: number;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | number | undefined;
+    [key: string]: unknown;
 };
 
-export type Version = _Object & {
-    type: 'version';
-} & {
+export type Version = Omit<Object, 'type'> & {
     links?: {
         /**
          * Link
@@ -5684,17 +4724,8 @@ export type Version = _Object & {
     };
     name?: string;
     id?: number;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | string | number | undefined;
+    type: 'version';
+    [key: string]: unknown;
 };
 
 /**
@@ -5718,24 +4749,15 @@ export type RepositoryUserPermission = {
             name?: string;
         };
     };
-    [key: string]: unknown | string | 'read' | 'write' | 'admin' | 'none' | User | Repository | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-    } | undefined;
+    [key: string]: unknown;
 };
 
-export type PullrequestComment = Comment & {
+export type PullrequestComment = Omit<Comment, 'type'> & {
     pullrequest?: Pullrequest;
     resolution?: CommentResolution;
     pending?: boolean;
-    [key: string]: unknown | Pullrequest | CommentResolution | boolean | undefined;
+    type: 'pullrequest_comment';
+    [key: string]: unknown;
 };
 
 export type PullrequestCommentTask = PullrequestTask & {
@@ -5751,12 +4773,13 @@ export type Branch = Ref & {
      * The default merge strategy for pull requests targeting this branch.
      */
     default_merge_strategy?: string;
-    [key: string]: unknown | Array<'merge_commit' | 'squash' | 'fast_forward' | 'squash_fast_forward' | 'rebase_fast_forward' | 'rebase_merge'> | string | undefined;
+    [key: string]: unknown;
 };
 
-export type CommitComment = Comment & {
+export type CommitComment = Omit<Comment, 'type'> & {
     commit?: Commit;
-    [key: string]: unknown | Commit | undefined;
+    type: 'commit_comment';
+    [key: string]: unknown;
 };
 
 /**
@@ -5817,10 +4840,11 @@ export type PaginatedTags = {
     values?: Array<Tag>;
 };
 
-export type Commit = BaseCommit & {
+export type Commit = Omit<BaseCommit, 'type'> & {
     repository?: Repository;
     participants?: Array<Participant>;
-    [key: string]: unknown | Repository | Array<Participant> | undefined;
+    type: 'commit';
+    [key: string]: unknown;
 };
 
 export type Tag = Ref & {
@@ -5833,10 +4857,10 @@ export type Tag = Ref & {
      */
     date?: string;
     tagger?: Author;
-    [key: string]: unknown | string | Author | undefined;
+    [key: string]: unknown;
 };
 
-export type SnippetCommit = BaseCommit & {
+export type SnippetCommit = Omit<BaseCommit, 'type'> & {
     links?: {
         /**
          * Link
@@ -5867,45 +4891,19 @@ export type SnippetCommit = BaseCommit & {
         };
     };
     snippet?: Snippet;
-    [key: string]: unknown | {
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        self?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        html?: {
-            href?: string;
-            name?: string;
-        };
-        /**
-         * Link
-         *
-         * A link to a resource related to this object.
-         */
-        diff?: {
-            href?: string;
-            name?: string;
-        };
-    } | Snippet | undefined;
+    type: 'snippet_commit';
+    [key: string]: unknown;
 };
 
-export type SshAccountKey = SshKey & {
+export type SshAccountKey = Omit<SshKey, 'type'> & {
     owner?: Account;
     expires_on?: string;
     /**
      * The SSH key fingerprint in SHA-256 format.
      */
     fingerprint?: string;
-    [key: string]: unknown | Account | string | undefined;
+    type: 'ssh_account_key';
+    [key: string]: unknown;
 };
 
 export type SearchCodeSearchResultWritable = {
@@ -5941,11 +4939,11 @@ export type DeleteAddonErrors = {
     /**
      * No authorization.
      */
-    401: _Error;
+    401: Error;
     /**
      * Improper authentication.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type DeleteAddonError = DeleteAddonErrors[keyof DeleteAddonErrors];
@@ -5970,15 +4968,15 @@ export type PutAddonErrors = {
     /**
      * Scopes have increased or decreased to none.
      */
-    400: _Error;
+    400: Error;
     /**
      * No authorization.
      */
-    401: _Error;
+    401: Error;
     /**
      * Improper authentication.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type PutAddonError = PutAddonErrors[keyof PutAddonErrors];
@@ -6003,7 +5001,7 @@ export type GetAddonLinkersErrors = {
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
 };
 
 export type GetAddonLinkersError = GetAddonLinkersErrors[keyof GetAddonLinkersErrors];
@@ -6032,11 +5030,11 @@ export type GetAddonLinkersByLinkerKeyErrors = {
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
     /**
      * The linker does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetAddonLinkersByLinkerKeyError = GetAddonLinkersByLinkerKeyErrors[keyof GetAddonLinkersByLinkerKeyErrors];
@@ -6065,11 +5063,11 @@ export type DeleteAddonLinkersByLinkerKeyValuesErrors = {
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
     /**
      * The linker does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteAddonLinkersByLinkerKeyValuesError = DeleteAddonLinkersByLinkerKeyValuesErrors[keyof DeleteAddonLinkersByLinkerKeyValuesErrors];
@@ -6100,11 +5098,11 @@ export type GetAddonLinkersByLinkerKeyValuesErrors = {
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
     /**
      * The linker does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetAddonLinkersByLinkerKeyValuesError = GetAddonLinkersByLinkerKeyValuesErrors[keyof GetAddonLinkersByLinkerKeyValuesErrors];
@@ -6133,15 +5131,15 @@ export type PostAddonLinkersByLinkerKeyValuesErrors = {
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
     /**
      * The linker does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * The linker already has the value being added.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type PostAddonLinkersByLinkerKeyValuesError = PostAddonLinkersByLinkerKeyValuesErrors[keyof PostAddonLinkersByLinkerKeyValuesErrors];
@@ -6170,15 +5168,15 @@ export type PutAddonLinkersByLinkerKeyValuesErrors = {
     /**
      * Invalid input.
      */
-    400: _Error;
+    400: Error;
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
     /**
      * The linker does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutAddonLinkersByLinkerKeyValuesError = PutAddonLinkersByLinkerKeyValuesErrors[keyof PutAddonLinkersByLinkerKeyValuesErrors];
@@ -6213,11 +5211,11 @@ export type DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors = {
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
     /**
      * The linker value does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteAddonLinkersByLinkerKeyValuesByValueIdError = DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors[keyof DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors];
@@ -6252,11 +5250,11 @@ export type GetAddonLinkersByLinkerKeyValuesByValueIdErrors = {
     /**
      * Authentication must use app JWT
      */
-    401: _Error;
+    401: Error;
     /**
      * The linker value does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetAddonLinkersByLinkerKeyValuesByValueIdError = GetAddonLinkersByLinkerKeyValuesByValueIdErrors[keyof GetAddonLinkersByLinkerKeyValuesByValueIdErrors];
@@ -6300,7 +5298,7 @@ export type GetHookEventsBySubjectTypeErrors = {
     /**
      * If an invalid `{subject_type}` value was specified.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetHookEventsBySubjectTypeError = GetHookEventsBySubjectTypeErrors[keyof GetHookEventsBySubjectTypeErrors];
@@ -6400,11 +5398,11 @@ export type GetRepositoriesByWorkspaceErrors = {
     /**
      * If the specified account does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * If the specified account marked as spam.
      */
-    410: _Error;
+    410: Error;
 };
 
 export type GetRepositoriesByWorkspaceError = GetRepositoriesByWorkspaceErrors[keyof GetRepositoriesByWorkspaceErrors];
@@ -6451,11 +5449,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugErrors = {
     /**
      * If the caller either does not have admin access to the repository, or the repository is set to read-only.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugError = DeleteRepositoriesByWorkspaceByRepoSlugErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugErrors];
@@ -6493,11 +5491,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugErrors = {
     /**
      * If the repository is private and the authenticated user does not have access to it.
      */
-    403: _Error;
+    403: Error;
     /**
      * If no repository exists at this location.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugError = GetRepositoriesByWorkspaceByRepoSlugErrors[keyof GetRepositoriesByWorkspaceByRepoSlugErrors];
@@ -6538,11 +5536,11 @@ export type PostRepositoriesByWorkspaceByRepoSlugErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
-    400: _Error;
+    400: Error;
     /**
      * If the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugError = PostRepositoriesByWorkspaceByRepoSlugErrors[keyof PostRepositoriesByWorkspaceByRepoSlugErrors];
@@ -6587,11 +5585,11 @@ export type PutRepositoriesByWorkspaceByRepoSlugErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
-    400: _Error;
+    400: Error;
     /**
      * If the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugError = PutRepositoriesByWorkspaceByRepoSlugErrors[keyof PutRepositoriesByWorkspaceByRepoSlugErrors];
@@ -6642,15 +5640,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors];
@@ -6691,15 +5689,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError = PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors];
@@ -6741,15 +5739,15 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors 
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository or branch restriction id does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
@@ -6788,15 +5786,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository or branch restriction id does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
@@ -6841,15 +5839,15 @@ export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository or branch restriction id does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
@@ -6887,15 +5885,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have read access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelError = GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors];
@@ -6933,15 +5931,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError = GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors];
@@ -6979,19 +5977,19 @@ export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
     /**
      * If the request contains invalid branching model configuration
      */
-    400: _Error;
+    400: Error;
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError = PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors[keyof PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors];
@@ -7033,7 +6031,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors = {
     /**
      * If the specified commit or repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors];
@@ -7075,7 +6073,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors =
     /**
      * If the specified commit, or the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError = DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors];
@@ -7117,7 +6115,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors = {
     /**
      * If the specified commit, or the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors];
@@ -7495,7 +6493,7 @@ export type GetPullrequestsForCommitErrors = {
     /**
      * Either the repository does not exist, or pull request commit links have not yet been indexed.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPullrequestsForCommitError = GetPullrequestsForCommitErrors[keyof GetPullrequestsForCommitErrors];
@@ -7603,7 +6601,7 @@ export type GetReportErrors = {
     /**
      * The report with the given ID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetReportError = GetReportErrors[keyof GetReportErrors];
@@ -7648,7 +6646,7 @@ export type CreateOrUpdateReportErrors = {
     /**
      * The provided Report object is malformed or incomplete.
      */
-    400: _Error;
+    400: Error;
 };
 
 export type CreateOrUpdateReportError = CreateOrUpdateReportErrors[keyof CreateOrUpdateReportErrors];
@@ -7800,7 +6798,7 @@ export type GetAnnotationErrors = {
     /**
      * The annotation with the given ID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetAnnotationError = GetAnnotationErrors[keyof GetAnnotationErrors];
@@ -7849,7 +6847,7 @@ export type CreateOrUpdateAnnotationErrors = {
     /**
      * The provided Annotation object is malformed or incomplete.
      */
-    400: _Error;
+    400: Error;
 };
 
 export type CreateOrUpdateAnnotationError = CreateOrUpdateAnnotationErrors[keyof CreateOrUpdateAnnotationErrors];
@@ -7915,7 +6913,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors = {
     /**
      * If the repository or commit does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors];
@@ -7964,7 +6962,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErro
     /**
      * If the repository, commit, or build status key does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildError = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors];
@@ -8014,7 +7012,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey
     /**
      * If the repository, commit, or build status key does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors];
@@ -8067,7 +7065,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey
     /**
      * If the repository or build does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError = PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors[keyof PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors];
@@ -8105,7 +7103,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitsErrors = {
     /**
      * If the specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugCommitsError = GetRepositoriesByWorkspaceByRepoSlugCommitsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsErrors];
@@ -8143,7 +7141,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitsErrors = {
     /**
      * If the specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugCommitsError = PostRepositoriesByWorkspaceByRepoSlugCommitsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsErrors];
@@ -8185,7 +7183,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors = {
     /**
      * If the specified revision does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError = GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors];
@@ -8227,7 +7225,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors = {
     /**
      * If the specified revision does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError = PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors];
@@ -8265,7 +7263,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugComponentsErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugComponentsError = GetRepositoriesByWorkspaceByRepoSlugComponentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsErrors];
@@ -8307,7 +7305,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors = 
     /**
      * The specified repository or component does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdError = GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors];
@@ -8345,7 +7343,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors = {
     /**
      * If the authenticated user does not have access to view the default reviewers
      */
-    403: _Error;
+    403: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersError = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors];
@@ -8389,11 +7387,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsern
     /**
      * If the authenticated user does not have access modify the default reviewers
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
@@ -8437,11 +7435,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername
     /**
      * If the authenticated user does not have access to check if the specified user is a default reviewer
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified user does not exist or is not a default reviewer
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
@@ -8485,15 +7483,15 @@ export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername
     /**
      * If the authenticated user tried to add a team, bot user, or user without access to the repository to the default reviewers
      */
-    400: _Error;
+    400: Error;
     /**
      * If the authenticated user does not have permission to modify the default reviewers
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
@@ -8535,7 +7533,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
     /**
      * If the specified user or repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysError = GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors];
@@ -8581,7 +7579,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
     /**
      * If the specified user or repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysError = PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors[keyof PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors];
@@ -8627,7 +7625,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
     /**
      * If the specified user, repository, or deploy key does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
@@ -8673,7 +7671,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
     /**
      * If the specified user or repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
@@ -8715,7 +7713,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
     /**
      * If the submitted key or related value is invalid
      */
-    400: _Error;
+    400: Error;
     /**
      * If the current user does not have permission to add a key for the specified user
      */
@@ -8723,7 +7721,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
     /**
      * If the specified user, repository, or deploy key does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
@@ -8786,7 +7784,7 @@ export type GetDeploymentForRepositoryErrors = {
     /**
      * No account, repository or deployment with the UUID provided exists.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetDeploymentForRepositoryError = GetDeploymentForRepositoryErrors[keyof GetDeploymentForRepositoryErrors];
@@ -8856,11 +7854,11 @@ export type CreateDeploymentVariableErrors = {
     /**
      * The account, repository, environment or variable with the given UUID was not found.
      */
-    404: _Error;
+    404: Error;
     /**
      * A variable with the provided key already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreateDeploymentVariableError = CreateDeploymentVariableErrors[keyof CreateDeploymentVariableErrors];
@@ -8902,7 +7900,7 @@ export type DeleteDeploymentVariableErrors = {
     /**
      * The account, repository, environment or variable with given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteDeploymentVariableError = DeleteDeploymentVariableErrors[keyof DeleteDeploymentVariableErrors];
@@ -8947,7 +7945,7 @@ export type UpdateDeploymentVariableErrors = {
     /**
      * The account, repository, environment or variable with the given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateDeploymentVariableError = UpdateDeploymentVariableErrors[keyof UpdateDeploymentVariableErrors];
@@ -9038,7 +8036,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors = {
      * trouble on very large diffs. If Bitbucket times out in cases
      * like these, a 555 status code is returned.
      */
-    555: _Error;
+    555: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecError = GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors];
@@ -9114,7 +8112,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors = {
     /**
      * If generating the diffstat timed out.
      */
-    555: _Error;
+    555: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecError = GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors];
@@ -9152,7 +8150,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
     /**
      * User is not authorized to read from the repository.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDownloadsError = GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors];
@@ -9188,15 +8186,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
     /**
      * Bad Request.
      */
-    400: _Error;
+    400: Error;
     /**
      * User is not authorized to write to the repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * Unsupported Content-Type. Use multiplart/form-data.
      */
-    406: _Error;
+    406: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugDownloadsError = PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors];
@@ -9236,11 +8234,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
     /**
      * User is not authorized to write to the repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified download does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError = DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors];
@@ -9282,11 +8280,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
     /**
      * User is not authorized to read from the repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified download artifact does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError = GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors];
@@ -9315,15 +8313,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors = 
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have read access to the repository
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelError = GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors];
@@ -9361,7 +8359,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors 
     /**
      * If the authenticated user does not have access to view the default reviewers
      */
-    403: _Error;
+    403: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersError = GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors];
@@ -9423,11 +8421,11 @@ export type CreateEnvironmentErrors = {
     /**
      * The account or repository does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * An environment host with the provided name already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreateEnvironmentError = CreateEnvironmentErrors[keyof CreateEnvironmentErrors];
@@ -9465,7 +8463,7 @@ export type DeleteEnvironmentForRepositoryErrors = {
     /**
      * No account or repository with the UUID provided exists.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteEnvironmentForRepositoryError = DeleteEnvironmentForRepositoryErrors[keyof DeleteEnvironmentForRepositoryErrors];
@@ -9503,7 +8501,7 @@ export type GetEnvironmentForRepositoryErrors = {
     /**
      * No account, repository or environment with the UUID provided exists.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetEnvironmentForRepositoryError = GetEnvironmentForRepositoryErrors[keyof GetEnvironmentForRepositoryErrors];
@@ -9541,7 +8539,7 @@ export type UpdateEnvironmentForRepositoryErrors = {
     /**
      * No account, repository or environment with the UUID provided exists.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateEnvironmentForRepositoryError = UpdateEnvironmentForRepositoryErrors[keyof UpdateEnvironmentForRepositoryErrors];
@@ -9606,7 +8604,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors 
     /**
      * If the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathError = GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors];
@@ -9726,11 +8724,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugHooksErrors = {
     /**
      * If the authenticated user does not have permission to access the webhooks.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugHooksError = GetRepositoriesByWorkspaceByRepoSlugHooksErrors[keyof GetRepositoriesByWorkspaceByRepoSlugHooksErrors];
@@ -9768,11 +8766,11 @@ export type PostRepositoriesByWorkspaceByRepoSlugHooksErrors = {
     /**
      * If the authenticated user does not have permission to install webhooks on the specified repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugHooksError = PostRepositoriesByWorkspaceByRepoSlugHooksErrors[keyof PostRepositoriesByWorkspaceByRepoSlugHooksErrors];
@@ -9814,11 +8812,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
     /**
      * If the authenticated user does not have permission to delete the webhook.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the webhook or repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidError = DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
@@ -9860,7 +8858,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
     /**
      * If the webhook or repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidError = GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
@@ -9902,11 +8900,11 @@ export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
     /**
      * If the authenticated user does not have permission to update the webhook.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the webhook or repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidError = PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
@@ -9944,7 +8942,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesError = GetRepositoriesByWorkspaceByRepoSlugIssuesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesErrors];
@@ -9985,15 +8983,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * When the authenticated user isn't authorized to create the issue.
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugIssuesError = PostRepositoriesByWorkspaceByRepoSlugIssuesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesErrors];
@@ -10034,15 +9032,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors = {
     /**
      * The request wasn't authenticated properly
      */
-    401: _Error;
+    401: Error;
     /**
      * When the authenticated user does not have admin permission on the repo
      */
-    403: _Error;
+    403: Error;
     /**
      * The repo does not exist or does not have an issue tracker
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportError = PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors];
@@ -10086,15 +9084,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTa
     /**
      * The request wasn't authenticated properly
      */
-    401: _Error;
+    401: Error;
     /**
      * When the authenticated user does not have admin permission on the repo
      */
-    403: _Error;
+    403: Error;
     /**
      * No export job has begun
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipError = GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipErrors];
@@ -10132,15 +9130,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
     /**
      * The request wasn't authenticated properly
      */
-    401: _Error;
+    401: Error;
     /**
      * When the authenticated user does not have admin permission on the repo
      */
-    403: _Error;
+    403: Error;
     /**
      * No export job has begun
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportError = GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors];
@@ -10182,19 +9180,19 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
     /**
      * The request wasn't authenticated properly
      */
-    401: _Error;
+    401: Error;
     /**
      * When the authenticated user does not have admin permission on the repo
      */
-    403: _Error;
+    403: Error;
     /**
      * No export job has begun
      */
-    404: _Error;
+    404: Error;
     /**
      * Import already running
      */
-    409: _Error;
+    409: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportError = PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors];
@@ -10236,11 +9234,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
     /**
      * When the authenticated user isn't authorized to delete the issue.
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
@@ -10282,15 +9280,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
     /**
      * When the authenticated user isn't authorized to access the issue.
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
     /**
      * The specified issue is unavailable.
      */
-    410: _Error;
+    410: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
@@ -10332,11 +9330,11 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
     /**
      * When the authenticated user isn't authorized to access the issue.
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
@@ -10382,7 +9380,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors];
@@ -10432,7 +9430,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors];
@@ -10480,7 +9478,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByP
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors];
@@ -10530,7 +9528,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPath
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors];
@@ -10578,7 +9576,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = {
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors];
@@ -10623,15 +9621,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = 
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * When the authenticated user isn't authorized to modify the issue.
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors];
@@ -10677,7 +9675,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeId
     /**
      * The specified repository or issue change does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors];
@@ -10762,7 +9760,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors =
     /**
      * If the input was invalid, or if the comment being created is detected as spam
      */
-    400: _Error;
+    400: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors];
@@ -10883,7 +9881,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByComment
     /**
      * If the input was invalid, or if the update to the comment is detected as spam
      */
-    400: _Error;
+    400: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors];
@@ -10925,7 +9923,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
     /**
      * Unexpected error.
      */
-    default: _Error;
+    default: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
@@ -10934,7 +9932,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses 
     /**
      * Unexpected error.
      */
-    default: _Error;
+    default: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
@@ -10967,11 +9965,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user has not voted for this issue, or when the repo does not exist, or does not have an issue tracker.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
@@ -10980,7 +9978,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
     /**
      * If the authenticated user has not voted for this issue.
      */
-    204: _Error;
+    204: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
@@ -11013,11 +10011,11 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
@@ -11026,7 +10024,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
     /**
      * Indicating the authenticated user has cast their vote successfully.
      */
-    204: _Error;
+    204: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
@@ -11059,11 +10057,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = 
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
@@ -11072,7 +10070,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses
     /**
      * Indicates that the authenticated user successfully stopped watching this issue.
      */
-    204: _Error;
+    204: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
@@ -11105,11 +10103,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user is not watching this issue, or when the repo does not exist, or does not have an issue tracker.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
@@ -11118,7 +10116,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = 
     /**
      * If the authenticated user is watching this issue.
      */
-    204: _Error;
+    204: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
@@ -11151,11 +10149,11 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user is not watching this issue, or when the repo does not exist, or does not have an issue tracker.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
@@ -11164,7 +10162,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = 
     /**
      * Indicates that the authenticated user successfully started watching this issue.
      */
-    204: _Error;
+    204: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
@@ -11198,15 +10196,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors = {
     /**
      * If the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have access to any of the repositories specified.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository or ref in the spec does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecError = GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors];
@@ -11244,7 +10242,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugMilestonesError = GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors];
@@ -11286,7 +10284,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors = 
     /**
      * The specified repository or milestone does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdError = GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors];
@@ -11324,7 +10322,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors = {
     /**
      * If no repository exists at this location
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsError = GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors];
@@ -11362,7 +10360,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors = {
     /**
      * If no repository exists at this location
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsError = PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors[keyof PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors];
@@ -11411,7 +10409,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors = {
      * trouble on very large diffs. If Bitbucket times out in cases
      * like these, a 555 status code is returned.
      */
-    555: _Error;
+    555: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecError = GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors];
@@ -11447,15 +10445,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors = 
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or both of the workspace and repository doesn't exist for the given identifiers.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors];
@@ -11497,15 +10495,15 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGrou
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the repository, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * The workspace does not exist, the repository does not exist, or the group does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
@@ -11547,15 +10545,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSl
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * The given user, workspace, and/or repository could not be found
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
@@ -11600,23 +10598,23 @@ export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSl
     /**
      * No permission value was provided or the value is invalid(not one of read, write, or admin)
      */
-    400: _Error;
+    400: Error;
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * You have reached your plan's user limit and must upgrade before giving access to additional users.
      */
-    402: _Error;
+    402: Error;
     /**
      * The requesting user isn't an admin of the repository, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * The workspace does not exist, the repository does not exist, or the group does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
@@ -11654,15 +10652,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors = {
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * No repository exists for the given repository slug and workspace.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors];
@@ -11706,15 +10704,15 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelec
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the repository, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, repository, and user doesn't exist for the given identifiers.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
@@ -11758,15 +10756,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelected
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the repository.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or both of the workspace and repository doesn't exist for the given identifiers.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
@@ -11813,23 +10811,23 @@ export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelected
     /**
      * No permission value was provided or the value is invalid (not one of read, write, or admin), or the selected user is not a valid user to update.
      */
-    400: _Error;
+    400: Error;
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * You have reached your plan's user limit and must upgrade before giving access to additional users.
      */
-    402: _Error;
+    402: Error;
     /**
      * The requesting user isn't an admin of the repository, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, repository, and selected user doesn't exist for the given identifiers.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
@@ -11944,11 +10942,11 @@ export type CreatePipelineForRepositoryErrors = {
     /**
      * The account or repository is not enabled, the yml file does not exist in the repository for the given revision, or the request body contained invalid properties.
      */
-    400: _Error;
+    400: Error;
     /**
      * The account or repository was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type CreatePipelineForRepositoryError = CreatePipelineForRepositoryErrors[keyof CreatePipelineForRepositoryErrors];
@@ -11987,7 +10985,7 @@ export type DeleteRepositoryPipelineCachesErrors = {
     /**
      * The workspace, repository or cache name was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoryPipelineCachesError = DeleteRepositoryPipelineCachesErrors[keyof DeleteRepositoryPipelineCachesErrors];
@@ -12021,7 +11019,7 @@ export type GetRepositoryPipelineCachesErrors = {
     /**
      * The account or repository was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineCachesError = GetRepositoryPipelineCachesErrors[keyof GetRepositoryPipelineCachesErrors];
@@ -12059,7 +11057,7 @@ export type DeleteRepositoryPipelineCacheErrors = {
     /**
      * The workspace, repository or cache_uuid with given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoryPipelineCacheError = DeleteRepositoryPipelineCacheErrors[keyof DeleteRepositoryPipelineCacheErrors];
@@ -12097,7 +11095,7 @@ export type GetRepositoryPipelineCacheContentUriErrors = {
     /**
      * The workspace, repository or cache_uuid with given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineCacheContentUriError = GetRepositoryPipelineCacheContentUriErrors[keyof GetRepositoryPipelineCacheContentUriErrors];
@@ -12156,11 +11154,11 @@ export type CreateRepositoryRunnerErrors = {
     /**
      * The request body contained invalid properties or runner limit exceeded.
      */
-    400: _Error;
+    400: Error;
     /**
      * The repository runner with the provided UUID already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreateRepositoryRunnerError = CreateRepositoryRunnerErrors[keyof CreateRepositoryRunnerErrors];
@@ -12198,7 +11196,7 @@ export type DeleteRepositoryRunnerErrors = {
     /**
      * The repository runner was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoryRunnerError = DeleteRepositoryRunnerErrors[keyof DeleteRepositoryRunnerErrors];
@@ -12236,7 +11234,7 @@ export type GetRepositoryRunnerErrors = {
     /**
      * The repository runner was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryRunnerError = GetRepositoryRunnerErrors[keyof GetRepositoryRunnerErrors];
@@ -12274,7 +11272,7 @@ export type UpdateRepositoryRunnerErrors = {
     /**
      * The repository runner was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateRepositoryRunnerError = UpdateRepositoryRunnerErrors[keyof UpdateRepositoryRunnerErrors];
@@ -12312,7 +11310,7 @@ export type GetPipelineForRepositoryErrors = {
     /**
      * No account, repository or pipeline with the UUID provided exists.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineForRepositoryError = GetPipelineForRepositoryErrors[keyof GetPipelineForRepositoryErrors];
@@ -12383,7 +11381,7 @@ export type GetPipelineStepForRepositoryErrors = {
     /**
      * No account, repository, pipeline or step with the UUID provided exists for the pipeline with the UUID provided.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineStepForRepositoryError = GetPipelineStepForRepositoryErrors[keyof GetPipelineStepForRepositoryErrors];
@@ -12425,11 +11423,11 @@ export type GetPipelineStepLogForRepositoryErrors = {
     /**
      * A pipeline with the given UUID does not exist, a step with the given UUID does not exist in the pipeline or a log file does not exist for the given step.
      */
-    404: _Error;
+    404: Error;
     /**
      * The requested range does not exist for requests that specified the [HTTP Range header](https://tools.ietf.org/html/rfc7233#section-3.1).
      */
-    416: _Error;
+    416: Error;
 };
 
 export type GetPipelineStepLogForRepositoryError = GetPipelineStepLogForRepositoryErrors[keyof GetPipelineStepLogForRepositoryErrors];
@@ -12473,7 +11471,7 @@ export type GetPipelineContainerLogErrors = {
     /**
      * No account, repository, pipeline, step or log exist for the provided path.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineContainerLogError = GetPipelineContainerLogErrors[keyof GetPipelineContainerLogErrors];
@@ -12513,7 +11511,7 @@ export type GetPipelineTestReportsErrors = {
     /**
      * No account, repository, pipeline, step or test reports exist for the provided path.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineTestReportsError = GetPipelineTestReportsErrors[keyof GetPipelineTestReportsErrors];
@@ -12553,7 +11551,7 @@ export type GetPipelineTestReportTestCasesErrors = {
     /**
      * No account, repository, pipeline, step or test reports exist for the provided path.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineTestReportTestCasesError = GetPipelineTestReportTestCasesErrors[keyof GetPipelineTestReportTestCasesErrors];
@@ -12597,7 +11595,7 @@ export type GetPipelineTestReportTestCaseReasonsErrors = {
     /**
      * No account, repository, pipeline, step or test case with the UUID provided exists for the pipeline with the UUID provided.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineTestReportTestCaseReasonsError = GetPipelineTestReportTestCaseReasonsErrors[keyof GetPipelineTestReportTestCaseReasonsErrors];
@@ -12633,11 +11631,11 @@ export type StopPipelineErrors = {
     /**
      * The specified pipeline has already completed.
      */
-    400: _Error;
+    400: Error;
     /**
      * Either the account, repository or pipeline with the given UUID does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type StopPipelineError = StopPipelineErrors[keyof StopPipelineErrors];
@@ -12727,11 +11725,11 @@ export type UpdateRepositoryBuildNumberErrors = {
     /**
      * The update failed because the next number was invalid (it should be higher than the current number).
      */
-    400: _Error;
+    400: Error;
     /**
      * The account or repository was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateRepositoryBuildNumberError = UpdateRepositoryBuildNumberErrors[keyof UpdateRepositoryBuildNumberErrors];
@@ -12765,7 +11763,7 @@ export type GetRepositoryPipelineSchedulesErrors = {
     /**
      * The account or repository was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineSchedulesError = GetRepositoryPipelineSchedulesErrors[keyof GetRepositoryPipelineSchedulesErrors];
@@ -12802,15 +11800,15 @@ export type CreateRepositoryPipelineScheduleErrors = {
     /**
      * There were errors validating the request.
      */
-    400: _Error;
+    400: Error;
     /**
      * The maximum limit of schedules for this repository was reached.
      */
-    401: _Error;
+    401: Error;
     /**
      * The account or repository was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type CreateRepositoryPipelineScheduleError = CreateRepositoryPipelineScheduleErrors[keyof CreateRepositoryPipelineScheduleErrors];
@@ -12848,7 +11846,7 @@ export type DeleteRepositoryPipelineScheduleErrors = {
     /**
      * The account, repository or schedule was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoryPipelineScheduleError = DeleteRepositoryPipelineScheduleErrors[keyof DeleteRepositoryPipelineScheduleErrors];
@@ -12886,7 +11884,7 @@ export type GetRepositoryPipelineScheduleErrors = {
     /**
      * The account, repository or schedule was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineScheduleError = GetRepositoryPipelineScheduleErrors[keyof GetRepositoryPipelineScheduleErrors];
@@ -12927,7 +11925,7 @@ export type UpdateRepositoryPipelineScheduleErrors = {
     /**
      * The account, repository or schedule was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateRepositoryPipelineScheduleError = UpdateRepositoryPipelineScheduleErrors[keyof UpdateRepositoryPipelineScheduleErrors];
@@ -12965,7 +11963,7 @@ export type GetRepositoryPipelineScheduleExecutionsErrors = {
     /**
      * The account or repository was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineScheduleExecutionsError = GetRepositoryPipelineScheduleExecutionsErrors[keyof GetRepositoryPipelineScheduleExecutionsErrors];
@@ -12999,7 +11997,7 @@ export type DeleteRepositoryPipelineKeyPairErrors = {
     /**
      * The account, repository or SSH key pair was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoryPipelineKeyPairError = DeleteRepositoryPipelineKeyPairErrors[keyof DeleteRepositoryPipelineKeyPairErrors];
@@ -13033,7 +12031,7 @@ export type GetRepositoryPipelineSshKeyPairErrors = {
     /**
      * The account, repository or SSH key pair was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineSshKeyPairError = GetRepositoryPipelineSshKeyPairErrors[keyof GetRepositoryPipelineSshKeyPairErrors];
@@ -13070,7 +12068,7 @@ export type UpdateRepositoryPipelineKeyPairErrors = {
     /**
      * The account, repository or SSH key pair was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateRepositoryPipelineKeyPairError = UpdateRepositoryPipelineKeyPairErrors[keyof UpdateRepositoryPipelineKeyPairErrors];
@@ -13132,11 +12130,11 @@ export type CreateRepositoryPipelineKnownHostErrors = {
     /**
      * The account or repository does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * A known host with the provided hostname already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreateRepositoryPipelineKnownHostError = CreateRepositoryPipelineKnownHostErrors[keyof CreateRepositoryPipelineKnownHostErrors];
@@ -13174,7 +12172,7 @@ export type DeleteRepositoryPipelineKnownHostErrors = {
     /**
      * The account, repository or known host with given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoryPipelineKnownHostError = DeleteRepositoryPipelineKnownHostErrors[keyof DeleteRepositoryPipelineKnownHostErrors];
@@ -13212,7 +12210,7 @@ export type GetRepositoryPipelineKnownHostErrors = {
     /**
      * The account, repository or known host with the specified UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineKnownHostError = GetRepositoryPipelineKnownHostErrors[keyof GetRepositoryPipelineKnownHostErrors];
@@ -13253,7 +12251,7 @@ export type UpdateRepositoryPipelineKnownHostErrors = {
     /**
      * The account, repository or known host with the given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateRepositoryPipelineKnownHostError = UpdateRepositoryPipelineKnownHostErrors[keyof UpdateRepositoryPipelineKnownHostErrors];
@@ -13315,11 +12313,11 @@ export type CreateRepositoryPipelineVariableErrors = {
     /**
      * The account or repository does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * A variable with the provided key already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreateRepositoryPipelineVariableError = CreateRepositoryPipelineVariableErrors[keyof CreateRepositoryPipelineVariableErrors];
@@ -13357,7 +12355,7 @@ export type DeleteRepositoryPipelineVariableErrors = {
     /**
      * The account, repository or variable with given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoryPipelineVariableError = DeleteRepositoryPipelineVariableErrors[keyof DeleteRepositoryPipelineVariableErrors];
@@ -13395,7 +12393,7 @@ export type GetRepositoryPipelineVariableErrors = {
     /**
      * The account, repository or variable with the specified UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoryPipelineVariableError = GetRepositoryPipelineVariableErrors[keyof GetRepositoryPipelineVariableErrors];
@@ -13436,7 +12434,7 @@ export type UpdateRepositoryPipelineVariableErrors = {
     /**
      * The account, repository or variable with the given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateRepositoryPipelineVariableError = UpdateRepositoryPipelineVariableErrors[keyof UpdateRepositoryPipelineVariableErrors];
@@ -13585,7 +12583,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
     /**
      * If the specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors];
@@ -13630,11 +12628,11 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
-    400: _Error;
+    400: Error;
     /**
      * If the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors];
@@ -13676,7 +12674,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors = {
     /**
      * If the specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors];
@@ -13720,7 +12718,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError
     /**
      * If the repository or pull request does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors];
@@ -13765,15 +12763,15 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError
     /**
      * If the input document was invalid.
      */
-    400: _Error;
+    400: Error;
     /**
      * If the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If the repository or pull request id does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors];
@@ -13819,7 +12817,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActiv
     /**
      * If the specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors];
@@ -13859,15 +12857,15 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdAp
     /**
      * Pull request cannot be unapproved because the pull request has already been merged.
      */
-    400: _Error;
+    400: Error;
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The specified pull request or the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors];
@@ -13909,11 +12907,11 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdAppr
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The specified pull request or the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors];
@@ -13955,11 +12953,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the pull request does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors];
@@ -14004,11 +13002,11 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the pull request does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors];
@@ -14054,11 +13052,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCo
     /**
      * If the authenticated user does not have access to delete the comment.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
@@ -14104,11 +13102,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
@@ -14157,11 +13155,11 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     /**
      * If the authenticated user does not have access to the comment.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
@@ -14208,11 +13206,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCo
      * If the authenticated user does not have access to the pull request,
      * or if the provided comment is not a top-level comment.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment does not exist, or if the comment has not been resolved
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors];
@@ -14260,15 +13258,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
      * if the provided comment is not a top-level comment,
      * or if the comment is not on the diff.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * If the comment has already been resolved.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors];
@@ -14310,11 +13308,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommi
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the pull request does not exist or the source branch is from a forked repository which no longer exists.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors];
@@ -14355,7 +13353,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDecl
      * If the decline took too long and timed out.
      * In this case the caller should retry the request later.
      */
-    555: _Error;
+    555: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors];
@@ -14467,7 +13465,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerg
      * If the merge took too long and timed out.
      * In this case the caller should retry the request later
      */
-    555: _Error;
+    555: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors];
@@ -14587,15 +13585,15 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRe
     /**
      * Pull request requested changes cannot be removed because the pull request has already been merged.
      */
-    400: _Error;
+    400: Error;
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The specified pull request or the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors];
@@ -14637,15 +13635,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequ
     /**
      * Pull request changes cannot be requested because the pull request has already been merged.
      */
-    400: _Error;
+    400: Error;
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The specified pull request or the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors];
@@ -14705,7 +13703,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatu
     /**
      * If the specified repository or pull request does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors];
@@ -14770,15 +13768,15 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     /**
      * If the user provides an invalid filter, sort, or fields query parameter.
      */
-    400: _Error;
+    400: Error;
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the pull request does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors];
@@ -14823,15 +13821,15 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTask
     /**
      * There is a missing required field in the request or the task content is blank.
      */
-    400: _Error;
+    400: Error;
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the pull request does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors];
@@ -14877,11 +13875,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTa
     /**
      * If the authenticated user does not have access to delete the task.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the task does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
@@ -14927,11 +13925,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the task does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
@@ -14980,15 +13978,15 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     /**
      * There is a missing required field in the request or the task content is blank.
      */
-    400: _Error;
+    400: Error;
     /**
      * If the authenticated user does not have access to the pull request.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the task does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
@@ -15158,11 +14156,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugRefsError = GetRepositoriesByWorkspaceByRepoSlugRefsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsErrors];
@@ -15218,11 +14216,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesError = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors];
@@ -15262,11 +14260,11 @@ export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or branch does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesError = PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors];
@@ -15310,11 +14308,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or branch does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError = DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors];
@@ -15358,11 +14356,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or branch does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors];
@@ -15418,11 +14416,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsError = GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors];
@@ -15460,7 +14458,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
     /**
      * If the target hash is missing, ambiguous, or invalid, or if the name is not provided.
      */
-    400: _Error;
+    400: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsError = PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors];
@@ -15504,11 +14502,11 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or tag does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError = DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors];
@@ -15552,11 +14550,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
      * access to it.
      *
      */
-    403: _Error;
+    403: Error;
     /**
      * The specified repository or tag does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError = GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors];
@@ -15599,7 +14597,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugSrcErrors = {
     /**
      * If the path or commit in the URL does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugSrcError = GetRepositoriesByWorkspaceByRepoSlugSrcErrors[keyof GetRepositoriesByWorkspaceByRepoSlugSrcErrors];
@@ -15745,11 +14743,11 @@ export type PostRepositoriesByWorkspaceByRepoSlugSrcErrors = {
     /**
      * If the authenticated user does not have write or admin access
      */
-    403: _Error;
+    403: Error;
     /**
      * If the repository does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostRepositoriesByWorkspaceByRepoSlugSrcError = PostRepositoriesByWorkspaceByRepoSlugSrcErrors[keyof PostRepositoriesByWorkspaceByRepoSlugSrcErrors];
@@ -15811,11 +14809,11 @@ export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors = {
     /**
      * If the path or commit in the URL does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * If the call times out, possibly because the specified recursion depth is too large.
      */
-    555: _Error;
+    555: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathError = GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors];
@@ -15862,7 +14860,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugVersionsErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugVersionsError = GetRepositoriesByWorkspaceByRepoSlugVersionsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsErrors];
@@ -15904,7 +14902,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors = {
     /**
      * The specified repository or version does not exist or does not have the issue tracker enabled.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdError = GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors];
@@ -15963,7 +14961,7 @@ export type GetSnippetsErrors = {
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsError = GetSnippetsErrors[keyof GetSnippetsErrors];
@@ -15991,7 +14989,7 @@ export type PostSnippetsErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
 };
 
 export type PostSnippetsError = PostSnippetsErrors[keyof PostSnippetsErrors];
@@ -16028,7 +15026,7 @@ export type GetSnippetsByWorkspaceErrors = {
     /**
      * If the user does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceError = GetSnippetsByWorkspaceErrors[keyof GetSnippetsByWorkspaceErrors];
@@ -16063,11 +15061,11 @@ export type PostSnippetsByWorkspaceErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have permission to create snippets in the specified workspace.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type PostSnippetsByWorkspaceError = PostSnippetsByWorkspaceErrors[keyof PostSnippetsByWorkspaceErrors];
@@ -16103,15 +15101,15 @@ export type DeleteSnippetsByWorkspaceByEncodedIdErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If authenticated user does not have permission to delete the private snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteSnippetsByWorkspaceByEncodedIdError = DeleteSnippetsByWorkspaceByEncodedIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdErrors];
@@ -16147,19 +15145,19 @@ export type GetSnippetsByWorkspaceByEncodedIdErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If authenticated user does not have access to the private snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * If the snippet marked as spam.
      */
-    410: _Error;
+    410: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdError = GetSnippetsByWorkspaceByEncodedIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdErrors];
@@ -16195,15 +15193,15 @@ export type PutSnippetsByWorkspaceByEncodedIdErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If authenticated user does not have permission to update the private snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutSnippetsByWorkspaceByEncodedIdError = PutSnippetsByWorkspaceByEncodedIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdErrors];
@@ -16239,11 +15237,11 @@ export type GetSnippetsByWorkspaceByEncodedIdCommentsErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdCommentsError = GetSnippetsByWorkspaceByEncodedIdCommentsErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommentsErrors];
@@ -16282,11 +15280,11 @@ export type PostSnippetsByWorkspaceByEncodedIdCommentsErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostSnippetsByWorkspaceByEncodedIdCommentsError = PostSnippetsByWorkspaceByEncodedIdCommentsErrors[keyof PostSnippetsByWorkspaceByEncodedIdCommentsErrors];
@@ -16326,11 +15324,11 @@ export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
     /**
      * If the authenticated user is not the author of the comment.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment or the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
@@ -16370,11 +15368,11 @@ export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment or snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
@@ -16417,11 +15415,11 @@ export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the comment or snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
@@ -16457,11 +15455,11 @@ export type GetSnippetsByWorkspaceByEncodedIdCommitsErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdCommitsError = GetSnippetsByWorkspaceByEncodedIdCommitsErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommitsErrors];
@@ -16501,11 +15499,11 @@ export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the commit or the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionError = GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors];
@@ -16545,11 +15543,11 @@ export type GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdFilesByPathError = GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors[keyof GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors];
@@ -16576,11 +15574,11 @@ export type DeleteSnippetsByWorkspaceByEncodedIdWatchErrors = {
     /**
      * If the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteSnippetsByWorkspaceByEncodedIdWatchError = DeleteSnippetsByWorkspaceByEncodedIdWatchErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdWatchErrors];
@@ -16616,7 +15614,7 @@ export type GetSnippetsByWorkspaceByEncodedIdWatchErrors = {
     /**
      * If the snippet does not exist, or if the authenticated user is not watching the snippet.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdWatchError = GetSnippetsByWorkspaceByEncodedIdWatchErrors[keyof GetSnippetsByWorkspaceByEncodedIdWatchErrors];
@@ -16652,11 +15650,11 @@ export type PutSnippetsByWorkspaceByEncodedIdWatchErrors = {
     /**
      * If the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutSnippetsByWorkspaceByEncodedIdWatchError = PutSnippetsByWorkspaceByEncodedIdWatchErrors[keyof PutSnippetsByWorkspaceByEncodedIdWatchErrors];
@@ -16692,7 +15690,7 @@ export type GetSnippetsByWorkspaceByEncodedIdWatchersErrors = {
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdWatchersError = GetSnippetsByWorkspaceByEncodedIdWatchersErrors[keyof GetSnippetsByWorkspaceByEncodedIdWatchersErrors];
@@ -16732,19 +15730,19 @@ export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If authenticated user does not have permission to delete the private snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * If `{node_id}` is not the latest revision.
      */
-    405: _Error;
+    405: Error;
 };
 
 export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdError = DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
@@ -16784,15 +15782,15 @@ export type GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If authenticated user does not have access to the private snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet, or the revision does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdByNodeIdError = GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
@@ -16832,19 +15830,19 @@ export type PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * If authenticated user does not have permission to update the private snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet or the revision does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * If `{node_id}` is not the latest revision.
      */
-    405: _Error;
+    405: Error;
 };
 
 export type PutSnippetsByWorkspaceByEncodedIdByNodeIdError = PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
@@ -16888,11 +15886,11 @@ export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the file or snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathError = GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors];
@@ -16935,11 +15933,11 @@ export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffError = GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors[keyof GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors];
@@ -16977,11 +15975,11 @@ export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the snippet does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchError = GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors[keyof GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors];
@@ -17033,11 +16031,11 @@ export type CreatePipelineVariableForTeamErrors = {
     /**
      * The account does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * A variable with the provided key already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreatePipelineVariableForTeamError = CreatePipelineVariableForTeamErrors[keyof CreatePipelineVariableForTeamErrors];
@@ -17071,7 +16069,7 @@ export type DeletePipelineVariableForTeamErrors = {
     /**
      * The account or the variable with the provided UUID does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeletePipelineVariableForTeamError = DeletePipelineVariableForTeamErrors[keyof DeletePipelineVariableForTeamErrors];
@@ -17105,7 +16103,7 @@ export type GetPipelineVariableForTeamErrors = {
     /**
      * The account or variable with the given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineVariableForTeamError = GetPipelineVariableForTeamErrors[keyof GetPipelineVariableForTeamErrors];
@@ -17142,7 +16140,7 @@ export type UpdatePipelineVariableForTeamErrors = {
     /**
      * The account or the variable was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdatePipelineVariableForTeamError = UpdatePipelineVariableForTeamErrors[keyof UpdatePipelineVariableForTeamErrors];
@@ -17195,15 +16193,15 @@ export type SearchTeamErrors = {
      * key will be returned in `error.data.key` property.
      *
      */
-    400: _Error;
+    400: Error;
     /**
      * Search is not enabled for the requested team, navigate to [https://bitbucket.org/search](https://bitbucket.org/search) to turn it on
      */
-    404: _Error;
+    404: Error;
     /**
      * Too many requests, try again later
      */
-    429: _Error;
+    429: Error;
 };
 
 export type SearchTeamError = SearchTeamErrors[keyof SearchTeamErrors];
@@ -17228,7 +16226,7 @@ export type GetUserErrors = {
     /**
      * When the request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type GetUserError = GetUserErrors[keyof GetUserErrors];
@@ -17253,7 +16251,7 @@ export type GetUserEmailsErrors = {
     /**
      * Unexpected error.
      */
-    default: _Error;
+    default: Error;
 };
 
 export type GetUserEmailsError = GetUserEmailsErrors[keyof GetUserEmailsErrors];
@@ -17262,7 +16260,7 @@ export type GetUserEmailsResponses = {
     /**
      * Unexpected error.
      */
-    default: _Error;
+    default: Error;
 };
 
 export type GetUserEmailsResponse = GetUserEmailsResponses[keyof GetUserEmailsResponses];
@@ -17283,7 +16281,7 @@ export type GetUserEmailsByEmailErrors = {
     /**
      * Unexpected error.
      */
-    default: _Error;
+    default: Error;
 };
 
 export type GetUserEmailsByEmailError = GetUserEmailsByEmailErrors[keyof GetUserEmailsByEmailErrors];
@@ -17292,7 +16290,7 @@ export type GetUserEmailsByEmailResponses = {
     /**
      * Unexpected error.
      */
-    default: _Error;
+    default: Error;
 };
 
 export type GetUserEmailsByEmailResponse = GetUserEmailsByEmailResponses[keyof GetUserEmailsByEmailResponses];
@@ -17352,7 +16350,7 @@ export type GetUserPermissionsWorkspacesErrors = {
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type GetUserPermissionsWorkspacesError = GetUserPermissionsWorkspacesErrors[keyof GetUserPermissionsWorkspacesErrors];
@@ -17386,11 +16384,11 @@ export type GetUserWorkspacesErrors = {
     /**
      * The request was invalid.
      */
-    400: _Error;
+    400: Error;
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type GetUserWorkspacesError = GetUserWorkspacesErrors[keyof GetUserWorkspacesErrors];
@@ -17422,11 +16420,11 @@ export type GetUserWorkspacesByWorkspacePermissionErrors = {
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user does not have access to the workspace.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type GetUserWorkspacesByWorkspacePermissionError = GetUserWorkspacesByWorkspacePermissionErrors[keyof GetUserWorkspacesByWorkspacePermissionErrors];
@@ -17471,15 +16469,15 @@ export type GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors = {
     /**
      * The request was invalid.
      */
-    400: _Error;
+    400: Error;
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user does not have access to the workspace.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type GetUserWorkspacesByWorkspacePermissionsRepositoriesError = GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors[keyof GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors];
@@ -17511,7 +16509,7 @@ export type GetUsersBySelectedUserErrors = {
     /**
      * If no user exists for the specified UUID, or if the specified account is a team account, not a personal account.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetUsersBySelectedUserError = GetUsersBySelectedUserErrors[keyof GetUsersBySelectedUserErrors];
@@ -17547,7 +16545,7 @@ export type GetUsersBySelectedUserGpgKeysErrors = {
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetUsersBySelectedUserGpgKeysError = GetUsersBySelectedUserGpgKeysErrors[keyof GetUsersBySelectedUserGpgKeysErrors];
@@ -17582,7 +16580,7 @@ export type PostUsersBySelectedUserGpgKeysErrors = {
     /**
      * If the submitted key or related value is invalid
      */
-    400: _Error;
+    400: Error;
     /**
      * If the current user does not have permission to add a key for the specified user
      */
@@ -17590,7 +16588,7 @@ export type PostUsersBySelectedUserGpgKeysErrors = {
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostUsersBySelectedUserGpgKeysError = PostUsersBySelectedUserGpgKeysErrors[keyof PostUsersBySelectedUserGpgKeysErrors];
@@ -17627,7 +16625,7 @@ export type DeleteUsersBySelectedUserGpgKeysByFingerprintErrors = {
     /**
      * If the submitted key or related value is invalid
      */
-    400: _Error;
+    400: Error;
     /**
      * If the current user does not have permission to delete a key for the specified user, or the submitted key is a subkey
      */
@@ -17635,7 +16633,7 @@ export type DeleteUsersBySelectedUserGpgKeysByFingerprintErrors = {
     /**
      * If the specified key does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteUsersBySelectedUserGpgKeysByFingerprintError = DeleteUsersBySelectedUserGpgKeysByFingerprintErrors[keyof DeleteUsersBySelectedUserGpgKeysByFingerprintErrors];
@@ -17676,7 +16674,7 @@ export type GetUsersBySelectedUserGpgKeysByFingerprintErrors = {
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetUsersBySelectedUserGpgKeysByFingerprintError = GetUsersBySelectedUserGpgKeysByFingerprintErrors[keyof GetUsersBySelectedUserGpgKeysByFingerprintErrors];
@@ -17730,11 +16728,11 @@ export type CreatePipelineVariableForUserErrors = {
     /**
      * The account does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * A variable with the provided key already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreatePipelineVariableForUserError = CreatePipelineVariableForUserErrors[keyof CreatePipelineVariableForUserErrors];
@@ -17768,7 +16766,7 @@ export type DeletePipelineVariableForUserErrors = {
     /**
      * The account or the variable with the provided UUID does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeletePipelineVariableForUserError = DeletePipelineVariableForUserErrors[keyof DeletePipelineVariableForUserErrors];
@@ -17802,7 +16800,7 @@ export type GetPipelineVariableForUserErrors = {
     /**
      * The account or variable with the given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineVariableForUserError = GetPipelineVariableForUserErrors[keyof GetPipelineVariableForUserErrors];
@@ -17839,7 +16837,7 @@ export type UpdatePipelineVariableForUserErrors = {
     /**
      * The account or the variable was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdatePipelineVariableForUserError = UpdatePipelineVariableForUserErrors[keyof UpdatePipelineVariableForUserErrors];
@@ -17982,15 +16980,15 @@ export type SearchAccountErrors = {
      * key will be returned in `error.data.key` property.
      *
      */
-    400: _Error;
+    400: Error;
     /**
      * Search is not enabled for the requested user, navigate to [https://bitbucket.org/search](https://bitbucket.org/search) to turn it on
      */
-    404: _Error;
+    404: Error;
     /**
      * Too many requests, try again later
      */
-    429: _Error;
+    429: Error;
 };
 
 export type SearchAccountError = SearchAccountErrors[keyof SearchAccountErrors];
@@ -18026,7 +17024,7 @@ export type GetUsersBySelectedUserSshKeysErrors = {
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetUsersBySelectedUserSshKeysError = GetUsersBySelectedUserSshKeysErrors[keyof GetUsersBySelectedUserSshKeysErrors];
@@ -18068,7 +17066,7 @@ export type PostUsersBySelectedUserSshKeysErrors = {
     /**
      * If the submitted key or related value is invalid
      */
-    400: _Error;
+    400: Error;
     /**
      * If the current user does not have permission to add a key for the specified user
      */
@@ -18076,7 +17074,7 @@ export type PostUsersBySelectedUserSshKeysErrors = {
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostUsersBySelectedUserSshKeysError = PostUsersBySelectedUserSshKeysErrors[keyof PostUsersBySelectedUserSshKeysErrors];
@@ -18112,7 +17110,7 @@ export type DeleteUsersBySelectedUserSshKeysByKeyIdErrors = {
     /**
      * If the submitted key or related value is invalid
      */
-    400: _Error;
+    400: Error;
     /**
      * If the current user does not have permission to add a key for the specified user
      */
@@ -18120,7 +17118,7 @@ export type DeleteUsersBySelectedUserSshKeysByKeyIdErrors = {
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteUsersBySelectedUserSshKeysByKeyIdError = DeleteUsersBySelectedUserSshKeysByKeyIdErrors[keyof DeleteUsersBySelectedUserSshKeysByKeyIdErrors];
@@ -18160,7 +17158,7 @@ export type GetUsersBySelectedUserSshKeysByKeyIdErrors = {
     /**
      * If the specified user or key does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetUsersBySelectedUserSshKeysByKeyIdError = GetUsersBySelectedUserSshKeysByKeyIdErrors[keyof GetUsersBySelectedUserSshKeysByKeyIdErrors];
@@ -18199,7 +17197,7 @@ export type PutUsersBySelectedUserSshKeysByKeyIdErrors = {
     /**
      * If the submitted key or related value is invalid
      */
-    400: _Error;
+    400: Error;
     /**
      * If the current user does not have permission to add a key for the specified user
      */
@@ -18207,7 +17205,7 @@ export type PutUsersBySelectedUserSshKeysByKeyIdErrors = {
     /**
      * If the specified user does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutUsersBySelectedUserSshKeysByKeyIdError = PutUsersBySelectedUserSshKeysByKeyIdErrors[keyof PutUsersBySelectedUserSshKeysByKeyIdErrors];
@@ -18259,7 +17257,7 @@ export type GetWorkspacesErrors = {
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type GetWorkspacesError = GetWorkspacesErrors[keyof GetWorkspacesErrors];
@@ -18291,7 +17289,7 @@ export type GetWorkspacesByWorkspaceErrors = {
     /**
      * If no workspace exists for the specified name or UUID.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceError = GetWorkspacesByWorkspaceErrors[keyof GetWorkspacesByWorkspaceErrors];
@@ -18323,11 +17321,11 @@ export type GetWorkspacesByWorkspaceHooksErrors = {
     /**
      * If the authenticated user is not an owner on the specified workspace.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified workspace does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceHooksError = GetWorkspacesByWorkspaceHooksErrors[keyof GetWorkspacesByWorkspaceHooksErrors];
@@ -18359,11 +17357,11 @@ export type PostWorkspacesByWorkspaceHooksErrors = {
     /**
      * If the authenticated user does not have permission to install webhooks on the specified workspace.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified workspace does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostWorkspacesByWorkspaceHooksError = PostWorkspacesByWorkspaceHooksErrors[keyof PostWorkspacesByWorkspaceHooksErrors];
@@ -18399,11 +17397,11 @@ export type DeleteWorkspacesByWorkspaceHooksByUidErrors = {
     /**
      * If the authenticated user does not have permission to delete the webhook.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the webhook or workspace does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteWorkspacesByWorkspaceHooksByUidError = DeleteWorkspacesByWorkspaceHooksByUidErrors[keyof DeleteWorkspacesByWorkspaceHooksByUidErrors];
@@ -18439,7 +17437,7 @@ export type GetWorkspacesByWorkspaceHooksByUidErrors = {
     /**
      * If the webhook or workspace does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceHooksByUidError = GetWorkspacesByWorkspaceHooksByUidErrors[keyof GetWorkspacesByWorkspaceHooksByUidErrors];
@@ -18475,11 +17473,11 @@ export type PutWorkspacesByWorkspaceHooksByUidErrors = {
     /**
      * If the authenticated user does not have permission to update the webhook.
      */
-    403: _Error;
+    403: Error;
     /**
      * If the webhook or workspace does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutWorkspacesByWorkspaceHooksByUidError = PutWorkspacesByWorkspaceHooksByUidErrors[keyof PutWorkspacesByWorkspaceHooksByUidErrors];
@@ -18511,11 +17509,11 @@ export type GetWorkspacesByWorkspaceMembersErrors = {
     /**
      * When more than 90 emails were provided when querying by email.
      */
-    400: _Error;
+    400: Error;
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type GetWorkspacesByWorkspaceMembersError = GetWorkspacesByWorkspaceMembersErrors[keyof GetWorkspacesByWorkspaceMembersErrors];
@@ -18551,11 +17549,11 @@ export type GetWorkspacesByWorkspaceMembersByMemberErrors = {
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * A workspace cannot be found, or a user cannot be found, or the user is not a a member of the workspace.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceMembersByMemberError = GetWorkspacesByWorkspaceMembersByMemberErrors[keyof GetWorkspacesByWorkspaceMembersByMemberErrors];
@@ -18594,7 +17592,7 @@ export type GetWorkspacesByWorkspacePermissionsErrors = {
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
 };
 
 export type GetWorkspacesByWorkspacePermissionsError = GetWorkspacesByWorkspacePermissionsErrors[keyof GetWorkspacesByWorkspacePermissionsErrors];
@@ -18640,7 +17638,7 @@ export type GetWorkspacesByWorkspacePermissionsRepositoriesErrors = {
     /**
      * The requesting user isn't an admin of the workspace.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type GetWorkspacesByWorkspacePermissionsRepositoriesError = GetWorkspacesByWorkspacePermissionsRepositoriesErrors[keyof GetWorkspacesByWorkspacePermissionsRepositoriesErrors];
@@ -18692,7 +17690,7 @@ export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors = {
     /**
      * The requesting user isn't an admin of the repository.
      */
-    403: _Error;
+    403: Error;
 };
 
 export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugError = GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors[keyof GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors];
@@ -18722,7 +17720,7 @@ export type GetOidcConfigurationErrors = {
     /**
      * The workspace was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetOidcConfigurationError = GetOidcConfigurationErrors[keyof GetOidcConfigurationErrors];
@@ -18750,7 +17748,7 @@ export type GetOidcKeysErrors = {
     /**
      * The workspace was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetOidcKeysError = GetOidcKeysErrors[keyof GetOidcKeysErrors];
@@ -18799,11 +17797,11 @@ export type CreateWorkspaceRunnerErrors = {
     /**
      * The request body contained invalid properties or runner limit exceeded.
      */
-    400: _Error;
+    400: Error;
     /**
      * The workspace runner with the provided UUID already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreateWorkspaceRunnerError = CreateWorkspaceRunnerErrors[keyof CreateWorkspaceRunnerErrors];
@@ -18837,7 +17835,7 @@ export type DeleteWorkspaceRunnerErrors = {
     /**
      * The workspace runner was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteWorkspaceRunnerError = DeleteWorkspaceRunnerErrors[keyof DeleteWorkspaceRunnerErrors];
@@ -18871,7 +17869,7 @@ export type GetWorkspaceRunnerErrors = {
     /**
      * The workspace runner was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspaceRunnerError = GetWorkspaceRunnerErrors[keyof GetWorkspaceRunnerErrors];
@@ -18905,7 +17903,7 @@ export type UpdateWorkspaceRunnerErrors = {
     /**
      * The workspace runner was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdateWorkspaceRunnerError = UpdateWorkspaceRunnerErrors[keyof UpdateWorkspaceRunnerErrors];
@@ -18959,11 +17957,11 @@ export type CreatePipelineVariableForWorkspaceErrors = {
     /**
      * The workspace does not exist.
      */
-    404: _Error;
+    404: Error;
     /**
      * A variable with the provided key already exists.
      */
-    409: _Error;
+    409: Error;
 };
 
 export type CreatePipelineVariableForWorkspaceError = CreatePipelineVariableForWorkspaceErrors[keyof CreatePipelineVariableForWorkspaceErrors];
@@ -18997,7 +17995,7 @@ export type DeletePipelineVariableForWorkspaceErrors = {
     /**
      * The workspace or the variable with the provided UUID does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeletePipelineVariableForWorkspaceError = DeletePipelineVariableForWorkspaceErrors[keyof DeletePipelineVariableForWorkspaceErrors];
@@ -19031,7 +18029,7 @@ export type GetPipelineVariableForWorkspaceErrors = {
     /**
      * The workspace or variable with the given UUID was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetPipelineVariableForWorkspaceError = GetPipelineVariableForWorkspaceErrors[keyof GetPipelineVariableForWorkspaceErrors];
@@ -19068,7 +18066,7 @@ export type UpdatePipelineVariableForWorkspaceErrors = {
     /**
      * The workspace or the variable was not found.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type UpdatePipelineVariableForWorkspaceError = UpdatePipelineVariableForWorkspaceErrors[keyof UpdatePipelineVariableForWorkspaceErrors];
@@ -19100,7 +18098,7 @@ export type GetWorkspacesByWorkspaceProjectsErrors = {
     /**
      * A workspace doesn't exist at this location.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsError = GetWorkspacesByWorkspaceProjectsErrors[keyof GetWorkspacesByWorkspaceProjectsErrors];
@@ -19132,11 +18130,11 @@ export type PostWorkspacesByWorkspaceProjectsErrors = {
     /**
      * The user requesting to create a project does not have the necessary permissions.
      */
-    403: _Error;
+    403: Error;
     /**
      * A workspace doesn't exist at this location.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostWorkspacesByWorkspaceProjectsError = PostWorkspacesByWorkspaceProjectsErrors[keyof PostWorkspacesByWorkspaceProjectsErrors];
@@ -19174,11 +18172,11 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
     /**
      * The requesting user isn't authorized to delete the project or the project isn't empty.
      */
-    403: _Error;
+    403: Error;
     /**
      * A project isn't hosted at this location.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors];
@@ -19216,15 +18214,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
     /**
      * The request wasn't authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't authorized to access the project.
      */
-    403: _Error;
+    403: Error;
     /**
      * A project isn't hosted at this location.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyError = GetWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyErrors];
@@ -19262,11 +18260,11 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
     /**
      * The requesting user isn't authorized to update or create the project.
      */
-    403: _Error;
+    403: Error;
     /**
      * A workspace doesn't exist at the location. Note that the project's absence from this location doesn't raise a 404, since a PUT at a non-existent location can be used to create a new project.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutWorkspacesByWorkspaceProjectsByProjectKeyError = PutWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyErrors];
@@ -19308,15 +18306,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have read access to the project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the project does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelError = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors];
@@ -19354,15 +18352,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsEr
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the project does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors];
@@ -19400,19 +18398,19 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsEr
     /**
      * If the request contains an invalid branching model configuration
      */
-    400: _Error;
+    400: Error;
     /**
      * If the request was not authenticated
      */
-    401: _Error;
+    401: Error;
     /**
      * If the authenticated user does not have admin access to the project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the project does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError = PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors];
@@ -19450,11 +18448,11 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors =
     /**
      * If the authenticated user does not have admin access to the project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the workspace or project does not exist at this location
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersError = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors];
@@ -19498,15 +18496,15 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySel
     /**
      * If the specified user is not a default reviewer for the project
      */
-    400: _Error;
+    400: Error;
     /**
      * If the authenticated user does not have admin access to the project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified user, project, or workspace does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
@@ -19550,15 +18548,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelect
     /**
      * If the specified user is not a default reviewer for the project
      */
-    400: _Error;
+    400: Error;
     /**
      * If the authenticated user does not have admin access to the project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified user, project, or workspace does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
@@ -19602,15 +18600,15 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelect
     /**
      * If the specified user cannot be added as a default reviewer for the project
      */
-    400: _Error;
+    400: Error;
     /**
      * If the authenticated user does not have admin access to the project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified user, project, or workspace does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
@@ -19648,11 +18646,11 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
     /**
      * If the specified workspace or project is not accessible to the current user
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified workspace or project does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors];
@@ -19690,15 +18688,15 @@ export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
     /**
      * Invalid deploy key inputs
      */
-    400: _Error;
+    400: Error;
     /**
      * If the specified workspace or project is not accessible to the current user
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified workspace or project does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError = PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors[keyof PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors];
@@ -19740,11 +18738,11 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErro
     /**
      * If the current user does not have permission to delete a key for the specified project
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified workspace, project, or project deploy key does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors];
@@ -19786,11 +18784,11 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors 
     /**
      * If the specified workspace or project is not accessible to the current user
      */
-    403: _Error;
+    403: Error;
     /**
      * If the specified workspace or project does not exist
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors];
@@ -19827,15 +18825,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsE
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The user doesn't have admin access to the project.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or both of the workspace and project don't exist for the given identifiers or the requesting user is not authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors];
@@ -19876,15 +18874,15 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGrou
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the project, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, project, and group doesn't exist                               for the given identifiers or the requesting user is not                               authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
@@ -19925,15 +18923,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsB
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The user doesn't have admin access to the project.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, project, and group doesn't exist                               for the given identifiers or the requesting user is not                               authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
@@ -19977,23 +18975,23 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsB
     /**
      * No permission value was provided or the value is invalid(not one of read, write, create-repo, or admin).
      */
-    400: _Error;
+    400: Error;
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * You have reached your plan's user limit and must upgrade before giving access to additional users.
      */
-    402: _Error;
+    402: Error;
     /**
      * The requesting user isn't an admin of the project, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, project, and group doesn't exist                               for the given identifiers or the requesting user is not                               authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
@@ -20030,15 +19028,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersEr
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The user doesn't have admin access to the project.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or both of the workspace and project don't exist for the given identifiers or the requesting user is not authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors];
@@ -20081,15 +19079,15 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUser
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the project, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, project, and selected user doesn't exist for the given identifiers or the requesting user is not authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
@@ -20132,15 +19130,15 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBy
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * The requesting user isn't an admin of the project.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, project, and selected user doesn't exist for the given identifiers or the requesting user is not authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
@@ -20186,23 +19184,23 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBy
     /**
      * No permission value was provided or the value is invalid (not one of read, write, create-repo, or admin)
      */
-    400: _Error;
+    400: Error;
     /**
      * The user couldn't be authenticated.
      */
-    401: _Error;
+    401: Error;
     /**
      * You have reached your plan's user limit and must upgrade before giving access to additional users.
      */
-    402: _Error;
+    402: Error;
     /**
      * The requesting user isn't an admin of the project, or the authentication method was not via app password.
      */
-    403: _Error;
+    403: Error;
     /**
      * One or more of the workspace, project, and selected user doesn't exist for the given identifiers or the requesting user is not authenticated
      */
-    404: _Error;
+    404: Error;
 };
 
 export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
@@ -20245,7 +19243,7 @@ export type GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors = {
     /**
      * If the specified user does not exist.
      */
-    404: _Error;
+    404: Error;
 };
 
 export type GetWorkspacesByWorkspacePullrequestsBySelectedUserError = GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors[keyof GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors];
@@ -20298,15 +19296,15 @@ export type SearchWorkspaceErrors = {
      * key will be returned in `error.data.key` property.
      *
      */
-    400: _Error;
+    400: Error;
     /**
      * Search is not enabled for the requested workspace, navigate to [https://bitbucket.org/search](https://bitbucket.org/search) to turn it on
      */
-    404: _Error;
+    404: Error;
     /**
      * Too many requests, try again later
      */
-    429: _Error;
+    429: Error;
 };
 
 export type SearchWorkspaceError = SearchWorkspaceErrors[keyof SearchWorkspaceErrors];

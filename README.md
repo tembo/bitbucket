@@ -1,6 +1,6 @@
 <h1 align="center">@tembo-io/bitbucket</h1>
 
-<p align="center">A fully typed TypeScript client for the <a href="https://developer.atlassian.com/cloud/bitbucket/rest/intro/">Bitbucket Cloud REST API</a>. Generated from the <a href="https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json">official OpenAPI spec</a> with clean, idiomatic method names.</p>
+<p align="center">A fully typed TypeScript client for the <a href="https://developer.atlassian.com/cloud/bitbucket/rest/intro/">Bitbucket Cloud REST API</a>. Generated from the <a href="https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json">official OpenAPI spec</a>.</p>
 
 ## Install
 

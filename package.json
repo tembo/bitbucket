@@ -11,7 +11,7 @@
     "README.md"
   ],
   "scripts": {
-    "generate": "bunx @hey-api/openapi-ts",
+    "generate": "bunx @hey-api/openapi-ts && bun scripts/postprocess-sdk.ts",
     "build": "tsup",
     "tsc": "tsc",
     "postprocess": "bun scripts/postprocess-sdk.ts"

@@ -17440,6 +17440,59 @@ export type GetUserWorkspacesByWorkspacePermissionResponses = {
 
 export type GetUserWorkspacesByWorkspacePermissionResponse = GetUserWorkspacesByWorkspacePermissionResponses[keyof GetUserWorkspacesByWorkspacePermissionResponses];
 
+export type GetUserWorkspacesByWorkspacePermissionsRepositoriesData = {
+    body?: never;
+    path: {
+        /**
+         * This can either be the workspace ID (slug) or the workspace UUID
+         * surrounded by curly-braces, for example: `{workspace UUID}`.
+         *
+         */
+        workspace: string;
+    };
+    query?: {
+        /**
+         *
+         * Query string to narrow down the response as per
+         * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+         */
+        q?: string;
+        /**
+         *
+         * Name of a response property sort the result by as per
+         * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering).
+         */
+        sort?: string;
+    };
+    url: '/user/workspaces/{workspace}/permissions/repositories';
+};
+
+export type GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors = {
+    /**
+     * The request was invalid.
+     */
+    400: _Error;
+    /**
+     * The request wasn't authenticated.
+     */
+    401: _Error;
+    /**
+     * The requesting user does not have access to the workspace.
+     */
+    403: _Error;
+};
+
+export type GetUserWorkspacesByWorkspacePermissionsRepositoriesError = GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors[keyof GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors];
+
+export type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses = {
+    /**
+     * The list of repository permissions for the authenticated user in the specified workspace.
+     */
+    200: PaginatedRepositoryPermissions;
+};
+
+export type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponse = GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses[keyof GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses];
+
 export type GetUsersBySelectedUserData = {
     body?: never;
     path: {

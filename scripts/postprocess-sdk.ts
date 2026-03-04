@@ -281,6 +281,9 @@ const RENAMES: Record<string, string> = {
   getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId: "getProjectPermissionUser",
   putWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId: "updateProjectPermissionUser",
   getWorkspacesByWorkspacePullrequestsBySelectedUser: "listWorkspaceUserPullRequests",
+
+  // User workspace permissions
+  getUserWorkspacesByWorkspacePermissionsRepositories: "listUserWorkspaceRepoPermissions",
 };
 
 async function main() {

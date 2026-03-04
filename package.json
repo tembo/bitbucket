@@ -1,6 +1,6 @@
 {
   "name": "@tembo-io/bitbucket",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "TypeScript client for the Bitbucket Cloud REST API",
   "type": "module",
   "main": "./lib/index.js",
@@ -11,6 +11,7 @@
     "README.md"
   ],
   "scripts": {
+    "generate": "bunx @hey-api/openapi-ts",
     "build": "tsup",
     "tsc": "tsc",
     "postprocess": "bun scripts/postprocess-sdk.ts"

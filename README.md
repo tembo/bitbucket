@@ -317,11 +317,10 @@ bitbucket.client.interceptors.error.use((error) => {
 
 ## Development
 
-Regenerate the SDK from the latest Bitbucket OpenAPI spec and apply method name cleanup:
+Regenerate the SDK from the latest Bitbucket OpenAPI spec:
 
 ```bash
 bun run generate
-bun run postprocess
 ```
 
 ## License

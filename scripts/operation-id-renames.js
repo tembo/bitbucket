@@ -1,4 +1,4 @@
-const RENAMES: Record<string, string> = {
+export const operationIdRenames = {
   // Addon
   putAddon: "updateAddon",
   getAddonLinkersByLinkerKey: "getAddonLinker",
@@ -8,7 +8,7 @@ const RENAMES: Record<string, string> = {
   putAddonLinkersByLinkerKeyValues: "updateAddonLinkerValues",
   deleteAddonLinkersByLinkerKeyValuesByValueId: "deleteAddonLinkerValue",
   getAddonLinkersByLinkerKeyValuesByValueId: "getAddonLinkerValue",
-
+  
   // Repositories (top-level)
   getRepositories: "listRepositories",
   getRepositoriesByWorkspace: "listWorkspaceRepositories",
@@ -16,19 +16,19 @@ const RENAMES: Record<string, string> = {
   getRepositoriesByWorkspaceByRepoSlug: "getRepository",
   postRepositoriesByWorkspaceByRepoSlug: "createRepository",
   putRepositoriesByWorkspaceByRepoSlug: "updateRepository",
-
+  
   // Branch restrictions
   getRepositoriesByWorkspaceByRepoSlugBranchRestrictions: "listBranchRestrictions",
   postRepositoriesByWorkspaceByRepoSlugBranchRestrictions: "createBranchRestriction",
   deleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById: "deleteBranchRestriction",
   getRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById: "getBranchRestriction",
   putRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById: "updateBranchRestriction",
-
+  
   // Branching model
   getRepositoriesByWorkspaceByRepoSlugBranchingModel: "getBranchingModel",
   getRepositoriesByWorkspaceByRepoSlugBranchingModelSettings: "getBranchingModelSettings",
   putRepositoriesByWorkspaceByRepoSlugBranchingModelSettings: "updateBranchingModelSettings",
-
+  
   // Commits
   getRepositoriesByWorkspaceByRepoSlugCommitByCommit: "getCommit",
   deleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApprove: "deleteCommitApproval",
@@ -46,52 +46,52 @@ const RENAMES: Record<string, string> = {
   postRepositoriesByWorkspaceByRepoSlugCommits: "filterCommits",
   getRepositoriesByWorkspaceByRepoSlugCommitsByRevision: "listCommitsByRevision",
   postRepositoriesByWorkspaceByRepoSlugCommitsByRevision: "filterCommitsByRevision",
-
+  
   // Components
   getRepositoriesByWorkspaceByRepoSlugComponents: "listComponents",
   getRepositoriesByWorkspaceByRepoSlugComponentsByComponentId: "getComponent",
-
+  
   // Default reviewers
   getRepositoriesByWorkspaceByRepoSlugDefaultReviewers: "listDefaultReviewers",
   deleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername: "deleteDefaultReviewer",
   getRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername: "getDefaultReviewer",
   putRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername: "addDefaultReviewer",
-
+  
   // Deploy keys
   getRepositoriesByWorkspaceByRepoSlugDeployKeys: "listDeployKeys",
   postRepositoriesByWorkspaceByRepoSlugDeployKeys: "createDeployKey",
   deleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId: "deleteDeployKey",
   getRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId: "getDeployKey",
   putRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId: "updateDeployKey",
-
+  
   // Diff
   getRepositoriesByWorkspaceByRepoSlugDiffBySpec: "getDiff",
   getRepositoriesByWorkspaceByRepoSlugDiffstatBySpec: "getDiffstat",
-
+  
   // Downloads
   getRepositoriesByWorkspaceByRepoSlugDownloads: "listDownloads",
   postRepositoriesByWorkspaceByRepoSlugDownloads: "createDownload",
   deleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilename: "deleteDownload",
   getRepositoriesByWorkspaceByRepoSlugDownloadsByFilename: "getDownload",
-
+  
   // Effective models
   getRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModel: "getEffectiveBranchingModel",
   getRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewers: "listEffectiveDefaultReviewers",
-
+  
   // File history
   getRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPath: "getFileHistory",
-
+  
   // Forks
   getRepositoriesByWorkspaceByRepoSlugForks: "listForks",
   postRepositoriesByWorkspaceByRepoSlugForks: "createFork",
-
+  
   // Repo hooks
   getRepositoriesByWorkspaceByRepoSlugHooks: "listRepoHooks",
   postRepositoriesByWorkspaceByRepoSlugHooks: "createRepoHook",
   deleteRepositoriesByWorkspaceByRepoSlugHooksByUid: "deleteRepoHook",
   getRepositoriesByWorkspaceByRepoSlugHooksByUid: "getRepoHook",
   putRepositoriesByWorkspaceByRepoSlugHooksByUid: "updateRepoHook",
-
+  
   // Issues
   getRepositoriesByWorkspaceByRepoSlugIssues: "listIssues",
   postRepositoriesByWorkspaceByRepoSlugIssues: "createIssue",
@@ -120,21 +120,21 @@ const RENAMES: Record<string, string> = {
   postRepositoriesByWorkspaceByRepoSlugIssuesExport: "exportIssues",
   getRepositoriesByWorkspaceByRepoSlugIssuesImport: "getIssueImportStatus",
   postRepositoriesByWorkspaceByRepoSlugIssuesImport: "importIssues",
-
+  
   // Merge base
   getRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspec: "getMergeBase",
-
+  
   // Milestones
   getRepositoriesByWorkspaceByRepoSlugMilestones: "listMilestones",
   getRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneId: "getMilestone",
-
+  
   // Override settings
   getRepositoriesByWorkspaceByRepoSlugOverrideSettings: "getOverrideSettings",
   putRepositoriesByWorkspaceByRepoSlugOverrideSettings: "updateOverrideSettings",
-
+  
   // Patch
   getRepositoriesByWorkspaceByRepoSlugPatchBySpec: "getPatch",
-
+  
   // Repo permissions
   getRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroups: "listRepoPermissionGroups",
   deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlug: "deleteRepoPermissionGroup",
@@ -144,7 +144,7 @@ const RENAMES: Record<string, string> = {
   deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId: "deleteRepoPermissionUser",
   getRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId: "getRepoPermissionUser",
   putRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId: "updateRepoPermissionUser",
-
+  
   // Pull requests
   getRepositoriesByWorkspaceByRepoSlugPullrequests: "listPullRequests",
   postRepositoriesByWorkspaceByRepoSlugPullrequests: "createPullRequest",
@@ -176,7 +176,7 @@ const RENAMES: Record<string, string> = {
   deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId: "deletePullRequestTask",
   getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId: "getPullRequestTask",
   putRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId: "updatePullRequestTask",
-
+  
   // Refs / branches / tags
   getRepositoriesByWorkspaceByRepoSlugRefs: "listRefs",
   getRepositoriesByWorkspaceByRepoSlugRefsBranches: "listBranches",
@@ -187,19 +187,19 @@ const RENAMES: Record<string, string> = {
   postRepositoriesByWorkspaceByRepoSlugRefsTags: "createTag",
   deleteRepositoriesByWorkspaceByRepoSlugRefsTagsByName: "deleteTag",
   getRepositoriesByWorkspaceByRepoSlugRefsTagsByName: "getTag",
-
+  
   // Source
   getRepositoriesByWorkspaceByRepoSlugSrc: "listSrcRoot",
   postRepositoriesByWorkspaceByRepoSlugSrc: "createSrcFileCommit",
   getRepositoriesByWorkspaceByRepoSlugSrcByCommitByPath: "getSrcFile",
-
+  
   // Versions
   getRepositoriesByWorkspaceByRepoSlugVersions: "listVersions",
   getRepositoriesByWorkspaceByRepoSlugVersionsByVersionId: "getVersion",
-
+  
   // Watchers
   getRepositoriesByWorkspaceByRepoSlugWatchers: "listRepoWatchers",
-
+  
   // Snippets
   getSnippets: "listSnippets",
   postSnippets: "createSnippet",
@@ -226,7 +226,7 @@ const RENAMES: Record<string, string> = {
   getSnippetsByWorkspaceByEncodedIdWatch: "getSnippetWatchStatus",
   putSnippetsByWorkspaceByEncodedIdWatch: "watchSnippet",
   getSnippetsByWorkspaceByEncodedIdWatchers: "listSnippetWatchers",
-
+  
   // Users
   getUserEmailsByEmail: "getUserEmail",
   getUserWorkspacesByWorkspacePermission: "getUserWorkspacePermission",
@@ -240,7 +240,7 @@ const RENAMES: Record<string, string> = {
   postUsersBySelectedUserSshKeys: "createUserSshKey",
   deleteUsersBySelectedUserSshKeysByKeyId: "deleteUserSshKey",
   putUsersBySelectedUserSshKeysByKeyId: "updateUserSshKey",
-
+  
   // Workspaces
   getWorkspaces: "listWorkspaces",
   getWorkspacesByWorkspace: "getWorkspace",
@@ -254,7 +254,7 @@ const RENAMES: Record<string, string> = {
   getWorkspacesByWorkspacePermissions: "listWorkspacePermissions",
   getWorkspacesByWorkspacePermissionsRepositories: "listWorkspaceRepoPermissions",
   getWorkspacesByWorkspacePermissionsRepositoriesByRepoSlug: "getWorkspaceRepoPermission",
-
+  
   // Projects
   getWorkspacesByWorkspaceProjects: "listProjects",
   postWorkspacesByWorkspaceProjects: "createProject",
@@ -281,65 +281,7 @@ const RENAMES: Record<string, string> = {
   getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId: "getProjectPermissionUser",
   putWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId: "updateProjectPermissionUser",
   getWorkspacesByWorkspacePullrequestsBySelectedUser: "listWorkspaceUserPullRequests",
-
+  
   // User workspace permissions
   getUserWorkspacesByWorkspacePermissionsRepositories: "listUserWorkspaceRepoPermissions",
 };
-
-async function main() {
-  const sdkPath = new URL("../src/sdk.gen.ts", import.meta.url).pathname;
-  let content = await Bun.file(sdkPath).text();
-
-  const newNames = new Set<string>();
-  const collisions: string[] = [];
-  for (const [, newName] of Object.entries(RENAMES)) {
-    if (newNames.has(newName)) {
-      collisions.push(newName);
-    }
-    newNames.add(newName);
-  }
-  if (collisions.length > 0) {
-    console.error("Duplicate new names found:", collisions);
-    process.exit(1);
-  }
-
-  const isClassBased = content.includes("class BitbucketClient");
-
-  let renamed = 0;
-  let notFound = 0;
-
-  for (const [oldName, newName] of Object.entries(RENAMES)) {
-    const pattern = isClassBased
-      ? `public ${oldName}<`
-      : `export const ${oldName} = `;
-    if (!content.includes(pattern)) {
-      console.warn(`  WARN: "${oldName}" not found in sdk.gen.ts`);
-      notFound++;
-      continue;
-    }
-    const replacement = isClassBased
-      ? `public ${newName}<`
-      : `export const ${newName} = `;
-    content = content.replace(pattern, replacement);
-    renamed++;
-  }
-
-  await Bun.write(sdkPath, content);
-
-  console.log(`Renamed ${renamed} methods (${notFound} not found)`);
-  console.log(`Mode: ${isClassBased ? "class-based" : "flat"}`);
-
-  const searchPattern = isClassBased
-    ? /public \w+ByWorkspace\w*</g
-    : /export const \w+ByWorkspace\w* = /g;
-  const remaining = content.match(searchPattern);
-  if (remaining && remaining.length > 0) {
-    console.log(`\n${remaining.length} methods still have "ByWorkspace" in their name:`);
-    for (const match of remaining) {
-      const name = match.replace("public ", "").replace("<", "").replace("export const ", "").replace(" = ", "");
-      console.log(`  ${name}`);
-    }
-  }
-}
-
-main();

@@ -1,6 +1,6 @@
 {
   "name": "@tembo-io/bitbucket",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "TypeScript client for the Bitbucket Cloud REST API",
   "type": "module",
   "main": "./lib/index.js",

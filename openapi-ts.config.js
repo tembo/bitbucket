@@ -286,17 +286,47 @@ const operationIdRenames = {
   getUserWorkspacesByWorkspacePermissionsRepositories: "listUserWorkspaceRepoPermissions",
 };
 
+function toPascalCase(value) {
+  return value
+    .split(/[^a-zA-Z0-9]+/)
+    .filter(Boolean)
+    .map(function (part) {
+      return part.charAt(0).toUpperCase() + part.slice(1);
+    })
+    .join("");
+}
+
+function buildGeneratedOperationId(method, path) {
+  const normalizedMethod = String(method || "").toLowerCase();
+  const parts = String(path || "")
+    .split("/")
+    .filter(Boolean)
+    .map(function (segment) {
+      if (segment.startsWith("{") && segment.endsWith("}")) {
+        return "By" + toPascalCase(segment.slice(1, -1));
+      }
+
+      return toPascalCase(segment);
+    });
+
+  return normalizedMethod + parts.join("");
+}
+
 export default {
   input: "https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
   output: "src",
   parser: {
     patch: {
-      operations: (_method, _path, operation) => {
-        if (!operation?.operationId) {
+      operations: function (method, path, operation) {
+        if (!operation) {
           return;
         }
 
-        const renamedOperationId = operationIdRenames[operation.operationId];
+        const generatedOperationId = buildGeneratedOperationId(method, path);
+        const currentOperationId = operation.operationId || generatedOperationId;
+        const renamedOperationId =
+          operationIdRenames[currentOperationId] ||
+          operationIdRenames[generatedOperationId];
         if (renamedOperationId) {
           operation.operationId = renamedOperationId;
         }

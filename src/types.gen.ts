@@ -4,20 +4,6 @@ export type ClientOptions = {
     baseUrl: 'https://api.bitbucket.org/2.0' | (string & {});
 };
 
-/**
- * Application Property
- *
- * An application property. It is a caller defined JSON object that Bitbucket will store and return.
- * The `_attributes` field at its top level can be used to control who is allowed to read and update the property.
- * The keys of the JSON object must match an allowed pattern. For details,
- * see [Application properties](/cloud/bitbucket/application-properties/).
- *
- */
-export type ApplicationProperty = {
-    _attributes?: Array<'public' | 'read_only'>;
-    [key: string]: unknown;
-};
-
 export type DeploymentEnvironment = Omit<Object, 'type'> & {
     /**
      * The UUID identifying the environment.
@@ -1502,6 +1488,20 @@ export type PaginatedPullrequests = {
      */
     previous?: string;
     values?: Array<Pullrequest>;
+};
+
+/**
+ * Application Property
+ *
+ * An application property. It is a caller defined JSON object that Bitbucket will store and return.
+ * The `_attributes` field at its top level can be used to control who is allowed to read and update the property.
+ * The keys of the JSON object must match an allowed pattern. For details,
+ * see [Application properties](/cloud/bitbucket/application-properties/).
+ *
+ */
+export type ApplicationProperty = {
+    _attributes?: Array<'public' | 'read_only'>;
+    [key: string]: unknown;
 };
 
 /**
@@ -4957,14 +4957,14 @@ export type DeleteAddonResponses = {
 
 export type DeleteAddonResponse = DeleteAddonResponses[keyof DeleteAddonResponses];
 
-export type PutAddonData = {
+export type UpdateAddonData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/addon';
 };
 
-export type PutAddonErrors = {
+export type UpdateAddonErrors = {
     /**
      * Scopes have increased or decreased to none.
      */
@@ -4979,16 +4979,16 @@ export type PutAddonErrors = {
     403: Error;
 };
 
-export type PutAddonError = PutAddonErrors[keyof PutAddonErrors];
+export type UpdateAddonError = UpdateAddonErrors[keyof UpdateAddonErrors];
 
-export type PutAddonResponses = {
+export type UpdateAddonResponses = {
     /**
      * Request has succeeded. The installation has been updated to the new descriptor.
      */
     204: void;
 };
 
-export type PutAddonResponse = PutAddonResponses[keyof PutAddonResponses];
+export type UpdateAddonResponse = UpdateAddonResponses[keyof UpdateAddonResponses];
 
 export type GetAddonLinkersData = {
     body?: never;
@@ -5013,7 +5013,7 @@ export type GetAddonLinkersResponses = {
     200: unknown;
 };
 
-export type GetAddonLinkersByLinkerKeyData = {
+export type GetAddonLinkerData = {
     body?: never;
     path: {
         /**
@@ -5026,7 +5026,7 @@ export type GetAddonLinkersByLinkerKeyData = {
     url: '/addon/linkers/{linker_key}';
 };
 
-export type GetAddonLinkersByLinkerKeyErrors = {
+export type GetAddonLinkerErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5037,16 +5037,16 @@ export type GetAddonLinkersByLinkerKeyErrors = {
     404: Error;
 };
 
-export type GetAddonLinkersByLinkerKeyError = GetAddonLinkersByLinkerKeyErrors[keyof GetAddonLinkersByLinkerKeyErrors];
+export type GetAddonLinkerError = GetAddonLinkerErrors[keyof GetAddonLinkerErrors];
 
-export type GetAddonLinkersByLinkerKeyResponses = {
+export type GetAddonLinkerResponses = {
     /**
      * Successful.
      */
     200: unknown;
 };
 
-export type DeleteAddonLinkersByLinkerKeyValuesData = {
+export type DeleteAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5059,7 +5059,7 @@ export type DeleteAddonLinkersByLinkerKeyValuesData = {
     url: '/addon/linkers/{linker_key}/values';
 };
 
-export type DeleteAddonLinkersByLinkerKeyValuesErrors = {
+export type DeleteAddonLinkerValuesErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5070,18 +5070,18 @@ export type DeleteAddonLinkersByLinkerKeyValuesErrors = {
     404: Error;
 };
 
-export type DeleteAddonLinkersByLinkerKeyValuesError = DeleteAddonLinkersByLinkerKeyValuesErrors[keyof DeleteAddonLinkersByLinkerKeyValuesErrors];
+export type DeleteAddonLinkerValuesError = DeleteAddonLinkerValuesErrors[keyof DeleteAddonLinkerValuesErrors];
 
-export type DeleteAddonLinkersByLinkerKeyValuesResponses = {
+export type DeleteAddonLinkerValuesResponses = {
     /**
      * Successfully deleted the linker values.
      */
     204: void;
 };
 
-export type DeleteAddonLinkersByLinkerKeyValuesResponse = DeleteAddonLinkersByLinkerKeyValuesResponses[keyof DeleteAddonLinkersByLinkerKeyValuesResponses];
+export type DeleteAddonLinkerValuesResponse = DeleteAddonLinkerValuesResponses[keyof DeleteAddonLinkerValuesResponses];
 
-export type GetAddonLinkersByLinkerKeyValuesData = {
+export type GetAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5094,7 +5094,7 @@ export type GetAddonLinkersByLinkerKeyValuesData = {
     url: '/addon/linkers/{linker_key}/values';
 };
 
-export type GetAddonLinkersByLinkerKeyValuesErrors = {
+export type GetAddonLinkerValuesErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5105,16 +5105,16 @@ export type GetAddonLinkersByLinkerKeyValuesErrors = {
     404: Error;
 };
 
-export type GetAddonLinkersByLinkerKeyValuesError = GetAddonLinkersByLinkerKeyValuesErrors[keyof GetAddonLinkersByLinkerKeyValuesErrors];
+export type GetAddonLinkerValuesError = GetAddonLinkerValuesErrors[keyof GetAddonLinkerValuesErrors];
 
-export type GetAddonLinkersByLinkerKeyValuesResponses = {
+export type GetAddonLinkerValuesResponses = {
     /**
      * Successful.
      */
     200: unknown;
 };
 
-export type PostAddonLinkersByLinkerKeyValuesData = {
+export type CreateAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5127,7 +5127,7 @@ export type PostAddonLinkersByLinkerKeyValuesData = {
     url: '/addon/linkers/{linker_key}/values';
 };
 
-export type PostAddonLinkersByLinkerKeyValuesErrors = {
+export type CreateAddonLinkerValuesErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5142,16 +5142,16 @@ export type PostAddonLinkersByLinkerKeyValuesErrors = {
     409: Error;
 };
 
-export type PostAddonLinkersByLinkerKeyValuesError = PostAddonLinkersByLinkerKeyValuesErrors[keyof PostAddonLinkersByLinkerKeyValuesErrors];
+export type CreateAddonLinkerValuesError = CreateAddonLinkerValuesErrors[keyof CreateAddonLinkerValuesErrors];
 
-export type PostAddonLinkersByLinkerKeyValuesResponses = {
+export type CreateAddonLinkerValuesResponses = {
     /**
      * Successfully created the linker value.
      */
     201: unknown;
 };
 
-export type PutAddonLinkersByLinkerKeyValuesData = {
+export type UpdateAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5164,7 +5164,7 @@ export type PutAddonLinkersByLinkerKeyValuesData = {
     url: '/addon/linkers/{linker_key}/values';
 };
 
-export type PutAddonLinkersByLinkerKeyValuesErrors = {
+export type UpdateAddonLinkerValuesErrors = {
     /**
      * Invalid input.
      */
@@ -5179,18 +5179,18 @@ export type PutAddonLinkersByLinkerKeyValuesErrors = {
     404: Error;
 };
 
-export type PutAddonLinkersByLinkerKeyValuesError = PutAddonLinkersByLinkerKeyValuesErrors[keyof PutAddonLinkersByLinkerKeyValuesErrors];
+export type UpdateAddonLinkerValuesError = UpdateAddonLinkerValuesErrors[keyof UpdateAddonLinkerValuesErrors];
 
-export type PutAddonLinkersByLinkerKeyValuesResponses = {
+export type UpdateAddonLinkerValuesResponses = {
     /**
      * Successfully updated the linker values.
      */
     204: void;
 };
 
-export type PutAddonLinkersByLinkerKeyValuesResponse = PutAddonLinkersByLinkerKeyValuesResponses[keyof PutAddonLinkersByLinkerKeyValuesResponses];
+export type UpdateAddonLinkerValuesResponse = UpdateAddonLinkerValuesResponses[keyof UpdateAddonLinkerValuesResponses];
 
-export type DeleteAddonLinkersByLinkerKeyValuesByValueIdData = {
+export type DeleteAddonLinkerValueData = {
     body?: never;
     path: {
         /**
@@ -5207,7 +5207,7 @@ export type DeleteAddonLinkersByLinkerKeyValuesByValueIdData = {
     url: '/addon/linkers/{linker_key}/values/{value_id}';
 };
 
-export type DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors = {
+export type DeleteAddonLinkerValueErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5218,18 +5218,18 @@ export type DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors = {
     404: Error;
 };
 
-export type DeleteAddonLinkersByLinkerKeyValuesByValueIdError = DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors[keyof DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors];
+export type DeleteAddonLinkerValueError = DeleteAddonLinkerValueErrors[keyof DeleteAddonLinkerValueErrors];
 
-export type DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses = {
+export type DeleteAddonLinkerValueResponses = {
     /**
      * Successfully deleted the linker value.
      */
     204: void;
 };
 
-export type DeleteAddonLinkersByLinkerKeyValuesByValueIdResponse = DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses[keyof DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses];
+export type DeleteAddonLinkerValueResponse = DeleteAddonLinkerValueResponses[keyof DeleteAddonLinkerValueResponses];
 
-export type GetAddonLinkersByLinkerKeyValuesByValueIdData = {
+export type GetAddonLinkerValueData = {
     body?: never;
     path: {
         /**
@@ -5246,7 +5246,7 @@ export type GetAddonLinkersByLinkerKeyValuesByValueIdData = {
     url: '/addon/linkers/{linker_key}/values/{value_id}';
 };
 
-export type GetAddonLinkersByLinkerKeyValuesByValueIdErrors = {
+export type GetAddonLinkerValueErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5257,9 +5257,9 @@ export type GetAddonLinkersByLinkerKeyValuesByValueIdErrors = {
     404: Error;
 };
 
-export type GetAddonLinkersByLinkerKeyValuesByValueIdError = GetAddonLinkersByLinkerKeyValuesByValueIdErrors[keyof GetAddonLinkersByLinkerKeyValuesByValueIdErrors];
+export type GetAddonLinkerValueError = GetAddonLinkerValueErrors[keyof GetAddonLinkerValueErrors];
 
-export type GetAddonLinkersByLinkerKeyValuesByValueIdResponses = {
+export type GetAddonLinkerValueResponses = {
     /**
      * Successful.
      */
@@ -5312,7 +5312,7 @@ export type GetHookEventsBySubjectTypeResponses = {
 
 export type GetHookEventsBySubjectTypeResponse = GetHookEventsBySubjectTypeResponses[keyof GetHookEventsBySubjectTypeResponses];
 
-export type GetRepositoriesData = {
+export type ListRepositoriesData = {
     body?: never;
     path?: never;
     query?: {
@@ -5347,16 +5347,16 @@ export type GetRepositoriesData = {
     url: '/repositories';
 };
 
-export type GetRepositoriesResponses = {
+export type ListRepositoriesResponses = {
     /**
      * All public repositories.
      */
     200: PaginatedRepositories;
 };
 
-export type GetRepositoriesResponse = GetRepositoriesResponses[keyof GetRepositoriesResponses];
+export type ListRepositoriesResponse = ListRepositoriesResponses[keyof ListRepositoriesResponses];
 
-export type GetRepositoriesByWorkspaceData = {
+export type ListWorkspaceRepositoriesData = {
     body?: never;
     path: {
         /**
@@ -5394,7 +5394,7 @@ export type GetRepositoriesByWorkspaceData = {
     url: '/repositories/{workspace}';
 };
 
-export type GetRepositoriesByWorkspaceErrors = {
+export type ListWorkspaceRepositoriesErrors = {
     /**
      * If the specified account does not exist.
      */
@@ -5405,18 +5405,18 @@ export type GetRepositoriesByWorkspaceErrors = {
     410: Error;
 };
 
-export type GetRepositoriesByWorkspaceError = GetRepositoriesByWorkspaceErrors[keyof GetRepositoriesByWorkspaceErrors];
+export type ListWorkspaceRepositoriesError = ListWorkspaceRepositoriesErrors[keyof ListWorkspaceRepositoriesErrors];
 
-export type GetRepositoriesByWorkspaceResponses = {
+export type ListWorkspaceRepositoriesResponses = {
     /**
      * The repositories owned by the specified account.
      */
     200: PaginatedRepositories;
 };
 
-export type GetRepositoriesByWorkspaceResponse = GetRepositoriesByWorkspaceResponses[keyof GetRepositoriesByWorkspaceResponses];
+export type ListWorkspaceRepositoriesResponse = ListWorkspaceRepositoriesResponses[keyof ListWorkspaceRepositoriesResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugData = {
+export type DeleteRepositoryData = {
     body?: never;
     path: {
         /**
@@ -5445,7 +5445,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugData = {
     url: '/repositories/{workspace}/{repo_slug}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugErrors = {
+export type DeleteRepositoryErrors = {
     /**
      * If the caller either does not have admin access to the repository, or the repository is set to read-only.
      */
@@ -5456,18 +5456,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugErrors = {
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugError = DeleteRepositoriesByWorkspaceByRepoSlugErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugErrors];
+export type DeleteRepositoryError = DeleteRepositoryErrors[keyof DeleteRepositoryErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugResponses = {
+export type DeleteRepositoryResponses = {
     /**
      * Indicates successful deletion.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugResponse = DeleteRepositoriesByWorkspaceByRepoSlugResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugResponses];
+export type DeleteRepositoryResponse = DeleteRepositoryResponses[keyof DeleteRepositoryResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugData = {
+export type GetRepositoryData = {
     body?: never;
     path: {
         /**
@@ -5487,7 +5487,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugData = {
     url: '/repositories/{workspace}/{repo_slug}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugErrors = {
+export type GetRepositoryErrors = {
     /**
      * If the repository is private and the authenticated user does not have access to it.
      */
@@ -5498,18 +5498,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugError = GetRepositoriesByWorkspaceByRepoSlugErrors[keyof GetRepositoriesByWorkspaceByRepoSlugErrors];
+export type GetRepositoryError = GetRepositoryErrors[keyof GetRepositoryErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugResponses = {
+export type GetRepositoryResponses = {
     /**
      * The repository object.
      */
     200: Repository;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugResponse = GetRepositoriesByWorkspaceByRepoSlugResponses[keyof GetRepositoriesByWorkspaceByRepoSlugResponses];
+export type GetRepositoryResponse = GetRepositoryResponses[keyof GetRepositoryResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugData = {
+export type CreateRepositoryData = {
     /**
      * The repository that is to be created. Note that most object elements are optional. Elements "owner" and "full_name" are ignored as the URL implies them.
      */
@@ -5532,7 +5532,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugData = {
     url: '/repositories/{workspace}/{repo_slug}';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugErrors = {
+export type CreateRepositoryErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
@@ -5543,18 +5543,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugErrors = {
     401: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugError = PostRepositoriesByWorkspaceByRepoSlugErrors[keyof PostRepositoriesByWorkspaceByRepoSlugErrors];
+export type CreateRepositoryError = CreateRepositoryErrors[keyof CreateRepositoryErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugResponses = {
+export type CreateRepositoryResponses = {
     /**
      * The newly created repository.
      */
     200: Repository;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugResponse = PostRepositoriesByWorkspaceByRepoSlugResponses[keyof PostRepositoriesByWorkspaceByRepoSlugResponses];
+export type CreateRepositoryResponse = CreateRepositoryResponses[keyof CreateRepositoryResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugData = {
+export type UpdateRepositoryData = {
     /**
      * The repository that is to be updated.
      *
@@ -5581,7 +5581,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugData = {
     url: '/repositories/{workspace}/{repo_slug}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugErrors = {
+export type UpdateRepositoryErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
@@ -5592,9 +5592,9 @@ export type PutRepositoriesByWorkspaceByRepoSlugErrors = {
     401: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugError = PutRepositoriesByWorkspaceByRepoSlugErrors[keyof PutRepositoriesByWorkspaceByRepoSlugErrors];
+export type UpdateRepositoryError = UpdateRepositoryErrors[keyof UpdateRepositoryErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugResponses = {
+export type UpdateRepositoryResponses = {
     /**
      * The existing repository has been updated
      */
@@ -5605,9 +5605,9 @@ export type PutRepositoriesByWorkspaceByRepoSlugResponses = {
     201: Repository;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugResponse = PutRepositoriesByWorkspaceByRepoSlugResponses[keyof PutRepositoriesByWorkspaceByRepoSlugResponses];
+export type UpdateRepositoryResponse = UpdateRepositoryResponses[keyof UpdateRepositoryResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
+export type ListBranchRestrictionsData = {
     body?: never;
     path: {
         /**
@@ -5636,7 +5636,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
+export type ListBranchRestrictionsErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5651,18 +5651,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors];
+export type ListBranchRestrictionsError = ListBranchRestrictionsErrors[keyof ListBranchRestrictionsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses = {
+export type ListBranchRestrictionsResponses = {
     /**
      * A paginated list of branch restrictions
      */
     200: PaginatedBranchrestrictions;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponse = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses];
+export type ListBranchRestrictionsResponse = ListBranchRestrictionsResponses[keyof ListBranchRestrictionsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
+export type CreateBranchRestrictionData = {
     /**
      * The new rule
      */
@@ -5685,7 +5685,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
+export type CreateBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5700,18 +5700,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError = PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors];
+export type CreateBranchRestrictionError = CreateBranchRestrictionErrors[keyof CreateBranchRestrictionErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses = {
+export type CreateBranchRestrictionResponses = {
     /**
      * A paginated list of branch restrictions
      */
     201: Branchrestriction;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponse = PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses];
+export type CreateBranchRestrictionResponse = CreateBranchRestrictionResponses[keyof CreateBranchRestrictionResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
+export type DeleteBranchRestrictionData = {
     body?: never;
     path: {
         /**
@@ -5735,7 +5735,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = 
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
+export type DeleteBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5750,15 +5750,15 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors 
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
+export type DeleteBranchRestrictionError = DeleteBranchRestrictionErrors[keyof DeleteBranchRestrictionErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses = {
+export type DeleteBranchRestrictionResponses = {
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses];
+export type DeleteBranchRestrictionResponse = DeleteBranchRestrictionResponses[keyof DeleteBranchRestrictionResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
+export type GetBranchRestrictionData = {
     body?: never;
     path: {
         /**
@@ -5782,7 +5782,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
+export type GetBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5797,18 +5797,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
+export type GetBranchRestrictionError = GetBranchRestrictionErrors[keyof GetBranchRestrictionErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses = {
+export type GetBranchRestrictionResponses = {
     /**
      * The branch restriction rule
      */
     200: Branchrestriction;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses];
+export type GetBranchRestrictionResponse = GetBranchRestrictionResponses[keyof GetBranchRestrictionResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
+export type UpdateBranchRestrictionData = {
     /**
      * The new version of the existing rule
      */
@@ -5835,7 +5835,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
+export type UpdateBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5850,18 +5850,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
+export type UpdateBranchRestrictionError = UpdateBranchRestrictionErrors[keyof UpdateBranchRestrictionErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses = {
+export type UpdateBranchRestrictionResponses = {
     /**
      * The updated branch restriction rule
      */
     200: Branchrestriction;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse = PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses];
+export type UpdateBranchRestrictionResponse = UpdateBranchRestrictionResponses[keyof UpdateBranchRestrictionResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelData = {
+export type GetBranchingModelData = {
     body?: never;
     path: {
         /**
@@ -5881,7 +5881,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelData = {
     url: '/repositories/{workspace}/{repo_slug}/branching-model';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors = {
+export type GetBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5896,18 +5896,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelError = GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors];
+export type GetBranchingModelError = GetBranchingModelErrors[keyof GetBranchingModelErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses = {
+export type GetBranchingModelResponses = {
     /**
      * The branching model object
      */
     200: BranchingModel;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponse = GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses];
+export type GetBranchingModelResponse = GetBranchingModelResponses[keyof GetBranchingModelResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
+export type GetBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -5927,7 +5927,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
     url: '/repositories/{workspace}/{repo_slug}/branching-model/settings';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
+export type GetBranchingModelSettingsErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5942,18 +5942,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError = GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors];
+export type GetBranchingModelSettingsError = GetBranchingModelSettingsErrors[keyof GetBranchingModelSettingsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses = {
+export type GetBranchingModelSettingsResponses = {
     /**
      * The branching model configuration
      */
     200: BranchingModelSettings;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponse = GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses];
+export type GetBranchingModelSettingsResponse = GetBranchingModelSettingsResponses[keyof GetBranchingModelSettingsResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
+export type UpdateBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -5973,7 +5973,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
     url: '/repositories/{workspace}/{repo_slug}/branching-model/settings';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
+export type UpdateBranchingModelSettingsErrors = {
     /**
      * If the request contains invalid branching model configuration
      */
@@ -5992,18 +5992,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError = PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors[keyof PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors];
+export type UpdateBranchingModelSettingsError = UpdateBranchingModelSettingsErrors[keyof UpdateBranchingModelSettingsErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses = {
+export type UpdateBranchingModelSettingsResponses = {
     /**
      * The updated branching model configuration
      */
     200: BranchingModelSettings;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponse = PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses[keyof PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses];
+export type UpdateBranchingModelSettingsResponse = UpdateBranchingModelSettingsResponses[keyof UpdateBranchingModelSettingsResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData = {
+export type GetCommitData = {
     body?: never;
     path: {
         /**
@@ -6027,25 +6027,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData = {
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors = {
+export type GetCommitErrors = {
     /**
      * If the specified commit or repository does not exist.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors];
+export type GetCommitError = GetCommitErrors[keyof GetCommitErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses = {
+export type GetCommitResponses = {
     /**
      * The commit object
      */
     200: Commit;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses];
+export type GetCommitResponse = GetCommitResponses[keyof GetCommitResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
+export type DeleteCommitApprovalData = {
     body?: never;
     path: {
         /**
@@ -6069,25 +6069,25 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/approve';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors = {
+export type DeleteCommitApprovalErrors = {
     /**
      * If the specified commit, or the repository does not exist.
      */
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError = DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors];
+export type DeleteCommitApprovalError = DeleteCommitApprovalErrors[keyof DeleteCommitApprovalErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses = {
+export type DeleteCommitApprovalResponses = {
     /**
      * An empty response indicating the authenticated user's approval has been withdrawn.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponse = DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses];
+export type DeleteCommitApprovalResponse = DeleteCommitApprovalResponses[keyof DeleteCommitApprovalResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
+export type ApproveCommitData = {
     body?: never;
     path: {
         /**
@@ -6111,25 +6111,25 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/approve';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors = {
+export type ApproveCommitErrors = {
     /**
      * If the specified commit, or the repository does not exist.
      */
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors];
+export type ApproveCommitError = ApproveCommitErrors[keyof ApproveCommitErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses = {
+export type ApproveCommitResponses = {
     /**
      * The `participant` object recording that the authenticated user approved the commit.
      */
     200: Participant;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponse = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses];
+export type ApproveCommitResponse = ApproveCommitResponses[keyof ApproveCommitResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
+export type ListCommitCommentsData = {
     body?: never;
     path: {
         /**
@@ -6166,16 +6166,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses = {
+export type ListCommitCommentsResponses = {
     /**
      * A paginated list of commit comments.
      */
     200: PaginatedCommitComments;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses];
+export type ListCommitCommentsResponse = ListCommitCommentsResponses[keyof ListCommitCommentsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
+export type CreateCommitCommentData = {
     /**
      * The specified comment.
      */
@@ -6202,7 +6202,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsErrors = {
+export type CreateCommitCommentErrors = {
     /**
      * If the comment was detected as spam, or if the parent comment is not attached to the same node as the new comment
      */
@@ -6213,14 +6213,14 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsErrors = 
     404: unknown;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses = {
+export type CreateCommitCommentResponses = {
     /**
      * The newly created comment.
      */
     201: unknown;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData = {
+export type DeleteCommitCommentData = {
     body?: never;
     path: {
         /**
@@ -6248,23 +6248,23 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByComme
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors = {
+export type DeleteCommitCommentErrors = {
     /**
      * If the comment doesn't exist
      */
     404: unknown;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses = {
+export type DeleteCommitCommentResponses = {
     /**
      * Indicates the comment was deleted by this action or a previous delete.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses];
+export type DeleteCommitCommentResponse = DeleteCommitCommentResponses[keyof DeleteCommitCommentResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData = {
+export type GetCommitCommentData = {
     body?: never;
     path: {
         /**
@@ -6292,16 +6292,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentI
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses = {
+export type GetCommitCommentResponses = {
     /**
      * The commit comment.
      */
     200: CommitComment;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses];
+export type GetCommitCommentResponse = GetCommitCommentResponses[keyof GetCommitCommentResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData = {
+export type UpdateCommitCommentData = {
     /**
      * The updated comment.
      */
@@ -6332,14 +6332,14 @@ export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentI
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors = {
+export type UpdateCommitCommentErrors = {
     /**
      * If the comment update was detected as spam
      */
     400: unknown;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses = {
+export type UpdateCommitCommentResponses = {
     /**
      * The newly updated comment.
      */
@@ -6861,7 +6861,7 @@ export type CreateOrUpdateAnnotationResponses = {
 
 export type CreateOrUpdateAnnotationResponse = CreateOrUpdateAnnotationResponses[keyof CreateOrUpdateAnnotationResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData = {
+export type ListCommitStatusesData = {
     body?: never;
     path: {
         /**
@@ -6905,7 +6905,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData = {
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors = {
+export type ListCommitStatusesErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -6916,18 +6916,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors];
+export type ListCommitStatusesError = ListCommitStatusesErrors[keyof ListCommitStatusesErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses = {
+export type ListCommitStatusesResponses = {
     /**
      * A paginated list of all commit statuses for this commit.
      */
     200: PaginatedCommitstatuses;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses];
+export type ListCommitStatusesResponse = ListCommitStatusesResponses[keyof ListCommitStatusesResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData = {
+export type CreateCommitBuildStatusData = {
     /**
      * The new commit status object.
      */
@@ -6954,7 +6954,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors = {
+export type CreateCommitBuildStatusErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -6965,18 +6965,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErro
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildError = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors];
+export type CreateCommitBuildStatusError = CreateCommitBuildStatusErrors[keyof CreateCommitBuildStatusErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses = {
+export type CreateCommitBuildStatusResponses = {
     /**
      * The newly created build status object.
      */
     201: Commitstatus;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponse = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses];
+export type CreateCommitBuildStatusResponse = CreateCommitBuildStatusResponses[keyof CreateCommitBuildStatusResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData = {
+export type GetCommitBuildStatusData = {
     body?: never;
     path: {
         /**
@@ -7004,7 +7004,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors = {
+export type GetCommitBuildStatusErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -7015,18 +7015,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors];
+export type GetCommitBuildStatusError = GetCommitBuildStatusErrors[keyof GetCommitBuildStatusErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses = {
+export type GetCommitBuildStatusResponses = {
     /**
      * The build status object with the specified key.
      */
     200: Commitstatus;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses];
+export type GetCommitBuildStatusResponse = GetCommitBuildStatusResponses[keyof GetCommitBuildStatusResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData = {
+export type UpdateCommitBuildStatusData = {
     /**
      * The updated build status object
      */
@@ -7057,7 +7057,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors = {
+export type UpdateCommitBuildStatusErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -7068,18 +7068,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKey
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError = PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors[keyof PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors];
+export type UpdateCommitBuildStatusError = UpdateCommitBuildStatusErrors[keyof UpdateCommitBuildStatusErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses = {
+export type UpdateCommitBuildStatusResponses = {
     /**
      * The updated build status object.
      */
     200: Commitstatus;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponse = PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses[keyof PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses];
+export type UpdateCommitBuildStatusResponse = UpdateCommitBuildStatusResponses[keyof UpdateCommitBuildStatusResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsData = {
+export type ListCommitsData = {
     body?: never;
     path: {
         /**
@@ -7099,25 +7099,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitsData = {
     url: '/repositories/{workspace}/{repo_slug}/commits';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsErrors = {
+export type ListCommitsErrors = {
     /**
      * If the specified repository does not exist.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsError = GetRepositoriesByWorkspaceByRepoSlugCommitsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsErrors];
+export type ListCommitsError = ListCommitsErrors[keyof ListCommitsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsResponses = {
+export type ListCommitsResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsResponse = GetRepositoriesByWorkspaceByRepoSlugCommitsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsResponses];
+export type ListCommitsResponse = ListCommitsResponses[keyof ListCommitsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsData = {
+export type FilterCommitsData = {
     body?: never;
     path: {
         /**
@@ -7137,25 +7137,25 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitsData = {
     url: '/repositories/{workspace}/{repo_slug}/commits';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsErrors = {
+export type FilterCommitsErrors = {
     /**
      * If the specified repository does not exist.
      */
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsError = PostRepositoriesByWorkspaceByRepoSlugCommitsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsErrors];
+export type FilterCommitsError = FilterCommitsErrors[keyof FilterCommitsErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsResponses = {
+export type FilterCommitsResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsResponse = PostRepositoriesByWorkspaceByRepoSlugCommitsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsResponses];
+export type FilterCommitsResponse = FilterCommitsResponses[keyof FilterCommitsResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
+export type ListCommitsByRevisionData = {
     body?: never;
     path: {
         /**
@@ -7179,25 +7179,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
     url: '/repositories/{workspace}/{repo_slug}/commits/{revision}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors = {
+export type ListCommitsByRevisionErrors = {
     /**
      * If the specified revision does not exist.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError = GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors];
+export type ListCommitsByRevisionError = ListCommitsByRevisionErrors[keyof ListCommitsByRevisionErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses = {
+export type ListCommitsByRevisionResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponse = GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses];
+export type ListCommitsByRevisionResponse = ListCommitsByRevisionResponses[keyof ListCommitsByRevisionResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
+export type FilterCommitsByRevisionData = {
     body?: never;
     path: {
         /**
@@ -7221,25 +7221,25 @@ export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
     url: '/repositories/{workspace}/{repo_slug}/commits/{revision}';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors = {
+export type FilterCommitsByRevisionErrors = {
     /**
      * If the specified revision does not exist.
      */
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError = PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors];
+export type FilterCommitsByRevisionError = FilterCommitsByRevisionErrors[keyof FilterCommitsByRevisionErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses = {
+export type FilterCommitsByRevisionResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponse = PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses];
+export type FilterCommitsByRevisionResponse = FilterCommitsByRevisionResponses[keyof FilterCommitsByRevisionResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsData = {
+export type ListComponentsData = {
     body?: never;
     path: {
         /**
@@ -7259,25 +7259,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugComponentsData = {
     url: '/repositories/{workspace}/{repo_slug}/components';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsErrors = {
+export type ListComponentsErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsError = GetRepositoriesByWorkspaceByRepoSlugComponentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsErrors];
+export type ListComponentsError = ListComponentsErrors[keyof ListComponentsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsResponses = {
+export type ListComponentsResponses = {
     /**
      * The components that have been defined in the issue tracker.
      */
     200: PaginatedComponents;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsResponse = GetRepositoriesByWorkspaceByRepoSlugComponentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsResponses];
+export type ListComponentsResponse = ListComponentsResponses[keyof ListComponentsResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData = {
+export type GetComponentData = {
     body?: never;
     path: {
         /**
@@ -7301,25 +7301,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData = {
     url: '/repositories/{workspace}/{repo_slug}/components/{component_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors = {
+export type GetComponentErrors = {
     /**
      * The specified repository or component does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdError = GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors];
+export type GetComponentError = GetComponentErrors[keyof GetComponentErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses = {
+export type GetComponentResponses = {
     /**
      * The specified component object.
      */
     200: Component;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponse = GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses];
+export type GetComponentResponse = GetComponentResponses[keyof GetComponentResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData = {
+export type ListDefaultReviewersData = {
     body?: never;
     path: {
         /**
@@ -7339,25 +7339,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData = {
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors = {
+export type ListDefaultReviewersErrors = {
     /**
      * If the authenticated user does not have access to view the default reviewers
      */
     403: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersError = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors];
+export type ListDefaultReviewersError = ListDefaultReviewersErrors[keyof ListDefaultReviewersErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses = {
+export type ListDefaultReviewersResponses = {
     /**
      * The paginated list of default reviewers
      */
     200: PaginatedAccounts;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponse = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses];
+export type ListDefaultReviewersResponse = ListDefaultReviewersResponses[keyof ListDefaultReviewersResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = {
+export type DeleteDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -7383,7 +7383,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsern
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors = {
+export type DeleteDefaultReviewerErrors = {
     /**
      * If the authenticated user does not have access modify the default reviewers
      */
@@ -7394,18 +7394,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsern
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
+export type DeleteDefaultReviewerError = DeleteDefaultReviewerErrors[keyof DeleteDefaultReviewerErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses = {
+export type DeleteDefaultReviewerResponses = {
     /**
      * The specified user successfully removed from the default reviewers
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse = DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses];
+export type DeleteDefaultReviewerResponse = DeleteDefaultReviewerResponses[keyof DeleteDefaultReviewerResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = {
+export type GetDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -7431,7 +7431,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors = {
+export type GetDefaultReviewerErrors = {
     /**
      * If the authenticated user does not have access to check if the specified user is a default reviewer
      */
@@ -7442,18 +7442,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
+export type GetDefaultReviewerError = GetDefaultReviewerErrors[keyof GetDefaultReviewerErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses = {
+export type GetDefaultReviewerResponses = {
     /**
      * The specified user is a default reviewer
      */
     200: Account;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses];
+export type GetDefaultReviewerResponse = GetDefaultReviewerResponses[keyof GetDefaultReviewerResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = {
+export type AddDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -7479,7 +7479,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors = {
+export type AddDefaultReviewerErrors = {
     /**
      * If the authenticated user tried to add a team, bot user, or user without access to the repository to the default reviewers
      */
@@ -7494,18 +7494,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
+export type AddDefaultReviewerError = AddDefaultReviewerErrors[keyof AddDefaultReviewerErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses = {
+export type AddDefaultReviewerResponses = {
     /**
      * The specified user was successfully added to the default reviewers
      */
     200: Account;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse = PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses[keyof PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses];
+export type AddDefaultReviewerResponse = AddDefaultReviewerResponses[keyof AddDefaultReviewerResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
+export type ListDeployKeysData = {
     body?: never;
     path: {
         /**
@@ -7525,7 +7525,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
+export type ListDeployKeysErrors = {
     /**
      * If the specified user or repository is not accessible to the current user
      */
@@ -7536,18 +7536,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysError = GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors];
+export type ListDeployKeysError = ListDeployKeysErrors[keyof ListDeployKeysErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses = {
+export type ListDeployKeysResponses = {
     /**
      * Deploy keys matching the repository
      */
     200: PaginatedDeployKeys;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponse = GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses];
+export type ListDeployKeysResponse = ListDeployKeysResponses[keyof ListDeployKeysResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
+export type CreateDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7567,7 +7567,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
+export type CreateDeployKeyErrors = {
     /**
      * Invalid deploy key inputs
      */
@@ -7582,18 +7582,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysError = PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors[keyof PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors];
+export type CreateDeployKeyError = CreateDeployKeyErrors[keyof CreateDeployKeyErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses = {
+export type CreateDeployKeyResponses = {
     /**
      * The deploy key that was created
      */
     200: DeployKey;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponse = PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses[keyof PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses];
+export type CreateDeployKeyResponse = CreateDeployKeyResponses[keyof CreateDeployKeyResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
+export type DeleteDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7617,7 +7617,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
+export type DeleteDeployKeyErrors = {
     /**
      * If the current user does not have permission to delete a key for the specified user
      */
@@ -7628,18 +7628,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
+export type DeleteDeployKeyError = DeleteDeployKeyErrors[keyof DeleteDeployKeyErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses = {
+export type DeleteDeployKeyResponses = {
     /**
      * The key has been deleted
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses];
+export type DeleteDeployKeyResponse = DeleteDeployKeyResponses[keyof DeleteDeployKeyResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
+export type GetDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7663,7 +7663,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
+export type GetDeployKeyErrors = {
     /**
      * If the specified user or repository is not accessible to the current user
      */
@@ -7674,18 +7674,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
+export type GetDeployKeyError = GetDeployKeyErrors[keyof GetDeployKeyErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses = {
+export type GetDeployKeyResponses = {
     /**
      * Deploy key matching the key ID
      */
     200: DeployKey;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse = GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses];
+export type GetDeployKeyResponse = GetDeployKeyResponses[keyof GetDeployKeyResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
+export type UpdateDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7709,7 +7709,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
+export type UpdateDeployKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -7724,16 +7724,16 @@ export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
+export type UpdateDeployKeyError = UpdateDeployKeyErrors[keyof UpdateDeployKeyErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses = {
+export type UpdateDeployKeyResponses = {
     /**
      * The newly updated deploy key.
      */
     200: DeployKey;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse = PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses];
+export type UpdateDeployKeyResponse = UpdateDeployKeyResponses[keyof UpdateDeployKeyResponses];
 
 export type GetDeploymentsForRepositoryData = {
     body?: never;
@@ -7959,7 +7959,7 @@ export type UpdateDeploymentVariableResponses = {
 
 export type UpdateDeploymentVariableResponse = UpdateDeploymentVariableResponses[keyof UpdateDeploymentVariableResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData = {
+export type GetDiffData = {
     body?: never;
     path: {
         /**
@@ -8027,7 +8027,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData = {
     url: '/repositories/{workspace}/{repo_slug}/diff/{spec}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors = {
+export type GetDiffErrors = {
     /**
      * If the diff was too large and timed out.
      *
@@ -8039,16 +8039,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors = {
     555: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecError = GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors];
+export type GetDiffError = GetDiffErrors[keyof GetDiffErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecResponses = {
+export type GetDiffResponses = {
     /**
      * The raw diff
      */
     200: unknown;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData = {
+export type GetDiffstatData = {
     body?: never;
     path: {
         /**
@@ -8108,25 +8108,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData = {
     url: '/repositories/{workspace}/{repo_slug}/diffstat/{spec}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors = {
+export type GetDiffstatErrors = {
     /**
      * If generating the diffstat timed out.
      */
     555: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecError = GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors];
+export type GetDiffstatError = GetDiffstatErrors[keyof GetDiffstatErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses = {
+export type GetDiffstatResponses = {
     /**
      * The diff stats
      */
     200: PaginatedDiffstats;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponse = GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses];
+export type GetDiffstatResponse = GetDiffstatResponses[keyof GetDiffstatResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDownloadsData = {
+export type ListDownloadsData = {
     body?: never;
     path: {
         /**
@@ -8146,23 +8146,23 @@ export type GetRepositoriesByWorkspaceByRepoSlugDownloadsData = {
     url: '/repositories/{workspace}/{repo_slug}/downloads';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
+export type ListDownloadsErrors = {
     /**
      * User is not authorized to read from the repository.
      */
     403: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDownloadsError = GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors];
+export type ListDownloadsError = ListDownloadsErrors[keyof ListDownloadsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDownloadsResponses = {
+export type ListDownloadsResponses = {
     /**
      * Returns a paginated list of the downloads associated with the repository.
      */
     200: unknown;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugDownloadsData = {
+export type CreateDownloadData = {
     body?: never;
     path: {
         /**
@@ -8182,7 +8182,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugDownloadsData = {
     url: '/repositories/{workspace}/{repo_slug}/downloads';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
+export type CreateDownloadErrors = {
     /**
      * Bad Request.
      */
@@ -8197,16 +8197,16 @@ export type PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
     406: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugDownloadsError = PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors];
+export type CreateDownloadError = CreateDownloadErrors[keyof CreateDownloadErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugDownloadsResponses = {
+export type CreateDownloadResponses = {
     /**
      * The artifact was uploaded sucessfully.
      */
     201: unknown;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
+export type DeleteDownloadData = {
     body?: never;
     path: {
         /**
@@ -8230,7 +8230,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
     url: '/repositories/{workspace}/{repo_slug}/downloads/{filename}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
+export type DeleteDownloadErrors = {
     /**
      * User is not authorized to write to the repository.
      */
@@ -8241,18 +8241,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError = DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors];
+export type DeleteDownloadError = DeleteDownloadErrors[keyof DeleteDownloadErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses = {
+export type DeleteDownloadResponses = {
     /**
      * The specified download artifact was deleted.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponse = DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses];
+export type DeleteDownloadResponse = DeleteDownloadResponses[keyof DeleteDownloadResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
+export type GetDownloadData = {
     body?: never;
     path: {
         /**
@@ -8276,7 +8276,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
     url: '/repositories/{workspace}/{repo_slug}/downloads/{filename}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
+export type GetDownloadErrors = {
     /**
      * User is not authorized to read from the repository.
      */
@@ -8287,9 +8287,9 @@ export type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError = GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors];
+export type GetDownloadError = GetDownloadErrors[keyof GetDownloadErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData = {
+export type GetEffectiveBranchingModelData = {
     body?: never;
     path: {
         /**
@@ -8309,7 +8309,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData = {
     url: '/repositories/{workspace}/{repo_slug}/effective-branching-model';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors = {
+export type GetEffectiveBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
@@ -8324,18 +8324,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors = 
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelError = GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors];
+export type GetEffectiveBranchingModelError = GetEffectiveBranchingModelErrors[keyof GetEffectiveBranchingModelErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses = {
+export type GetEffectiveBranchingModelResponses = {
     /**
      * The effective branching model object
      */
     200: EffectiveRepoBranchingModel;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponse = GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses];
+export type GetEffectiveBranchingModelResponse = GetEffectiveBranchingModelResponses[keyof GetEffectiveBranchingModelResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData = {
+export type ListEffectiveDefaultReviewersData = {
     body?: never;
     path: {
         /**
@@ -8355,23 +8355,23 @@ export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData = 
     url: '/repositories/{workspace}/{repo_slug}/effective-default-reviewers';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors = {
+export type ListEffectiveDefaultReviewersErrors = {
     /**
      * If the authenticated user does not have access to view the default reviewers
      */
     403: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersError = GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors];
+export type ListEffectiveDefaultReviewersError = ListEffectiveDefaultReviewersErrors[keyof ListEffectiveDefaultReviewersErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses = {
+export type ListEffectiveDefaultReviewersResponses = {
     /**
      * The paginated list of effective default reviewers
      */
     200: PaginatedDefaultReviewerAndType;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponse = GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses];
+export type ListEffectiveDefaultReviewersResponse = ListEffectiveDefaultReviewersResponses[keyof ListEffectiveDefaultReviewersResponses];
 
 export type GetEnvironmentsForRepositoryData = {
     body?: never;
@@ -8551,7 +8551,7 @@ export type UpdateEnvironmentForRepositoryResponses = {
     202: unknown;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData = {
+export type GetFileHistoryData = {
     body?: never;
     path: {
         /**
@@ -8600,25 +8600,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData = 
     url: '/repositories/{workspace}/{repo_slug}/filehistory/{commit}/{path}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors = {
+export type GetFileHistoryErrors = {
     /**
      * If the repository does not exist.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathError = GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors];
+export type GetFileHistoryError = GetFileHistoryErrors[keyof GetFileHistoryErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses = {
+export type GetFileHistoryResponses = {
     /**
      * A paginated list of commits that modified the specified file
      */
     200: PaginatedFiles;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponse = GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses[keyof GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses];
+export type GetFileHistoryResponse = GetFileHistoryResponses[keyof GetFileHistoryResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugForksData = {
+export type ListForksData = {
     body?: never;
     path: {
         /**
@@ -8659,16 +8659,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugForksData = {
     url: '/repositories/{workspace}/{repo_slug}/forks';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugForksResponses = {
+export type ListForksResponses = {
     /**
      * All forks.
      */
     200: PaginatedRepositories;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugForksResponse = GetRepositoriesByWorkspaceByRepoSlugForksResponses[keyof GetRepositoriesByWorkspaceByRepoSlugForksResponses];
+export type ListForksResponse = ListForksResponses[keyof ListForksResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugForksData = {
+export type CreateForkData = {
     /**
      * A repository object. This can be left blank.
      */
@@ -8691,16 +8691,16 @@ export type PostRepositoriesByWorkspaceByRepoSlugForksData = {
     url: '/repositories/{workspace}/{repo_slug}/forks';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugForksResponses = {
+export type CreateForkResponses = {
     /**
      * The newly created fork.
      */
     201: Repository;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugForksResponse = PostRepositoriesByWorkspaceByRepoSlugForksResponses[keyof PostRepositoriesByWorkspaceByRepoSlugForksResponses];
+export type CreateForkResponse = CreateForkResponses[keyof CreateForkResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksData = {
+export type ListRepoHooksData = {
     body?: never;
     path: {
         /**
@@ -8720,7 +8720,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugHooksData = {
     url: '/repositories/{workspace}/{repo_slug}/hooks';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksErrors = {
+export type ListRepoHooksErrors = {
     /**
      * If the authenticated user does not have permission to access the webhooks.
      */
@@ -8731,18 +8731,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugHooksErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksError = GetRepositoriesByWorkspaceByRepoSlugHooksErrors[keyof GetRepositoriesByWorkspaceByRepoSlugHooksErrors];
+export type ListRepoHooksError = ListRepoHooksErrors[keyof ListRepoHooksErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksResponses = {
+export type ListRepoHooksResponses = {
     /**
      * The paginated list of installed webhooks.
      */
     200: PaginatedWebhookSubscriptions;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksResponse = GetRepositoriesByWorkspaceByRepoSlugHooksResponses[keyof GetRepositoriesByWorkspaceByRepoSlugHooksResponses];
+export type ListRepoHooksResponse = ListRepoHooksResponses[keyof ListRepoHooksResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugHooksData = {
+export type CreateRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8762,7 +8762,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugHooksData = {
     url: '/repositories/{workspace}/{repo_slug}/hooks';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugHooksErrors = {
+export type CreateRepoHookErrors = {
     /**
      * If the authenticated user does not have permission to install webhooks on the specified repository.
      */
@@ -8773,18 +8773,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugHooksErrors = {
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugHooksError = PostRepositoriesByWorkspaceByRepoSlugHooksErrors[keyof PostRepositoriesByWorkspaceByRepoSlugHooksErrors];
+export type CreateRepoHookError = CreateRepoHookErrors[keyof CreateRepoHookErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugHooksResponses = {
+export type CreateRepoHookResponses = {
     /**
      * If the webhook was registered successfully.
      */
     201: WebhookSubscription;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugHooksResponse = PostRepositoriesByWorkspaceByRepoSlugHooksResponses[keyof PostRepositoriesByWorkspaceByRepoSlugHooksResponses];
+export type CreateRepoHookResponse = CreateRepoHookResponses[keyof CreateRepoHookResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
+export type DeleteRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8808,7 +8808,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
     url: '/repositories/{workspace}/{repo_slug}/hooks/{uid}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
+export type DeleteRepoHookErrors = {
     /**
      * If the authenticated user does not have permission to delete the webhook.
      */
@@ -8819,18 +8819,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidError = DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
+export type DeleteRepoHookError = DeleteRepoHookErrors[keyof DeleteRepoHookErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses = {
+export type DeleteRepoHookResponses = {
     /**
      * When the webhook was deleted successfully
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponse = DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses];
+export type DeleteRepoHookResponse = DeleteRepoHookResponses[keyof DeleteRepoHookResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
+export type GetRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8854,25 +8854,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
     url: '/repositories/{workspace}/{repo_slug}/hooks/{uid}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
+export type GetRepoHookErrors = {
     /**
      * If the webhook or repository does not exist.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidError = GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
+export type GetRepoHookError = GetRepoHookErrors[keyof GetRepoHookErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses = {
+export type GetRepoHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponse = GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses[keyof GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses];
+export type GetRepoHookResponse = GetRepoHookResponses[keyof GetRepoHookResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
+export type UpdateRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8896,7 +8896,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
     url: '/repositories/{workspace}/{repo_slug}/hooks/{uid}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
+export type UpdateRepoHookErrors = {
     /**
      * If the authenticated user does not have permission to update the webhook.
      */
@@ -8907,18 +8907,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidError = PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
+export type UpdateRepoHookError = UpdateRepoHookErrors[keyof UpdateRepoHookErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses = {
+export type UpdateRepoHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponse = PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses[keyof PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses];
+export type UpdateRepoHookResponse = UpdateRepoHookResponses[keyof UpdateRepoHookResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesData = {
+export type ListIssuesData = {
     body?: never;
     path: {
         /**
@@ -8938,25 +8938,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesData = {
     url: '/repositories/{workspace}/{repo_slug}/issues';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
+export type ListIssuesErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesError = GetRepositoriesByWorkspaceByRepoSlugIssuesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesErrors];
+export type ListIssuesError = ListIssuesErrors[keyof ListIssuesErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesResponses = {
+export type ListIssuesResponses = {
     /**
      * A paginated list of the issues matching any filter criteria that were provided.
      */
     200: PaginatedIssues;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesResponses];
+export type ListIssuesResponse = ListIssuesResponses[keyof ListIssuesResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesData = {
+export type CreateIssueData = {
     /**
      * The new issue. The only required element is `title`. All other elements can be omitted from the body.
      */
@@ -8979,7 +8979,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesData = {
     url: '/repositories/{workspace}/{repo_slug}/issues';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
+export type CreateIssueErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -8994,18 +8994,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesError = PostRepositoriesByWorkspaceByRepoSlugIssuesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesErrors];
+export type CreateIssueError = CreateIssueErrors[keyof CreateIssueErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesResponses = {
+export type CreateIssueResponses = {
     /**
      * The newly created issue.
      */
     201: Issue;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesResponse = PostRepositoriesByWorkspaceByRepoSlugIssuesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesResponses];
+export type CreateIssueResponse = CreateIssueResponses[keyof CreateIssueResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportData = {
+export type ExportIssuesData = {
     /**
      * The options to apply to the export. Available options include `project_key` and `project_name` which, if specified, are used as the project key and name in the exported Jira json format. Option `send_email` specifies whether an email should be sent upon export result. Option `include_attachments` specifies whether attachments are included in the export.
      */
@@ -9028,7 +9028,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/export';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors = {
+export type ExportIssuesErrors = {
     /**
      * The request wasn't authenticated properly
      */
@@ -9043,9 +9043,9 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors = {
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportError = PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors];
+export type ExportIssuesError = ExportIssuesErrors[keyof ExportIssuesErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesExportResponses = {
+export type ExportIssuesResponses = {
     /**
      * The export job has been accepted
      */
@@ -9106,7 +9106,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTa
 
 export type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
+export type GetIssueImportStatusData = {
     body?: never;
     path: {
         /**
@@ -9126,7 +9126,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/import';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
+export type GetIssueImportStatusErrors = {
     /**
      * The request wasn't authenticated properly
      */
@@ -9141,9 +9141,9 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportError = GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors];
+export type GetIssueImportStatusError = GetIssueImportStatusErrors[keyof GetIssueImportStatusErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses = {
+export type GetIssueImportStatusResponses = {
     /**
      * Import job complete with either FAILURE or SUCCESS status
      */
@@ -9154,9 +9154,9 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses = {
     202: IssueJobStatus;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses];
+export type GetIssueImportStatusResponse = GetIssueImportStatusResponses[keyof GetIssueImportStatusResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
+export type ImportIssuesData = {
     body?: never;
     path: {
         /**
@@ -9176,7 +9176,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/import';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
+export type ImportIssuesErrors = {
     /**
      * The request wasn't authenticated properly
      */
@@ -9195,18 +9195,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
     409: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportError = PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors];
+export type ImportIssuesError = ImportIssuesErrors[keyof ImportIssuesErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses = {
+export type ImportIssuesResponses = {
     /**
      * Import job accepted
      */
     202: IssueJobStatus;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponse = PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses];
+export type ImportIssuesResponse = ImportIssuesResponses[keyof ImportIssuesResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
+export type DeleteIssueData = {
     body?: never;
     path: {
         /**
@@ -9230,7 +9230,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
+export type DeleteIssueErrors = {
     /**
      * When the authenticated user isn't authorized to delete the issue.
      */
@@ -9241,18 +9241,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
+export type DeleteIssueError = DeleteIssueErrors[keyof DeleteIssueErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses = {
+export type DeleteIssueResponses = {
     /**
      * Indicates the issue was deleted successfully.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses];
+export type DeleteIssueResponse = DeleteIssueResponses[keyof DeleteIssueResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
+export type GetIssueData = {
     body?: never;
     path: {
         /**
@@ -9276,7 +9276,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
+export type GetIssueErrors = {
     /**
      * When the authenticated user isn't authorized to access the issue.
      */
@@ -9291,18 +9291,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
     410: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
+export type GetIssueError = GetIssueErrors[keyof GetIssueErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses = {
+export type GetIssueResponses = {
     /**
      * The issue object.
      */
     200: Issue;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses];
+export type GetIssueResponse = GetIssueResponses[keyof GetIssueResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
+export type UpdateIssueData = {
     body?: never;
     path: {
         /**
@@ -9326,7 +9326,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
+export type UpdateIssueErrors = {
     /**
      * When the authenticated user isn't authorized to access the issue.
      */
@@ -9337,18 +9337,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
+export type UpdateIssueError = UpdateIssueErrors[keyof UpdateIssueErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses = {
+export type UpdateIssueResponses = {
     /**
      * The updated issue object.
      */
     200: Issue;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses];
+export type UpdateIssueResponse = UpdateIssueResponses[keyof UpdateIssueResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData = {
+export type ListIssueAttachmentsData = {
     body?: never;
     path: {
         /**
@@ -9372,7 +9372,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData =
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors = {
+export type ListIssueAttachmentsErrors = {
     /**
      * If the issue tracker is private and the request was not authenticated.
      */
@@ -9383,18 +9383,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors];
+export type ListIssueAttachmentsError = ListIssueAttachmentsErrors[keyof ListIssueAttachmentsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses = {
+export type ListIssueAttachmentsResponses = {
     /**
      * A paginated list of all attachments for this issue.
      */
     200: PaginatedIssueAttachments;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses];
+export type ListIssueAttachmentsResponse = ListIssueAttachmentsResponses[keyof ListIssueAttachmentsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData = {
+export type CreateIssueAttachmentData = {
     body?: never;
     path: {
         /**
@@ -9418,7 +9418,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData 
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors = {
+export type CreateIssueAttachmentErrors = {
     /**
      * If no files were uploaded, or if the wrong `Content-Type` was used.
      */
@@ -9433,16 +9433,16 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors];
+export type CreateIssueAttachmentError = CreateIssueAttachmentErrors[keyof CreateIssueAttachmentErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses = {
+export type CreateIssueAttachmentResponses = {
     /**
      * An empty response document.
      */
     201: unknown;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData = {
+export type DeleteIssueAttachmentData = {
     body?: never;
     path: {
         /**
@@ -9470,7 +9470,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByP
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments/{path}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors = {
+export type DeleteIssueAttachmentErrors = {
     /**
      * If the issue tracker is private and the request was not authenticated.
      */
@@ -9481,18 +9481,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByP
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors];
+export type DeleteIssueAttachmentError = DeleteIssueAttachmentErrors[keyof DeleteIssueAttachmentErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses = {
+export type DeleteIssueAttachmentResponses = {
     /**
      * Indicates that the deletion was successful
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses];
+export type DeleteIssueAttachmentResponse = DeleteIssueAttachmentResponses[keyof DeleteIssueAttachmentResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData = {
+export type GetIssueAttachmentData = {
     body?: never;
     path: {
         /**
@@ -9520,7 +9520,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPath
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments/{path}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors = {
+export type GetIssueAttachmentErrors = {
     /**
      * If the issue tracker is private and the request was not authenticated.
      */
@@ -9531,9 +9531,9 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPath
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors];
+export type GetIssueAttachmentError = GetIssueAttachmentErrors[keyof GetIssueAttachmentErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
+export type ListIssueChangesData = {
     body?: never;
     path: {
         /**
@@ -9572,25 +9572,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/changes';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = {
+export type ListIssueChangesErrors = {
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors];
+export type ListIssueChangesError = ListIssueChangesErrors[keyof ListIssueChangesErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses = {
+export type ListIssueChangesResponses = {
     /**
      * Returns all the issue changes that were made on the specified issue.
      */
     200: PaginatedLogEntries;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses];
+export type ListIssueChangesResponse = ListIssueChangesResponses[keyof ListIssueChangesResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
+export type CreateIssueChangeData = {
     /**
      * The new issue state change. The only required elements are `changes.[].new`. All other elements can be omitted from the body.
      */
@@ -9617,7 +9617,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/changes';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = {
+export type CreateIssueChangeErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9632,18 +9632,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = 
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors];
+export type CreateIssueChangeError = CreateIssueChangeErrors[keyof CreateIssueChangeErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses = {
+export type CreateIssueChangeResponses = {
     /**
      * The newly created issue change.
      */
     201: IssueChange;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponse = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses];
+export type CreateIssueChangeResponse = CreateIssueChangeResponses[keyof CreateIssueChangeResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdData = {
+export type GetIssueChangeData = {
     body?: never;
     path: {
         /**
@@ -9671,25 +9671,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeId
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/changes/{change_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors = {
+export type GetIssueChangeErrors = {
     /**
      * The specified repository or issue change does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors];
+export type GetIssueChangeError = GetIssueChangeErrors[keyof GetIssueChangeErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses = {
+export type GetIssueChangeResponses = {
     /**
      * The specified issue change object.
      */
     200: IssueChange;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses];
+export type GetIssueChangeResponse = GetIssueChangeResponses[keyof GetIssueChangeResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
+export type ListIssueCommentsData = {
     body?: never;
     path: {
         /**
@@ -9720,16 +9720,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses = {
+export type ListIssueCommentsResponses = {
     /**
      * A paginated list of issue comments.
      */
     200: PaginatedIssueComments;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses];
+export type ListIssueCommentsResponse = ListIssueCommentsResponses[keyof ListIssueCommentsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
+export type CreateIssueCommentData = {
     /**
      * The new issue comment object.
      */
@@ -9756,23 +9756,23 @@ export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors = {
+export type CreateIssueCommentErrors = {
     /**
      * If the input was invalid, or if the comment being created is detected as spam
      */
     400: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors];
+export type CreateIssueCommentError = CreateIssueCommentErrors[keyof CreateIssueCommentErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses = {
+export type CreateIssueCommentResponses = {
     /**
      * The newly created comment.
      */
     201: unknown;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData = {
+export type DeleteIssueCommentData = {
     body?: never;
     path: {
         /**
@@ -9800,16 +9800,16 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByComm
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments/{comment_id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses = {
+export type DeleteIssueCommentResponses = {
     /**
      * Indicates successful deletion.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses];
+export type DeleteIssueCommentResponse = DeleteIssueCommentResponses[keyof DeleteIssueCommentResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData = {
+export type GetIssueCommentData = {
     body?: never;
     path: {
         /**
@@ -9837,16 +9837,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByComment
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments/{comment_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses = {
+export type GetIssueCommentResponses = {
     /**
      * The issue comment.
      */
     200: IssueComment;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses];
+export type GetIssueCommentResponse = GetIssueCommentResponses[keyof GetIssueCommentResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData = {
+export type UpdateIssueCommentData = {
     /**
      * The updated comment.
      */
@@ -9877,25 +9877,25 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByComment
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments/{comment_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors = {
+export type UpdateIssueCommentErrors = {
     /**
      * If the input was invalid, or if the update to the comment is detected as spam
      */
     400: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors];
+export type UpdateIssueCommentError = UpdateIssueCommentErrors[keyof UpdateIssueCommentErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses = {
+export type UpdateIssueCommentResponses = {
     /**
      * The updated issue comment.
      */
     200: IssueComment;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses];
+export type UpdateIssueCommentResponse = UpdateIssueCommentResponses[keyof UpdateIssueCommentResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
+export type DeleteIssueVoteData = {
     body?: never;
     path: {
         /**
@@ -9919,25 +9919,25 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/vote';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
+export type DeleteIssueVoteErrors = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
+export type DeleteIssueVoteError = DeleteIssueVoteErrors[keyof DeleteIssueVoteErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
+export type DeleteIssueVoteResponses = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
+export type DeleteIssueVoteResponse = DeleteIssueVoteResponses[keyof DeleteIssueVoteResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
+export type GetIssueVoteData = {
     body?: never;
     path: {
         /**
@@ -9961,7 +9961,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/vote';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
+export type GetIssueVoteErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9972,18 +9972,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
+export type GetIssueVoteError = GetIssueVoteErrors[keyof GetIssueVoteErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
+export type GetIssueVoteResponses = {
     /**
      * If the authenticated user has not voted for this issue.
      */
     204: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
+export type GetIssueVoteResponse = GetIssueVoteResponses[keyof GetIssueVoteResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
+export type AddIssueVoteData = {
     body?: never;
     path: {
         /**
@@ -10007,7 +10007,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/vote';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
+export type AddIssueVoteErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -10018,18 +10018,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
+export type AddIssueVoteError = AddIssueVoteErrors[keyof AddIssueVoteErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
+export type AddIssueVoteResponses = {
     /**
      * Indicating the authenticated user has cast their vote successfully.
      */
     204: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
+export type AddIssueVoteResponse = AddIssueVoteResponses[keyof AddIssueVoteResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
+export type UnwatchIssueData = {
     body?: never;
     path: {
         /**
@@ -10053,7 +10053,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/watch';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
+export type UnwatchIssueErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -10064,18 +10064,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = 
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
+export type UnwatchIssueError = UnwatchIssueErrors[keyof UnwatchIssueErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = {
+export type UnwatchIssueResponses = {
     /**
      * Indicates that the authenticated user successfully stopped watching this issue.
      */
     204: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
+export type UnwatchIssueResponse = UnwatchIssueResponses[keyof UnwatchIssueResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
+export type GetIssueWatchStatusData = {
     body?: never;
     path: {
         /**
@@ -10099,7 +10099,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/watch';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
+export type GetIssueWatchStatusErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -10110,18 +10110,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
+export type GetIssueWatchStatusError = GetIssueWatchStatusErrors[keyof GetIssueWatchStatusErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = {
+export type GetIssueWatchStatusResponses = {
     /**
      * If the authenticated user is watching this issue.
      */
     204: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
+export type GetIssueWatchStatusResponse = GetIssueWatchStatusResponses[keyof GetIssueWatchStatusResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
+export type WatchIssueData = {
     body?: never;
     path: {
         /**
@@ -10145,7 +10145,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/watch';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
+export type WatchIssueErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -10156,18 +10156,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
+export type WatchIssueError = WatchIssueErrors[keyof WatchIssueErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = {
+export type WatchIssueResponses = {
     /**
      * Indicates that the authenticated user successfully started watching this issue.
      */
     204: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
+export type WatchIssueResponse = WatchIssueResponses[keyof WatchIssueResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData = {
+export type GetMergeBaseData = {
     body?: never;
     path: {
         /**
@@ -10192,7 +10192,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData = {
     url: '/repositories/{workspace}/{repo_slug}/merge-base/{revspec}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors = {
+export type GetMergeBaseErrors = {
     /**
      * If the request was not authenticated.
      */
@@ -10207,18 +10207,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecError = GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors];
+export type GetMergeBaseError = GetMergeBaseErrors[keyof GetMergeBaseErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses = {
+export type GetMergeBaseResponses = {
     /**
      * The merge base of the provided spec.
      */
     200: Commit;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponse = GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses[keyof GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses];
+export type GetMergeBaseResponse = GetMergeBaseResponses[keyof GetMergeBaseResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesData = {
+export type ListMilestonesData = {
     body?: never;
     path: {
         /**
@@ -10238,25 +10238,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugMilestonesData = {
     url: '/repositories/{workspace}/{repo_slug}/milestones';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors = {
+export type ListMilestonesErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesError = GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors];
+export type ListMilestonesError = ListMilestonesErrors[keyof ListMilestonesErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses = {
+export type ListMilestonesResponses = {
     /**
      * The milestones that have been defined in the issue tracker.
      */
     200: PaginatedMilestones;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesResponse = GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses];
+export type ListMilestonesResponse = ListMilestonesResponses[keyof ListMilestonesResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData = {
+export type GetMilestoneData = {
     body?: never;
     path: {
         /**
@@ -10280,25 +10280,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData = {
     url: '/repositories/{workspace}/{repo_slug}/milestones/{milestone_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors = {
+export type GetMilestoneErrors = {
     /**
      * The specified repository or milestone does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdError = GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors];
+export type GetMilestoneError = GetMilestoneErrors[keyof GetMilestoneErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses = {
+export type GetMilestoneResponses = {
     /**
      * The specified milestone object.
      */
     200: Milestone;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponse = GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses];
+export type GetMilestoneResponse = GetMilestoneResponses[keyof GetMilestoneResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
+export type GetOverrideSettingsData = {
     body?: never;
     path: {
         /**
@@ -10318,25 +10318,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
     url: '/repositories/{workspace}/{repo_slug}/override-settings';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors = {
+export type GetOverrideSettingsErrors = {
     /**
      * If no repository exists at this location
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsError = GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors];
+export type GetOverrideSettingsError = GetOverrideSettingsErrors[keyof GetOverrideSettingsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses = {
+export type GetOverrideSettingsResponses = {
     /**
      * The repository setting inheritance state
      */
     200: RepositoryInheritanceState;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponse = GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses];
+export type GetOverrideSettingsResponse = GetOverrideSettingsResponses[keyof GetOverrideSettingsResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
+export type UpdateOverrideSettingsData = {
     body?: never;
     path: {
         /**
@@ -10356,25 +10356,25 @@ export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
     url: '/repositories/{workspace}/{repo_slug}/override-settings';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors = {
+export type UpdateOverrideSettingsErrors = {
     /**
      * If no repository exists at this location
      */
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsError = PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors[keyof PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors];
+export type UpdateOverrideSettingsError = UpdateOverrideSettingsErrors[keyof UpdateOverrideSettingsErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses = {
+export type UpdateOverrideSettingsResponses = {
     /**
      * The repository setting inheritance state was set and no content returned
      */
     204: void;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponse = PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses[keyof PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses];
+export type UpdateOverrideSettingsResponse = UpdateOverrideSettingsResponses[keyof UpdateOverrideSettingsResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData = {
+export type GetPatchData = {
     body?: never;
     path: {
         /**
@@ -10400,7 +10400,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData = {
     url: '/repositories/{workspace}/{repo_slug}/patch/{spec}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors = {
+export type GetPatchErrors = {
     /**
      * If the diff was too large and timed out.
      *
@@ -10412,16 +10412,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors = {
     555: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecError = GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors];
+export type GetPatchError = GetPatchErrors[keyof GetPatchErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecResponses = {
+export type GetPatchResponses = {
     /**
      * The raw patches
      */
     200: unknown;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData = {
+export type ListRepoPermissionGroupsData = {
     body?: never;
     path: {
         /**
@@ -10441,7 +10441,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData = {
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors = {
+export type ListRepoPermissionGroupsErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10456,18 +10456,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors = 
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors];
+export type ListRepoPermissionGroupsError = ListRepoPermissionGroupsErrors[keyof ListRepoPermissionGroupsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses = {
+export type ListRepoPermissionGroupsResponses = {
     /**
      * Paginated of explicit group permissions on the repository.
      */
     200: PaginatedRepositoryGroupPermissions;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses];
+export type ListRepoPermissionGroupsResponse = ListRepoPermissionGroupsResponses[keyof ListRepoPermissionGroupsResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData = {
+export type DeleteRepoPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -10491,7 +10491,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGrou
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors = {
+export type DeleteRepoPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10506,18 +10506,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGrou
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
+export type DeleteRepoPermissionGroupError = DeleteRepoPermissionGroupErrors[keyof DeleteRepoPermissionGroupErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses = {
+export type DeleteRepoPermissionGroupResponses = {
     /**
      * Group permission deleted
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses];
+export type DeleteRepoPermissionGroupResponse = DeleteRepoPermissionGroupResponses[keyof DeleteRepoPermissionGroupResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData = {
+export type GetRepoPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -10541,7 +10541,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSl
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors = {
+export type GetRepoPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10556,18 +10556,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSl
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
+export type GetRepoPermissionGroupError = GetRepoPermissionGroupErrors[keyof GetRepoPermissionGroupErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses = {
+export type GetRepoPermissionGroupResponses = {
     /**
      * Group permission for group slug and repository
      */
     200: RepositoryGroupPermission;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses];
+export type GetRepoPermissionGroupResponse = GetRepoPermissionGroupResponses[keyof GetRepoPermissionGroupResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData = {
+export type UpdateRepoPermissionGroupData = {
     /**
      * The permission to grant
      */
@@ -10594,7 +10594,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSl
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors = {
+export type UpdateRepoPermissionGroupErrors = {
     /**
      * No permission value was provided or the value is invalid(not one of read, write, or admin)
      */
@@ -10617,18 +10617,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSl
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
+export type UpdateRepoPermissionGroupError = UpdateRepoPermissionGroupErrors[keyof UpdateRepoPermissionGroupErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses = {
+export type UpdateRepoPermissionGroupResponses = {
     /**
      * Group permission updated
      */
     200: RepositoryGroupPermission;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses];
+export type UpdateRepoPermissionGroupResponse = UpdateRepoPermissionGroupResponses[keyof UpdateRepoPermissionGroupResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData = {
+export type ListRepoPermissionUsersData = {
     body?: never;
     path: {
         /**
@@ -10648,7 +10648,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData = {
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors = {
+export type ListRepoPermissionUsersErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10663,18 +10663,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors];
+export type ListRepoPermissionUsersError = ListRepoPermissionUsersErrors[keyof ListRepoPermissionUsersErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses = {
+export type ListRepoPermissionUsersResponses = {
     /**
      * Paginated of explicit user permissions on the repository.
      */
     200: PaginatedRepositoryUserPermissions;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses];
+export type ListRepoPermissionUsersResponse = ListRepoPermissionUsersResponses[keyof ListRepoPermissionUsersResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData = {
+export type DeleteRepoPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -10700,7 +10700,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelec
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors = {
+export type DeleteRepoPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10715,18 +10715,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelec
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
+export type DeleteRepoPermissionUserError = DeleteRepoPermissionUserErrors[keyof DeleteRepoPermissionUserErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses = {
+export type DeleteRepoPermissionUserResponses = {
     /**
      * The repository user permission was deleted and no content returned.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses];
+export type DeleteRepoPermissionUserResponse = DeleteRepoPermissionUserResponses[keyof DeleteRepoPermissionUserResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData = {
+export type GetRepoPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -10752,7 +10752,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelected
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors = {
+export type GetRepoPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10767,18 +10767,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelected
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
+export type GetRepoPermissionUserError = GetRepoPermissionUserErrors[keyof GetRepoPermissionUserErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses = {
+export type GetRepoPermissionUserResponses = {
     /**
      * Explicit user permission for user and repository
      */
     200: RepositoryUserPermission;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses];
+export type GetRepoPermissionUserResponse = GetRepoPermissionUserResponses[keyof GetRepoPermissionUserResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData = {
+export type UpdateRepoPermissionUserData = {
     /**
      * The permission to grant
      */
@@ -10807,7 +10807,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelected
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors = {
+export type UpdateRepoPermissionUserErrors = {
     /**
      * No permission value was provided or the value is invalid (not one of read, write, or admin), or the selected user is not a valid user to update.
      */
@@ -10830,16 +10830,16 @@ export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelected
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
+export type UpdateRepoPermissionUserError = UpdateRepoPermissionUserErrors[keyof UpdateRepoPermissionUserErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses = {
+export type UpdateRepoPermissionUserResponses = {
     /**
      * Explicit user permission updated
      */
     200: RepositoryUserPermission;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses];
+export type UpdateRepoPermissionUserResponse = UpdateRepoPermissionUserResponses[keyof UpdateRepoPermissionUserResponses];
 
 export type GetPipelinesForRepositoryData = {
     body?: never;
@@ -12550,7 +12550,7 @@ export type UpdateRepositoryHostedPropertyValueResponses = {
 
 export type UpdateRepositoryHostedPropertyValueResponse = UpdateRepositoryHostedPropertyValueResponses[keyof UpdateRepositoryHostedPropertyValueResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
+export type ListPullRequestsData = {
     body?: never;
     path: {
         /**
@@ -12575,7 +12575,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
     url: '/repositories/{workspace}/{repo_slug}/pullrequests';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
+export type ListPullRequestsErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -12586,18 +12586,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors];
+export type ListPullRequestsError = ListPullRequestsErrors[keyof ListPullRequestsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses = {
+export type ListPullRequestsResponses = {
     /**
      * All pull requests on the specified repository.
      */
     200: PaginatedPullrequests;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses];
+export type ListPullRequestsResponse = ListPullRequestsResponses[keyof ListPullRequestsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
+export type CreatePullRequestData = {
     /**
      * The new pull request.
      *
@@ -12624,7 +12624,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
     url: '/repositories/{workspace}/{repo_slug}/pullrequests';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
+export type CreatePullRequestErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
@@ -12635,18 +12635,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
     401: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors];
+export type CreatePullRequestError = CreatePullRequestErrors[keyof CreatePullRequestErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses = {
+export type CreatePullRequestResponses = {
     /**
      * The newly created pull request.
      */
     201: Pullrequest;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses];
+export type CreatePullRequestResponse = CreatePullRequestResponses[keyof CreatePullRequestResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData = {
+export type ListPullRequestsActivityData = {
     body?: never;
     path: {
         /**
@@ -12666,7 +12666,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData = {
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/activity';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors = {
+export type ListPullRequestsActivityErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -12677,16 +12677,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors];
+export type ListPullRequestsActivityError = ListPullRequestsActivityErrors[keyof ListPullRequestsActivityErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityResponses = {
+export type ListPullRequestsActivityResponses = {
     /**
      * The pull request activity log
      */
     200: unknown;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData = {
+export type GetPullRequestData = {
     body?: never;
     path: {
         /**
@@ -12710,7 +12710,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData 
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors = {
+export type GetPullRequestErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -12721,18 +12721,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors];
+export type GetPullRequestError = GetPullRequestErrors[keyof GetPullRequestErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses = {
+export type GetPullRequestResponses = {
     /**
      * The pull request object
      */
     200: Pullrequest;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses];
+export type GetPullRequestResponse = GetPullRequestResponses[keyof GetPullRequestResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData = {
+export type UpdatePullRequestData = {
     /**
      * The pull request that is to be updated.
      */
@@ -12759,7 +12759,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData 
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors = {
+export type UpdatePullRequestErrors = {
     /**
      * If the input document was invalid.
      */
@@ -12774,18 +12774,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors];
+export type UpdatePullRequestError = UpdatePullRequestErrors[keyof UpdatePullRequestErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses = {
+export type UpdatePullRequestResponses = {
     /**
      * The updated pull request
      */
     200: Pullrequest;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponse = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses];
+export type UpdatePullRequestResponse = UpdatePullRequestResponses[keyof UpdatePullRequestResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityData = {
+export type GetPullRequestActivityData = {
     body?: never;
     path: {
         /**
@@ -12809,7 +12809,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActiv
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/activity';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors = {
+export type GetPullRequestActivityErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -12820,16 +12820,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActiv
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors];
+export type GetPullRequestActivityError = GetPullRequestActivityErrors[keyof GetPullRequestActivityErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityResponses = {
+export type GetPullRequestActivityResponses = {
     /**
      * The pull request activity log
      */
     200: unknown;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData = {
+export type DeletePullRequestApprovalData = {
     body?: never;
     path: {
         /**
@@ -12853,7 +12853,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdAp
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors = {
+export type DeletePullRequestApprovalErrors = {
     /**
      * Pull request cannot be unapproved because the pull request has already been merged.
      */
@@ -12868,18 +12868,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdAp
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors];
+export type DeletePullRequestApprovalError = DeletePullRequestApprovalErrors[keyof DeletePullRequestApprovalErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses = {
+export type DeletePullRequestApprovalResponses = {
     /**
      * An empty response indicating the authenticated user's approval has been withdrawn.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses];
+export type DeletePullRequestApprovalResponse = DeletePullRequestApprovalResponses[keyof DeletePullRequestApprovalResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData = {
+export type ApprovePullRequestData = {
     body?: never;
     path: {
         /**
@@ -12903,7 +12903,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdAppr
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors = {
+export type ApprovePullRequestErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -12914,18 +12914,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdAppr
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors];
+export type ApprovePullRequestError = ApprovePullRequestErrors[keyof ApprovePullRequestErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses = {
+export type ApprovePullRequestResponses = {
     /**
      * The `participant` object recording that the authenticated user approved the pull request.
      */
     200: Participant;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses];
+export type ApprovePullRequestResponse = ApprovePullRequestResponses[keyof ApprovePullRequestResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData = {
+export type ListPullRequestCommentsData = {
     body?: never;
     path: {
         /**
@@ -12949,7 +12949,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors = {
+export type ListPullRequestCommentsErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -12960,18 +12960,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors];
+export type ListPullRequestCommentsError = ListPullRequestCommentsErrors[keyof ListPullRequestCommentsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses = {
+export type ListPullRequestCommentsResponses = {
     /**
      * A paginated list of comments made on the given pull request, in chronological order.
      */
     200: PaginatedPullrequestComments;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses];
+export type ListPullRequestCommentsResponse = ListPullRequestCommentsResponses[keyof ListPullRequestCommentsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData = {
+export type CreatePullRequestCommentData = {
     /**
      * The comment object.
      */
@@ -12998,7 +12998,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors = {
+export type CreatePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -13009,18 +13009,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors];
+export type CreatePullRequestCommentError = CreatePullRequestCommentErrors[keyof CreatePullRequestCommentErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses = {
+export type CreatePullRequestCommentResponses = {
     /**
      * The newly created comment.
      */
     201: PullrequestComment;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses];
+export type CreatePullRequestCommentResponse = CreatePullRequestCommentResponses[keyof CreatePullRequestCommentResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData = {
+export type DeletePullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -13048,7 +13048,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCo
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors = {
+export type DeletePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to delete the comment.
      */
@@ -13059,18 +13059,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCo
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
+export type DeletePullRequestCommentError = DeletePullRequestCommentErrors[keyof DeletePullRequestCommentErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses = {
+export type DeletePullRequestCommentResponses = {
     /**
      * Successful deletion.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses];
+export type DeletePullRequestCommentResponse = DeletePullRequestCommentResponses[keyof DeletePullRequestCommentResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData = {
+export type GetPullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -13098,7 +13098,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors = {
+export type GetPullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -13109,18 +13109,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
+export type GetPullRequestCommentError = GetPullRequestCommentErrors[keyof GetPullRequestCommentErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses = {
+export type GetPullRequestCommentResponses = {
     /**
      * The comment.
      */
     200: PullrequestComment;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses];
+export type GetPullRequestCommentResponse = GetPullRequestCommentResponses[keyof GetPullRequestCommentResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData = {
+export type UpdatePullRequestCommentData = {
     /**
      * The contents of the updated comment.
      */
@@ -13151,7 +13151,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors = {
+export type UpdatePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the comment.
      */
@@ -13162,18 +13162,18 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComme
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
+export type UpdatePullRequestCommentError = UpdatePullRequestCommentErrors[keyof UpdatePullRequestCommentErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses = {
+export type UpdatePullRequestCommentResponses = {
     /**
      * The updated comment.
      */
     200: PullrequestComment;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses];
+export type UpdatePullRequestCommentResponse = UpdatePullRequestCommentResponses[keyof UpdatePullRequestCommentResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData = {
+export type UnresolvePullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -13201,7 +13201,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCo
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors = {
+export type UnresolvePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request,
      * or if the provided comment is not a top-level comment.
@@ -13213,18 +13213,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCo
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors];
+export type UnresolvePullRequestCommentError = UnresolvePullRequestCommentErrors[keyof UnresolvePullRequestCommentErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses = {
+export type UnresolvePullRequestCommentResponses = {
     /**
      * The comment is reopened.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses];
+export type UnresolvePullRequestCommentResponse = UnresolvePullRequestCommentResponses[keyof UnresolvePullRequestCommentResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData = {
+export type ResolvePullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -13252,7 +13252,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors = {
+export type ResolvePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request,
      * if the provided comment is not a top-level comment,
@@ -13269,18 +13269,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdComm
     409: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors];
+export type ResolvePullRequestCommentError = ResolvePullRequestCommentErrors[keyof ResolvePullRequestCommentErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses = {
+export type ResolvePullRequestCommentResponses = {
     /**
      * The comment resolution details.
      */
     200: CommentResolution;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses];
+export type ResolvePullRequestCommentResponse = ResolvePullRequestCommentResponses[keyof ResolvePullRequestCommentResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsData = {
+export type ListPullRequestCommitsData = {
     body?: never;
     path: {
         /**
@@ -13304,7 +13304,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommi
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/commits';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors = {
+export type ListPullRequestCommitsErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -13315,16 +13315,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommi
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors];
+export type ListPullRequestCommitsError = ListPullRequestCommitsErrors[keyof ListPullRequestCommitsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsResponses = {
+export type ListPullRequestCommitsResponses = {
     /**
      * A paginated list of commits made on the given pull request, in chronological order. This list will be empty if the source branch no longer exists.
      */
     200: unknown;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineData = {
+export type DeclinePullRequestData = {
     body?: never;
     path: {
         /**
@@ -13348,7 +13348,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDecl
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/decline';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors = {
+export type DeclinePullRequestErrors = {
     /**
      * If the decline took too long and timed out.
      * In this case the caller should retry the request later.
@@ -13356,18 +13356,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDecl
     555: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors];
+export type DeclinePullRequestError = DeclinePullRequestErrors[keyof DeclinePullRequestErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses = {
+export type DeclinePullRequestResponses = {
     /**
      * The pull request was successfully declined.
      */
     200: Pullrequest;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses];
+export type DeclinePullRequestResponse = DeclinePullRequestResponses[keyof DeclinePullRequestResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffData = {
+export type GetPullRequestDiffData = {
     body?: never;
     path: {
         /**
@@ -13391,7 +13391,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffD
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diff';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstatData = {
+export type GetPullRequestDiffstatData = {
     body?: never;
     path: {
         /**
@@ -13415,7 +13415,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffs
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diffstat';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeData = {
+export type MergePullRequestData = {
     body?: PullrequestMergeParameters;
     path: {
         /**
@@ -13456,7 +13456,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerg
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors = {
+export type MergePullRequestErrors = {
     /**
      * Unable to merge because one of the refs involved changed while attempting to merge
      */
@@ -13468,9 +13468,9 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerg
     555: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors];
+export type MergePullRequestError = MergePullRequestErrors[keyof MergePullRequestErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses = {
+export type MergePullRequestResponses = {
     /**
      * The pull request object.
      */
@@ -13481,9 +13481,9 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerg
     202: unknown;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses];
+export type MergePullRequestResponse = MergePullRequestResponses[keyof MergePullRequestResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdData = {
+export type GetPullRequestMergeTaskStatusData = {
     body?: never;
     path: {
         /**
@@ -13511,7 +13511,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerge
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge/task-status/{task_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdErrors = {
+export type GetPullRequestMergeTaskStatusErrors = {
     /**
      * If the provided task ID does not relate to this pull request, or if something went wrong during the merge operation
      */
@@ -13526,14 +13526,14 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMerge
     409: unknown;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdResponses = {
+export type GetPullRequestMergeTaskStatusResponses = {
     /**
      * Returns a task status if the merge is either pending or successful, and if it is successful, a pull request
      */
     200: unknown;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatchData = {
+export type GetPullRequestPatchData = {
     body?: never;
     path: {
         /**
@@ -13557,7 +13557,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatch
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/patch';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData = {
+export type DeletePullRequestChangeRequestData = {
     body?: never;
     path: {
         /**
@@ -13581,7 +13581,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRe
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors = {
+export type DeletePullRequestChangeRequestErrors = {
     /**
      * Pull request requested changes cannot be removed because the pull request has already been merged.
      */
@@ -13596,18 +13596,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRe
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors];
+export type DeletePullRequestChangeRequestError = DeletePullRequestChangeRequestErrors[keyof DeletePullRequestChangeRequestErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses = {
+export type DeletePullRequestChangeRequestResponses = {
     /**
      * An empty response indicating the authenticated user's request for change has been withdrawn.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses];
+export type DeletePullRequestChangeRequestResponse = DeletePullRequestChangeRequestResponses[keyof DeletePullRequestChangeRequestResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData = {
+export type RequestPullRequestChangesData = {
     body?: never;
     path: {
         /**
@@ -13631,7 +13631,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequ
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors = {
+export type RequestPullRequestChangesErrors = {
     /**
      * Pull request changes cannot be requested because the pull request has already been merged.
      */
@@ -13646,18 +13646,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequ
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors];
+export type RequestPullRequestChangesError = RequestPullRequestChangesErrors[keyof RequestPullRequestChangesErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses = {
+export type RequestPullRequestChangesResponses = {
     /**
      * The `participant` object recording that the authenticated user requested changes on the pull request.
      */
     200: Participant;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses];
+export type RequestPullRequestChangesResponse = RequestPullRequestChangesResponses[keyof RequestPullRequestChangesResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesData = {
+export type ListPullRequestStatusesData = {
     body?: never;
     path: {
         /**
@@ -13695,7 +13695,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatu
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/statuses';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors = {
+export type ListPullRequestStatusesErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -13706,18 +13706,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatu
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors];
+export type ListPullRequestStatusesError = ListPullRequestStatusesErrors[keyof ListPullRequestStatusesErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses = {
+export type ListPullRequestStatusesResponses = {
     /**
      * A paginated list of all commit statuses for this pull request.
      */
     200: PaginatedCommitstatuses;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses];
+export type ListPullRequestStatusesResponse = ListPullRequestStatusesResponses[keyof ListPullRequestStatusesResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData = {
+export type ListPullRequestTasksData = {
     body?: never;
     path: {
         /**
@@ -13764,7 +13764,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors = {
+export type ListPullRequestTasksErrors = {
     /**
      * If the user provides an invalid filter, sort, or fields query parameter.
      */
@@ -13779,18 +13779,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors];
+export type ListPullRequestTasksError = ListPullRequestTasksErrors[keyof ListPullRequestTasksErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses = {
+export type ListPullRequestTasksResponses = {
     /**
      * A paginated list of pull request tasks for the given pull request.
      */
     200: PaginatedTasks;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses];
+export type ListPullRequestTasksResponse = ListPullRequestTasksResponses[keyof ListPullRequestTasksResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData = {
+export type CreatePullRequestTaskData = {
     /**
      * The contents of the task
      */
@@ -13817,7 +13817,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTask
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors = {
+export type CreatePullRequestTaskErrors = {
     /**
      * There is a missing required field in the request or the task content is blank.
      */
@@ -13832,18 +13832,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTask
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors];
+export type CreatePullRequestTaskError = CreatePullRequestTaskErrors[keyof CreatePullRequestTaskErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses = {
+export type CreatePullRequestTaskResponses = {
     /**
      * The newly created task.
      */
     201: PullrequestCommentTask;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses];
+export type CreatePullRequestTaskResponse = CreatePullRequestTaskResponses[keyof CreatePullRequestTaskResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData = {
+export type DeletePullRequestTaskData = {
     body?: never;
     path: {
         /**
@@ -13871,7 +13871,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTa
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors = {
+export type DeletePullRequestTaskErrors = {
     /**
      * If the authenticated user does not have access to delete the task.
      */
@@ -13882,18 +13882,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTa
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
+export type DeletePullRequestTaskError = DeletePullRequestTaskErrors[keyof DeletePullRequestTaskErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses = {
+export type DeletePullRequestTaskResponses = {
     /**
      * Successful deletion.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses];
+export type DeletePullRequestTaskResponse = DeletePullRequestTaskResponses[keyof DeletePullRequestTaskResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData = {
+export type GetPullRequestTaskData = {
     body?: never;
     path: {
         /**
@@ -13921,7 +13921,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors = {
+export type GetPullRequestTaskErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -13932,18 +13932,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
+export type GetPullRequestTaskError = GetPullRequestTaskErrors[keyof GetPullRequestTaskErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses = {
+export type GetPullRequestTaskResponses = {
     /**
      * The task.
      */
     200: PullrequestCommentTask;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses];
+export type GetPullRequestTaskResponse = GetPullRequestTaskResponses[keyof GetPullRequestTaskResponses];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData = {
+export type UpdatePullRequestTaskData = {
     /**
      * The updated state and content of the task.
      */
@@ -13974,7 +13974,7 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}';
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors = {
+export type UpdatePullRequestTaskErrors = {
     /**
      * There is a missing required field in the request or the task content is blank.
      */
@@ -13989,16 +13989,16 @@ export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasks
     404: Error;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
+export type UpdatePullRequestTaskError = UpdatePullRequestTaskErrors[keyof UpdatePullRequestTaskErrors];
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses = {
+export type UpdatePullRequestTaskResponses = {
     /**
      * The updated task.
      */
     200: PullrequestCommentTask;
 };
 
-export type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses];
+export type UpdatePullRequestTaskResponse = UpdatePullRequestTaskResponses[keyof UpdatePullRequestTaskResponses];
 
 export type DeletePullRequestHostedPropertyValueData = {
     body?: never;
@@ -14114,7 +14114,7 @@ export type UpdatePullRequestHostedPropertyValueResponses = {
 
 export type UpdatePullRequestHostedPropertyValueResponse = UpdatePullRequestHostedPropertyValueResponses[keyof UpdatePullRequestHostedPropertyValueResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsData = {
+export type ListRefsData = {
     body?: never;
     path: {
         /**
@@ -14150,7 +14150,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsData = {
     url: '/repositories/{workspace}/{repo_slug}/refs';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsErrors = {
+export type ListRefsErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14163,18 +14163,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsError = GetRepositoriesByWorkspaceByRepoSlugRefsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsErrors];
+export type ListRefsError = ListRefsErrors[keyof ListRefsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsResponses = {
+export type ListRefsResponses = {
     /**
      * A paginated list of refs matching any filter criteria that were provided.
      */
     200: PaginatedRefs;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsResponse = GetRepositoriesByWorkspaceByRepoSlugRefsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsResponses];
+export type ListRefsResponse = ListRefsResponses[keyof ListRefsResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
+export type ListBranchesData = {
     body?: never;
     path: {
         /**
@@ -14210,7 +14210,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/branches';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
+export type ListBranchesErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14223,18 +14223,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesError = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors];
+export type ListBranchesError = ListBranchesErrors[keyof ListBranchesErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses = {
+export type ListBranchesResponses = {
     /**
      * A paginated list of branches matching any filter criteria that were provided.
      */
     200: PaginatedBranches;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponse = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses];
+export type ListBranchesResponse = ListBranchesResponses[keyof ListBranchesResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
+export type CreateBranchData = {
     body?: never;
     path: {
         /**
@@ -14254,7 +14254,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/branches';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
+export type CreateBranchErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14267,18 +14267,18 @@ export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesError = PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors];
+export type CreateBranchError = CreateBranchErrors[keyof CreateBranchErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses = {
+export type CreateBranchResponses = {
     /**
      * The newly created branch object.
      */
     201: Branch;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponse = PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses];
+export type CreateBranchResponse = CreateBranchResponses[keyof CreateBranchResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
+export type DeleteBranchData = {
     body?: never;
     path: {
         /**
@@ -14302,7 +14302,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/branches/{name}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
+export type DeleteBranchErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14315,18 +14315,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError = DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors];
+export type DeleteBranchError = DeleteBranchErrors[keyof DeleteBranchErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses = {
+export type DeleteBranchResponses = {
     /**
      * Indicates that the specified branch was successfully deleted.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponse = DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses];
+export type DeleteBranchResponse = DeleteBranchResponses[keyof DeleteBranchResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
+export type GetBranchData = {
     body?: never;
     path: {
         /**
@@ -14350,7 +14350,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/branches/{name}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
+export type GetBranchErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14363,18 +14363,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors];
+export type GetBranchError = GetBranchErrors[keyof GetBranchErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses = {
+export type GetBranchResponses = {
     /**
      * The branch object.
      */
     200: Branch;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponse = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses];
+export type GetBranchResponse = GetBranchResponses[keyof GetBranchResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
+export type ListTagsData = {
     body?: never;
     path: {
         /**
@@ -14410,7 +14410,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/tags';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
+export type ListTagsErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14423,18 +14423,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsError = GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors];
+export type ListTagsError = ListTagsErrors[keyof ListTagsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses = {
+export type ListTagsResponses = {
     /**
      * A paginated list of tags matching any filter criteria that were provided.
      */
     200: PaginatedTags;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponse = GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses];
+export type ListTagsResponse = ListTagsResponses[keyof ListTagsResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
+export type CreateTagData = {
     body: Tag;
     path: {
         /**
@@ -14454,25 +14454,25 @@ export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/tags';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
+export type CreateTagErrors = {
     /**
      * If the target hash is missing, ambiguous, or invalid, or if the name is not provided.
      */
     400: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsError = PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors];
+export type CreateTagError = CreateTagErrors[keyof CreateTagErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses = {
+export type CreateTagResponses = {
     /**
      * The newly created tag.
      */
     201: Tag;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponse = PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses];
+export type CreateTagResponse = CreateTagResponses[keyof CreateTagResponses];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
+export type DeleteTagData = {
     body?: never;
     path: {
         /**
@@ -14496,7 +14496,7 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/tags/{name}';
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
+export type DeleteTagErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14509,18 +14509,18 @@ export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
     404: Error;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError = DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors];
+export type DeleteTagError = DeleteTagErrors[keyof DeleteTagErrors];
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses = {
+export type DeleteTagResponses = {
     /**
      * Indicates the specified tag was successfully deleted.
      */
     204: void;
 };
 
-export type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponse = DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses];
+export type DeleteTagResponse = DeleteTagResponses[keyof DeleteTagResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
+export type GetTagData = {
     body?: never;
     path: {
         /**
@@ -14544,7 +14544,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
     url: '/repositories/{workspace}/{repo_slug}/refs/tags/{name}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
+export type GetTagErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -14557,18 +14557,18 @@ export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError = GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors];
+export type GetTagError = GetTagErrors[keyof GetTagErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses = {
+export type GetTagResponses = {
     /**
      * The tag object.
      */
     200: Tag;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponse = GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses];
+export type GetTagResponse = GetTagResponses[keyof GetTagResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcData = {
+export type ListSrcRootData = {
     body?: never;
     path: {
         /**
@@ -14593,16 +14593,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugSrcData = {
     url: '/repositories/{workspace}/{repo_slug}/src';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcErrors = {
+export type ListSrcRootErrors = {
     /**
      * If the path or commit in the URL does not exist.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcError = GetRepositoriesByWorkspaceByRepoSlugSrcErrors[keyof GetRepositoriesByWorkspaceByRepoSlugSrcErrors];
+export type ListSrcRootError = ListSrcRootErrors[keyof ListSrcRootErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcResponses = {
+export type ListSrcRootResponses = {
     /**
      * If the path matches a file, then the raw contents of the file are
      * returned (unless the `format=meta` query parameter was provided,
@@ -14616,9 +14616,9 @@ export type GetRepositoriesByWorkspaceByRepoSlugSrcResponses = {
     200: PaginatedTreeentries;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcResponse = GetRepositoriesByWorkspaceByRepoSlugSrcResponses[keyof GetRepositoriesByWorkspaceByRepoSlugSrcResponses];
+export type ListSrcRootResponse = ListSrcRootResponses[keyof ListSrcRootResponses];
 
-export type PostRepositoriesByWorkspaceByRepoSlugSrcData = {
+export type CreateSrcFileCommitData = {
     body?: never;
     path: {
         /**
@@ -14739,7 +14739,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugSrcData = {
     url: '/repositories/{workspace}/{repo_slug}/src';
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugSrcErrors = {
+export type CreateSrcFileCommitErrors = {
     /**
      * If the authenticated user does not have write or admin access
      */
@@ -14750,9 +14750,9 @@ export type PostRepositoriesByWorkspaceByRepoSlugSrcErrors = {
     404: Error;
 };
 
-export type PostRepositoriesByWorkspaceByRepoSlugSrcError = PostRepositoriesByWorkspaceByRepoSlugSrcErrors[keyof PostRepositoriesByWorkspaceByRepoSlugSrcErrors];
+export type CreateSrcFileCommitError = CreateSrcFileCommitErrors[keyof CreateSrcFileCommitErrors];
 
-export type PostRepositoriesByWorkspaceByRepoSlugSrcResponses = {
+export type CreateSrcFileCommitResponses = {
     /**
      *
      *
@@ -14760,7 +14760,7 @@ export type PostRepositoriesByWorkspaceByRepoSlugSrcResponses = {
     201: unknown;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData = {
+export type GetSrcFileData = {
     body?: never;
     path: {
         /**
@@ -14805,7 +14805,7 @@ export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData = {
     url: '/repositories/{workspace}/{repo_slug}/src/{commit}/{path}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors = {
+export type GetSrcFileErrors = {
     /**
      * If the path or commit in the URL does not exist.
      */
@@ -14816,9 +14816,9 @@ export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors = {
     555: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathError = GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors];
+export type GetSrcFileError = GetSrcFileErrors[keyof GetSrcFileErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses = {
+export type GetSrcFileResponses = {
     /**
      * If the path matches a file, then the raw contents of the file are
      * returned.  If the `format=meta` query parameter is provided,
@@ -14834,9 +14834,9 @@ export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses = {
     200: PaginatedTreeentries;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponse = GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses[keyof GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses];
+export type GetSrcFileResponse = GetSrcFileResponses[keyof GetSrcFileResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsData = {
+export type ListVersionsData = {
     body?: never;
     path: {
         /**
@@ -14856,25 +14856,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugVersionsData = {
     url: '/repositories/{workspace}/{repo_slug}/versions';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsErrors = {
+export type ListVersionsErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsError = GetRepositoriesByWorkspaceByRepoSlugVersionsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsErrors];
+export type ListVersionsError = ListVersionsErrors[keyof ListVersionsErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsResponses = {
+export type ListVersionsResponses = {
     /**
      * The versions that have been defined in the issue tracker.
      */
     200: PaginatedVersions;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsResponse = GetRepositoriesByWorkspaceByRepoSlugVersionsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsResponses];
+export type ListVersionsResponse = ListVersionsResponses[keyof ListVersionsResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData = {
+export type GetVersionData = {
     body?: never;
     path: {
         /**
@@ -14898,25 +14898,25 @@ export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData = {
     url: '/repositories/{workspace}/{repo_slug}/versions/{version_id}';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors = {
+export type GetVersionErrors = {
     /**
      * The specified repository or version does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdError = GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors];
+export type GetVersionError = GetVersionErrors[keyof GetVersionErrors];
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses = {
+export type GetVersionResponses = {
     /**
      * The specified version object.
      */
     200: Version;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponse = GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses];
+export type GetVersionResponse = GetVersionResponses[keyof GetVersionResponses];
 
-export type GetRepositoriesByWorkspaceByRepoSlugWatchersData = {
+export type ListRepoWatchersData = {
     body?: never;
     path: {
         /**
@@ -14936,16 +14936,16 @@ export type GetRepositoriesByWorkspaceByRepoSlugWatchersData = {
     url: '/repositories/{workspace}/{repo_slug}/watchers';
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugWatchersResponses = {
+export type ListRepoWatchersResponses = {
     /**
      * A paginated list of all the watchers on the specified repository.
      */
     200: PaginatedAccounts;
 };
 
-export type GetRepositoriesByWorkspaceByRepoSlugWatchersResponse = GetRepositoriesByWorkspaceByRepoSlugWatchersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugWatchersResponses];
+export type ListRepoWatchersResponse = ListRepoWatchersResponses[keyof ListRepoWatchersResponses];
 
-export type GetSnippetsData = {
+export type ListSnippetsData = {
     body?: never;
     path?: never;
     query?: {
@@ -14957,25 +14957,25 @@ export type GetSnippetsData = {
     url: '/snippets';
 };
 
-export type GetSnippetsErrors = {
+export type ListSnippetsErrors = {
     /**
      * If the snippet does not exist.
      */
     404: Error;
 };
 
-export type GetSnippetsError = GetSnippetsErrors[keyof GetSnippetsErrors];
+export type ListSnippetsError = ListSnippetsErrors[keyof ListSnippetsErrors];
 
-export type GetSnippetsResponses = {
+export type ListSnippetsResponses = {
     /**
      * A paginated list of snippets.
      */
     200: PaginatedSnippets;
 };
 
-export type GetSnippetsResponse = GetSnippetsResponses[keyof GetSnippetsResponses];
+export type ListSnippetsResponse = ListSnippetsResponses[keyof ListSnippetsResponses];
 
-export type PostSnippetsData = {
+export type CreateSnippetData = {
     /**
      * The new snippet object.
      */
@@ -14985,25 +14985,25 @@ export type PostSnippetsData = {
     url: '/snippets';
 };
 
-export type PostSnippetsErrors = {
+export type CreateSnippetErrors = {
     /**
      * If the request was not authenticated
      */
     401: Error;
 };
 
-export type PostSnippetsError = PostSnippetsErrors[keyof PostSnippetsErrors];
+export type CreateSnippetError = CreateSnippetErrors[keyof CreateSnippetErrors];
 
-export type PostSnippetsResponses = {
+export type CreateSnippetResponses = {
     /**
      * The newly created snippet object.
      */
     201: Snippet;
 };
 
-export type PostSnippetsResponse = PostSnippetsResponses[keyof PostSnippetsResponses];
+export type CreateSnippetResponse = CreateSnippetResponses[keyof CreateSnippetResponses];
 
-export type GetSnippetsByWorkspaceData = {
+export type ListWorkspaceSnippetsData = {
     body?: never;
     path: {
         /**
@@ -15022,25 +15022,25 @@ export type GetSnippetsByWorkspaceData = {
     url: '/snippets/{workspace}';
 };
 
-export type GetSnippetsByWorkspaceErrors = {
+export type ListWorkspaceSnippetsErrors = {
     /**
      * If the user does not exist.
      */
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceError = GetSnippetsByWorkspaceErrors[keyof GetSnippetsByWorkspaceErrors];
+export type ListWorkspaceSnippetsError = ListWorkspaceSnippetsErrors[keyof ListWorkspaceSnippetsErrors];
 
-export type GetSnippetsByWorkspaceResponses = {
+export type ListWorkspaceSnippetsResponses = {
     /**
      * A paginated list of snippets.
      */
     200: PaginatedSnippets;
 };
 
-export type GetSnippetsByWorkspaceResponse = GetSnippetsByWorkspaceResponses[keyof GetSnippetsByWorkspaceResponses];
+export type ListWorkspaceSnippetsResponse = ListWorkspaceSnippetsResponses[keyof ListWorkspaceSnippetsResponses];
 
-export type PostSnippetsByWorkspaceData = {
+export type CreateWorkspaceSnippetData = {
     /**
      * The new snippet object.
      */
@@ -15057,7 +15057,7 @@ export type PostSnippetsByWorkspaceData = {
     url: '/snippets/{workspace}';
 };
 
-export type PostSnippetsByWorkspaceErrors = {
+export type CreateWorkspaceSnippetErrors = {
     /**
      * If the request was not authenticated
      */
@@ -15068,18 +15068,18 @@ export type PostSnippetsByWorkspaceErrors = {
     403: Error;
 };
 
-export type PostSnippetsByWorkspaceError = PostSnippetsByWorkspaceErrors[keyof PostSnippetsByWorkspaceErrors];
+export type CreateWorkspaceSnippetError = CreateWorkspaceSnippetErrors[keyof CreateWorkspaceSnippetErrors];
 
-export type PostSnippetsByWorkspaceResponses = {
+export type CreateWorkspaceSnippetResponses = {
     /**
      * The newly created snippet object.
      */
     201: Snippet;
 };
 
-export type PostSnippetsByWorkspaceResponse = PostSnippetsByWorkspaceResponses[keyof PostSnippetsByWorkspaceResponses];
+export type CreateWorkspaceSnippetResponse = CreateWorkspaceSnippetResponses[keyof CreateWorkspaceSnippetResponses];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdData = {
+export type DeleteSnippetData = {
     body?: never;
     path: {
         /**
@@ -15097,7 +15097,7 @@ export type DeleteSnippetsByWorkspaceByEncodedIdData = {
     url: '/snippets/{workspace}/{encoded_id}';
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdErrors = {
+export type DeleteSnippetErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -15112,18 +15112,18 @@ export type DeleteSnippetsByWorkspaceByEncodedIdErrors = {
     404: Error;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdError = DeleteSnippetsByWorkspaceByEncodedIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdErrors];
+export type DeleteSnippetError = DeleteSnippetErrors[keyof DeleteSnippetErrors];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdResponses = {
+export type DeleteSnippetResponses = {
     /**
      * If the snippet was deleted successfully.
      */
     204: void;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdResponse = DeleteSnippetsByWorkspaceByEncodedIdResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdResponses];
+export type DeleteSnippetResponse = DeleteSnippetResponses[keyof DeleteSnippetResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdData = {
+export type GetSnippetData = {
     body?: never;
     path: {
         /**
@@ -15141,7 +15141,7 @@ export type GetSnippetsByWorkspaceByEncodedIdData = {
     url: '/snippets/{workspace}/{encoded_id}';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdErrors = {
+export type GetSnippetErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -15160,18 +15160,18 @@ export type GetSnippetsByWorkspaceByEncodedIdErrors = {
     410: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdError = GetSnippetsByWorkspaceByEncodedIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdErrors];
+export type GetSnippetError = GetSnippetErrors[keyof GetSnippetErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdResponses = {
+export type GetSnippetResponses = {
     /**
      * The snippet object.
      */
     200: Snippet;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdResponse = GetSnippetsByWorkspaceByEncodedIdResponses[keyof GetSnippetsByWorkspaceByEncodedIdResponses];
+export type GetSnippetResponse = GetSnippetResponses[keyof GetSnippetResponses];
 
-export type PutSnippetsByWorkspaceByEncodedIdData = {
+export type UpdateSnippetData = {
     body?: never;
     path: {
         /**
@@ -15189,7 +15189,7 @@ export type PutSnippetsByWorkspaceByEncodedIdData = {
     url: '/snippets/{workspace}/{encoded_id}';
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdErrors = {
+export type UpdateSnippetErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -15204,18 +15204,18 @@ export type PutSnippetsByWorkspaceByEncodedIdErrors = {
     404: Error;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdError = PutSnippetsByWorkspaceByEncodedIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdErrors];
+export type UpdateSnippetError = UpdateSnippetErrors[keyof UpdateSnippetErrors];
 
-export type PutSnippetsByWorkspaceByEncodedIdResponses = {
+export type UpdateSnippetResponses = {
     /**
      * The updated snippet object.
      */
     200: Snippet;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdResponse = PutSnippetsByWorkspaceByEncodedIdResponses[keyof PutSnippetsByWorkspaceByEncodedIdResponses];
+export type UpdateSnippetResponse = UpdateSnippetResponses[keyof UpdateSnippetResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsData = {
+export type ListSnippetCommentsData = {
     body?: never;
     path: {
         /**
@@ -15233,7 +15233,7 @@ export type GetSnippetsByWorkspaceByEncodedIdCommentsData = {
     url: '/snippets/{workspace}/{encoded_id}/comments';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsErrors = {
+export type ListSnippetCommentsErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15244,18 +15244,18 @@ export type GetSnippetsByWorkspaceByEncodedIdCommentsErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsError = GetSnippetsByWorkspaceByEncodedIdCommentsErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommentsErrors];
+export type ListSnippetCommentsError = ListSnippetCommentsErrors[keyof ListSnippetCommentsErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsResponses = {
+export type ListSnippetCommentsResponses = {
     /**
      * A paginated list of snippet comments, ordered by creation date.
      */
     200: PaginatedSnippetComments;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsResponse = GetSnippetsByWorkspaceByEncodedIdCommentsResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommentsResponses];
+export type ListSnippetCommentsResponse = ListSnippetCommentsResponses[keyof ListSnippetCommentsResponses];
 
-export type PostSnippetsByWorkspaceByEncodedIdCommentsData = {
+export type CreateSnippetCommentData = {
     /**
      * The contents of the new comment.
      */
@@ -15276,7 +15276,7 @@ export type PostSnippetsByWorkspaceByEncodedIdCommentsData = {
     url: '/snippets/{workspace}/{encoded_id}/comments';
 };
 
-export type PostSnippetsByWorkspaceByEncodedIdCommentsErrors = {
+export type CreateSnippetCommentErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15287,18 +15287,18 @@ export type PostSnippetsByWorkspaceByEncodedIdCommentsErrors = {
     404: Error;
 };
 
-export type PostSnippetsByWorkspaceByEncodedIdCommentsError = PostSnippetsByWorkspaceByEncodedIdCommentsErrors[keyof PostSnippetsByWorkspaceByEncodedIdCommentsErrors];
+export type CreateSnippetCommentError = CreateSnippetCommentErrors[keyof CreateSnippetCommentErrors];
 
-export type PostSnippetsByWorkspaceByEncodedIdCommentsResponses = {
+export type CreateSnippetCommentResponses = {
     /**
      * The newly created comment.
      */
     201: SnippetComment;
 };
 
-export type PostSnippetsByWorkspaceByEncodedIdCommentsResponse = PostSnippetsByWorkspaceByEncodedIdCommentsResponses[keyof PostSnippetsByWorkspaceByEncodedIdCommentsResponses];
+export type CreateSnippetCommentResponse = CreateSnippetCommentResponses[keyof CreateSnippetCommentResponses];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
+export type DeleteSnippetCommentData = {
     body?: never;
     path: {
         /**
@@ -15320,7 +15320,7 @@ export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
     url: '/snippets/{workspace}/{encoded_id}/comments/{comment_id}';
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
+export type DeleteSnippetCommentErrors = {
     /**
      * If the authenticated user is not the author of the comment.
      */
@@ -15331,18 +15331,18 @@ export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
     404: Error;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
+export type DeleteSnippetCommentError = DeleteSnippetCommentErrors[keyof DeleteSnippetCommentErrors];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses = {
+export type DeleteSnippetCommentResponses = {
     /**
      * Indicates the comment was deleted successfully.
      */
     204: void;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse = DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses];
+export type DeleteSnippetCommentResponse = DeleteSnippetCommentResponses[keyof DeleteSnippetCommentResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
+export type GetSnippetCommentData = {
     body?: never;
     path: {
         /**
@@ -15364,7 +15364,7 @@ export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
     url: '/snippets/{workspace}/{encoded_id}/comments/{comment_id}';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
+export type GetSnippetCommentErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15375,18 +15375,18 @@ export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
+export type GetSnippetCommentError = GetSnippetCommentErrors[keyof GetSnippetCommentErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses = {
+export type GetSnippetCommentResponses = {
     /**
      * The specified comment.
      */
     200: SnippetComment;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse = GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses];
+export type GetSnippetCommentResponse = GetSnippetCommentResponses[keyof GetSnippetCommentResponses];
 
-export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
+export type UpdateSnippetCommentData = {
     /**
      * The contents to update the comment to.
      */
@@ -15411,7 +15411,7 @@ export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
     url: '/snippets/{workspace}/{encoded_id}/comments/{comment_id}';
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
+export type UpdateSnippetCommentErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15422,18 +15422,18 @@ export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
     404: Error;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
+export type UpdateSnippetCommentError = UpdateSnippetCommentErrors[keyof UpdateSnippetCommentErrors];
 
-export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses = {
+export type UpdateSnippetCommentResponses = {
     /**
      * The updated comment object.
      */
     200: SnippetComment;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse = PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses[keyof PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses];
+export type UpdateSnippetCommentResponse = UpdateSnippetCommentResponses[keyof UpdateSnippetCommentResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsData = {
+export type ListSnippetCommitsData = {
     body?: never;
     path: {
         /**
@@ -15451,7 +15451,7 @@ export type GetSnippetsByWorkspaceByEncodedIdCommitsData = {
     url: '/snippets/{workspace}/{encoded_id}/commits';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsErrors = {
+export type ListSnippetCommitsErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15462,18 +15462,18 @@ export type GetSnippetsByWorkspaceByEncodedIdCommitsErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsError = GetSnippetsByWorkspaceByEncodedIdCommitsErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommitsErrors];
+export type ListSnippetCommitsError = ListSnippetCommitsErrors[keyof ListSnippetCommitsErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsResponses = {
+export type ListSnippetCommitsResponses = {
     /**
      * The paginated list of snippet commits.
      */
     200: PaginatedSnippetCommit;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsResponse = GetSnippetsByWorkspaceByEncodedIdCommitsResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommitsResponses];
+export type ListSnippetCommitsResponse = ListSnippetCommitsResponses[keyof ListSnippetCommitsResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData = {
+export type GetSnippetCommitData = {
     body?: never;
     path: {
         /**
@@ -15495,7 +15495,7 @@ export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData = {
     url: '/snippets/{workspace}/{encoded_id}/commits/{revision}';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors = {
+export type GetSnippetCommitErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15506,18 +15506,18 @@ export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionError = GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors];
+export type GetSnippetCommitError = GetSnippetCommitErrors[keyof GetSnippetCommitErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses = {
+export type GetSnippetCommitResponses = {
     /**
      * The specified snippet commit.
      */
     200: SnippetCommit;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponse = GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses];
+export type GetSnippetCommitResponse = GetSnippetCommitResponses[keyof GetSnippetCommitResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdFilesByPathData = {
+export type GetSnippetFileData = {
     body?: never;
     path: {
         /**
@@ -15539,7 +15539,7 @@ export type GetSnippetsByWorkspaceByEncodedIdFilesByPathData = {
     url: '/snippets/{workspace}/{encoded_id}/files/{path}';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors = {
+export type GetSnippetFileErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15550,9 +15550,9 @@ export type GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdFilesByPathError = GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors[keyof GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors];
+export type GetSnippetFileError = GetSnippetFileErrors[keyof GetSnippetFileErrors];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdWatchData = {
+export type UnwatchSnippetData = {
     body?: never;
     path: {
         /**
@@ -15570,7 +15570,7 @@ export type DeleteSnippetsByWorkspaceByEncodedIdWatchData = {
     url: '/snippets/{workspace}/{encoded_id}/watch';
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdWatchErrors = {
+export type UnwatchSnippetErrors = {
     /**
      * If the request was not authenticated.
      */
@@ -15581,18 +15581,18 @@ export type DeleteSnippetsByWorkspaceByEncodedIdWatchErrors = {
     404: Error;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdWatchError = DeleteSnippetsByWorkspaceByEncodedIdWatchErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdWatchErrors];
+export type UnwatchSnippetError = UnwatchSnippetErrors[keyof UnwatchSnippetErrors];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdWatchResponses = {
+export type UnwatchSnippetResponses = {
     /**
      * Indicates the user stopped watching the snippet successfully.
      */
     204: void;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdWatchResponse = DeleteSnippetsByWorkspaceByEncodedIdWatchResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdWatchResponses];
+export type UnwatchSnippetResponse = UnwatchSnippetResponses[keyof UnwatchSnippetResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchData = {
+export type GetSnippetWatchStatusData = {
     body?: never;
     path: {
         /**
@@ -15610,25 +15610,25 @@ export type GetSnippetsByWorkspaceByEncodedIdWatchData = {
     url: '/snippets/{workspace}/{encoded_id}/watch';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchErrors = {
+export type GetSnippetWatchStatusErrors = {
     /**
      * If the snippet does not exist, or if the authenticated user is not watching the snippet.
      */
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchError = GetSnippetsByWorkspaceByEncodedIdWatchErrors[keyof GetSnippetsByWorkspaceByEncodedIdWatchErrors];
+export type GetSnippetWatchStatusError = GetSnippetWatchStatusErrors[keyof GetSnippetWatchStatusErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchResponses = {
+export type GetSnippetWatchStatusResponses = {
     /**
      * If the authenticated user is watching the snippet.
      */
     204: void;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchResponse = GetSnippetsByWorkspaceByEncodedIdWatchResponses[keyof GetSnippetsByWorkspaceByEncodedIdWatchResponses];
+export type GetSnippetWatchStatusResponse = GetSnippetWatchStatusResponses[keyof GetSnippetWatchStatusResponses];
 
-export type PutSnippetsByWorkspaceByEncodedIdWatchData = {
+export type WatchSnippetData = {
     body?: never;
     path: {
         /**
@@ -15646,7 +15646,7 @@ export type PutSnippetsByWorkspaceByEncodedIdWatchData = {
     url: '/snippets/{workspace}/{encoded_id}/watch';
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdWatchErrors = {
+export type WatchSnippetErrors = {
     /**
      * If the request was not authenticated.
      */
@@ -15657,18 +15657,18 @@ export type PutSnippetsByWorkspaceByEncodedIdWatchErrors = {
     404: Error;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdWatchError = PutSnippetsByWorkspaceByEncodedIdWatchErrors[keyof PutSnippetsByWorkspaceByEncodedIdWatchErrors];
+export type WatchSnippetError = WatchSnippetErrors[keyof WatchSnippetErrors];
 
-export type PutSnippetsByWorkspaceByEncodedIdWatchResponses = {
+export type WatchSnippetResponses = {
     /**
      * Indicates the authenticated user is now watching the snippet.
      */
     204: void;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdWatchResponse = PutSnippetsByWorkspaceByEncodedIdWatchResponses[keyof PutSnippetsByWorkspaceByEncodedIdWatchResponses];
+export type WatchSnippetResponse = WatchSnippetResponses[keyof WatchSnippetResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchersData = {
+export type ListSnippetWatchersData = {
     body?: never;
     path: {
         /**
@@ -15686,25 +15686,25 @@ export type GetSnippetsByWorkspaceByEncodedIdWatchersData = {
     url: '/snippets/{workspace}/{encoded_id}/watchers';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchersErrors = {
+export type ListSnippetWatchersErrors = {
     /**
      * If the snippet does not exist.
      */
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchersError = GetSnippetsByWorkspaceByEncodedIdWatchersErrors[keyof GetSnippetsByWorkspaceByEncodedIdWatchersErrors];
+export type ListSnippetWatchersError = ListSnippetWatchersErrors[keyof ListSnippetWatchersErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchersResponses = {
+export type ListSnippetWatchersResponses = {
     /**
      * The paginated list of users watching this snippet
      */
     200: PaginatedAccounts;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdWatchersResponse = GetSnippetsByWorkspaceByEncodedIdWatchersResponses[keyof GetSnippetsByWorkspaceByEncodedIdWatchersResponses];
+export type ListSnippetWatchersResponse = ListSnippetWatchersResponses[keyof ListSnippetWatchersResponses];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData = {
+export type DeleteSnippetRevisionData = {
     body?: never;
     path: {
         /**
@@ -15726,7 +15726,7 @@ export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData = {
     url: '/snippets/{workspace}/{encoded_id}/{node_id}';
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
+export type DeleteSnippetRevisionErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -15745,18 +15745,18 @@ export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
     405: Error;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdError = DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
+export type DeleteSnippetRevisionError = DeleteSnippetRevisionErrors[keyof DeleteSnippetRevisionErrors];
 
-export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses = {
+export type DeleteSnippetRevisionResponses = {
     /**
      * If the snippet was deleted successfully.
      */
     204: void;
 };
 
-export type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponse = DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses];
+export type DeleteSnippetRevisionResponse = DeleteSnippetRevisionResponses[keyof DeleteSnippetRevisionResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdData = {
+export type GetSnippetRevisionData = {
     body?: never;
     path: {
         /**
@@ -15778,7 +15778,7 @@ export type GetSnippetsByWorkspaceByEncodedIdByNodeIdData = {
     url: '/snippets/{workspace}/{encoded_id}/{node_id}';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
+export type GetSnippetRevisionErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -15793,18 +15793,18 @@ export type GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdError = GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
+export type GetSnippetRevisionError = GetSnippetRevisionErrors[keyof GetSnippetRevisionErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses = {
+export type GetSnippetRevisionResponses = {
     /**
      * The snippet object.
      */
     200: Snippet;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdResponse = GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses];
+export type GetSnippetRevisionResponse = GetSnippetRevisionResponses[keyof GetSnippetRevisionResponses];
 
-export type PutSnippetsByWorkspaceByEncodedIdByNodeIdData = {
+export type UpdateSnippetRevisionData = {
     body?: never;
     path: {
         /**
@@ -15826,7 +15826,7 @@ export type PutSnippetsByWorkspaceByEncodedIdByNodeIdData = {
     url: '/snippets/{workspace}/{encoded_id}/{node_id}';
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
+export type UpdateSnippetRevisionErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -15845,18 +15845,18 @@ export type PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
     405: Error;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdByNodeIdError = PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
+export type UpdateSnippetRevisionError = UpdateSnippetRevisionErrors[keyof UpdateSnippetRevisionErrors];
 
-export type PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses = {
+export type UpdateSnippetRevisionResponses = {
     /**
      * The updated snippet object.
      */
     200: Snippet;
 };
 
-export type PutSnippetsByWorkspaceByEncodedIdByNodeIdResponse = PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses[keyof PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses];
+export type UpdateSnippetRevisionResponse = UpdateSnippetRevisionResponses[keyof UpdateSnippetRevisionResponses];
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData = {
+export type GetSnippetRevisionFileData = {
     body?: never;
     path: {
         /**
@@ -15882,7 +15882,7 @@ export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData = {
     url: '/snippets/{workspace}/{encoded_id}/{node_id}/files/{path}';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors = {
+export type GetSnippetRevisionFileErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15893,16 +15893,16 @@ export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathError = GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors];
+export type GetSnippetRevisionFileError = GetSnippetRevisionFileErrors[keyof GetSnippetRevisionFileErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathResponses = {
+export type GetSnippetRevisionFileResponses = {
     /**
      * Returns the contents of the specified file.
      */
     200: unknown;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData = {
+export type GetSnippetDiffData = {
     body?: never;
     path: {
         /**
@@ -15929,7 +15929,7 @@ export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData = {
     url: '/snippets/{workspace}/{encoded_id}/{revision}/diff';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors = {
+export type GetSnippetDiffErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15940,16 +15940,16 @@ export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffError = GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors[keyof GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors];
+export type GetSnippetDiffError = GetSnippetDiffErrors[keyof GetSnippetDiffErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffResponses = {
+export type GetSnippetDiffResponses = {
     /**
      * The raw diff contents.
      */
     200: unknown;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData = {
+export type GetSnippetPatchData = {
     body?: never;
     path: {
         /**
@@ -15971,7 +15971,7 @@ export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData = {
     url: '/snippets/{workspace}/{encoded_id}/{revision}/patch';
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors = {
+export type GetSnippetPatchErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -15982,9 +15982,9 @@ export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors = {
     404: Error;
 };
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchError = GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors[keyof GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors];
+export type GetSnippetPatchError = GetSnippetPatchErrors[keyof GetSnippetPatchErrors];
 
-export type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchResponses = {
+export type GetSnippetPatchResponses = {
     /**
      * The raw patch contents.
      */
@@ -16265,7 +16265,7 @@ export type GetUserEmailsResponses = {
 
 export type GetUserEmailsResponse = GetUserEmailsResponses[keyof GetUserEmailsResponses];
 
-export type GetUserEmailsByEmailData = {
+export type GetUserEmailData = {
     body?: never;
     path: {
         /**
@@ -16277,23 +16277,23 @@ export type GetUserEmailsByEmailData = {
     url: '/user/emails/{email}';
 };
 
-export type GetUserEmailsByEmailErrors = {
+export type GetUserEmailErrors = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
 
-export type GetUserEmailsByEmailError = GetUserEmailsByEmailErrors[keyof GetUserEmailsByEmailErrors];
+export type GetUserEmailError = GetUserEmailErrors[keyof GetUserEmailErrors];
 
-export type GetUserEmailsByEmailResponses = {
+export type GetUserEmailResponses = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
 
-export type GetUserEmailsByEmailResponse = GetUserEmailsByEmailResponses[keyof GetUserEmailsByEmailResponses];
+export type GetUserEmailResponse = GetUserEmailResponses[keyof GetUserEmailResponses];
 
 export type GetUserPermissionsRepositoriesData = {
     body?: never;
@@ -16402,7 +16402,7 @@ export type GetUserWorkspacesResponses = {
 
 export type GetUserWorkspacesResponse = GetUserWorkspacesResponses[keyof GetUserWorkspacesResponses];
 
-export type GetUserWorkspacesByWorkspacePermissionData = {
+export type GetUserWorkspacePermissionData = {
     body?: never;
     path: {
         /**
@@ -16416,7 +16416,7 @@ export type GetUserWorkspacesByWorkspacePermissionData = {
     url: '/user/workspaces/{workspace}/permission';
 };
 
-export type GetUserWorkspacesByWorkspacePermissionErrors = {
+export type GetUserWorkspacePermissionErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -16427,18 +16427,18 @@ export type GetUserWorkspacesByWorkspacePermissionErrors = {
     403: Error;
 };
 
-export type GetUserWorkspacesByWorkspacePermissionError = GetUserWorkspacesByWorkspacePermissionErrors[keyof GetUserWorkspacesByWorkspacePermissionErrors];
+export type GetUserWorkspacePermissionError = GetUserWorkspacePermissionErrors[keyof GetUserWorkspacePermissionErrors];
 
-export type GetUserWorkspacesByWorkspacePermissionResponses = {
+export type GetUserWorkspacePermissionResponses = {
     /**
      * The user that is part of a workspace.
      */
     200: WorkspaceMembership;
 };
 
-export type GetUserWorkspacesByWorkspacePermissionResponse = GetUserWorkspacesByWorkspacePermissionResponses[keyof GetUserWorkspacesByWorkspacePermissionResponses];
+export type GetUserWorkspacePermissionResponse = GetUserWorkspacePermissionResponses[keyof GetUserWorkspacePermissionResponses];
 
-export type GetUserWorkspacesByWorkspacePermissionsRepositoriesData = {
+export type ListUserWorkspaceRepoPermissionsData = {
     body?: never;
     path: {
         /**
@@ -16465,7 +16465,7 @@ export type GetUserWorkspacesByWorkspacePermissionsRepositoriesData = {
     url: '/user/workspaces/{workspace}/permissions/repositories';
 };
 
-export type GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors = {
+export type ListUserWorkspaceRepoPermissionsErrors = {
     /**
      * The request was invalid.
      */
@@ -16480,18 +16480,18 @@ export type GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors = {
     403: Error;
 };
 
-export type GetUserWorkspacesByWorkspacePermissionsRepositoriesError = GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors[keyof GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors];
+export type ListUserWorkspaceRepoPermissionsError = ListUserWorkspaceRepoPermissionsErrors[keyof ListUserWorkspaceRepoPermissionsErrors];
 
-export type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses = {
+export type ListUserWorkspaceRepoPermissionsResponses = {
     /**
      * The list of repository permissions for the authenticated user in the specified workspace.
      */
     200: PaginatedRepositoryPermissions;
 };
 
-export type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponse = GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses[keyof GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses];
+export type ListUserWorkspaceRepoPermissionsResponse = ListUserWorkspaceRepoPermissionsResponses[keyof ListUserWorkspaceRepoPermissionsResponses];
 
-export type GetUsersBySelectedUserData = {
+export type GetUserProfileData = {
     body?: never;
     path: {
         /**
@@ -16505,25 +16505,25 @@ export type GetUsersBySelectedUserData = {
     url: '/users/{selected_user}';
 };
 
-export type GetUsersBySelectedUserErrors = {
+export type GetUserProfileErrors = {
     /**
      * If no user exists for the specified UUID, or if the specified account is a team account, not a personal account.
      */
     404: Error;
 };
 
-export type GetUsersBySelectedUserError = GetUsersBySelectedUserErrors[keyof GetUsersBySelectedUserErrors];
+export type GetUserProfileError = GetUserProfileErrors[keyof GetUserProfileErrors];
 
-export type GetUsersBySelectedUserResponses = {
+export type GetUserProfileResponses = {
     /**
      * The user object
      */
     200: Account;
 };
 
-export type GetUsersBySelectedUserResponse = GetUsersBySelectedUserResponses[keyof GetUsersBySelectedUserResponses];
+export type GetUserProfileResponse = GetUserProfileResponses[keyof GetUserProfileResponses];
 
-export type GetUsersBySelectedUserGpgKeysData = {
+export type ListUserGpgKeysData = {
     body?: never;
     path: {
         /**
@@ -16537,7 +16537,7 @@ export type GetUsersBySelectedUserGpgKeysData = {
     url: '/users/{selected_user}/gpg-keys';
 };
 
-export type GetUsersBySelectedUserGpgKeysErrors = {
+export type ListUserGpgKeysErrors = {
     /**
      * If the specified user's keys are not accessible to the current user
      */
@@ -16548,18 +16548,18 @@ export type GetUsersBySelectedUserGpgKeysErrors = {
     404: Error;
 };
 
-export type GetUsersBySelectedUserGpgKeysError = GetUsersBySelectedUserGpgKeysErrors[keyof GetUsersBySelectedUserGpgKeysErrors];
+export type ListUserGpgKeysError = ListUserGpgKeysErrors[keyof ListUserGpgKeysErrors];
 
-export type GetUsersBySelectedUserGpgKeysResponses = {
+export type ListUserGpgKeysResponses = {
     /**
      * A list of the GPG keys associated with the account.
      */
     200: PaginatedGpgUserKeys;
 };
 
-export type GetUsersBySelectedUserGpgKeysResponse = GetUsersBySelectedUserGpgKeysResponses[keyof GetUsersBySelectedUserGpgKeysResponses];
+export type ListUserGpgKeysResponse = ListUserGpgKeysResponses[keyof ListUserGpgKeysResponses];
 
-export type PostUsersBySelectedUserGpgKeysData = {
+export type CreateUserGpgKeyData = {
     /**
      * The new GPG key object.
      */
@@ -16576,7 +16576,7 @@ export type PostUsersBySelectedUserGpgKeysData = {
     url: '/users/{selected_user}/gpg-keys';
 };
 
-export type PostUsersBySelectedUserGpgKeysErrors = {
+export type CreateUserGpgKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -16591,18 +16591,18 @@ export type PostUsersBySelectedUserGpgKeysErrors = {
     404: Error;
 };
 
-export type PostUsersBySelectedUserGpgKeysError = PostUsersBySelectedUserGpgKeysErrors[keyof PostUsersBySelectedUserGpgKeysErrors];
+export type CreateUserGpgKeyError = CreateUserGpgKeyErrors[keyof CreateUserGpgKeyErrors];
 
-export type PostUsersBySelectedUserGpgKeysResponses = {
+export type CreateUserGpgKeyResponses = {
     /**
      * The newly created GPG key.
      */
     201: GpgAccountKey;
 };
 
-export type PostUsersBySelectedUserGpgKeysResponse = PostUsersBySelectedUserGpgKeysResponses[keyof PostUsersBySelectedUserGpgKeysResponses];
+export type CreateUserGpgKeyResponse = CreateUserGpgKeyResponses[keyof CreateUserGpgKeyResponses];
 
-export type DeleteUsersBySelectedUserGpgKeysByFingerprintData = {
+export type DeleteUserGpgKeyData = {
     body?: never;
     path: {
         /**
@@ -16621,7 +16621,7 @@ export type DeleteUsersBySelectedUserGpgKeysByFingerprintData = {
     url: '/users/{selected_user}/gpg-keys/{fingerprint}';
 };
 
-export type DeleteUsersBySelectedUserGpgKeysByFingerprintErrors = {
+export type DeleteUserGpgKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -16636,18 +16636,18 @@ export type DeleteUsersBySelectedUserGpgKeysByFingerprintErrors = {
     404: Error;
 };
 
-export type DeleteUsersBySelectedUserGpgKeysByFingerprintError = DeleteUsersBySelectedUserGpgKeysByFingerprintErrors[keyof DeleteUsersBySelectedUserGpgKeysByFingerprintErrors];
+export type DeleteUserGpgKeyError = DeleteUserGpgKeyErrors[keyof DeleteUserGpgKeyErrors];
 
-export type DeleteUsersBySelectedUserGpgKeysByFingerprintResponses = {
+export type DeleteUserGpgKeyResponses = {
     /**
      * The key has been deleted
      */
     204: void;
 };
 
-export type DeleteUsersBySelectedUserGpgKeysByFingerprintResponse = DeleteUsersBySelectedUserGpgKeysByFingerprintResponses[keyof DeleteUsersBySelectedUserGpgKeysByFingerprintResponses];
+export type DeleteUserGpgKeyResponse = DeleteUserGpgKeyResponses[keyof DeleteUserGpgKeyResponses];
 
-export type GetUsersBySelectedUserGpgKeysByFingerprintData = {
+export type GetUserGpgKeyData = {
     body?: never;
     path: {
         /**
@@ -16666,7 +16666,7 @@ export type GetUsersBySelectedUserGpgKeysByFingerprintData = {
     url: '/users/{selected_user}/gpg-keys/{fingerprint}';
 };
 
-export type GetUsersBySelectedUserGpgKeysByFingerprintErrors = {
+export type GetUserGpgKeyErrors = {
     /**
      * If the specified user's keys are not accessible to the current user
      */
@@ -16677,16 +16677,16 @@ export type GetUsersBySelectedUserGpgKeysByFingerprintErrors = {
     404: Error;
 };
 
-export type GetUsersBySelectedUserGpgKeysByFingerprintError = GetUsersBySelectedUserGpgKeysByFingerprintErrors[keyof GetUsersBySelectedUserGpgKeysByFingerprintErrors];
+export type GetUserGpgKeyError = GetUserGpgKeyErrors[keyof GetUserGpgKeyErrors];
 
-export type GetUsersBySelectedUserGpgKeysByFingerprintResponses = {
+export type GetUserGpgKeyResponses = {
     /**
      * The specific GPG key matching the user and fingerprint.
      */
     200: GpgAccountKey;
 };
 
-export type GetUsersBySelectedUserGpgKeysByFingerprintResponse = GetUsersBySelectedUserGpgKeysByFingerprintResponses[keyof GetUsersBySelectedUserGpgKeysByFingerprintResponses];
+export type GetUserGpgKeyResponse = GetUserGpgKeyResponses[keyof GetUserGpgKeyResponses];
 
 export type GetPipelineVariablesForUserData = {
     body?: never;
@@ -17002,7 +17002,7 @@ export type SearchAccountResponses = {
 
 export type SearchAccountResponse = SearchAccountResponses[keyof SearchAccountResponses];
 
-export type GetUsersBySelectedUserSshKeysData = {
+export type ListUserSshKeysData = {
     body?: never;
     path: {
         /**
@@ -17016,7 +17016,7 @@ export type GetUsersBySelectedUserSshKeysData = {
     url: '/users/{selected_user}/ssh-keys';
 };
 
-export type GetUsersBySelectedUserSshKeysErrors = {
+export type ListUserSshKeysErrors = {
     /**
      * If the specified user's keys are not accessible to the current user
      */
@@ -17027,18 +17027,18 @@ export type GetUsersBySelectedUserSshKeysErrors = {
     404: Error;
 };
 
-export type GetUsersBySelectedUserSshKeysError = GetUsersBySelectedUserSshKeysErrors[keyof GetUsersBySelectedUserSshKeysErrors];
+export type ListUserSshKeysError = ListUserSshKeysErrors[keyof ListUserSshKeysErrors];
 
-export type GetUsersBySelectedUserSshKeysResponses = {
+export type ListUserSshKeysResponses = {
     /**
      * A list of the SSH keys associated with the account.
      */
     200: PaginatedSshUserKeys;
 };
 
-export type GetUsersBySelectedUserSshKeysResponse = GetUsersBySelectedUserSshKeysResponses[keyof GetUsersBySelectedUserSshKeysResponses];
+export type ListUserSshKeysResponse = ListUserSshKeysResponses[keyof ListUserSshKeysResponses];
 
-export type PostUsersBySelectedUserSshKeysData = {
+export type CreateUserSshKeyData = {
     /**
      * The new SSH key object. Note that the username property has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis).
      */
@@ -17062,7 +17062,7 @@ export type PostUsersBySelectedUserSshKeysData = {
     url: '/users/{selected_user}/ssh-keys';
 };
 
-export type PostUsersBySelectedUserSshKeysErrors = {
+export type CreateUserSshKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -17077,18 +17077,18 @@ export type PostUsersBySelectedUserSshKeysErrors = {
     404: Error;
 };
 
-export type PostUsersBySelectedUserSshKeysError = PostUsersBySelectedUserSshKeysErrors[keyof PostUsersBySelectedUserSshKeysErrors];
+export type CreateUserSshKeyError = CreateUserSshKeyErrors[keyof CreateUserSshKeyErrors];
 
-export type PostUsersBySelectedUserSshKeysResponses = {
+export type CreateUserSshKeyResponses = {
     /**
      * The newly created SSH key.
      */
     201: SshAccountKey;
 };
 
-export type PostUsersBySelectedUserSshKeysResponse = PostUsersBySelectedUserSshKeysResponses[keyof PostUsersBySelectedUserSshKeysResponses];
+export type CreateUserSshKeyResponse = CreateUserSshKeyResponses[keyof CreateUserSshKeyResponses];
 
-export type DeleteUsersBySelectedUserSshKeysByKeyIdData = {
+export type DeleteUserSshKeyData = {
     body?: never;
     path: {
         /**
@@ -17106,7 +17106,7 @@ export type DeleteUsersBySelectedUserSshKeysByKeyIdData = {
     url: '/users/{selected_user}/ssh-keys/{key_id}';
 };
 
-export type DeleteUsersBySelectedUserSshKeysByKeyIdErrors = {
+export type DeleteUserSshKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -17121,18 +17121,18 @@ export type DeleteUsersBySelectedUserSshKeysByKeyIdErrors = {
     404: Error;
 };
 
-export type DeleteUsersBySelectedUserSshKeysByKeyIdError = DeleteUsersBySelectedUserSshKeysByKeyIdErrors[keyof DeleteUsersBySelectedUserSshKeysByKeyIdErrors];
+export type DeleteUserSshKeyError = DeleteUserSshKeyErrors[keyof DeleteUserSshKeyErrors];
 
-export type DeleteUsersBySelectedUserSshKeysByKeyIdResponses = {
+export type DeleteUserSshKeyResponses = {
     /**
      * The key has been deleted
      */
     204: void;
 };
 
-export type DeleteUsersBySelectedUserSshKeysByKeyIdResponse = DeleteUsersBySelectedUserSshKeysByKeyIdResponses[keyof DeleteUsersBySelectedUserSshKeysByKeyIdResponses];
+export type DeleteUserSshKeyResponse = DeleteUserSshKeyResponses[keyof DeleteUserSshKeyResponses];
 
-export type GetUsersBySelectedUserSshKeysByKeyIdData = {
+export type GetUserSshKeyData = {
     body?: never;
     path: {
         /**
@@ -17150,7 +17150,7 @@ export type GetUsersBySelectedUserSshKeysByKeyIdData = {
     url: '/users/{selected_user}/ssh-keys/{key_id}';
 };
 
-export type GetUsersBySelectedUserSshKeysByKeyIdErrors = {
+export type GetUserSshKeyErrors = {
     /**
      * If the specified user or key is not accessible to the current user
      */
@@ -17161,18 +17161,18 @@ export type GetUsersBySelectedUserSshKeysByKeyIdErrors = {
     404: Error;
 };
 
-export type GetUsersBySelectedUserSshKeysByKeyIdError = GetUsersBySelectedUserSshKeysByKeyIdErrors[keyof GetUsersBySelectedUserSshKeysByKeyIdErrors];
+export type GetUserSshKeyError = GetUserSshKeyErrors[keyof GetUserSshKeyErrors];
 
-export type GetUsersBySelectedUserSshKeysByKeyIdResponses = {
+export type GetUserSshKeyResponses = {
     /**
      * The specific SSH key matching the user and UUID
      */
     200: SshAccountKey;
 };
 
-export type GetUsersBySelectedUserSshKeysByKeyIdResponse = GetUsersBySelectedUserSshKeysByKeyIdResponses[keyof GetUsersBySelectedUserSshKeysByKeyIdResponses];
+export type GetUserSshKeyResponse = GetUserSshKeyResponses[keyof GetUserSshKeyResponses];
 
-export type PutUsersBySelectedUserSshKeysByKeyIdData = {
+export type UpdateUserSshKeyData = {
     /**
      * The updated SSH key object
      */
@@ -17193,7 +17193,7 @@ export type PutUsersBySelectedUserSshKeysByKeyIdData = {
     url: '/users/{selected_user}/ssh-keys/{key_id}';
 };
 
-export type PutUsersBySelectedUserSshKeysByKeyIdErrors = {
+export type UpdateUserSshKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -17208,18 +17208,18 @@ export type PutUsersBySelectedUserSshKeysByKeyIdErrors = {
     404: Error;
 };
 
-export type PutUsersBySelectedUserSshKeysByKeyIdError = PutUsersBySelectedUserSshKeysByKeyIdErrors[keyof PutUsersBySelectedUserSshKeysByKeyIdErrors];
+export type UpdateUserSshKeyError = UpdateUserSshKeyErrors[keyof UpdateUserSshKeyErrors];
 
-export type PutUsersBySelectedUserSshKeysByKeyIdResponses = {
+export type UpdateUserSshKeyResponses = {
     /**
      * The newly updated SSH key.
      */
     200: SshAccountKey;
 };
 
-export type PutUsersBySelectedUserSshKeysByKeyIdResponse = PutUsersBySelectedUserSshKeysByKeyIdResponses[keyof PutUsersBySelectedUserSshKeysByKeyIdResponses];
+export type UpdateUserSshKeyResponse = UpdateUserSshKeyResponses[keyof UpdateUserSshKeyResponses];
 
-export type GetWorkspacesData = {
+export type ListWorkspacesData = {
     body?: never;
     path?: never;
     query?: {
@@ -17253,25 +17253,25 @@ export type GetWorkspacesData = {
     url: '/workspaces';
 };
 
-export type GetWorkspacesErrors = {
+export type ListWorkspacesErrors = {
     /**
      * The request wasn't authenticated.
      */
     401: Error;
 };
 
-export type GetWorkspacesError = GetWorkspacesErrors[keyof GetWorkspacesErrors];
+export type ListWorkspacesError = ListWorkspacesErrors[keyof ListWorkspacesErrors];
 
-export type GetWorkspacesResponses = {
+export type ListWorkspacesResponses = {
     /**
      * The list of workspaces accessible by the authenticated user.
      */
     200: PaginatedWorkspaces;
 };
 
-export type GetWorkspacesResponse = GetWorkspacesResponses[keyof GetWorkspacesResponses];
+export type ListWorkspacesResponse = ListWorkspacesResponses[keyof ListWorkspacesResponses];
 
-export type GetWorkspacesByWorkspaceData = {
+export type GetWorkspaceData = {
     body?: never;
     path: {
         /**
@@ -17285,25 +17285,25 @@ export type GetWorkspacesByWorkspaceData = {
     url: '/workspaces/{workspace}';
 };
 
-export type GetWorkspacesByWorkspaceErrors = {
+export type GetWorkspaceErrors = {
     /**
      * If no workspace exists for the specified name or UUID.
      */
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceError = GetWorkspacesByWorkspaceErrors[keyof GetWorkspacesByWorkspaceErrors];
+export type GetWorkspaceError = GetWorkspaceErrors[keyof GetWorkspaceErrors];
 
-export type GetWorkspacesByWorkspaceResponses = {
+export type GetWorkspaceResponses = {
     /**
      * The workspace.
      */
     200: Workspace;
 };
 
-export type GetWorkspacesByWorkspaceResponse = GetWorkspacesByWorkspaceResponses[keyof GetWorkspacesByWorkspaceResponses];
+export type GetWorkspaceResponse = GetWorkspaceResponses[keyof GetWorkspaceResponses];
 
-export type GetWorkspacesByWorkspaceHooksData = {
+export type ListWorkspaceHooksData = {
     body?: never;
     path: {
         /**
@@ -17317,7 +17317,7 @@ export type GetWorkspacesByWorkspaceHooksData = {
     url: '/workspaces/{workspace}/hooks';
 };
 
-export type GetWorkspacesByWorkspaceHooksErrors = {
+export type ListWorkspaceHooksErrors = {
     /**
      * If the authenticated user is not an owner on the specified workspace.
      */
@@ -17328,18 +17328,18 @@ export type GetWorkspacesByWorkspaceHooksErrors = {
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceHooksError = GetWorkspacesByWorkspaceHooksErrors[keyof GetWorkspacesByWorkspaceHooksErrors];
+export type ListWorkspaceHooksError = ListWorkspaceHooksErrors[keyof ListWorkspaceHooksErrors];
 
-export type GetWorkspacesByWorkspaceHooksResponses = {
+export type ListWorkspaceHooksResponses = {
     /**
      * The paginated list of installed webhooks.
      */
     200: PaginatedWebhookSubscriptions;
 };
 
-export type GetWorkspacesByWorkspaceHooksResponse = GetWorkspacesByWorkspaceHooksResponses[keyof GetWorkspacesByWorkspaceHooksResponses];
+export type ListWorkspaceHooksResponse = ListWorkspaceHooksResponses[keyof ListWorkspaceHooksResponses];
 
-export type PostWorkspacesByWorkspaceHooksData = {
+export type CreateWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -17353,7 +17353,7 @@ export type PostWorkspacesByWorkspaceHooksData = {
     url: '/workspaces/{workspace}/hooks';
 };
 
-export type PostWorkspacesByWorkspaceHooksErrors = {
+export type CreateWorkspaceHookErrors = {
     /**
      * If the authenticated user does not have permission to install webhooks on the specified workspace.
      */
@@ -17364,18 +17364,18 @@ export type PostWorkspacesByWorkspaceHooksErrors = {
     404: Error;
 };
 
-export type PostWorkspacesByWorkspaceHooksError = PostWorkspacesByWorkspaceHooksErrors[keyof PostWorkspacesByWorkspaceHooksErrors];
+export type CreateWorkspaceHookError = CreateWorkspaceHookErrors[keyof CreateWorkspaceHookErrors];
 
-export type PostWorkspacesByWorkspaceHooksResponses = {
+export type CreateWorkspaceHookResponses = {
     /**
      * If the webhook was registered successfully.
      */
     201: WebhookSubscription;
 };
 
-export type PostWorkspacesByWorkspaceHooksResponse = PostWorkspacesByWorkspaceHooksResponses[keyof PostWorkspacesByWorkspaceHooksResponses];
+export type CreateWorkspaceHookResponse = CreateWorkspaceHookResponses[keyof CreateWorkspaceHookResponses];
 
-export type DeleteWorkspacesByWorkspaceHooksByUidData = {
+export type DeleteWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -17393,7 +17393,7 @@ export type DeleteWorkspacesByWorkspaceHooksByUidData = {
     url: '/workspaces/{workspace}/hooks/{uid}';
 };
 
-export type DeleteWorkspacesByWorkspaceHooksByUidErrors = {
+export type DeleteWorkspaceHookErrors = {
     /**
      * If the authenticated user does not have permission to delete the webhook.
      */
@@ -17404,18 +17404,18 @@ export type DeleteWorkspacesByWorkspaceHooksByUidErrors = {
     404: Error;
 };
 
-export type DeleteWorkspacesByWorkspaceHooksByUidError = DeleteWorkspacesByWorkspaceHooksByUidErrors[keyof DeleteWorkspacesByWorkspaceHooksByUidErrors];
+export type DeleteWorkspaceHookError = DeleteWorkspaceHookErrors[keyof DeleteWorkspaceHookErrors];
 
-export type DeleteWorkspacesByWorkspaceHooksByUidResponses = {
+export type DeleteWorkspaceHookResponses = {
     /**
      * When the webhook was deleted successfully
      */
     204: void;
 };
 
-export type DeleteWorkspacesByWorkspaceHooksByUidResponse = DeleteWorkspacesByWorkspaceHooksByUidResponses[keyof DeleteWorkspacesByWorkspaceHooksByUidResponses];
+export type DeleteWorkspaceHookResponse = DeleteWorkspaceHookResponses[keyof DeleteWorkspaceHookResponses];
 
-export type GetWorkspacesByWorkspaceHooksByUidData = {
+export type GetWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -17433,25 +17433,25 @@ export type GetWorkspacesByWorkspaceHooksByUidData = {
     url: '/workspaces/{workspace}/hooks/{uid}';
 };
 
-export type GetWorkspacesByWorkspaceHooksByUidErrors = {
+export type GetWorkspaceHookErrors = {
     /**
      * If the webhook or workspace does not exist.
      */
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceHooksByUidError = GetWorkspacesByWorkspaceHooksByUidErrors[keyof GetWorkspacesByWorkspaceHooksByUidErrors];
+export type GetWorkspaceHookError = GetWorkspaceHookErrors[keyof GetWorkspaceHookErrors];
 
-export type GetWorkspacesByWorkspaceHooksByUidResponses = {
+export type GetWorkspaceHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
 
-export type GetWorkspacesByWorkspaceHooksByUidResponse = GetWorkspacesByWorkspaceHooksByUidResponses[keyof GetWorkspacesByWorkspaceHooksByUidResponses];
+export type GetWorkspaceHookResponse = GetWorkspaceHookResponses[keyof GetWorkspaceHookResponses];
 
-export type PutWorkspacesByWorkspaceHooksByUidData = {
+export type UpdateWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -17469,7 +17469,7 @@ export type PutWorkspacesByWorkspaceHooksByUidData = {
     url: '/workspaces/{workspace}/hooks/{uid}';
 };
 
-export type PutWorkspacesByWorkspaceHooksByUidErrors = {
+export type UpdateWorkspaceHookErrors = {
     /**
      * If the authenticated user does not have permission to update the webhook.
      */
@@ -17480,18 +17480,18 @@ export type PutWorkspacesByWorkspaceHooksByUidErrors = {
     404: Error;
 };
 
-export type PutWorkspacesByWorkspaceHooksByUidError = PutWorkspacesByWorkspaceHooksByUidErrors[keyof PutWorkspacesByWorkspaceHooksByUidErrors];
+export type UpdateWorkspaceHookError = UpdateWorkspaceHookErrors[keyof UpdateWorkspaceHookErrors];
 
-export type PutWorkspacesByWorkspaceHooksByUidResponses = {
+export type UpdateWorkspaceHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
 
-export type PutWorkspacesByWorkspaceHooksByUidResponse = PutWorkspacesByWorkspaceHooksByUidResponses[keyof PutWorkspacesByWorkspaceHooksByUidResponses];
+export type UpdateWorkspaceHookResponse = UpdateWorkspaceHookResponses[keyof UpdateWorkspaceHookResponses];
 
-export type GetWorkspacesByWorkspaceMembersData = {
+export type ListWorkspaceMembersData = {
     body?: never;
     path: {
         /**
@@ -17505,7 +17505,7 @@ export type GetWorkspacesByWorkspaceMembersData = {
     url: '/workspaces/{workspace}/members';
 };
 
-export type GetWorkspacesByWorkspaceMembersErrors = {
+export type ListWorkspaceMembersErrors = {
     /**
      * When more than 90 emails were provided when querying by email.
      */
@@ -17516,18 +17516,18 @@ export type GetWorkspacesByWorkspaceMembersErrors = {
     401: Error;
 };
 
-export type GetWorkspacesByWorkspaceMembersError = GetWorkspacesByWorkspaceMembersErrors[keyof GetWorkspacesByWorkspaceMembersErrors];
+export type ListWorkspaceMembersError = ListWorkspaceMembersErrors[keyof ListWorkspaceMembersErrors];
 
-export type GetWorkspacesByWorkspaceMembersResponses = {
+export type ListWorkspaceMembersResponses = {
     /**
      * The list of users that are part of a workspace.
      */
     200: PaginatedWorkspaceMemberships;
 };
 
-export type GetWorkspacesByWorkspaceMembersResponse = GetWorkspacesByWorkspaceMembersResponses[keyof GetWorkspacesByWorkspaceMembersResponses];
+export type ListWorkspaceMembersResponse = ListWorkspaceMembersResponses[keyof ListWorkspaceMembersResponses];
 
-export type GetWorkspacesByWorkspaceMembersByMemberData = {
+export type GetWorkspaceMemberData = {
     body?: never;
     path: {
         /**
@@ -17545,7 +17545,7 @@ export type GetWorkspacesByWorkspaceMembersByMemberData = {
     url: '/workspaces/{workspace}/members/{member}';
 };
 
-export type GetWorkspacesByWorkspaceMembersByMemberErrors = {
+export type GetWorkspaceMemberErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -17556,18 +17556,18 @@ export type GetWorkspacesByWorkspaceMembersByMemberErrors = {
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceMembersByMemberError = GetWorkspacesByWorkspaceMembersByMemberErrors[keyof GetWorkspacesByWorkspaceMembersByMemberErrors];
+export type GetWorkspaceMemberError = GetWorkspaceMemberErrors[keyof GetWorkspaceMemberErrors];
 
-export type GetWorkspacesByWorkspaceMembersByMemberResponses = {
+export type GetWorkspaceMemberResponses = {
     /**
      * The user that is part of a workspace.
      */
     200: WorkspaceMembership;
 };
 
-export type GetWorkspacesByWorkspaceMembersByMemberResponse = GetWorkspacesByWorkspaceMembersByMemberResponses[keyof GetWorkspacesByWorkspaceMembersByMemberResponses];
+export type GetWorkspaceMemberResponse = GetWorkspaceMemberResponses[keyof GetWorkspaceMemberResponses];
 
-export type GetWorkspacesByWorkspacePermissionsData = {
+export type ListWorkspacePermissionsData = {
     body?: never;
     path: {
         /**
@@ -17588,25 +17588,25 @@ export type GetWorkspacesByWorkspacePermissionsData = {
     url: '/workspaces/{workspace}/permissions';
 };
 
-export type GetWorkspacesByWorkspacePermissionsErrors = {
+export type ListWorkspacePermissionsErrors = {
     /**
      * The request wasn't authenticated.
      */
     401: Error;
 };
 
-export type GetWorkspacesByWorkspacePermissionsError = GetWorkspacesByWorkspacePermissionsErrors[keyof GetWorkspacesByWorkspacePermissionsErrors];
+export type ListWorkspacePermissionsError = ListWorkspacePermissionsErrors[keyof ListWorkspacePermissionsErrors];
 
-export type GetWorkspacesByWorkspacePermissionsResponses = {
+export type ListWorkspacePermissionsResponses = {
     /**
      * The list of users that are part of a workspace, along with their permission.
      */
     200: PaginatedWorkspaceMemberships;
 };
 
-export type GetWorkspacesByWorkspacePermissionsResponse = GetWorkspacesByWorkspacePermissionsResponses[keyof GetWorkspacesByWorkspacePermissionsResponses];
+export type ListWorkspacePermissionsResponse = ListWorkspacePermissionsResponses[keyof ListWorkspacePermissionsResponses];
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesData = {
+export type ListWorkspaceRepoPermissionsData = {
     body?: never;
     path: {
         /**
@@ -17634,25 +17634,25 @@ export type GetWorkspacesByWorkspacePermissionsRepositoriesData = {
     url: '/workspaces/{workspace}/permissions/repositories';
 };
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesErrors = {
+export type ListWorkspaceRepoPermissionsErrors = {
     /**
      * The requesting user isn't an admin of the workspace.
      */
     403: Error;
 };
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesError = GetWorkspacesByWorkspacePermissionsRepositoriesErrors[keyof GetWorkspacesByWorkspacePermissionsRepositoriesErrors];
+export type ListWorkspaceRepoPermissionsError = ListWorkspaceRepoPermissionsErrors[keyof ListWorkspaceRepoPermissionsErrors];
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesResponses = {
+export type ListWorkspaceRepoPermissionsResponses = {
     /**
      * List of workspace's repository permissions.
      */
     200: PaginatedRepositoryPermissions;
 };
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesResponse = GetWorkspacesByWorkspacePermissionsRepositoriesResponses[keyof GetWorkspacesByWorkspacePermissionsRepositoriesResponses];
+export type ListWorkspaceRepoPermissionsResponse = ListWorkspaceRepoPermissionsResponses[keyof ListWorkspaceRepoPermissionsResponses];
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData = {
+export type GetWorkspaceRepoPermissionData = {
     body?: never;
     path: {
         /**
@@ -17686,23 +17686,23 @@ export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData = {
     url: '/workspaces/{workspace}/permissions/repositories/{repo_slug}';
 };
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors = {
+export type GetWorkspaceRepoPermissionErrors = {
     /**
      * The requesting user isn't an admin of the repository.
      */
     403: Error;
 };
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugError = GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors[keyof GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors];
+export type GetWorkspaceRepoPermissionError = GetWorkspaceRepoPermissionErrors[keyof GetWorkspaceRepoPermissionErrors];
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses = {
+export type GetWorkspaceRepoPermissionResponses = {
     /**
      * The repository permission for all users in this repository.
      */
     200: PaginatedRepositoryPermissions;
 };
 
-export type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponse = GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses[keyof GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses];
+export type GetWorkspaceRepoPermissionResponse = GetWorkspaceRepoPermissionResponses[keyof GetWorkspaceRepoPermissionResponses];
 
 export type GetOidcConfigurationData = {
     body?: never;
@@ -18080,7 +18080,7 @@ export type UpdatePipelineVariableForWorkspaceResponses = {
 
 export type UpdatePipelineVariableForWorkspaceResponse = UpdatePipelineVariableForWorkspaceResponses[keyof UpdatePipelineVariableForWorkspaceResponses];
 
-export type GetWorkspacesByWorkspaceProjectsData = {
+export type ListProjectsData = {
     body?: never;
     path: {
         /**
@@ -18094,25 +18094,25 @@ export type GetWorkspacesByWorkspaceProjectsData = {
     url: '/workspaces/{workspace}/projects';
 };
 
-export type GetWorkspacesByWorkspaceProjectsErrors = {
+export type ListProjectsErrors = {
     /**
      * A workspace doesn't exist at this location.
      */
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsError = GetWorkspacesByWorkspaceProjectsErrors[keyof GetWorkspacesByWorkspaceProjectsErrors];
+export type ListProjectsError = ListProjectsErrors[keyof ListProjectsErrors];
 
-export type GetWorkspacesByWorkspaceProjectsResponses = {
+export type ListProjectsResponses = {
     /**
      * The list of projects in this workspace.
      */
     200: PaginatedProjects;
 };
 
-export type GetWorkspacesByWorkspaceProjectsResponse = GetWorkspacesByWorkspaceProjectsResponses[keyof GetWorkspacesByWorkspaceProjectsResponses];
+export type ListProjectsResponse = ListProjectsResponses[keyof ListProjectsResponses];
 
-export type PostWorkspacesByWorkspaceProjectsData = {
+export type CreateProjectData = {
     body: Project2;
     path: {
         /**
@@ -18126,7 +18126,7 @@ export type PostWorkspacesByWorkspaceProjectsData = {
     url: '/workspaces/{workspace}/projects';
 };
 
-export type PostWorkspacesByWorkspaceProjectsErrors = {
+export type CreateProjectErrors = {
     /**
      * The user requesting to create a project does not have the necessary permissions.
      */
@@ -18137,18 +18137,18 @@ export type PostWorkspacesByWorkspaceProjectsErrors = {
     404: Error;
 };
 
-export type PostWorkspacesByWorkspaceProjectsError = PostWorkspacesByWorkspaceProjectsErrors[keyof PostWorkspacesByWorkspaceProjectsErrors];
+export type CreateProjectError = CreateProjectErrors[keyof CreateProjectErrors];
 
-export type PostWorkspacesByWorkspaceProjectsResponses = {
+export type CreateProjectResponses = {
     /**
      * A new project has been created.
      */
     201: Project;
 };
 
-export type PostWorkspacesByWorkspaceProjectsResponse = PostWorkspacesByWorkspaceProjectsResponses[keyof PostWorkspacesByWorkspaceProjectsResponses];
+export type CreateProjectResponse = CreateProjectResponses[keyof CreateProjectResponses];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyData = {
+export type DeleteProjectData = {
     body?: never;
     path: {
         /**
@@ -18168,7 +18168,7 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyData = {
     url: '/workspaces/{workspace}/projects/{project_key}';
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
+export type DeleteProjectErrors = {
     /**
      * The requesting user isn't authorized to delete the project or the project isn't empty.
      */
@@ -18179,18 +18179,18 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
     404: Error;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors];
+export type DeleteProjectError = DeleteProjectErrors[keyof DeleteProjectErrors];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
+export type DeleteProjectResponses = {
     /**
      * Successful deletion.
      */
     204: void;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses];
+export type DeleteProjectResponse = DeleteProjectResponses[keyof DeleteProjectResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyData = {
+export type GetProjectData = {
     body?: never;
     path: {
         /**
@@ -18210,7 +18210,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyData = {
     url: '/workspaces/{workspace}/projects/{project_key}';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
+export type GetProjectErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -18225,18 +18225,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyError = GetWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyErrors];
+export type GetProjectError = GetProjectErrors[keyof GetProjectErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
+export type GetProjectResponses = {
     /**
      * The project that is part of a workspace.
      */
     200: Project;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyResponses];
+export type GetProjectResponse = GetProjectResponses[keyof GetProjectResponses];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyData = {
+export type UpdateProjectData = {
     body: Project2;
     path: {
         /**
@@ -18256,7 +18256,7 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyData = {
     url: '/workspaces/{workspace}/projects/{project_key}';
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
+export type UpdateProjectErrors = {
     /**
      * The requesting user isn't authorized to update or create the project.
      */
@@ -18267,9 +18267,9 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
     404: Error;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyError = PutWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyErrors];
+export type UpdateProjectError = UpdateProjectErrors[keyof UpdateProjectErrors];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
+export type UpdateProjectResponses = {
     /**
      * The existing project is has been updated.
      */
@@ -18280,9 +18280,9 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
     201: Project;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyResponses];
+export type UpdateProjectResponse = UpdateProjectResponses[keyof UpdateProjectResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData = {
+export type GetProjectBranchingModelData = {
     body?: never;
     path: {
         /**
@@ -18302,7 +18302,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData = {
     url: '/workspaces/{workspace}/projects/{project_key}/branching-model';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors = {
+export type GetProjectBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
@@ -18317,18 +18317,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors = {
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelError = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors];
+export type GetProjectBranchingModelError = GetProjectBranchingModelErrors[keyof GetProjectBranchingModelErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses = {
+export type GetProjectBranchingModelResponses = {
     /**
      * The branching model object
      */
     200: ProjectBranchingModel;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses];
+export type GetProjectBranchingModelResponse = GetProjectBranchingModelResponses[keyof GetProjectBranchingModelResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData = {
+export type GetProjectBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -18348,7 +18348,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsDa
     url: '/workspaces/{workspace}/projects/{project_key}/branching-model/settings';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors = {
+export type GetProjectBranchingModelSettingsErrors = {
     /**
      * If the request was not authenticated
      */
@@ -18363,18 +18363,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsEr
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors];
+export type GetProjectBranchingModelSettingsError = GetProjectBranchingModelSettingsErrors[keyof GetProjectBranchingModelSettingsErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses = {
+export type GetProjectBranchingModelSettingsResponses = {
     /**
      * The branching model configuration
      */
     200: BranchingModelSettings;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses];
+export type GetProjectBranchingModelSettingsResponse = GetProjectBranchingModelSettingsResponses[keyof GetProjectBranchingModelSettingsResponses];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData = {
+export type UpdateProjectBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -18394,7 +18394,7 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsDa
     url: '/workspaces/{workspace}/projects/{project_key}/branching-model/settings';
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors = {
+export type UpdateProjectBranchingModelSettingsErrors = {
     /**
      * If the request contains an invalid branching model configuration
      */
@@ -18413,18 +18413,18 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsEr
     404: Error;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError = PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors];
+export type UpdateProjectBranchingModelSettingsError = UpdateProjectBranchingModelSettingsErrors[keyof UpdateProjectBranchingModelSettingsErrors];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses = {
+export type UpdateProjectBranchingModelSettingsResponses = {
     /**
      * The updated branching model configuration
      */
     200: BranchingModelSettings;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses];
+export type UpdateProjectBranchingModelSettingsResponse = UpdateProjectBranchingModelSettingsResponses[keyof UpdateProjectBranchingModelSettingsResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData = {
+export type ListProjectDefaultReviewersData = {
     body?: never;
     path: {
         /**
@@ -18444,7 +18444,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData = {
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors = {
+export type ListProjectDefaultReviewersErrors = {
     /**
      * If the authenticated user does not have admin access to the project
      */
@@ -18455,18 +18455,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors =
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersError = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors];
+export type ListProjectDefaultReviewersError = ListProjectDefaultReviewersErrors[keyof ListProjectDefaultReviewersErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses = {
+export type ListProjectDefaultReviewersResponses = {
     /**
      * The list of project default reviewers
      */
     200: PaginatedDefaultReviewerAndType;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses];
+export type ListProjectDefaultReviewersResponse = ListProjectDefaultReviewersResponses[keyof ListProjectDefaultReviewersResponses];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData = {
+export type DeleteProjectDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -18492,7 +18492,7 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySel
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}';
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors = {
+export type DeleteProjectDefaultReviewerErrors = {
     /**
      * If the specified user is not a default reviewer for the project
      */
@@ -18507,18 +18507,18 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySel
     404: Error;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
+export type DeleteProjectDefaultReviewerError = DeleteProjectDefaultReviewerErrors[keyof DeleteProjectDefaultReviewerErrors];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses = {
+export type DeleteProjectDefaultReviewerResponses = {
     /**
      * The specified user was removed from the list of project default reviewers
      */
     204: void;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses];
+export type DeleteProjectDefaultReviewerResponse = DeleteProjectDefaultReviewerResponses[keyof DeleteProjectDefaultReviewerResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData = {
+export type GetProjectDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -18544,7 +18544,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelect
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors = {
+export type GetProjectDefaultReviewerErrors = {
     /**
      * If the specified user is not a default reviewer for the project
      */
@@ -18559,18 +18559,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelect
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
+export type GetProjectDefaultReviewerError = GetProjectDefaultReviewerErrors[keyof GetProjectDefaultReviewerErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses = {
+export type GetProjectDefaultReviewerResponses = {
     /**
      * The specified user that is a default reviewer
      */
     200: User;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses];
+export type GetProjectDefaultReviewerResponse = GetProjectDefaultReviewerResponses[keyof GetProjectDefaultReviewerResponses];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData = {
+export type AddProjectDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -18596,7 +18596,7 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelect
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}';
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors = {
+export type AddProjectDefaultReviewerErrors = {
     /**
      * If the specified user cannot be added as a default reviewer for the project
      */
@@ -18611,18 +18611,18 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelect
     404: Error;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
+export type AddProjectDefaultReviewerError = AddProjectDefaultReviewerErrors[keyof AddProjectDefaultReviewerErrors];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses = {
+export type AddProjectDefaultReviewerResponses = {
     /**
      * The specified user was added as a project default reviewer
      */
     200: User;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses];
+export type AddProjectDefaultReviewerResponse = AddProjectDefaultReviewerResponses[keyof AddProjectDefaultReviewerResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
+export type ListProjectDeployKeysData = {
     body?: never;
     path: {
         /**
@@ -18642,7 +18642,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
+export type ListProjectDeployKeysErrors = {
     /**
      * If the specified workspace or project is not accessible to the current user
      */
@@ -18653,18 +18653,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors];
+export type ListProjectDeployKeysError = ListProjectDeployKeysErrors[keyof ListProjectDeployKeysErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses = {
+export type ListProjectDeployKeysResponses = {
     /**
      * Deploy keys matching the project
      */
     200: PaginatedProjectDeployKeys;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses];
+export type ListProjectDeployKeysResponse = ListProjectDeployKeysResponses[keyof ListProjectDeployKeysResponses];
 
-export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
+export type CreateProjectDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -18684,7 +18684,7 @@ export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys';
 };
 
-export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
+export type CreateProjectDeployKeyErrors = {
     /**
      * Invalid deploy key inputs
      */
@@ -18699,18 +18699,18 @@ export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
     404: Error;
 };
 
-export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError = PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors[keyof PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors];
+export type CreateProjectDeployKeyError = CreateProjectDeployKeyErrors[keyof CreateProjectDeployKeyErrors];
 
-export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses = {
+export type CreateProjectDeployKeyResponses = {
     /**
      * The project deploy key that was created
      */
     200: ProjectDeployKey;
 };
 
-export type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponse = PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses[keyof PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses];
+export type CreateProjectDeployKeyResponse = CreateProjectDeployKeyResponses[keyof CreateProjectDeployKeyResponses];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData = {
+export type DeleteProjectDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -18734,7 +18734,7 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}';
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors = {
+export type DeleteProjectDeployKeyErrors = {
     /**
      * If the current user does not have permission to delete a key for the specified project
      */
@@ -18745,18 +18745,18 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErro
     404: Error;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors];
+export type DeleteProjectDeployKeyError = DeleteProjectDeployKeyErrors[keyof DeleteProjectDeployKeyErrors];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses = {
+export type DeleteProjectDeployKeyResponses = {
     /**
      * The project deploy key has been deleted
      */
     204: void;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses];
+export type DeleteProjectDeployKeyResponse = DeleteProjectDeployKeyResponses[keyof DeleteProjectDeployKeyResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData = {
+export type GetProjectDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -18780,7 +18780,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData = 
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors = {
+export type GetProjectDeployKeyErrors = {
     /**
      * If the specified workspace or project is not accessible to the current user
      */
@@ -18791,18 +18791,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors 
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors];
+export type GetProjectDeployKeyError = GetProjectDeployKeyErrors[keyof GetProjectDeployKeyErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses = {
+export type GetProjectDeployKeyResponses = {
     /**
      * Project deploy key matching the key ID
      */
     200: ProjectDeployKey;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses];
+export type GetProjectDeployKeyResponse = GetProjectDeployKeyResponses[keyof GetProjectDeployKeyResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsData = {
+export type ListProjectPermissionGroupsData = {
     body?: never;
     path: {
         /**
@@ -18821,7 +18821,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsD
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors = {
+export type ListProjectPermissionGroupsErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -18836,18 +18836,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsE
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors];
+export type ListProjectPermissionGroupsError = ListProjectPermissionGroupsErrors[keyof ListProjectPermissionGroupsErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses = {
+export type ListProjectPermissionGroupsResponses = {
     /**
      * Paginated list of project group permissions
      */
     200: PaginatedProjectGroupPermissions;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses];
+export type ListProjectPermissionGroupsResponse = ListProjectPermissionGroupsResponses[keyof ListProjectPermissionGroupsResponses];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData = {
+export type DeleteProjectPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -18870,7 +18870,7 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGrou
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}';
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors = {
+export type DeleteProjectPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -18885,18 +18885,18 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGrou
     404: Error;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
+export type DeleteProjectPermissionGroupError = DeleteProjectPermissionGroupErrors[keyof DeleteProjectPermissionGroupErrors];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses = {
+export type DeleteProjectPermissionGroupResponses = {
     /**
      * The project group permission was deleted and no content returned.
      */
     204: void;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses];
+export type DeleteProjectPermissionGroupResponse = DeleteProjectPermissionGroupResponses[keyof DeleteProjectPermissionGroupResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData = {
+export type GetProjectPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -18919,7 +18919,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsB
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors = {
+export type GetProjectPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -18934,18 +18934,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsB
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
+export type GetProjectPermissionGroupError = GetProjectPermissionGroupErrors[keyof GetProjectPermissionGroupErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses = {
+export type GetProjectPermissionGroupResponses = {
     /**
      * Project group permission
      */
     200: ProjectGroupPermission;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses];
+export type GetProjectPermissionGroupResponse = GetProjectPermissionGroupResponses[keyof GetProjectPermissionGroupResponses];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData = {
+export type UpdateProjectPermissionGroupData = {
     /**
      * The permission to grant
      */
@@ -18971,7 +18971,7 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsB
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}';
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors = {
+export type UpdateProjectPermissionGroupErrors = {
     /**
      * No permission value was provided or the value is invalid(not one of read, write, create-repo, or admin).
      */
@@ -18994,18 +18994,18 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsB
     404: Error;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
+export type UpdateProjectPermissionGroupError = UpdateProjectPermissionGroupErrors[keyof UpdateProjectPermissionGroupErrors];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses = {
+export type UpdateProjectPermissionGroupResponses = {
     /**
      * Project group permission updated.
      */
     200: ProjectGroupPermission;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses];
+export type UpdateProjectPermissionGroupResponse = UpdateProjectPermissionGroupResponses[keyof UpdateProjectPermissionGroupResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersData = {
+export type ListProjectPermissionUsersData = {
     body?: never;
     path: {
         /**
@@ -19024,7 +19024,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersDa
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors = {
+export type ListProjectPermissionUsersErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -19039,18 +19039,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersEr
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors];
+export type ListProjectPermissionUsersError = ListProjectPermissionUsersErrors[keyof ListProjectPermissionUsersErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses = {
+export type ListProjectPermissionUsersResponses = {
     /**
      * Paginated list of explicit user permissions.
      */
     200: PaginatedProjectUserPermissions;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses];
+export type ListProjectPermissionUsersResponse = ListProjectPermissionUsersResponses[keyof ListProjectPermissionUsersResponses];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData = {
+export type DeleteProjectPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -19075,7 +19075,7 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUser
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}';
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors = {
+export type DeleteProjectPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -19090,18 +19090,18 @@ export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUser
     404: Error;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
+export type DeleteProjectPermissionUserError = DeleteProjectPermissionUserErrors[keyof DeleteProjectPermissionUserErrors];
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses = {
+export type DeleteProjectPermissionUserResponses = {
     /**
      * The project user permission was deleted and no content returned.
      */
     204: void;
 };
 
-export type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses];
+export type DeleteProjectPermissionUserResponse = DeleteProjectPermissionUserResponses[keyof DeleteProjectPermissionUserResponses];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData = {
+export type GetProjectPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -19126,7 +19126,7 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBy
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}';
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors = {
+export type GetProjectPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -19141,18 +19141,18 @@ export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBy
     404: Error;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
+export type GetProjectPermissionUserError = GetProjectPermissionUserErrors[keyof GetProjectPermissionUserErrors];
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses = {
+export type GetProjectPermissionUserResponses = {
     /**
      * Explicit user permission for user and project
      */
     200: ProjectUserPermission;
 };
 
-export type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses];
+export type GetProjectPermissionUserResponse = GetProjectPermissionUserResponses[keyof GetProjectPermissionUserResponses];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData = {
+export type UpdateProjectPermissionUserData = {
     /**
      * The permission to grant
      */
@@ -19180,7 +19180,7 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBy
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}';
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors = {
+export type UpdateProjectPermissionUserErrors = {
     /**
      * No permission value was provided or the value is invalid (not one of read, write, create-repo, or admin)
      */
@@ -19203,18 +19203,18 @@ export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBy
     404: Error;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
+export type UpdateProjectPermissionUserError = UpdateProjectPermissionUserErrors[keyof UpdateProjectPermissionUserErrors];
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses = {
+export type UpdateProjectPermissionUserResponses = {
     /**
      * Explicit user permission updated
      */
     200: ProjectUserPermission;
 };
 
-export type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses];
+export type UpdateProjectPermissionUserResponse = UpdateProjectPermissionUserResponses[keyof UpdateProjectPermissionUserResponses];
 
-export type GetWorkspacesByWorkspacePullrequestsBySelectedUserData = {
+export type ListWorkspaceUserPullRequestsData = {
     body?: never;
     path: {
         /**
@@ -19239,23 +19239,23 @@ export type GetWorkspacesByWorkspacePullrequestsBySelectedUserData = {
     url: '/workspaces/{workspace}/pullrequests/{selected_user}';
 };
 
-export type GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors = {
+export type ListWorkspaceUserPullRequestsErrors = {
     /**
      * If the specified user does not exist.
      */
     404: Error;
 };
 
-export type GetWorkspacesByWorkspacePullrequestsBySelectedUserError = GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors[keyof GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors];
+export type ListWorkspaceUserPullRequestsError = ListWorkspaceUserPullRequestsErrors[keyof ListWorkspaceUserPullRequestsErrors];
 
-export type GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses = {
+export type ListWorkspaceUserPullRequestsResponses = {
     /**
      * All pull requests authored by the specified user.
      */
     200: PaginatedPullrequests;
 };
 
-export type GetWorkspacesByWorkspacePullrequestsBySelectedUserResponse = GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses[keyof GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses];
+export type ListWorkspaceUserPullRequestsResponse = ListWorkspaceUserPullRequestsResponses[keyof ListWorkspaceUserPullRequestsResponses];
 
 export type SearchWorkspaceData = {
     body?: never;

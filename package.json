@@ -33,6 +33,7 @@
     "url": "https://github.com/tembo/bitbucket"
   },
   "devDependencies": {
+    "@hey-api/client-fetch": "^0.13.1",
     "@hey-api/openapi-ts": "^0.93.1",
     "@types/bun": "latest",
     "tsup": "^8.3.5",

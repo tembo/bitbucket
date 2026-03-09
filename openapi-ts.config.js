@@ -8,7 +8,7 @@ const operationIdRenames = {
   putAddonLinkersByLinkerKeyValues: "updateAddonLinkerValues",
   deleteAddonLinkersByLinkerKeyValuesByValueId: "deleteAddonLinkerValue",
   getAddonLinkersByLinkerKeyValuesByValueId: "getAddonLinkerValue",
-  
+
   // Repositories (top-level)
   getRepositories: "listRepositories",
   getRepositoriesByWorkspace: "listWorkspaceRepositories",
@@ -16,19 +16,19 @@ const operationIdRenames = {
   getRepositoriesByWorkspaceByRepoSlug: "getRepository",
   postRepositoriesByWorkspaceByRepoSlug: "createRepository",
   putRepositoriesByWorkspaceByRepoSlug: "updateRepository",
-  
+
   // Branch restrictions
   getRepositoriesByWorkspaceByRepoSlugBranchRestrictions: "listBranchRestrictions",
   postRepositoriesByWorkspaceByRepoSlugBranchRestrictions: "createBranchRestriction",
   deleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById: "deleteBranchRestriction",
   getRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById: "getBranchRestriction",
   putRepositoriesByWorkspaceByRepoSlugBranchRestrictionsById: "updateBranchRestriction",
-  
+
   // Branching model
   getRepositoriesByWorkspaceByRepoSlugBranchingModel: "getBranchingModel",
   getRepositoriesByWorkspaceByRepoSlugBranchingModelSettings: "getBranchingModelSettings",
   putRepositoriesByWorkspaceByRepoSlugBranchingModelSettings: "updateBranchingModelSettings",
-  
+
   // Commits
   getRepositoriesByWorkspaceByRepoSlugCommitByCommit: "getCommit",
   deleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApprove: "deleteCommitApproval",
@@ -46,52 +46,52 @@ const operationIdRenames = {
   postRepositoriesByWorkspaceByRepoSlugCommits: "filterCommits",
   getRepositoriesByWorkspaceByRepoSlugCommitsByRevision: "listCommitsByRevision",
   postRepositoriesByWorkspaceByRepoSlugCommitsByRevision: "filterCommitsByRevision",
-  
+
   // Components
   getRepositoriesByWorkspaceByRepoSlugComponents: "listComponents",
   getRepositoriesByWorkspaceByRepoSlugComponentsByComponentId: "getComponent",
-  
+
   // Default reviewers
   getRepositoriesByWorkspaceByRepoSlugDefaultReviewers: "listDefaultReviewers",
   deleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername: "deleteDefaultReviewer",
   getRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername: "getDefaultReviewer",
   putRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsername: "addDefaultReviewer",
-  
+
   // Deploy keys
   getRepositoriesByWorkspaceByRepoSlugDeployKeys: "listDeployKeys",
   postRepositoriesByWorkspaceByRepoSlugDeployKeys: "createDeployKey",
   deleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId: "deleteDeployKey",
   getRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId: "getDeployKey",
   putRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyId: "updateDeployKey",
-  
+
   // Diff
   getRepositoriesByWorkspaceByRepoSlugDiffBySpec: "getDiff",
   getRepositoriesByWorkspaceByRepoSlugDiffstatBySpec: "getDiffstat",
-  
+
   // Downloads
   getRepositoriesByWorkspaceByRepoSlugDownloads: "listDownloads",
   postRepositoriesByWorkspaceByRepoSlugDownloads: "createDownload",
   deleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilename: "deleteDownload",
   getRepositoriesByWorkspaceByRepoSlugDownloadsByFilename: "getDownload",
-  
+
   // Effective models
   getRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModel: "getEffectiveBranchingModel",
   getRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewers: "listEffectiveDefaultReviewers",
-  
+
   // File history
   getRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPath: "getFileHistory",
-  
+
   // Forks
   getRepositoriesByWorkspaceByRepoSlugForks: "listForks",
   postRepositoriesByWorkspaceByRepoSlugForks: "createFork",
-  
+
   // Repo hooks
   getRepositoriesByWorkspaceByRepoSlugHooks: "listRepoHooks",
   postRepositoriesByWorkspaceByRepoSlugHooks: "createRepoHook",
   deleteRepositoriesByWorkspaceByRepoSlugHooksByUid: "deleteRepoHook",
   getRepositoriesByWorkspaceByRepoSlugHooksByUid: "getRepoHook",
   putRepositoriesByWorkspaceByRepoSlugHooksByUid: "updateRepoHook",
-  
+
   // Issues
   getRepositoriesByWorkspaceByRepoSlugIssues: "listIssues",
   postRepositoriesByWorkspaceByRepoSlugIssues: "createIssue",
@@ -120,21 +120,21 @@ const operationIdRenames = {
   postRepositoriesByWorkspaceByRepoSlugIssuesExport: "exportIssues",
   getRepositoriesByWorkspaceByRepoSlugIssuesImport: "getIssueImportStatus",
   postRepositoriesByWorkspaceByRepoSlugIssuesImport: "importIssues",
-  
+
   // Merge base
   getRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspec: "getMergeBase",
-  
+
   // Milestones
   getRepositoriesByWorkspaceByRepoSlugMilestones: "listMilestones",
   getRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneId: "getMilestone",
-  
+
   // Override settings
   getRepositoriesByWorkspaceByRepoSlugOverrideSettings: "getOverrideSettings",
   putRepositoriesByWorkspaceByRepoSlugOverrideSettings: "updateOverrideSettings",
-  
+
   // Patch
   getRepositoriesByWorkspaceByRepoSlugPatchBySpec: "getPatch",
-  
+
   // Repo permissions
   getRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroups: "listRepoPermissionGroups",
   deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlug: "deleteRepoPermissionGroup",
@@ -144,7 +144,7 @@ const operationIdRenames = {
   deleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId: "deleteRepoPermissionUser",
   getRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId: "getRepoPermissionUser",
   putRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserId: "updateRepoPermissionUser",
-  
+
   // Pull requests
   getRepositoriesByWorkspaceByRepoSlugPullrequests: "listPullRequests",
   postRepositoriesByWorkspaceByRepoSlugPullrequests: "createPullRequest",
@@ -176,7 +176,7 @@ const operationIdRenames = {
   deleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId: "deletePullRequestTask",
   getRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId: "getPullRequestTask",
   putRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskId: "updatePullRequestTask",
-  
+
   // Refs / branches / tags
   getRepositoriesByWorkspaceByRepoSlugRefs: "listRefs",
   getRepositoriesByWorkspaceByRepoSlugRefsBranches: "listBranches",
@@ -187,19 +187,19 @@ const operationIdRenames = {
   postRepositoriesByWorkspaceByRepoSlugRefsTags: "createTag",
   deleteRepositoriesByWorkspaceByRepoSlugRefsTagsByName: "deleteTag",
   getRepositoriesByWorkspaceByRepoSlugRefsTagsByName: "getTag",
-  
+
   // Source
   getRepositoriesByWorkspaceByRepoSlugSrc: "listSrcRoot",
   postRepositoriesByWorkspaceByRepoSlugSrc: "createSrcFileCommit",
   getRepositoriesByWorkspaceByRepoSlugSrcByCommitByPath: "getSrcFile",
-  
+
   // Versions
   getRepositoriesByWorkspaceByRepoSlugVersions: "listVersions",
   getRepositoriesByWorkspaceByRepoSlugVersionsByVersionId: "getVersion",
-  
+
   // Watchers
   getRepositoriesByWorkspaceByRepoSlugWatchers: "listRepoWatchers",
-  
+
   // Snippets
   getSnippets: "listSnippets",
   postSnippets: "createSnippet",
@@ -226,7 +226,7 @@ const operationIdRenames = {
   getSnippetsByWorkspaceByEncodedIdWatch: "getSnippetWatchStatus",
   putSnippetsByWorkspaceByEncodedIdWatch: "watchSnippet",
   getSnippetsByWorkspaceByEncodedIdWatchers: "listSnippetWatchers",
-  
+
   // Users
   getUserEmailsByEmail: "getUserEmail",
   getUserWorkspacesByWorkspacePermission: "getUserWorkspacePermission",
@@ -240,7 +240,7 @@ const operationIdRenames = {
   postUsersBySelectedUserSshKeys: "createUserSshKey",
   deleteUsersBySelectedUserSshKeysByKeyId: "deleteUserSshKey",
   putUsersBySelectedUserSshKeysByKeyId: "updateUserSshKey",
-  
+
   // Workspaces
   getWorkspaces: "listWorkspaces",
   getWorkspacesByWorkspace: "getWorkspace",
@@ -254,7 +254,7 @@ const operationIdRenames = {
   getWorkspacesByWorkspacePermissions: "listWorkspacePermissions",
   getWorkspacesByWorkspacePermissionsRepositories: "listWorkspaceRepoPermissions",
   getWorkspacesByWorkspacePermissionsRepositoriesByRepoSlug: "getWorkspaceRepoPermission",
-  
+
   // Projects
   getWorkspacesByWorkspaceProjects: "listProjects",
   postWorkspacesByWorkspaceProjects: "createProject",
@@ -281,7 +281,7 @@ const operationIdRenames = {
   getWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId: "getProjectPermissionUser",
   putWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserId: "updateProjectPermissionUser",
   getWorkspacesByWorkspacePullrequestsBySelectedUser: "listWorkspaceUserPullRequests",
-  
+
   // User workspace permissions
   getUserWorkspacesByWorkspacePermissionsRepositories: "listUserWorkspaceRepoPermissions",
 };

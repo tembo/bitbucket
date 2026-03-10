@@ -6,6 +6,7 @@
   "main": "./lib/index.js",
   "files": [
     "lib/",
+    "openapi.json",
     "package.json",
     "LICENSE.md",
     "README.md"

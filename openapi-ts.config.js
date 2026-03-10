@@ -313,7 +313,7 @@ function buildGeneratedOperationId(method, path) {
 }
 
 export default {
-  input: "https://dac-static.atlassian.com/cloud/bitbucket/swagger.v3.json",
+  input: "openapi.json",
   output: "src",
   parser: {
     patch: {

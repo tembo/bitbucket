@@ -20,7 +20,7 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 
 class HeyApiClient {
     protected client: Client;
-    
+
     constructor(args?: {
         client?: Client;
     }) {
@@ -30,9 +30,9 @@ class HeyApiClient {
 
 class HeyApiRegistry<T> {
     private readonly defaultKey = 'default';
-    
+
     private readonly instances: Map<string, T> = new Map();
-    
+
     get(key?: string): T {
         const instance = this.instances.get(key ?? this.defaultKey);
         if (!instance) {
@@ -40,7 +40,7 @@ class HeyApiRegistry<T> {
         }
         return instance;
     }
-    
+
     set(value: T, key?: string): void {
         this.instances.set(key ?? this.defaultKey, value);
     }
@@ -48,7 +48,7 @@ class HeyApiRegistry<T> {
 
 export class BitbucketClient extends HeyApiClient {
     public static readonly __registry = new HeyApiRegistry<BitbucketClient>();
-    
+
     constructor(args?: {
         client?: Client;
         key?: string;
@@ -56,7 +56,7 @@ export class BitbucketClient extends HeyApiClient {
         super(args);
         BitbucketClient.__registry.set(this, args?.key);
     }
-    
+
     /**
      * Delete an app
      *
@@ -86,7 +86,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update an installed app
      *
@@ -149,7 +149,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List linkers for an app
      *
@@ -171,7 +171,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a linker for an app
      *
@@ -193,7 +193,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete all linker values
      *
@@ -215,7 +215,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List linker values for a linker
      *
@@ -244,7 +244,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a linker value
      *
@@ -273,7 +273,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a linker value
      *
@@ -302,7 +302,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a linker value
      *
@@ -324,7 +324,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a linker value
      *
@@ -346,7 +346,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a webhook resource
      *
@@ -371,7 +371,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List subscribable webhook types
      *
@@ -396,7 +396,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List public repositories
      *
@@ -421,7 +421,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List repositories in a workspace
      *
@@ -448,7 +448,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a repository
      *
@@ -467,7 +467,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a repository
      *
@@ -484,7 +484,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a repository
      *
@@ -535,7 +535,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Update a repository
      *
@@ -572,7 +572,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List branch restrictions
      *
@@ -590,7 +590,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a branch restriction rule
      *
@@ -655,7 +655,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a branch restriction rule
      *
@@ -672,7 +672,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a branch restriction rule
      *
@@ -689,7 +689,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a branch restriction rule
      *
@@ -714,7 +714,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Get the branching model for a repository
      *
@@ -747,7 +747,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the branching model config for a repository
      *
@@ -776,7 +776,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update the branching model config for a repository
      *
@@ -850,7 +850,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a commit
      *
@@ -867,7 +867,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Unapprove a commit
      *
@@ -889,7 +889,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Approve a commit
      *
@@ -911,7 +911,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List a commit's comments
      *
@@ -933,7 +933,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create comment for a commit
      *
@@ -964,7 +964,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a commit comment
      *
@@ -987,7 +987,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a commit comment
      *
@@ -1004,7 +1004,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a commit comment
      *
@@ -1032,7 +1032,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a commit application property
      *
@@ -1049,7 +1049,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a commit application property
      *
@@ -1066,7 +1066,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a commit application property
      *
@@ -1087,7 +1087,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List pull requests that contain a commit
      *
@@ -1104,7 +1104,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List reports
      *
@@ -1121,7 +1121,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a report
      *
@@ -1138,7 +1138,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a report
      *
@@ -1155,7 +1155,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create or update a report
      *
@@ -1223,7 +1223,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List annotations
      *
@@ -1240,66 +1240,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
-    /**
-     * Bulk create or update annotations
-     *
-     * Bulk upload of annotations.
-     * Annotations are individual findings that have been identified as part of a report, for example, a line of code that represents a vulnerability. These annotations can be attached to a specific file and even a specific line in that file, however, that is optional. Annotations are not mandatory and a report can contain up to 1000 annotations.
-     *
-     * Add the annotations you want to upload as objects in a JSON array and make sure each annotation has the external_id field set to a unique value. If you want to use an existing id from your own system, we recommend prefixing it with your system's name to avoid collisions, for example, mySystem-annotation001. The external id can later be used to identify the report as an alternative to the generated [UUID](https://developer.atlassian.com/bitbucket/api/2/reference/meta/uri-uuid#uuid). You can upload up to 100 annotations per POST request.
-     *
-     * ### Sample cURL request:
-     * ```
-     * curl --location 'https://api.bitbucket.org/2.0/repositories/<username>/<reposity-name>/commit/<commit-hash>/reports/mysystem-001/annotations' \
-     * --header 'Content-Type: application/json' \
-     * --data-raw '[
-     * {
-     * "external_id": "mysystem-annotation001",
-     * "title": "Security scan report",
-     * "annotation_type": "VULNERABILITY",
-     * "summary": "This line represents a security threat.",
-     * "severity": "HIGH",
-     * "path": "my-service/src/main/java/com/myCompany/mysystem/logic/Main.java",
-     * "line": 42
-     * },
-     * {
-     * "external_id": "mySystem-annotation002",
-     * "title": "Bug report",
-     * "annotation_type": "BUG",
-     * "result": "FAILED",
-     * "summary": "This line might introduce a bug.",
-     * "severity": "MEDIUM",
-     * "path": "my-service/src/main/java/com/myCompany/mysystem/logic/Helper.java",
-     * "line": 13
-     * }
-     * ]'
-     * ```
-     *
-     * ### Possible field values:
-     * annotation_type: VULNERABILITY, CODE_SMELL, BUG
-     * result: PASSED, FAILED, IGNORED, SKIPPED
-     * severity: HIGH, MEDIUM, LOW, CRITICAL
-     *
-     * Please refer to the [Code Insights documentation](https://confluence.atlassian.com/bitbucket/code-insights-994316785.html) for more information.
-     *
-     */
-    public bulkCreateOrUpdateAnnotations<ThrowOnError extends boolean = false>(options: Options<BulkCreateOrUpdateAnnotationsData, ThrowOnError>) {
-        return (options.client ?? this.client).post<BulkCreateOrUpdateAnnotationsResponses, unknown, ThrowOnError>({
-            security: [
-                { scheme: 'bearer', type: 'http' },
-                { scheme: 'basic', type: 'http' },
-                { name: 'Authorization', type: 'apiKey' }
-            ],
-            url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/reports/{reportId}/annotations',
-            ...options,
-            headers: {
-                'Content-Type': 'application/json',
-                ...options.headers
-            }
-        });
-    }
-    
+
     /**
      * Delete an annotation
      *
@@ -1316,7 +1257,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an annotation
      *
@@ -1333,7 +1274,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create or update an annotation
      *
@@ -1379,7 +1320,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List commit statuses for a commit
      *
@@ -1396,7 +1337,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a build status for a commit
      *
@@ -1454,7 +1395,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Get a build status for a commit
      *
@@ -1471,7 +1412,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a build status for a commit
      *
@@ -1504,7 +1445,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List commits
      *
@@ -1565,7 +1506,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List commits with include/exclude
      *
@@ -1586,7 +1527,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List commits for revision
      *
@@ -1640,7 +1581,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List commits for revision using include/exclude
      *
@@ -1661,7 +1602,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List components
      *
@@ -1683,7 +1624,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a component for issues
      *
@@ -1702,7 +1643,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List default reviewers
      *
@@ -1724,7 +1665,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Remove a user from the default reviewers
      *
@@ -1741,7 +1682,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a default reviewer
      *
@@ -1762,7 +1703,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Add a user to the default reviewers
      *
@@ -1782,7 +1723,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List repository deploy keys
      *
@@ -1799,7 +1740,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Add a repository deploy key
      *
@@ -1831,7 +1772,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a repository deploy key
      *
@@ -1848,7 +1789,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a repository deploy key
      *
@@ -1865,7 +1806,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a repository deploy key
      *
@@ -1896,7 +1837,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List deployments
      *
@@ -1913,7 +1854,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a deployment
      *
@@ -1930,7 +1871,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List variables for an environment
      *
@@ -1947,7 +1888,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a variable for an environment
      *
@@ -1968,7 +1909,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a variable for an environment
      *
@@ -1985,7 +1926,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a variable for an environment
      *
@@ -2006,7 +1947,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Compare two commits
      *
@@ -2058,7 +1999,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Compare two commit diff stats
      *
@@ -2098,7 +2039,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List download artifacts
      *
@@ -2115,7 +2056,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Upload a download artifact
      *
@@ -2141,7 +2082,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a download artifact
      *
@@ -2158,7 +2099,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a download artifact link
      *
@@ -2181,7 +2122,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the effective, or currently applied, branching model for a repository
      */
@@ -2196,7 +2137,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List effective default reviewers
      *
@@ -2217,7 +2158,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List environments
      *
@@ -2234,7 +2175,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create an environment
      *
@@ -2255,7 +2196,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete an environment
      *
@@ -2272,7 +2213,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an environment
      *
@@ -2289,7 +2230,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update an environment
      *
@@ -2306,7 +2247,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List commits that modified a file
      *
@@ -2349,7 +2290,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List repository forks
      *
@@ -2367,7 +2308,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Fork a repository
      *
@@ -2444,7 +2385,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List webhooks for a repository
      *
@@ -2461,7 +2402,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a webhook for a repository
      *
@@ -2510,7 +2451,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a webhook for a repository
      *
@@ -2528,7 +2469,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a webhook for a repository
      *
@@ -2546,7 +2487,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a webhook for a repository
      *
@@ -2580,7 +2521,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List issues
      *
@@ -2599,7 +2540,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create an issue
      *
@@ -2628,7 +2569,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Export issues
      *
@@ -2654,7 +2595,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Check issue export status
      *
@@ -2683,7 +2624,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Check issue import status
      *
@@ -2709,7 +2650,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Import issues
      *
@@ -2736,7 +2677,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete an issue
      *
@@ -2756,7 +2697,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an issue
      *
@@ -2775,7 +2716,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update an issue
      *
@@ -2819,7 +2760,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List attachments for an issue
      *
@@ -2843,7 +2784,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Upload an attachment to an issue
      *
@@ -2868,7 +2809,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete an attachment for an issue
      *
@@ -2887,7 +2828,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get attachment for an issue
      *
@@ -2913,7 +2854,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List changes on an issue
      *
@@ -2964,7 +2905,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Modify the state of an issue
      *
@@ -3024,7 +2965,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Get issue change object
      *
@@ -3046,7 +2987,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List comments on an issue
      *
@@ -3072,7 +3013,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a comment on an issue
      *
@@ -3102,7 +3043,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a comment on an issue
      *
@@ -3121,7 +3062,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a comment on an issue
      *
@@ -3140,7 +3081,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a comment on an issue
      *
@@ -3171,7 +3112,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Remove vote for an issue
      *
@@ -3190,7 +3131,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Check if current user voted for an issue
      *
@@ -3211,7 +3152,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Vote for an issue
      *
@@ -3233,7 +3174,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Stop watching an issue
      *
@@ -3252,7 +3193,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Check if current user is watching a issue
      *
@@ -3272,7 +3213,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Watch an issue
      *
@@ -3294,7 +3235,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the common ancestor between two commits
      *
@@ -3315,7 +3256,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List milestones
      *
@@ -3337,7 +3278,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a milestone
      *
@@ -3356,7 +3297,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Retrieve the inheritance state for repository settings
      */
@@ -3371,7 +3312,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Set the inheritance state for repository settings
      *
@@ -3387,7 +3328,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a patch for two commits
      *
@@ -3420,7 +3361,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List explicit group permissions for a repository
      *
@@ -3438,7 +3379,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete an explicit group permission for a repository
      *
@@ -3459,7 +3400,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an explicit group permission for a repository
      *
@@ -3485,7 +3426,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update an explicit group permission for a repository
      *
@@ -3516,7 +3457,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List explicit user permissions for a repository
      *
@@ -3534,7 +3475,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete an explicit user permission for a repository
      *
@@ -3555,7 +3496,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an explicit user permission for a repository
      *
@@ -3581,7 +3522,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update an explicit user permission for a repository
      *
@@ -3612,7 +3553,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List pipelines
      *
@@ -3634,7 +3575,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Run a pipeline
      *
@@ -3826,7 +3767,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete caches
      *
@@ -3843,7 +3784,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List caches
      *
@@ -3860,7 +3801,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a cache
      *
@@ -3877,7 +3818,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get cache content URI
      *
@@ -3894,7 +3835,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get repository runners
      *
@@ -3911,7 +3852,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create repository runner
      *
@@ -3928,7 +3869,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete repository runner
      *
@@ -3945,7 +3886,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get repository runner
      *
@@ -3962,7 +3903,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update repository runner
      *
@@ -3979,7 +3920,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a pipeline
      *
@@ -3996,7 +3937,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List steps for a pipeline
      *
@@ -4013,7 +3954,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a step of a pipeline
      *
@@ -4030,7 +3971,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get log file for a step
      *
@@ -4049,7 +3990,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the logs for the build container or a service container for a given step of a pipeline.
      *
@@ -4068,7 +4009,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a summary of test reports for a given step of a pipeline.
      */
@@ -4083,7 +4024,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get test cases for a given step of a pipeline.
      */
@@ -4098,7 +4039,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get test case reasons (output) for a given test case in a step of a pipeline.
      */
@@ -4113,7 +4054,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Stop a pipeline
      *
@@ -4130,7 +4071,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get configuration
      *
@@ -4147,7 +4088,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update configuration
      *
@@ -4168,7 +4109,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Update the next build number
      *
@@ -4189,7 +4130,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List schedules
      *
@@ -4206,7 +4147,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a schedule
      *
@@ -4227,7 +4168,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a schedule
      *
@@ -4244,7 +4185,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a schedule
      *
@@ -4261,7 +4202,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a schedule
      *
@@ -4282,7 +4223,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List executions of a schedule
      *
@@ -4299,7 +4240,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete SSH key pair
      *
@@ -4316,7 +4257,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get SSH key pair
      *
@@ -4333,7 +4274,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update SSH key pair
      *
@@ -4354,7 +4295,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List known hosts
      *
@@ -4371,7 +4312,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a known host
      *
@@ -4392,7 +4333,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a known host
      *
@@ -4409,7 +4350,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a known host
      *
@@ -4426,7 +4367,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a known host
      *
@@ -4447,7 +4388,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List variables for a repository
      *
@@ -4464,7 +4405,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a variable for a repository
      *
@@ -4485,7 +4426,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a variable for a repository
      *
@@ -4502,7 +4443,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a variable for a repository
      *
@@ -4519,7 +4460,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a variable for a repository
      *
@@ -4540,7 +4481,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a repository application property
      *
@@ -4557,7 +4498,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a repository application property
      *
@@ -4574,7 +4515,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a repository application property
      *
@@ -4595,7 +4536,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List pull requests
      *
@@ -4620,7 +4561,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a pull request
      *
@@ -4706,7 +4647,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List a pull request activity log
      *
@@ -5008,7 +4949,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a pull request
      *
@@ -5025,7 +4966,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a pull request
      *
@@ -5050,7 +4991,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List a pull request activity log
      *
@@ -5352,7 +5293,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Unapprove a pull request
      *
@@ -5370,7 +5311,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Approve a pull request
      *
@@ -5387,7 +5328,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List comments on a pull request
      *
@@ -5413,7 +5354,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a comment on a pull request
      *
@@ -5436,7 +5377,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a comment on a pull request
      *
@@ -5453,7 +5394,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a comment on a pull request
      *
@@ -5470,7 +5411,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a comment on a pull request
      *
@@ -5491,7 +5432,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Reopen a comment thread
      */
@@ -5506,7 +5447,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Resolve a comment thread
      */
@@ -5521,7 +5462,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List commits on a pull request
      *
@@ -5541,7 +5482,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Decline a pull request
      *
@@ -5558,7 +5499,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List changes in a pull request
      *
@@ -5576,7 +5517,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the diff stat for a pull request
      *
@@ -5594,7 +5535,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Merge a pull request
      *
@@ -5615,7 +5556,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Get the merge task status for a pull request
      *
@@ -5678,7 +5619,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the patch for a pull request
      *
@@ -5696,7 +5637,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Remove change request for a pull request
      */
@@ -5711,7 +5652,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Request changes for a pull request
      */
@@ -5726,7 +5667,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List commit statuses for a pull request
      *
@@ -5744,7 +5685,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List tasks on a pull request
      *
@@ -5764,7 +5705,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a task on a pull request
      *
@@ -5790,7 +5731,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a task on a pull request
      *
@@ -5807,7 +5748,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a task on a pull request
      *
@@ -5824,7 +5765,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a task on a pull request
      *
@@ -5845,7 +5786,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a pull request application property
      *
@@ -5862,7 +5803,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a pull request application property
      *
@@ -5879,7 +5820,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a pull request application property
      *
@@ -5900,7 +5841,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List branches and tags
      *
@@ -5928,7 +5869,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List open branches
      *
@@ -5964,7 +5905,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a branch
      *
@@ -6005,7 +5946,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a branch
      *
@@ -6028,7 +5969,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a branch
      *
@@ -6052,7 +5993,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List tags
      *
@@ -6079,7 +6020,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a tag
      *
@@ -6118,7 +6059,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a tag
      *
@@ -6137,7 +6078,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a tag
      *
@@ -6279,7 +6220,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the root directory of the main branch
      *
@@ -6303,7 +6244,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a commit by uploading a file
      *
@@ -6443,7 +6384,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get file or directory contents
      *
@@ -6662,7 +6603,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List defined versions for issues
      *
@@ -6684,7 +6625,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a defined version for issues
      *
@@ -6703,7 +6644,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List repositories watchers
      *
@@ -6721,7 +6662,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List snippets
      *
@@ -6764,7 +6705,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a snippet
      *
@@ -6932,7 +6873,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List snippets in a workspace
      *
@@ -6951,7 +6892,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a snippet for a workspace
      *
@@ -6974,7 +6915,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a snippet
      *
@@ -6991,7 +6932,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a snippet
      *
@@ -7193,7 +7134,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a snippet
      *
@@ -7407,7 +7348,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List comments on a snippet
      *
@@ -7430,7 +7371,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a comment on a snippet
      *
@@ -7455,7 +7396,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a comment on a snippet
      *
@@ -7474,7 +7415,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a comment on a snippet
      *
@@ -7491,7 +7432,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a comment on a snippet
      *
@@ -7516,7 +7457,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List snippet changes
      *
@@ -7533,7 +7474,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a previous snippet change
      *
@@ -7550,7 +7491,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a snippet's raw file at HEAD
      *
@@ -7569,7 +7510,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Stop watching a snippet
      *
@@ -7587,7 +7528,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Check if the current user is watching a snippet
      *
@@ -7609,7 +7550,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Watch a snippet
      *
@@ -7626,7 +7567,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List users watching a snippet
      *
@@ -7645,7 +7586,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a previous revision of a snippet
      *
@@ -7669,7 +7610,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a previous revision of a snippet
      *
@@ -7694,7 +7635,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a previous revision of a snippet
      *
@@ -7724,7 +7665,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a snippet's raw file
      *
@@ -7749,7 +7690,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get snippet changes between versions
      *
@@ -7784,7 +7725,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get snippet patch between versions
      *
@@ -7820,7 +7761,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List variables for an account
      *
@@ -7840,7 +7781,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a variable for a user
      *
@@ -7864,7 +7805,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a variable for a team
      *
@@ -7884,7 +7825,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a variable for a team
      *
@@ -7904,7 +7845,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a variable for a team
      *
@@ -7928,7 +7869,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Search for code in a team's repositories
      *
@@ -7961,7 +7902,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get current user
      *
@@ -7978,7 +7919,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List email addresses for current user
      *
@@ -7996,7 +7937,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an email address for current user
      *
@@ -8017,7 +7958,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List repository permissions for a user
      *
@@ -8059,7 +8000,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List workspaces for the current user
      *
@@ -8107,7 +8048,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List workspaces for the current user
      *
@@ -8131,7 +8072,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get user permission on a workspace
      *
@@ -8159,7 +8100,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List repository permissions in a workspace for a user
      *
@@ -8196,7 +8137,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a user
      *
@@ -8219,7 +8160,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List GPG keys
      *
@@ -8238,7 +8179,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Add a new GPG key
      *
@@ -8267,7 +8208,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a GPG key
      *
@@ -8284,7 +8225,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a GPG key
      *
@@ -8303,7 +8244,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List variables for a user
      *
@@ -8323,7 +8264,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a variable for a user
      *
@@ -8347,7 +8288,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a variable for a user
      *
@@ -8367,7 +8308,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a variable for a user
      *
@@ -8387,7 +8328,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a variable for a user
      *
@@ -8411,7 +8352,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a user application property
      *
@@ -8428,7 +8369,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a user application property
      *
@@ -8445,7 +8386,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a user application property
      *
@@ -8466,7 +8407,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Search for code in a user's repositories
      *
@@ -8497,7 +8438,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List SSH keys
      *
@@ -8514,7 +8455,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Add a new SSH key
      *
@@ -8541,7 +8482,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a SSH key
      *
@@ -8558,7 +8499,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a SSH key
      *
@@ -8575,7 +8516,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a SSH key
      *
@@ -8604,7 +8545,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List workspaces for user
      *
@@ -8638,7 +8579,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a workspace
      *
@@ -8655,7 +8596,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List webhooks for a workspace
      *
@@ -8672,7 +8613,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a webhook for a workspace
      *
@@ -8725,7 +8666,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a webhook for a workspace
      *
@@ -8742,7 +8683,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a webhook for a workspace
      *
@@ -8760,7 +8701,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a webhook for a workspace
      *
@@ -8794,7 +8735,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List users in a workspace
      *
@@ -8832,7 +8773,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get user membership for a workspace
      *
@@ -8851,7 +8792,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List user permissions in a workspace
      *
@@ -8885,7 +8826,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List all repository permissions for a workspace
      *
@@ -8925,7 +8866,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List a repository permissions for a workspace
      *
@@ -8964,7 +8905,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get OpenID configuration for OIDC in Pipelines
      *
@@ -8981,7 +8922,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get keys for OIDC in Pipelines
      *
@@ -8998,7 +8939,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get workspace runners
      *
@@ -9015,7 +8956,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create workspace runner
      *
@@ -9032,7 +8973,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete workspace runner
      *
@@ -9049,7 +8990,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get workspace runner
      *
@@ -9066,7 +9007,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update workspace runner
      *
@@ -9083,7 +9024,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List variables for a workspace
      *
@@ -9100,7 +9041,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a variable for a workspace
      *
@@ -9121,7 +9062,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a variable for a workspace
      *
@@ -9138,7 +9079,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get variable for a workspace
      *
@@ -9155,7 +9096,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update variable for a workspace
      *
@@ -9176,7 +9117,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List projects in a workspace
      *
@@ -9193,7 +9134,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a project in a workspace
      *
@@ -9267,7 +9208,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Delete a project for a workspace
      *
@@ -9293,7 +9234,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a project for a workspace
      *
@@ -9310,7 +9251,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update a project for a workspace
      *
@@ -9352,7 +9293,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * Get the branching model for a project
      *
@@ -9384,7 +9325,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get the branching model config for a project
      *
@@ -9415,7 +9356,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update the branching model config for a project
      *
@@ -9469,7 +9410,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List the default reviewers in a project
      *
@@ -9487,7 +9428,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Remove the specific user from the project's default reviewers
      *
@@ -9511,7 +9452,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a default reviewer
      *
@@ -9528,7 +9469,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Add the specific user as a default reviewer for the project
      *
@@ -9546,7 +9487,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List project deploy keys
      *
@@ -9563,7 +9504,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Create a project deploy key
      *
@@ -9592,7 +9533,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete a deploy key from a project
      *
@@ -9609,7 +9550,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get a project deploy key
      *
@@ -9626,7 +9567,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * List explicit group permissions for a project
      *
@@ -9644,7 +9585,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete an explicit group permission for a project
      *
@@ -9663,7 +9604,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an explicit group permission for a project
      *
@@ -9690,7 +9631,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update an explicit group permission for a project
      *
@@ -9723,7 +9664,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List explicit user permissions for a project
      *
@@ -9741,7 +9682,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Delete an explicit user permission for a project
      *
@@ -9763,7 +9704,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Get an explicit user permission for a project
      *
@@ -9790,7 +9731,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Update an explicit user permission for a project
      *
@@ -9824,7 +9765,7 @@ export class BitbucketClient extends HeyApiClient {
             }
         });
     }
-    
+
     /**
      * List workspace pull requests for a user
      *
@@ -9849,7 +9790,7 @@ export class BitbucketClient extends HeyApiClient {
             ...options
         });
     }
-    
+
     /**
      * Search for code in a workspace
      *

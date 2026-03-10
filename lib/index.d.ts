@@ -312,19 +312,6 @@ declare const createClient: (config?: Config) => Client;
 type ClientOptions = {
     baseUrl: 'https://api.bitbucket.org/2.0' | (string & {});
 };
-/**
- * Application Property
- *
- * An application property. It is a caller defined JSON object that Bitbucket will store and return.
- * The `_attributes` field at its top level can be used to control who is allowed to read and update the property.
- * The keys of the JSON object must match an allowed pattern. For details,
- * see [Application properties](/cloud/bitbucket/application-properties/).
- *
- */
-type ApplicationProperty = {
-    _attributes?: Array<'public' | 'read_only'>;
-    [key: string]: unknown;
-};
 type DeploymentEnvironment = Omit<Object$1, 'type'> & {
     /**
      * The UUID identifying the environment.
@@ -1717,6 +1704,19 @@ type PaginatedPullrequests = {
      */
     previous?: string;
     values?: Array<Pullrequest>;
+};
+/**
+ * Application Property
+ *
+ * An application property. It is a caller defined JSON object that Bitbucket will store and return.
+ * The `_attributes` field at its top level can be used to control who is allowed to read and update the property.
+ * The keys of the JSON object must match an allowed pattern. For details,
+ * see [Application properties](/cloud/bitbucket/application-properties/).
+ *
+ */
+type ApplicationProperty = {
+    _attributes?: Array<'public' | 'read_only'>;
+    [key: string]: unknown;
 };
 /**
  * Base type for most resource objects. It defines the common `type` element that identifies an object's type. It also identifies the element as Swagger's `discriminator`.
@@ -5042,13 +5042,13 @@ type DeleteAddonResponses = {
     204: void;
 };
 type DeleteAddonResponse = DeleteAddonResponses[keyof DeleteAddonResponses];
-type PutAddonData = {
+type UpdateAddonData = {
     body?: never;
     path?: never;
     query?: never;
     url: '/addon';
 };
-type PutAddonErrors = {
+type UpdateAddonErrors = {
     /**
      * Scopes have increased or decreased to none.
      */
@@ -5062,14 +5062,14 @@ type PutAddonErrors = {
      */
     403: Error;
 };
-type PutAddonError = PutAddonErrors[keyof PutAddonErrors];
-type PutAddonResponses = {
+type UpdateAddonError = UpdateAddonErrors[keyof UpdateAddonErrors];
+type UpdateAddonResponses = {
     /**
      * Request has succeeded. The installation has been updated to the new descriptor.
      */
     204: void;
 };
-type PutAddonResponse = PutAddonResponses[keyof PutAddonResponses];
+type UpdateAddonResponse = UpdateAddonResponses[keyof UpdateAddonResponses];
 type GetAddonLinkersData = {
     body?: never;
     path?: never;
@@ -5089,7 +5089,7 @@ type GetAddonLinkersResponses = {
      */
     200: unknown;
 };
-type GetAddonLinkersByLinkerKeyData = {
+type GetAddonLinkerData = {
     body?: never;
     path: {
         /**
@@ -5101,7 +5101,7 @@ type GetAddonLinkersByLinkerKeyData = {
     query?: never;
     url: '/addon/linkers/{linker_key}';
 };
-type GetAddonLinkersByLinkerKeyErrors = {
+type GetAddonLinkerErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5111,14 +5111,14 @@ type GetAddonLinkersByLinkerKeyErrors = {
      */
     404: Error;
 };
-type GetAddonLinkersByLinkerKeyError = GetAddonLinkersByLinkerKeyErrors[keyof GetAddonLinkersByLinkerKeyErrors];
-type GetAddonLinkersByLinkerKeyResponses = {
+type GetAddonLinkerError = GetAddonLinkerErrors[keyof GetAddonLinkerErrors];
+type GetAddonLinkerResponses = {
     /**
      * Successful.
      */
     200: unknown;
 };
-type DeleteAddonLinkersByLinkerKeyValuesData = {
+type DeleteAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5130,7 +5130,7 @@ type DeleteAddonLinkersByLinkerKeyValuesData = {
     query?: never;
     url: '/addon/linkers/{linker_key}/values';
 };
-type DeleteAddonLinkersByLinkerKeyValuesErrors = {
+type DeleteAddonLinkerValuesErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5140,15 +5140,15 @@ type DeleteAddonLinkersByLinkerKeyValuesErrors = {
      */
     404: Error;
 };
-type DeleteAddonLinkersByLinkerKeyValuesError = DeleteAddonLinkersByLinkerKeyValuesErrors[keyof DeleteAddonLinkersByLinkerKeyValuesErrors];
-type DeleteAddonLinkersByLinkerKeyValuesResponses = {
+type DeleteAddonLinkerValuesError = DeleteAddonLinkerValuesErrors[keyof DeleteAddonLinkerValuesErrors];
+type DeleteAddonLinkerValuesResponses = {
     /**
      * Successfully deleted the linker values.
      */
     204: void;
 };
-type DeleteAddonLinkersByLinkerKeyValuesResponse = DeleteAddonLinkersByLinkerKeyValuesResponses[keyof DeleteAddonLinkersByLinkerKeyValuesResponses];
-type GetAddonLinkersByLinkerKeyValuesData = {
+type DeleteAddonLinkerValuesResponse = DeleteAddonLinkerValuesResponses[keyof DeleteAddonLinkerValuesResponses];
+type GetAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5160,7 +5160,7 @@ type GetAddonLinkersByLinkerKeyValuesData = {
     query?: never;
     url: '/addon/linkers/{linker_key}/values';
 };
-type GetAddonLinkersByLinkerKeyValuesErrors = {
+type GetAddonLinkerValuesErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5170,14 +5170,14 @@ type GetAddonLinkersByLinkerKeyValuesErrors = {
      */
     404: Error;
 };
-type GetAddonLinkersByLinkerKeyValuesError = GetAddonLinkersByLinkerKeyValuesErrors[keyof GetAddonLinkersByLinkerKeyValuesErrors];
-type GetAddonLinkersByLinkerKeyValuesResponses = {
+type GetAddonLinkerValuesError = GetAddonLinkerValuesErrors[keyof GetAddonLinkerValuesErrors];
+type GetAddonLinkerValuesResponses = {
     /**
      * Successful.
      */
     200: unknown;
 };
-type PostAddonLinkersByLinkerKeyValuesData = {
+type CreateAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5189,7 +5189,7 @@ type PostAddonLinkersByLinkerKeyValuesData = {
     query?: never;
     url: '/addon/linkers/{linker_key}/values';
 };
-type PostAddonLinkersByLinkerKeyValuesErrors = {
+type CreateAddonLinkerValuesErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5203,14 +5203,14 @@ type PostAddonLinkersByLinkerKeyValuesErrors = {
      */
     409: Error;
 };
-type PostAddonLinkersByLinkerKeyValuesError = PostAddonLinkersByLinkerKeyValuesErrors[keyof PostAddonLinkersByLinkerKeyValuesErrors];
-type PostAddonLinkersByLinkerKeyValuesResponses = {
+type CreateAddonLinkerValuesError = CreateAddonLinkerValuesErrors[keyof CreateAddonLinkerValuesErrors];
+type CreateAddonLinkerValuesResponses = {
     /**
      * Successfully created the linker value.
      */
     201: unknown;
 };
-type PutAddonLinkersByLinkerKeyValuesData = {
+type UpdateAddonLinkerValuesData = {
     body?: never;
     path: {
         /**
@@ -5222,7 +5222,7 @@ type PutAddonLinkersByLinkerKeyValuesData = {
     query?: never;
     url: '/addon/linkers/{linker_key}/values';
 };
-type PutAddonLinkersByLinkerKeyValuesErrors = {
+type UpdateAddonLinkerValuesErrors = {
     /**
      * Invalid input.
      */
@@ -5236,15 +5236,15 @@ type PutAddonLinkersByLinkerKeyValuesErrors = {
      */
     404: Error;
 };
-type PutAddonLinkersByLinkerKeyValuesError = PutAddonLinkersByLinkerKeyValuesErrors[keyof PutAddonLinkersByLinkerKeyValuesErrors];
-type PutAddonLinkersByLinkerKeyValuesResponses = {
+type UpdateAddonLinkerValuesError = UpdateAddonLinkerValuesErrors[keyof UpdateAddonLinkerValuesErrors];
+type UpdateAddonLinkerValuesResponses = {
     /**
      * Successfully updated the linker values.
      */
     204: void;
 };
-type PutAddonLinkersByLinkerKeyValuesResponse = PutAddonLinkersByLinkerKeyValuesResponses[keyof PutAddonLinkersByLinkerKeyValuesResponses];
-type DeleteAddonLinkersByLinkerKeyValuesByValueIdData = {
+type UpdateAddonLinkerValuesResponse = UpdateAddonLinkerValuesResponses[keyof UpdateAddonLinkerValuesResponses];
+type DeleteAddonLinkerValueData = {
     body?: never;
     path: {
         /**
@@ -5260,7 +5260,7 @@ type DeleteAddonLinkersByLinkerKeyValuesByValueIdData = {
     query?: never;
     url: '/addon/linkers/{linker_key}/values/{value_id}';
 };
-type DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors = {
+type DeleteAddonLinkerValueErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5270,15 +5270,15 @@ type DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors = {
      */
     404: Error;
 };
-type DeleteAddonLinkersByLinkerKeyValuesByValueIdError = DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors[keyof DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors];
-type DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses = {
+type DeleteAddonLinkerValueError = DeleteAddonLinkerValueErrors[keyof DeleteAddonLinkerValueErrors];
+type DeleteAddonLinkerValueResponses = {
     /**
      * Successfully deleted the linker value.
      */
     204: void;
 };
-type DeleteAddonLinkersByLinkerKeyValuesByValueIdResponse = DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses[keyof DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses];
-type GetAddonLinkersByLinkerKeyValuesByValueIdData = {
+type DeleteAddonLinkerValueResponse = DeleteAddonLinkerValueResponses[keyof DeleteAddonLinkerValueResponses];
+type GetAddonLinkerValueData = {
     body?: never;
     path: {
         /**
@@ -5294,7 +5294,7 @@ type GetAddonLinkersByLinkerKeyValuesByValueIdData = {
     query?: never;
     url: '/addon/linkers/{linker_key}/values/{value_id}';
 };
-type GetAddonLinkersByLinkerKeyValuesByValueIdErrors = {
+type GetAddonLinkerValueErrors = {
     /**
      * Authentication must use app JWT
      */
@@ -5304,8 +5304,8 @@ type GetAddonLinkersByLinkerKeyValuesByValueIdErrors = {
      */
     404: Error;
 };
-type GetAddonLinkersByLinkerKeyValuesByValueIdError = GetAddonLinkersByLinkerKeyValuesByValueIdErrors[keyof GetAddonLinkersByLinkerKeyValuesByValueIdErrors];
-type GetAddonLinkersByLinkerKeyValuesByValueIdResponses = {
+type GetAddonLinkerValueError = GetAddonLinkerValueErrors[keyof GetAddonLinkerValueErrors];
+type GetAddonLinkerValueResponses = {
     /**
      * Successful.
      */
@@ -5349,7 +5349,7 @@ type GetHookEventsBySubjectTypeResponses = {
     200: PaginatedHookEvents;
 };
 type GetHookEventsBySubjectTypeResponse = GetHookEventsBySubjectTypeResponses[keyof GetHookEventsBySubjectTypeResponses];
-type GetRepositoriesData = {
+type ListRepositoriesData = {
     body?: never;
     path?: never;
     query?: {
@@ -5383,14 +5383,14 @@ type GetRepositoriesData = {
     };
     url: '/repositories';
 };
-type GetRepositoriesResponses = {
+type ListRepositoriesResponses = {
     /**
      * All public repositories.
      */
     200: PaginatedRepositories;
 };
-type GetRepositoriesResponse = GetRepositoriesResponses[keyof GetRepositoriesResponses];
-type GetRepositoriesByWorkspaceData = {
+type ListRepositoriesResponse = ListRepositoriesResponses[keyof ListRepositoriesResponses];
+type ListWorkspaceRepositoriesData = {
     body?: never;
     path: {
         /**
@@ -5427,7 +5427,7 @@ type GetRepositoriesByWorkspaceData = {
     };
     url: '/repositories/{workspace}';
 };
-type GetRepositoriesByWorkspaceErrors = {
+type ListWorkspaceRepositoriesErrors = {
     /**
      * If the specified account does not exist.
      */
@@ -5437,15 +5437,15 @@ type GetRepositoriesByWorkspaceErrors = {
      */
     410: Error;
 };
-type GetRepositoriesByWorkspaceError = GetRepositoriesByWorkspaceErrors[keyof GetRepositoriesByWorkspaceErrors];
-type GetRepositoriesByWorkspaceResponses = {
+type ListWorkspaceRepositoriesError = ListWorkspaceRepositoriesErrors[keyof ListWorkspaceRepositoriesErrors];
+type ListWorkspaceRepositoriesResponses = {
     /**
      * The repositories owned by the specified account.
      */
     200: PaginatedRepositories;
 };
-type GetRepositoriesByWorkspaceResponse = GetRepositoriesByWorkspaceResponses[keyof GetRepositoriesByWorkspaceResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugData = {
+type ListWorkspaceRepositoriesResponse = ListWorkspaceRepositoriesResponses[keyof ListWorkspaceRepositoriesResponses];
+type DeleteRepositoryData = {
     body?: never;
     path: {
         /**
@@ -5473,7 +5473,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugData = {
     };
     url: '/repositories/{workspace}/{repo_slug}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugErrors = {
+type DeleteRepositoryErrors = {
     /**
      * If the caller either does not have admin access to the repository, or the repository is set to read-only.
      */
@@ -5483,15 +5483,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugError = DeleteRepositoriesByWorkspaceByRepoSlugErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugResponses = {
+type DeleteRepositoryError = DeleteRepositoryErrors[keyof DeleteRepositoryErrors];
+type DeleteRepositoryResponses = {
     /**
      * Indicates successful deletion.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugResponse = DeleteRepositoriesByWorkspaceByRepoSlugResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugResponses];
-type GetRepositoriesByWorkspaceByRepoSlugData = {
+type DeleteRepositoryResponse = DeleteRepositoryResponses[keyof DeleteRepositoryResponses];
+type GetRepositoryData = {
     body?: never;
     path: {
         /**
@@ -5510,7 +5510,7 @@ type GetRepositoriesByWorkspaceByRepoSlugData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugErrors = {
+type GetRepositoryErrors = {
     /**
      * If the repository is private and the authenticated user does not have access to it.
      */
@@ -5520,15 +5520,15 @@ type GetRepositoriesByWorkspaceByRepoSlugErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugError = GetRepositoriesByWorkspaceByRepoSlugErrors[keyof GetRepositoriesByWorkspaceByRepoSlugErrors];
-type GetRepositoriesByWorkspaceByRepoSlugResponses = {
+type GetRepositoryError = GetRepositoryErrors[keyof GetRepositoryErrors];
+type GetRepositoryResponses = {
     /**
      * The repository object.
      */
     200: Repository;
 };
-type GetRepositoriesByWorkspaceByRepoSlugResponse = GetRepositoriesByWorkspaceByRepoSlugResponses[keyof GetRepositoriesByWorkspaceByRepoSlugResponses];
-type PostRepositoriesByWorkspaceByRepoSlugData = {
+type GetRepositoryResponse = GetRepositoryResponses[keyof GetRepositoryResponses];
+type CreateRepositoryData = {
     /**
      * The repository that is to be created. Note that most object elements are optional. Elements "owner" and "full_name" are ignored as the URL implies them.
      */
@@ -5550,7 +5550,7 @@ type PostRepositoriesByWorkspaceByRepoSlugData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}';
 };
-type PostRepositoriesByWorkspaceByRepoSlugErrors = {
+type CreateRepositoryErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
@@ -5560,15 +5560,15 @@ type PostRepositoriesByWorkspaceByRepoSlugErrors = {
      */
     401: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugError = PostRepositoriesByWorkspaceByRepoSlugErrors[keyof PostRepositoriesByWorkspaceByRepoSlugErrors];
-type PostRepositoriesByWorkspaceByRepoSlugResponses = {
+type CreateRepositoryError = CreateRepositoryErrors[keyof CreateRepositoryErrors];
+type CreateRepositoryResponses = {
     /**
      * The newly created repository.
      */
     200: Repository;
 };
-type PostRepositoriesByWorkspaceByRepoSlugResponse = PostRepositoriesByWorkspaceByRepoSlugResponses[keyof PostRepositoriesByWorkspaceByRepoSlugResponses];
-type PutRepositoriesByWorkspaceByRepoSlugData = {
+type CreateRepositoryResponse = CreateRepositoryResponses[keyof CreateRepositoryResponses];
+type UpdateRepositoryData = {
     /**
      * The repository that is to be updated.
      *
@@ -5594,7 +5594,7 @@ type PutRepositoriesByWorkspaceByRepoSlugData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugErrors = {
+type UpdateRepositoryErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
@@ -5604,8 +5604,8 @@ type PutRepositoriesByWorkspaceByRepoSlugErrors = {
      */
     401: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugError = PutRepositoriesByWorkspaceByRepoSlugErrors[keyof PutRepositoriesByWorkspaceByRepoSlugErrors];
-type PutRepositoriesByWorkspaceByRepoSlugResponses = {
+type UpdateRepositoryError = UpdateRepositoryErrors[keyof UpdateRepositoryErrors];
+type UpdateRepositoryResponses = {
     /**
      * The existing repository has been updated
      */
@@ -5615,8 +5615,8 @@ type PutRepositoriesByWorkspaceByRepoSlugResponses = {
      */
     201: Repository;
 };
-type PutRepositoriesByWorkspaceByRepoSlugResponse = PutRepositoriesByWorkspaceByRepoSlugResponses[keyof PutRepositoriesByWorkspaceByRepoSlugResponses];
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
+type UpdateRepositoryResponse = UpdateRepositoryResponses[keyof UpdateRepositoryResponses];
+type ListBranchRestrictionsData = {
     body?: never;
     path: {
         /**
@@ -5644,7 +5644,7 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions';
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
+type ListBranchRestrictionsErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5658,15 +5658,15 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses = {
+type ListBranchRestrictionsError = ListBranchRestrictionsErrors[keyof ListBranchRestrictionsErrors];
+type ListBranchRestrictionsResponses = {
     /**
      * A paginated list of branch restrictions
      */
     200: PaginatedBranchrestrictions;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponse = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
+type ListBranchRestrictionsResponse = ListBranchRestrictionsResponses[keyof ListBranchRestrictionsResponses];
+type CreateBranchRestrictionData = {
     /**
      * The new rule
      */
@@ -5688,7 +5688,7 @@ type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions';
 };
-type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
+type CreateBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5702,15 +5702,15 @@ type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError = PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses = {
+type CreateBranchRestrictionError = CreateBranchRestrictionErrors[keyof CreateBranchRestrictionErrors];
+type CreateBranchRestrictionResponses = {
     /**
      * A paginated list of branch restrictions
      */
     201: Branchrestriction;
 };
-type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponse = PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
+type CreateBranchRestrictionResponse = CreateBranchRestrictionResponses[keyof CreateBranchRestrictionResponses];
+type DeleteBranchRestrictionData = {
     body?: never;
     path: {
         /**
@@ -5733,7 +5733,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
+type DeleteBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5747,12 +5747,12 @@ type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses = {
+type DeleteBranchRestrictionError = DeleteBranchRestrictionErrors[keyof DeleteBranchRestrictionErrors];
+type DeleteBranchRestrictionResponses = {
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
+type DeleteBranchRestrictionResponse = DeleteBranchRestrictionResponses[keyof DeleteBranchRestrictionResponses];
+type GetBranchRestrictionData = {
     body?: never;
     path: {
         /**
@@ -5775,7 +5775,7 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
+type GetBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5789,15 +5789,15 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses = {
+type GetBranchRestrictionError = GetBranchRestrictionErrors[keyof GetBranchRestrictionErrors];
+type GetBranchRestrictionResponses = {
     /**
      * The branch restriction rule
      */
     200: Branchrestriction;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse = GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
+type GetBranchRestrictionResponse = GetBranchRestrictionResponses[keyof GetBranchRestrictionResponses];
+type UpdateBranchRestrictionData = {
     /**
      * The new version of the existing rule
      */
@@ -5823,7 +5823,7 @@ type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/branch-restrictions/{id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
+type UpdateBranchRestrictionErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5837,15 +5837,15 @@ type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError = PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses = {
+type UpdateBranchRestrictionError = UpdateBranchRestrictionErrors[keyof UpdateBranchRestrictionErrors];
+type UpdateBranchRestrictionResponses = {
     /**
      * The updated branch restriction rule
      */
     200: Branchrestriction;
 };
-type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse = PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelData = {
+type UpdateBranchRestrictionResponse = UpdateBranchRestrictionResponses[keyof UpdateBranchRestrictionResponses];
+type GetBranchingModelData = {
     body?: never;
     path: {
         /**
@@ -5864,7 +5864,7 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchingModelData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/branching-model';
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors = {
+type GetBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5878,15 +5878,15 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelError = GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors];
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses = {
+type GetBranchingModelError = GetBranchingModelErrors[keyof GetBranchingModelErrors];
+type GetBranchingModelResponses = {
     /**
      * The branching model object
      */
     200: BranchingModel;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponse = GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses];
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
+type GetBranchingModelResponse = GetBranchingModelResponses[keyof GetBranchingModelResponses];
+type GetBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -5905,7 +5905,7 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/branching-model/settings';
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
+type GetBranchingModelSettingsErrors = {
     /**
      * If the request was not authenticated
      */
@@ -5919,15 +5919,15 @@ type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError = GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses = {
+type GetBranchingModelSettingsError = GetBranchingModelSettingsErrors[keyof GetBranchingModelSettingsErrors];
+type GetBranchingModelSettingsResponses = {
     /**
      * The branching model configuration
      */
     200: BranchingModelSettings;
 };
-type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponse = GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses];
-type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
+type GetBranchingModelSettingsResponse = GetBranchingModelSettingsResponses[keyof GetBranchingModelSettingsResponses];
+type UpdateBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -5946,7 +5946,7 @@ type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/branching-model/settings';
 };
-type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
+type UpdateBranchingModelSettingsErrors = {
     /**
      * If the request contains invalid branching model configuration
      */
@@ -5964,15 +5964,15 @@ type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError = PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors[keyof PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors];
-type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses = {
+type UpdateBranchingModelSettingsError = UpdateBranchingModelSettingsErrors[keyof UpdateBranchingModelSettingsErrors];
+type UpdateBranchingModelSettingsResponses = {
     /**
      * The updated branching model configuration
      */
     200: BranchingModelSettings;
 };
-type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponse = PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses[keyof PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData = {
+type UpdateBranchingModelSettingsResponse = UpdateBranchingModelSettingsResponses[keyof UpdateBranchingModelSettingsResponses];
+type GetCommitData = {
     body?: never;
     path: {
         /**
@@ -5995,21 +5995,21 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors = {
+type GetCommitErrors = {
     /**
      * If the specified commit or repository does not exist.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses = {
+type GetCommitError = GetCommitErrors[keyof GetCommitErrors];
+type GetCommitResponses = {
     /**
      * The commit object
      */
     200: Commit;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
+type GetCommitResponse = GetCommitResponses[keyof GetCommitResponses];
+type DeleteCommitApprovalData = {
     body?: never;
     path: {
         /**
@@ -6032,21 +6032,21 @@ type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/approve';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors = {
+type DeleteCommitApprovalErrors = {
     /**
      * If the specified commit, or the repository does not exist.
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError = DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses = {
+type DeleteCommitApprovalError = DeleteCommitApprovalErrors[keyof DeleteCommitApprovalErrors];
+type DeleteCommitApprovalResponses = {
     /**
      * An empty response indicating the authenticated user's approval has been withdrawn.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponse = DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses];
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
+type DeleteCommitApprovalResponse = DeleteCommitApprovalResponses[keyof DeleteCommitApprovalResponses];
+type ApproveCommitData = {
     body?: never;
     path: {
         /**
@@ -6069,21 +6069,21 @@ type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/approve';
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors = {
+type ApproveCommitErrors = {
     /**
      * If the specified commit, or the repository does not exist.
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors];
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses = {
+type ApproveCommitError = ApproveCommitErrors[keyof ApproveCommitErrors];
+type ApproveCommitResponses = {
     /**
      * The `participant` object recording that the authenticated user approved the commit.
      */
     200: Participant;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponse = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
+type ApproveCommitResponse = ApproveCommitResponses[keyof ApproveCommitResponses];
+type ListCommitCommentsData = {
     body?: never;
     path: {
         /**
@@ -6119,14 +6119,14 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments';
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses = {
+type ListCommitCommentsResponses = {
     /**
      * A paginated list of commit comments.
      */
     200: PaginatedCommitComments;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
+type ListCommitCommentsResponse = ListCommitCommentsResponses[keyof ListCommitCommentsResponses];
+type CreateCommitCommentData = {
     /**
      * The specified comment.
      */
@@ -6152,7 +6152,7 @@ type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments';
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsErrors = {
+type CreateCommitCommentErrors = {
     /**
      * If the comment was detected as spam, or if the parent comment is not attached to the same node as the new comment
      */
@@ -6162,13 +6162,13 @@ type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsErrors = {
      */
     404: unknown;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses = {
+type CreateCommitCommentResponses = {
     /**
      * The newly created comment.
      */
     201: unknown;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData = {
+type DeleteCommitCommentData = {
     body?: never;
     path: {
         /**
@@ -6195,20 +6195,20 @@ type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdDat
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors = {
+type DeleteCommitCommentErrors = {
     /**
      * If the comment doesn't exist
      */
     404: unknown;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses = {
+type DeleteCommitCommentResponses = {
     /**
      * Indicates the comment was deleted by this action or a previous delete.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData = {
+type DeleteCommitCommentResponse = DeleteCommitCommentResponses[keyof DeleteCommitCommentResponses];
+type GetCommitCommentData = {
     body?: never;
     path: {
         /**
@@ -6235,14 +6235,14 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData =
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses = {
+type GetCommitCommentResponses = {
     /**
      * The commit comment.
      */
     200: CommitComment;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData = {
+type GetCommitCommentResponse = GetCommitCommentResponses[keyof GetCommitCommentResponses];
+type UpdateCommitCommentData = {
     /**
      * The updated comment.
      */
@@ -6272,13 +6272,13 @@ type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData =
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/comments/{comment_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors = {
+type UpdateCommitCommentErrors = {
     /**
      * If the comment update was detected as spam
      */
     400: unknown;
 };
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses = {
+type UpdateCommitCommentResponses = {
     /**
      * The newly updated comment.
      */
@@ -6750,7 +6750,7 @@ type CreateOrUpdateAnnotationResponses = {
     200: ReportAnnotation;
 };
 type CreateOrUpdateAnnotationResponse = CreateOrUpdateAnnotationResponses[keyof CreateOrUpdateAnnotationResponses];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData = {
+type ListCommitStatusesData = {
     body?: never;
     path: {
         /**
@@ -6793,7 +6793,7 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses';
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors = {
+type ListCommitStatusesErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -6803,15 +6803,15 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses = {
+type ListCommitStatusesError = ListCommitStatusesErrors[keyof ListCommitStatusesErrors];
+type ListCommitStatusesResponses = {
     /**
      * A paginated list of all commit statuses for this commit.
      */
     200: PaginatedCommitstatuses;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses];
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData = {
+type ListCommitStatusesResponse = ListCommitStatusesResponses[keyof ListCommitStatusesResponses];
+type CreateCommitBuildStatusData = {
     /**
      * The new commit status object.
      */
@@ -6837,7 +6837,7 @@ type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build';
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors = {
+type CreateCommitBuildStatusErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -6847,15 +6847,15 @@ type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildError = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors];
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses = {
+type CreateCommitBuildStatusError = CreateCommitBuildStatusErrors[keyof CreateCommitBuildStatusErrors];
+type CreateCommitBuildStatusResponses = {
     /**
      * The newly created build status object.
      */
     201: Commitstatus;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponse = PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData = {
+type CreateCommitBuildStatusResponse = CreateCommitBuildStatusResponses[keyof CreateCommitBuildStatusResponses];
+type GetCommitBuildStatusData = {
     body?: never;
     path: {
         /**
@@ -6882,7 +6882,7 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData = 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors = {
+type GetCommitBuildStatusErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -6892,15 +6892,15 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors 
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors];
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses = {
+type GetCommitBuildStatusError = GetCommitBuildStatusErrors[keyof GetCommitBuildStatusErrors];
+type GetCommitBuildStatusResponses = {
     /**
      * The build status object with the specified key.
      */
     200: Commitstatus;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponse = GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses];
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData = {
+type GetCommitBuildStatusResponse = GetCommitBuildStatusResponses[keyof GetCommitBuildStatusResponses];
+type UpdateCommitBuildStatusData = {
     /**
      * The updated build status object
      */
@@ -6930,7 +6930,7 @@ type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData = 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commit/{commit}/statuses/build/{key}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors = {
+type UpdateCommitBuildStatusErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -6940,15 +6940,15 @@ type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors 
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError = PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors[keyof PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors];
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses = {
+type UpdateCommitBuildStatusError = UpdateCommitBuildStatusErrors[keyof UpdateCommitBuildStatusErrors];
+type UpdateCommitBuildStatusResponses = {
     /**
      * The updated build status object.
      */
     200: Commitstatus;
 };
-type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponse = PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses[keyof PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses];
-type GetRepositoriesByWorkspaceByRepoSlugCommitsData = {
+type UpdateCommitBuildStatusResponse = UpdateCommitBuildStatusResponses[keyof UpdateCommitBuildStatusResponses];
+type ListCommitsData = {
     body?: never;
     path: {
         /**
@@ -6967,21 +6967,21 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commits';
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitsErrors = {
+type ListCommitsErrors = {
     /**
      * If the specified repository does not exist.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitsError = GetRepositoriesByWorkspaceByRepoSlugCommitsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugCommitsResponses = {
+type ListCommitsError = ListCommitsErrors[keyof ListCommitsErrors];
+type ListCommitsResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitsResponse = GetRepositoriesByWorkspaceByRepoSlugCommitsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugCommitsData = {
+type ListCommitsResponse = ListCommitsResponses[keyof ListCommitsResponses];
+type FilterCommitsData = {
     body?: never;
     path: {
         /**
@@ -7000,21 +7000,21 @@ type PostRepositoriesByWorkspaceByRepoSlugCommitsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commits';
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitsErrors = {
+type FilterCommitsErrors = {
     /**
      * If the specified repository does not exist.
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitsError = PostRepositoriesByWorkspaceByRepoSlugCommitsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugCommitsResponses = {
+type FilterCommitsError = FilterCommitsErrors[keyof FilterCommitsErrors];
+type FilterCommitsResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitsResponse = PostRepositoriesByWorkspaceByRepoSlugCommitsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsResponses];
-type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
+type FilterCommitsResponse = FilterCommitsResponses[keyof FilterCommitsResponses];
+type ListCommitsByRevisionData = {
     body?: never;
     path: {
         /**
@@ -7037,21 +7037,21 @@ type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commits/{revision}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors = {
+type ListCommitsByRevisionErrors = {
     /**
      * If the specified revision does not exist.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError = GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors];
-type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses = {
+type ListCommitsByRevisionError = ListCommitsByRevisionErrors[keyof ListCommitsByRevisionErrors];
+type ListCommitsByRevisionResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
-type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponse = GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses[keyof GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses];
-type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
+type ListCommitsByRevisionResponse = ListCommitsByRevisionResponses[keyof ListCommitsByRevisionResponses];
+type FilterCommitsByRevisionData = {
     body?: never;
     path: {
         /**
@@ -7074,21 +7074,21 @@ type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/commits/{revision}';
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors = {
+type FilterCommitsByRevisionErrors = {
     /**
      * If the specified revision does not exist.
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError = PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors];
-type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses = {
+type FilterCommitsByRevisionError = FilterCommitsByRevisionErrors[keyof FilterCommitsByRevisionErrors];
+type FilterCommitsByRevisionResponses = {
     /**
      * A paginated list of commits
      */
     200: PaginatedChangeset;
 };
-type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponse = PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses[keyof PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses];
-type GetRepositoriesByWorkspaceByRepoSlugComponentsData = {
+type FilterCommitsByRevisionResponse = FilterCommitsByRevisionResponses[keyof FilterCommitsByRevisionResponses];
+type ListComponentsData = {
     body?: never;
     path: {
         /**
@@ -7107,21 +7107,21 @@ type GetRepositoriesByWorkspaceByRepoSlugComponentsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/components';
 };
-type GetRepositoriesByWorkspaceByRepoSlugComponentsErrors = {
+type ListComponentsErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugComponentsError = GetRepositoriesByWorkspaceByRepoSlugComponentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugComponentsResponses = {
+type ListComponentsError = ListComponentsErrors[keyof ListComponentsErrors];
+type ListComponentsResponses = {
     /**
      * The components that have been defined in the issue tracker.
      */
     200: PaginatedComponents;
 };
-type GetRepositoriesByWorkspaceByRepoSlugComponentsResponse = GetRepositoriesByWorkspaceByRepoSlugComponentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsResponses];
-type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData = {
+type ListComponentsResponse = ListComponentsResponses[keyof ListComponentsResponses];
+type GetComponentData = {
     body?: never;
     path: {
         /**
@@ -7144,21 +7144,21 @@ type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/components/{component_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors = {
+type GetComponentErrors = {
     /**
      * The specified repository or component does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdError = GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses = {
+type GetComponentError = GetComponentErrors[keyof GetComponentErrors];
+type GetComponentResponses = {
     /**
      * The specified component object.
      */
     200: Component;
 };
-type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponse = GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData = {
+type GetComponentResponse = GetComponentResponses[keyof GetComponentResponses];
+type ListDefaultReviewersData = {
     body?: never;
     path: {
         /**
@@ -7177,21 +7177,21 @@ type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors = {
+type ListDefaultReviewersErrors = {
     /**
      * If the authenticated user does not have access to view the default reviewers
      */
     403: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersError = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors];
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses = {
+type ListDefaultReviewersError = ListDefaultReviewersErrors[keyof ListDefaultReviewersErrors];
+type ListDefaultReviewersResponses = {
     /**
      * The paginated list of default reviewers
      */
     200: PaginatedAccounts;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponse = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = {
+type ListDefaultReviewersResponse = ListDefaultReviewersResponses[keyof ListDefaultReviewersResponses];
+type DeleteDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -7216,7 +7216,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors = {
+type DeleteDefaultReviewerErrors = {
     /**
      * If the authenticated user does not have access modify the default reviewers
      */
@@ -7226,15 +7226,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErro
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses = {
+type DeleteDefaultReviewerError = DeleteDefaultReviewerErrors[keyof DeleteDefaultReviewerErrors];
+type DeleteDefaultReviewerResponses = {
     /**
      * The specified user successfully removed from the default reviewers
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse = DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses];
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = {
+type DeleteDefaultReviewerResponse = DeleteDefaultReviewerResponses[keyof DeleteDefaultReviewerResponses];
+type GetDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -7259,7 +7259,7 @@ type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors = {
+type GetDefaultReviewerErrors = {
     /**
      * If the authenticated user does not have access to check if the specified user is a default reviewer
      */
@@ -7269,15 +7269,15 @@ type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors 
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses = {
+type GetDefaultReviewerError = GetDefaultReviewerErrors[keyof GetDefaultReviewerErrors];
+type GetDefaultReviewerResponses = {
     /**
      * The specified user is a default reviewer
      */
     200: Account;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse = GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses];
-type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = {
+type GetDefaultReviewerResponse = GetDefaultReviewerResponses[keyof GetDefaultReviewerResponses];
+type AddDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -7302,7 +7302,7 @@ type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData = 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/default-reviewers/{target_username}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors = {
+type AddDefaultReviewerErrors = {
     /**
      * If the authenticated user tried to add a team, bot user, or user without access to the repository to the default reviewers
      */
@@ -7316,15 +7316,15 @@ type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors 
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError = PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors[keyof PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors];
-type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses = {
+type AddDefaultReviewerError = AddDefaultReviewerErrors[keyof AddDefaultReviewerErrors];
+type AddDefaultReviewerResponses = {
     /**
      * The specified user was successfully added to the default reviewers
      */
     200: Account;
 };
-type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse = PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses[keyof PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses];
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
+type AddDefaultReviewerResponse = AddDefaultReviewerResponses[keyof AddDefaultReviewerResponses];
+type ListDeployKeysData = {
     body?: never;
     path: {
         /**
@@ -7343,7 +7343,7 @@ type GetRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
+type ListDeployKeysErrors = {
     /**
      * If the specified user or repository is not accessible to the current user
      */
@@ -7353,15 +7353,15 @@ type GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysError = GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors];
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses = {
+type ListDeployKeysError = ListDeployKeysErrors[keyof ListDeployKeysErrors];
+type ListDeployKeysResponses = {
     /**
      * Deploy keys matching the repository
      */
     200: PaginatedDeployKeys;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponse = GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses];
-type PostRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
+type ListDeployKeysResponse = ListDeployKeysResponses[keyof ListDeployKeysResponses];
+type CreateDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7380,7 +7380,7 @@ type PostRepositoriesByWorkspaceByRepoSlugDeployKeysData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys';
 };
-type PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
+type CreateDeployKeyErrors = {
     /**
      * Invalid deploy key inputs
      */
@@ -7394,15 +7394,15 @@ type PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugDeployKeysError = PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors[keyof PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors];
-type PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses = {
+type CreateDeployKeyError = CreateDeployKeyErrors[keyof CreateDeployKeyErrors];
+type CreateDeployKeyResponses = {
     /**
      * The deploy key that was created
      */
     200: DeployKey;
 };
-type PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponse = PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses[keyof PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
+type CreateDeployKeyResponse = CreateDeployKeyResponses[keyof CreateDeployKeyResponses];
+type DeleteDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7425,7 +7425,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
+type DeleteDeployKeyErrors = {
     /**
      * If the current user does not have permission to delete a key for the specified user
      */
@@ -7435,15 +7435,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses = {
+type DeleteDeployKeyError = DeleteDeployKeyErrors[keyof DeleteDeployKeyErrors];
+type DeleteDeployKeyResponses = {
     /**
      * The key has been deleted
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
+type DeleteDeployKeyResponse = DeleteDeployKeyResponses[keyof DeleteDeployKeyResponses];
+type GetDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7466,7 +7466,7 @@ type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
+type GetDeployKeyErrors = {
     /**
      * If the specified user or repository is not accessible to the current user
      */
@@ -7476,15 +7476,15 @@ type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses = {
+type GetDeployKeyError = GetDeployKeyErrors[keyof GetDeployKeyErrors];
+type GetDeployKeyResponses = {
     /**
      * Deploy key matching the key ID
      */
     200: DeployKey;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse = GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
+type GetDeployKeyResponse = GetDeployKeyResponses[keyof GetDeployKeyResponses];
+type UpdateDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -7507,7 +7507,7 @@ type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/deploy-keys/{key_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
+type UpdateDeployKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -7521,14 +7521,14 @@ type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError = PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses = {
+type UpdateDeployKeyError = UpdateDeployKeyErrors[keyof UpdateDeployKeyErrors];
+type UpdateDeployKeyResponses = {
     /**
      * The newly updated deploy key.
      */
     200: DeployKey;
 };
-type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse = PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses];
+type UpdateDeployKeyResponse = UpdateDeployKeyResponses[keyof UpdateDeployKeyResponses];
 type GetDeploymentsForRepositoryData = {
     body?: never;
     path: {
@@ -7727,7 +7727,7 @@ type UpdateDeploymentVariableResponses = {
     200: DeploymentVariable;
 };
 type UpdateDeploymentVariableResponse = UpdateDeploymentVariableResponses[keyof UpdateDeploymentVariableResponses];
-type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData = {
+type GetDiffData = {
     body?: never;
     path: {
         /**
@@ -7794,7 +7794,7 @@ type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/diff/{spec}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors = {
+type GetDiffErrors = {
     /**
      * If the diff was too large and timed out.
      *
@@ -7805,14 +7805,14 @@ type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors = {
      */
     555: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecError = GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors];
-type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecResponses = {
+type GetDiffError = GetDiffErrors[keyof GetDiffErrors];
+type GetDiffResponses = {
     /**
      * The raw diff
      */
     200: unknown;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData = {
+type GetDiffstatData = {
     body?: never;
     path: {
         /**
@@ -7871,21 +7871,21 @@ type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/diffstat/{spec}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors = {
+type GetDiffstatErrors = {
     /**
      * If generating the diffstat timed out.
      */
     555: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecError = GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors];
-type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses = {
+type GetDiffstatError = GetDiffstatErrors[keyof GetDiffstatErrors];
+type GetDiffstatResponses = {
     /**
      * The diff stats
      */
     200: PaginatedDiffstats;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponse = GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses[keyof GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses];
-type GetRepositoriesByWorkspaceByRepoSlugDownloadsData = {
+type GetDiffstatResponse = GetDiffstatResponses[keyof GetDiffstatResponses];
+type ListDownloadsData = {
     body?: never;
     path: {
         /**
@@ -7904,20 +7904,20 @@ type GetRepositoriesByWorkspaceByRepoSlugDownloadsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/downloads';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
+type ListDownloadsErrors = {
     /**
      * User is not authorized to read from the repository.
      */
     403: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDownloadsError = GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugDownloadsResponses = {
+type ListDownloadsError = ListDownloadsErrors[keyof ListDownloadsErrors];
+type ListDownloadsResponses = {
     /**
      * Returns a paginated list of the downloads associated with the repository.
      */
     200: unknown;
 };
-type PostRepositoriesByWorkspaceByRepoSlugDownloadsData = {
+type CreateDownloadData = {
     body?: never;
     path: {
         /**
@@ -7936,7 +7936,7 @@ type PostRepositoriesByWorkspaceByRepoSlugDownloadsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/downloads';
 };
-type PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
+type CreateDownloadErrors = {
     /**
      * Bad Request.
      */
@@ -7950,14 +7950,14 @@ type PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors = {
      */
     406: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugDownloadsError = PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugDownloadsResponses = {
+type CreateDownloadError = CreateDownloadErrors[keyof CreateDownloadErrors];
+type CreateDownloadResponses = {
     /**
      * The artifact was uploaded sucessfully.
      */
     201: unknown;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
+type DeleteDownloadData = {
     body?: never;
     path: {
         /**
@@ -7980,7 +7980,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/downloads/{filename}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
+type DeleteDownloadErrors = {
     /**
      * User is not authorized to write to the repository.
      */
@@ -7990,15 +7990,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError = DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses = {
+type DeleteDownloadError = DeleteDownloadErrors[keyof DeleteDownloadErrors];
+type DeleteDownloadResponses = {
     /**
      * The specified download artifact was deleted.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponse = DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses];
-type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
+type DeleteDownloadResponse = DeleteDownloadResponses[keyof DeleteDownloadResponses];
+type GetDownloadData = {
     body?: never;
     path: {
         /**
@@ -8021,7 +8021,7 @@ type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/downloads/{filename}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
+type GetDownloadErrors = {
     /**
      * User is not authorized to read from the repository.
      */
@@ -8031,8 +8031,8 @@ type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError = GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors];
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData = {
+type GetDownloadError = GetDownloadErrors[keyof GetDownloadErrors];
+type GetEffectiveBranchingModelData = {
     body?: never;
     path: {
         /**
@@ -8051,7 +8051,7 @@ type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/effective-branching-model';
 };
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors = {
+type GetEffectiveBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
@@ -8065,15 +8065,15 @@ type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelError = GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors];
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses = {
+type GetEffectiveBranchingModelError = GetEffectiveBranchingModelErrors[keyof GetEffectiveBranchingModelErrors];
+type GetEffectiveBranchingModelResponses = {
     /**
      * The effective branching model object
      */
     200: EffectiveRepoBranchingModel;
 };
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponse = GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses];
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData = {
+type GetEffectiveBranchingModelResponse = GetEffectiveBranchingModelResponses[keyof GetEffectiveBranchingModelResponses];
+type ListEffectiveDefaultReviewersData = {
     body?: never;
     path: {
         /**
@@ -8092,20 +8092,20 @@ type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/effective-default-reviewers';
 };
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors = {
+type ListEffectiveDefaultReviewersErrors = {
     /**
      * If the authenticated user does not have access to view the default reviewers
      */
     403: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersError = GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors];
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses = {
+type ListEffectiveDefaultReviewersError = ListEffectiveDefaultReviewersErrors[keyof ListEffectiveDefaultReviewersErrors];
+type ListEffectiveDefaultReviewersResponses = {
     /**
      * The paginated list of effective default reviewers
      */
     200: PaginatedDefaultReviewerAndType;
 };
-type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponse = GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses];
+type ListEffectiveDefaultReviewersResponse = ListEffectiveDefaultReviewersResponses[keyof ListEffectiveDefaultReviewersResponses];
 type GetEnvironmentsForRepositoryData = {
     body?: never;
     path: {
@@ -8262,7 +8262,7 @@ type UpdateEnvironmentForRepositoryResponses = {
      */
     202: unknown;
 };
-type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData = {
+type GetFileHistoryData = {
     body?: never;
     path: {
         /**
@@ -8310,21 +8310,21 @@ type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/filehistory/{commit}/{path}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors = {
+type GetFileHistoryErrors = {
     /**
      * If the repository does not exist.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathError = GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors];
-type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses = {
+type GetFileHistoryError = GetFileHistoryErrors[keyof GetFileHistoryErrors];
+type GetFileHistoryResponses = {
     /**
      * A paginated list of commits that modified the specified file
      */
     200: PaginatedFiles;
 };
-type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponse = GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses[keyof GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses];
-type GetRepositoriesByWorkspaceByRepoSlugForksData = {
+type GetFileHistoryResponse = GetFileHistoryResponses[keyof GetFileHistoryResponses];
+type ListForksData = {
     body?: never;
     path: {
         /**
@@ -8364,14 +8364,14 @@ type GetRepositoriesByWorkspaceByRepoSlugForksData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/forks';
 };
-type GetRepositoriesByWorkspaceByRepoSlugForksResponses = {
+type ListForksResponses = {
     /**
      * All forks.
      */
     200: PaginatedRepositories;
 };
-type GetRepositoriesByWorkspaceByRepoSlugForksResponse = GetRepositoriesByWorkspaceByRepoSlugForksResponses[keyof GetRepositoriesByWorkspaceByRepoSlugForksResponses];
-type PostRepositoriesByWorkspaceByRepoSlugForksData = {
+type ListForksResponse = ListForksResponses[keyof ListForksResponses];
+type CreateForkData = {
     /**
      * A repository object. This can be left blank.
      */
@@ -8393,14 +8393,14 @@ type PostRepositoriesByWorkspaceByRepoSlugForksData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/forks';
 };
-type PostRepositoriesByWorkspaceByRepoSlugForksResponses = {
+type CreateForkResponses = {
     /**
      * The newly created fork.
      */
     201: Repository;
 };
-type PostRepositoriesByWorkspaceByRepoSlugForksResponse = PostRepositoriesByWorkspaceByRepoSlugForksResponses[keyof PostRepositoriesByWorkspaceByRepoSlugForksResponses];
-type GetRepositoriesByWorkspaceByRepoSlugHooksData = {
+type CreateForkResponse = CreateForkResponses[keyof CreateForkResponses];
+type ListRepoHooksData = {
     body?: never;
     path: {
         /**
@@ -8419,7 +8419,7 @@ type GetRepositoriesByWorkspaceByRepoSlugHooksData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/hooks';
 };
-type GetRepositoriesByWorkspaceByRepoSlugHooksErrors = {
+type ListRepoHooksErrors = {
     /**
      * If the authenticated user does not have permission to access the webhooks.
      */
@@ -8429,15 +8429,15 @@ type GetRepositoriesByWorkspaceByRepoSlugHooksErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugHooksError = GetRepositoriesByWorkspaceByRepoSlugHooksErrors[keyof GetRepositoriesByWorkspaceByRepoSlugHooksErrors];
-type GetRepositoriesByWorkspaceByRepoSlugHooksResponses = {
+type ListRepoHooksError = ListRepoHooksErrors[keyof ListRepoHooksErrors];
+type ListRepoHooksResponses = {
     /**
      * The paginated list of installed webhooks.
      */
     200: PaginatedWebhookSubscriptions;
 };
-type GetRepositoriesByWorkspaceByRepoSlugHooksResponse = GetRepositoriesByWorkspaceByRepoSlugHooksResponses[keyof GetRepositoriesByWorkspaceByRepoSlugHooksResponses];
-type PostRepositoriesByWorkspaceByRepoSlugHooksData = {
+type ListRepoHooksResponse = ListRepoHooksResponses[keyof ListRepoHooksResponses];
+type CreateRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8456,7 +8456,7 @@ type PostRepositoriesByWorkspaceByRepoSlugHooksData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/hooks';
 };
-type PostRepositoriesByWorkspaceByRepoSlugHooksErrors = {
+type CreateRepoHookErrors = {
     /**
      * If the authenticated user does not have permission to install webhooks on the specified repository.
      */
@@ -8466,15 +8466,15 @@ type PostRepositoriesByWorkspaceByRepoSlugHooksErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugHooksError = PostRepositoriesByWorkspaceByRepoSlugHooksErrors[keyof PostRepositoriesByWorkspaceByRepoSlugHooksErrors];
-type PostRepositoriesByWorkspaceByRepoSlugHooksResponses = {
+type CreateRepoHookError = CreateRepoHookErrors[keyof CreateRepoHookErrors];
+type CreateRepoHookResponses = {
     /**
      * If the webhook was registered successfully.
      */
     201: WebhookSubscription;
 };
-type PostRepositoriesByWorkspaceByRepoSlugHooksResponse = PostRepositoriesByWorkspaceByRepoSlugHooksResponses[keyof PostRepositoriesByWorkspaceByRepoSlugHooksResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
+type CreateRepoHookResponse = CreateRepoHookResponses[keyof CreateRepoHookResponses];
+type DeleteRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8497,7 +8497,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/hooks/{uid}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
+type DeleteRepoHookErrors = {
     /**
      * If the authenticated user does not have permission to delete the webhook.
      */
@@ -8507,15 +8507,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidError = DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses = {
+type DeleteRepoHookError = DeleteRepoHookErrors[keyof DeleteRepoHookErrors];
+type DeleteRepoHookResponses = {
     /**
      * When the webhook was deleted successfully
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponse = DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses];
-type GetRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
+type DeleteRepoHookResponse = DeleteRepoHookResponses[keyof DeleteRepoHookResponses];
+type GetRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8538,21 +8538,21 @@ type GetRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/hooks/{uid}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
+type GetRepoHookErrors = {
     /**
      * If the webhook or repository does not exist.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugHooksByUidError = GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
-type GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses = {
+type GetRepoHookError = GetRepoHookErrors[keyof GetRepoHookErrors];
+type GetRepoHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
-type GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponse = GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses[keyof GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses];
-type PutRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
+type GetRepoHookResponse = GetRepoHookResponses[keyof GetRepoHookResponses];
+type UpdateRepoHookData = {
     body?: never;
     path: {
         /**
@@ -8575,7 +8575,7 @@ type PutRepositoriesByWorkspaceByRepoSlugHooksByUidData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/hooks/{uid}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
+type UpdateRepoHookErrors = {
     /**
      * If the authenticated user does not have permission to update the webhook.
      */
@@ -8585,15 +8585,15 @@ type PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugHooksByUidError = PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors[keyof PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors];
-type PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses = {
+type UpdateRepoHookError = UpdateRepoHookErrors[keyof UpdateRepoHookErrors];
+type UpdateRepoHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
-type PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponse = PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses[keyof PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesData = {
+type UpdateRepoHookResponse = UpdateRepoHookResponses[keyof UpdateRepoHookResponses];
+type ListIssuesData = {
     body?: never;
     path: {
         /**
@@ -8612,21 +8612,21 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
+type ListIssuesErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesError = GetRepositoriesByWorkspaceByRepoSlugIssuesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesResponses = {
+type ListIssuesError = ListIssuesErrors[keyof ListIssuesErrors];
+type ListIssuesResponses = {
     /**
      * A paginated list of the issues matching any filter criteria that were provided.
      */
     200: PaginatedIssues;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesResponses];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesData = {
+type ListIssuesResponse = ListIssuesResponses[keyof ListIssuesResponses];
+type CreateIssueData = {
     /**
      * The new issue. The only required element is `title`. All other elements can be omitted from the body.
      */
@@ -8648,7 +8648,7 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues';
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
+type CreateIssueErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -8662,15 +8662,15 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesError = PostRepositoriesByWorkspaceByRepoSlugIssuesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesErrors];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesResponses = {
+type CreateIssueError = CreateIssueErrors[keyof CreateIssueErrors];
+type CreateIssueResponses = {
     /**
      * The newly created issue.
      */
     201: Issue;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesResponse = PostRepositoriesByWorkspaceByRepoSlugIssuesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesResponses];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesExportData = {
+type CreateIssueResponse = CreateIssueResponses[keyof CreateIssueResponses];
+type ExportIssuesData = {
     /**
      * The options to apply to the export. Available options include `project_key` and `project_name` which, if specified, are used as the project key and name in the exported Jira json format. Option `send_email` specifies whether an email should be sent upon export result. Option `include_attachments` specifies whether attachments are included in the export.
      */
@@ -8692,7 +8692,7 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesExportData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/export';
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors = {
+type ExportIssuesErrors = {
     /**
      * The request wasn't authenticated properly
      */
@@ -8706,8 +8706,8 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesExportError = PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesExportResponses = {
+type ExportIssuesError = ExportIssuesErrors[keyof ExportIssuesErrors];
+type ExportIssuesResponses = {
     /**
      * The export job has been accepted
      */
@@ -8762,7 +8762,7 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZip
     202: IssueJobStatus;
 };
 type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
+type GetIssueImportStatusData = {
     body?: never;
     path: {
         /**
@@ -8781,7 +8781,7 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/import';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
+type GetIssueImportStatusErrors = {
     /**
      * The request wasn't authenticated properly
      */
@@ -8795,8 +8795,8 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesImportError = GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses = {
+type GetIssueImportStatusError = GetIssueImportStatusErrors[keyof GetIssueImportStatusErrors];
+type GetIssueImportStatusResponses = {
     /**
      * Import job complete with either FAILURE or SUCCESS status
      */
@@ -8806,8 +8806,8 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses = {
      */
     202: IssueJobStatus;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
+type GetIssueImportStatusResponse = GetIssueImportStatusResponses[keyof GetIssueImportStatusResponses];
+type ImportIssuesData = {
     body?: never;
     path: {
         /**
@@ -8826,7 +8826,7 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesImportData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/import';
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
+type ImportIssuesErrors = {
     /**
      * The request wasn't authenticated properly
      */
@@ -8844,15 +8844,15 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors = {
      */
     409: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesImportError = PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses = {
+type ImportIssuesError = ImportIssuesErrors[keyof ImportIssuesErrors];
+type ImportIssuesResponses = {
     /**
      * Import job accepted
      */
     202: IssueJobStatus;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponse = PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
+type ImportIssuesResponse = ImportIssuesResponses[keyof ImportIssuesResponses];
+type DeleteIssueData = {
     body?: never;
     path: {
         /**
@@ -8875,7 +8875,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
+type DeleteIssueErrors = {
     /**
      * When the authenticated user isn't authorized to delete the issue.
      */
@@ -8885,15 +8885,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses = {
+type DeleteIssueError = DeleteIssueErrors[keyof DeleteIssueErrors];
+type DeleteIssueResponses = {
     /**
      * Indicates the issue was deleted successfully.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
+type DeleteIssueResponse = DeleteIssueResponses[keyof DeleteIssueResponses];
+type GetIssueData = {
     body?: never;
     path: {
         /**
@@ -8916,7 +8916,7 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
+type GetIssueErrors = {
     /**
      * When the authenticated user isn't authorized to access the issue.
      */
@@ -8930,15 +8930,15 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
      */
     410: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses = {
+type GetIssueError = GetIssueErrors[keyof GetIssueErrors];
+type GetIssueResponses = {
     /**
      * The issue object.
      */
     200: Issue;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
+type GetIssueResponse = GetIssueResponses[keyof GetIssueResponses];
+type UpdateIssueData = {
     body?: never;
     path: {
         /**
@@ -8961,7 +8961,7 @@ type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
+type UpdateIssueErrors = {
     /**
      * When the authenticated user isn't authorized to access the issue.
      */
@@ -8971,15 +8971,15 @@ type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses = {
+type UpdateIssueError = UpdateIssueErrors[keyof UpdateIssueErrors];
+type UpdateIssueResponses = {
     /**
      * The updated issue object.
      */
     200: Issue;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData = {
+type UpdateIssueResponse = UpdateIssueResponses[keyof UpdateIssueResponses];
+type ListIssueAttachmentsData = {
     body?: never;
     path: {
         /**
@@ -9002,7 +9002,7 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors = {
+type ListIssueAttachmentsErrors = {
     /**
      * If the issue tracker is private and the request was not authenticated.
      */
@@ -9012,15 +9012,15 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses = {
+type ListIssueAttachmentsError = ListIssueAttachmentsErrors[keyof ListIssueAttachmentsErrors];
+type ListIssueAttachmentsResponses = {
     /**
      * A paginated list of all attachments for this issue.
      */
     200: PaginatedIssueAttachments;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData = {
+type ListIssueAttachmentsResponse = ListIssueAttachmentsResponses[keyof ListIssueAttachmentsResponses];
+type CreateIssueAttachmentData = {
     body?: never;
     path: {
         /**
@@ -9043,7 +9043,7 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments';
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors = {
+type CreateIssueAttachmentErrors = {
     /**
      * If no files were uploaded, or if the wrong `Content-Type` was used.
      */
@@ -9057,14 +9057,14 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses = {
+type CreateIssueAttachmentError = CreateIssueAttachmentErrors[keyof CreateIssueAttachmentErrors];
+type CreateIssueAttachmentResponses = {
     /**
      * An empty response document.
      */
     201: unknown;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData = {
+type DeleteIssueAttachmentData = {
     body?: never;
     path: {
         /**
@@ -9091,7 +9091,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments/{path}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors = {
+type DeleteIssueAttachmentErrors = {
     /**
      * If the issue tracker is private and the request was not authenticated.
      */
@@ -9101,15 +9101,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErro
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses = {
+type DeleteIssueAttachmentError = DeleteIssueAttachmentErrors[keyof DeleteIssueAttachmentErrors];
+type DeleteIssueAttachmentResponses = {
     /**
      * Indicates that the deletion was successful
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData = {
+type DeleteIssueAttachmentResponse = DeleteIssueAttachmentResponses[keyof DeleteIssueAttachmentResponses];
+type GetIssueAttachmentData = {
     body?: never;
     path: {
         /**
@@ -9136,7 +9136,7 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData = 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/attachments/{path}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors = {
+type GetIssueAttachmentErrors = {
     /**
      * If the issue tracker is private and the request was not authenticated.
      */
@@ -9146,8 +9146,8 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors 
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
+type GetIssueAttachmentError = GetIssueAttachmentErrors[keyof GetIssueAttachmentErrors];
+type ListIssueChangesData = {
     body?: never;
     path: {
         /**
@@ -9185,21 +9185,21 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/changes';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = {
+type ListIssueChangesErrors = {
     /**
      * The specified repository or issue does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses = {
+type ListIssueChangesError = ListIssueChangesErrors[keyof ListIssueChangesErrors];
+type ListIssueChangesResponses = {
     /**
      * Returns all the issue changes that were made on the specified issue.
      */
     200: PaginatedLogEntries;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
+type ListIssueChangesResponse = ListIssueChangesResponses[keyof ListIssueChangesResponses];
+type CreateIssueChangeData = {
     /**
      * The new issue state change. The only required elements are `changes.[].new`. All other elements can be omitted from the body.
      */
@@ -9225,7 +9225,7 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/changes';
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = {
+type CreateIssueChangeErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9239,15 +9239,15 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses = {
+type CreateIssueChangeError = CreateIssueChangeErrors[keyof CreateIssueChangeErrors];
+type CreateIssueChangeResponses = {
     /**
      * The newly created issue change.
      */
     201: IssueChange;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponse = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdData = {
+type CreateIssueChangeResponse = CreateIssueChangeResponses[keyof CreateIssueChangeResponses];
+type GetIssueChangeData = {
     body?: never;
     path: {
         /**
@@ -9274,21 +9274,21 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdData = 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/changes/{change_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors = {
+type GetIssueChangeErrors = {
     /**
      * The specified repository or issue change does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses = {
+type GetIssueChangeError = GetIssueChangeErrors[keyof GetIssueChangeErrors];
+type GetIssueChangeResponses = {
     /**
      * The specified issue change object.
      */
     200: IssueChange;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
+type GetIssueChangeResponse = GetIssueChangeResponses[keyof GetIssueChangeResponses];
+type ListIssueCommentsData = {
     body?: never;
     path: {
         /**
@@ -9318,14 +9318,14 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses = {
+type ListIssueCommentsResponses = {
     /**
      * A paginated list of issue comments.
      */
     200: PaginatedIssueComments;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
+type ListIssueCommentsResponse = ListIssueCommentsResponses[keyof ListIssueCommentsResponses];
+type CreateIssueCommentData = {
     /**
      * The new issue comment object.
      */
@@ -9351,20 +9351,20 @@ type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments';
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors = {
+type CreateIssueCommentErrors = {
     /**
      * If the input was invalid, or if the comment being created is detected as spam
      */
     400: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsError = PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses = {
+type CreateIssueCommentError = CreateIssueCommentErrors[keyof CreateIssueCommentErrors];
+type CreateIssueCommentResponses = {
     /**
      * The newly created comment.
      */
     201: unknown;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData = {
+type DeleteIssueCommentData = {
     body?: never;
     path: {
         /**
@@ -9391,14 +9391,14 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdDa
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments/{comment_id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses = {
+type DeleteIssueCommentResponses = {
     /**
      * Indicates successful deletion.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData = {
+type DeleteIssueCommentResponse = DeleteIssueCommentResponses[keyof DeleteIssueCommentResponses];
+type GetIssueCommentData = {
     body?: never;
     path: {
         /**
@@ -9425,14 +9425,14 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments/{comment_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses = {
+type GetIssueCommentResponses = {
     /**
      * The issue comment.
      */
     200: IssueComment;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData = {
+type GetIssueCommentResponse = GetIssueCommentResponses[keyof GetIssueCommentResponses];
+type UpdateIssueCommentData = {
     /**
      * The updated comment.
      */
@@ -9462,21 +9462,21 @@ type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/comments/{comment_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors = {
+type UpdateIssueCommentErrors = {
     /**
      * If the input was invalid, or if the update to the comment is detected as spam
      */
     400: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses = {
+type UpdateIssueCommentError = UpdateIssueCommentErrors[keyof UpdateIssueCommentErrors];
+type UpdateIssueCommentResponses = {
     /**
      * The updated issue comment.
      */
     200: IssueComment;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
+type UpdateIssueCommentResponse = UpdateIssueCommentResponses[keyof UpdateIssueCommentResponses];
+type DeleteIssueVoteData = {
     body?: never;
     path: {
         /**
@@ -9499,21 +9499,21 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/vote';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
+type DeleteIssueVoteErrors = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
+type DeleteIssueVoteError = DeleteIssueVoteErrors[keyof DeleteIssueVoteErrors];
+type DeleteIssueVoteResponses = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
+type DeleteIssueVoteResponse = DeleteIssueVoteResponses[keyof DeleteIssueVoteResponses];
+type GetIssueVoteData = {
     body?: never;
     path: {
         /**
@@ -9536,7 +9536,7 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/vote';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
+type GetIssueVoteErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9546,15 +9546,15 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
+type GetIssueVoteError = GetIssueVoteErrors[keyof GetIssueVoteErrors];
+type GetIssueVoteResponses = {
     /**
      * If the authenticated user has not voted for this issue.
      */
     204: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
+type GetIssueVoteResponse = GetIssueVoteResponses[keyof GetIssueVoteResponses];
+type AddIssueVoteData = {
     body?: never;
     path: {
         /**
@@ -9577,7 +9577,7 @@ type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/vote';
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
+type AddIssueVoteErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9587,15 +9587,15 @@ type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses = {
+type AddIssueVoteError = AddIssueVoteErrors[keyof AddIssueVoteErrors];
+type AddIssueVoteResponses = {
     /**
      * Indicating the authenticated user has cast their vote successfully.
      */
     204: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
+type AddIssueVoteResponse = AddIssueVoteResponses[keyof AddIssueVoteResponses];
+type UnwatchIssueData = {
     body?: never;
     path: {
         /**
@@ -9618,7 +9618,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/watch';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
+type UnwatchIssueErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9628,15 +9628,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = {
+type UnwatchIssueError = UnwatchIssueErrors[keyof UnwatchIssueErrors];
+type UnwatchIssueResponses = {
     /**
      * Indicates that the authenticated user successfully stopped watching this issue.
      */
     204: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
+type UnwatchIssueResponse = UnwatchIssueResponses[keyof UnwatchIssueResponses];
+type GetIssueWatchStatusData = {
     body?: never;
     path: {
         /**
@@ -9659,7 +9659,7 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/watch';
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
+type GetIssueWatchStatusErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9669,15 +9669,15 @@ type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = {
+type GetIssueWatchStatusError = GetIssueWatchStatusErrors[keyof GetIssueWatchStatusErrors];
+type GetIssueWatchStatusResponses = {
     /**
      * If the authenticated user is watching this issue.
      */
     204: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
+type GetIssueWatchStatusResponse = GetIssueWatchStatusResponses[keyof GetIssueWatchStatusResponses];
+type WatchIssueData = {
     body?: never;
     path: {
         /**
@@ -9700,7 +9700,7 @@ type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/issues/{issue_id}/watch';
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
+type WatchIssueErrors = {
     /**
      * When the request wasn't authenticated.
      */
@@ -9710,15 +9710,15 @@ type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors];
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses = {
+type WatchIssueError = WatchIssueErrors[keyof WatchIssueErrors];
+type WatchIssueResponses = {
     /**
      * Indicates that the authenticated user successfully started watching this issue.
      */
     204: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse = PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses[keyof PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses];
-type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData = {
+type WatchIssueResponse = WatchIssueResponses[keyof WatchIssueResponses];
+type GetMergeBaseData = {
     body?: never;
     path: {
         /**
@@ -9742,7 +9742,7 @@ type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/merge-base/{revspec}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors = {
+type GetMergeBaseErrors = {
     /**
      * If the request was not authenticated.
      */
@@ -9756,15 +9756,15 @@ type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecError = GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors];
-type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses = {
+type GetMergeBaseError = GetMergeBaseErrors[keyof GetMergeBaseErrors];
+type GetMergeBaseResponses = {
     /**
      * The merge base of the provided spec.
      */
     200: Commit;
 };
-type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponse = GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses[keyof GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses];
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesData = {
+type GetMergeBaseResponse = GetMergeBaseResponses[keyof GetMergeBaseResponses];
+type ListMilestonesData = {
     body?: never;
     path: {
         /**
@@ -9783,21 +9783,21 @@ type GetRepositoriesByWorkspaceByRepoSlugMilestonesData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/milestones';
 };
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors = {
+type ListMilestonesErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesError = GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors];
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses = {
+type ListMilestonesError = ListMilestonesErrors[keyof ListMilestonesErrors];
+type ListMilestonesResponses = {
     /**
      * The milestones that have been defined in the issue tracker.
      */
     200: PaginatedMilestones;
 };
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesResponse = GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses];
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData = {
+type ListMilestonesResponse = ListMilestonesResponses[keyof ListMilestonesResponses];
+type GetMilestoneData = {
     body?: never;
     path: {
         /**
@@ -9820,21 +9820,21 @@ type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/milestones/{milestone_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors = {
+type GetMilestoneErrors = {
     /**
      * The specified repository or milestone does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdError = GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses = {
+type GetMilestoneError = GetMilestoneErrors[keyof GetMilestoneErrors];
+type GetMilestoneResponses = {
     /**
      * The specified milestone object.
      */
     200: Milestone;
 };
-type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponse = GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
+type GetMilestoneResponse = GetMilestoneResponses[keyof GetMilestoneResponses];
+type GetOverrideSettingsData = {
     body?: never;
     path: {
         /**
@@ -9853,21 +9853,21 @@ type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/override-settings';
 };
-type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors = {
+type GetOverrideSettingsErrors = {
     /**
      * If no repository exists at this location
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsError = GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses = {
+type GetOverrideSettingsError = GetOverrideSettingsErrors[keyof GetOverrideSettingsErrors];
+type GetOverrideSettingsResponses = {
     /**
      * The repository setting inheritance state
      */
     200: RepositoryInheritanceState;
 };
-type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponse = GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses];
-type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
+type GetOverrideSettingsResponse = GetOverrideSettingsResponses[keyof GetOverrideSettingsResponses];
+type UpdateOverrideSettingsData = {
     body?: never;
     path: {
         /**
@@ -9886,21 +9886,21 @@ type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/override-settings';
 };
-type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors = {
+type UpdateOverrideSettingsErrors = {
     /**
      * If no repository exists at this location
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsError = PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors[keyof PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors];
-type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses = {
+type UpdateOverrideSettingsError = UpdateOverrideSettingsErrors[keyof UpdateOverrideSettingsErrors];
+type UpdateOverrideSettingsResponses = {
     /**
      * The repository setting inheritance state was set and no content returned
      */
     204: void;
 };
-type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponse = PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses[keyof PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData = {
+type UpdateOverrideSettingsResponse = UpdateOverrideSettingsResponses[keyof UpdateOverrideSettingsResponses];
+type GetPatchData = {
     body?: never;
     path: {
         /**
@@ -9925,7 +9925,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/patch/{spec}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors = {
+type GetPatchErrors = {
     /**
      * If the diff was too large and timed out.
      *
@@ -9936,14 +9936,14 @@ type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors = {
      */
     555: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecError = GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecResponses = {
+type GetPatchError = GetPatchErrors[keyof GetPatchErrors];
+type GetPatchResponses = {
     /**
      * The raw patches
      */
     200: unknown;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData = {
+type ListRepoPermissionGroupsData = {
     body?: never;
     path: {
         /**
@@ -9962,7 +9962,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors = {
+type ListRepoPermissionGroupsErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -9976,15 +9976,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses = {
+type ListRepoPermissionGroupsError = ListRepoPermissionGroupsErrors[keyof ListRepoPermissionGroupsErrors];
+type ListRepoPermissionGroupsResponses = {
     /**
      * Paginated of explicit group permissions on the repository.
      */
     200: PaginatedRepositoryGroupPermissions;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData = {
+type ListRepoPermissionGroupsResponse = ListRepoPermissionGroupsResponses[keyof ListRepoPermissionGroupsResponses];
+type DeleteRepoPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -10007,7 +10007,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugDa
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors = {
+type DeleteRepoPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10021,15 +10021,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugEr
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses = {
+type DeleteRepoPermissionGroupError = DeleteRepoPermissionGroupErrors[keyof DeleteRepoPermissionGroupErrors];
+type DeleteRepoPermissionGroupResponses = {
     /**
      * Group permission deleted
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData = {
+type DeleteRepoPermissionGroupResponse = DeleteRepoPermissionGroupResponses[keyof DeleteRepoPermissionGroupResponses];
+type GetRepoPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -10052,7 +10052,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors = {
+type GetRepoPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10066,15 +10066,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses = {
+type GetRepoPermissionGroupError = GetRepoPermissionGroupErrors[keyof GetRepoPermissionGroupErrors];
+type GetRepoPermissionGroupResponses = {
     /**
      * Group permission for group slug and repository
      */
     200: RepositoryGroupPermission;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses];
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData = {
+type GetRepoPermissionGroupResponse = GetRepoPermissionGroupResponses[keyof GetRepoPermissionGroupResponses];
+type UpdateRepoPermissionGroupData = {
     /**
      * The permission to grant
      */
@@ -10100,7 +10100,7 @@ type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/groups/{group_slug}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors = {
+type UpdateRepoPermissionGroupErrors = {
     /**
      * No permission value was provided or the value is invalid(not one of read, write, or admin)
      */
@@ -10122,15 +10122,15 @@ type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors];
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses = {
+type UpdateRepoPermissionGroupError = UpdateRepoPermissionGroupErrors[keyof UpdateRepoPermissionGroupErrors];
+type UpdateRepoPermissionGroupResponses = {
     /**
      * Group permission updated
      */
     200: RepositoryGroupPermission;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData = {
+type UpdateRepoPermissionGroupResponse = UpdateRepoPermissionGroupResponses[keyof UpdateRepoPermissionGroupResponses];
+type ListRepoPermissionUsersData = {
     body?: never;
     path: {
         /**
@@ -10149,7 +10149,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors = {
+type ListRepoPermissionUsersErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10163,15 +10163,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses = {
+type ListRepoPermissionUsersError = ListRepoPermissionUsersErrors[keyof ListRepoPermissionUsersErrors];
+type ListRepoPermissionUsersResponses = {
     /**
      * Paginated of explicit user permissions on the repository.
      */
     200: PaginatedRepositoryUserPermissions;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData = {
+type ListRepoPermissionUsersResponse = ListRepoPermissionUsersResponses[keyof ListRepoPermissionUsersResponses];
+type DeleteRepoPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -10196,7 +10196,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUser
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors = {
+type DeleteRepoPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10210,15 +10210,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUser
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses = {
+type DeleteRepoPermissionUserError = DeleteRepoPermissionUserErrors[keyof DeleteRepoPermissionUserErrors];
+type DeleteRepoPermissionUserResponses = {
     /**
      * The repository user permission was deleted and no content returned.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData = {
+type DeleteRepoPermissionUserResponse = DeleteRepoPermissionUserResponses[keyof DeleteRepoPermissionUserResponses];
+type GetRepoPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -10243,7 +10243,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdD
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors = {
+type GetRepoPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -10257,15 +10257,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdE
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses = {
+type GetRepoPermissionUserError = GetRepoPermissionUserErrors[keyof GetRepoPermissionUserErrors];
+type GetRepoPermissionUserResponses = {
     /**
      * Explicit user permission for user and repository
      */
     200: RepositoryUserPermission;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse = GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData = {
+type GetRepoPermissionUserResponse = GetRepoPermissionUserResponses[keyof GetRepoPermissionUserResponses];
+type UpdateRepoPermissionUserData = {
     /**
      * The permission to grant
      */
@@ -10293,7 +10293,7 @@ type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdD
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/permissions-config/users/{selected_user_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors = {
+type UpdateRepoPermissionUserErrors = {
     /**
      * No permission value was provided or the value is invalid (not one of read, write, or admin), or the selected user is not a valid user to update.
      */
@@ -10315,14 +10315,14 @@ type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdE
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses = {
+type UpdateRepoPermissionUserError = UpdateRepoPermissionUserErrors[keyof UpdateRepoPermissionUserErrors];
+type UpdateRepoPermissionUserResponses = {
     /**
      * Explicit user permission updated
      */
     200: RepositoryUserPermission;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse = PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses];
+type UpdateRepoPermissionUserResponse = UpdateRepoPermissionUserResponses[keyof UpdateRepoPermissionUserResponses];
 type GetPipelinesForRepositoryData = {
     body?: never;
     path: {
@@ -11832,7 +11832,7 @@ type UpdateRepositoryHostedPropertyValueResponses = {
     204: void;
 };
 type UpdateRepositoryHostedPropertyValueResponse = UpdateRepositoryHostedPropertyValueResponses[keyof UpdateRepositoryHostedPropertyValueResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
+type ListPullRequestsData = {
     body?: never;
     path: {
         /**
@@ -11856,7 +11856,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/pullrequests';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
+type ListPullRequestsErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -11866,15 +11866,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses = {
+type ListPullRequestsError = ListPullRequestsErrors[keyof ListPullRequestsErrors];
+type ListPullRequestsResponses = {
     /**
      * All pull requests on the specified repository.
      */
     200: PaginatedPullrequests;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
+type ListPullRequestsResponse = ListPullRequestsResponses[keyof ListPullRequestsResponses];
+type CreatePullRequestData = {
     /**
      * The new pull request.
      *
@@ -11900,7 +11900,7 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
+type CreatePullRequestErrors = {
     /**
      * If the input document was invalid, or if the caller lacks the privilege to create repositories under the targeted account.
      */
@@ -11910,15 +11910,15 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors = {
      */
     401: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses = {
+type CreatePullRequestError = CreatePullRequestErrors[keyof CreatePullRequestErrors];
+type CreatePullRequestResponses = {
     /**
      * The newly created pull request.
      */
     201: Pullrequest;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData = {
+type CreatePullRequestResponse = CreatePullRequestResponses[keyof CreatePullRequestResponses];
+type ListPullRequestsActivityData = {
     body?: never;
     path: {
         /**
@@ -11937,7 +11937,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/activity';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors = {
+type ListPullRequestsActivityErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -11947,14 +11947,14 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityResponses = {
+type ListPullRequestsActivityError = ListPullRequestsActivityErrors[keyof ListPullRequestsActivityErrors];
+type ListPullRequestsActivityResponses = {
     /**
      * The pull request activity log
      */
     200: unknown;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData = {
+type GetPullRequestData = {
     body?: never;
     path: {
         /**
@@ -11977,7 +11977,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors = {
+type GetPullRequestErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -11987,15 +11987,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses = {
+type GetPullRequestError = GetPullRequestErrors[keyof GetPullRequestErrors];
+type GetPullRequestResponses = {
     /**
      * The pull request object
      */
     200: Pullrequest;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData = {
+type GetPullRequestResponse = GetPullRequestResponses[keyof GetPullRequestResponses];
+type UpdatePullRequestData = {
     /**
      * The pull request that is to be updated.
      */
@@ -12021,7 +12021,7 @@ type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors = {
+type UpdatePullRequestErrors = {
     /**
      * If the input document was invalid.
      */
@@ -12035,15 +12035,15 @@ type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors = {
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses = {
+type UpdatePullRequestError = UpdatePullRequestErrors[keyof UpdatePullRequestErrors];
+type UpdatePullRequestResponses = {
     /**
      * The updated pull request
      */
     200: Pullrequest;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponse = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityData = {
+type UpdatePullRequestResponse = UpdatePullRequestResponses[keyof UpdatePullRequestResponses];
+type GetPullRequestActivityData = {
     body?: never;
     path: {
         /**
@@ -12066,7 +12066,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityData
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/activity';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors = {
+type GetPullRequestActivityErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -12076,14 +12076,14 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErro
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityResponses = {
+type GetPullRequestActivityError = GetPullRequestActivityErrors[keyof GetPullRequestActivityErrors];
+type GetPullRequestActivityResponses = {
     /**
      * The pull request activity log
      */
     200: unknown;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData = {
+type DeletePullRequestApprovalData = {
     body?: never;
     path: {
         /**
@@ -12106,7 +12106,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveDa
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors = {
+type DeletePullRequestApprovalErrors = {
     /**
      * Pull request cannot be unapproved because the pull request has already been merged.
      */
@@ -12120,15 +12120,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveEr
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses = {
+type DeletePullRequestApprovalError = DeletePullRequestApprovalErrors[keyof DeletePullRequestApprovalErrors];
+type DeletePullRequestApprovalResponses = {
     /**
      * An empty response indicating the authenticated user's approval has been withdrawn.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData = {
+type DeletePullRequestApprovalResponse = DeletePullRequestApprovalResponses[keyof DeletePullRequestApprovalResponses];
+type ApprovePullRequestData = {
     body?: never;
     path: {
         /**
@@ -12151,7 +12151,7 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/approve';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors = {
+type ApprovePullRequestErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -12161,15 +12161,15 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErro
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses = {
+type ApprovePullRequestError = ApprovePullRequestErrors[keyof ApprovePullRequestErrors];
+type ApprovePullRequestResponses = {
     /**
      * The `participant` object recording that the authenticated user approved the pull request.
      */
     200: Participant;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData = {
+type ApprovePullRequestResponse = ApprovePullRequestResponses[keyof ApprovePullRequestResponses];
+type ListPullRequestCommentsData = {
     body?: never;
     path: {
         /**
@@ -12192,7 +12192,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors = {
+type ListPullRequestCommentsErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -12202,15 +12202,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErro
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses = {
+type ListPullRequestCommentsError = ListPullRequestCommentsErrors[keyof ListPullRequestCommentsErrors];
+type ListPullRequestCommentsResponses = {
     /**
      * A paginated list of comments made on the given pull request, in chronological order.
      */
     200: PaginatedPullrequestComments;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData = {
+type ListPullRequestCommentsResponse = ListPullRequestCommentsResponses[keyof ListPullRequestCommentsResponses];
+type CreatePullRequestCommentData = {
     /**
      * The comment object.
      */
@@ -12236,7 +12236,7 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsDat
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors = {
+type CreatePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -12246,15 +12246,15 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErr
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses = {
+type CreatePullRequestCommentError = CreatePullRequestCommentErrors[keyof CreatePullRequestCommentErrors];
+type CreatePullRequestCommentResponses = {
     /**
      * The newly created comment.
      */
     201: PullrequestComment;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData = {
+type CreatePullRequestCommentResponse = CreatePullRequestCommentResponses[keyof CreatePullRequestCommentResponses];
+type DeletePullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -12281,7 +12281,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsB
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors = {
+type DeletePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to delete the comment.
      */
@@ -12291,15 +12291,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsB
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses = {
+type DeletePullRequestCommentError = DeletePullRequestCommentErrors[keyof DeletePullRequestCommentErrors];
+type DeletePullRequestCommentResponses = {
     /**
      * Successful deletion.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData = {
+type DeletePullRequestCommentResponse = DeletePullRequestCommentResponses[keyof DeletePullRequestCommentResponses];
+type GetPullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -12326,7 +12326,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCo
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors = {
+type GetPullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -12336,15 +12336,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCo
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses = {
+type GetPullRequestCommentError = GetPullRequestCommentErrors[keyof GetPullRequestCommentErrors];
+type GetPullRequestCommentResponses = {
     /**
      * The comment.
      */
     200: PullrequestComment;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData = {
+type GetPullRequestCommentResponse = GetPullRequestCommentResponses[keyof GetPullRequestCommentResponses];
+type UpdatePullRequestCommentData = {
     /**
      * The contents of the updated comment.
      */
@@ -12374,7 +12374,7 @@ type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCo
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors = {
+type UpdatePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the comment.
      */
@@ -12384,15 +12384,15 @@ type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCo
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses = {
+type UpdatePullRequestCommentError = UpdatePullRequestCommentErrors[keyof UpdatePullRequestCommentErrors];
+type UpdatePullRequestCommentResponses = {
     /**
      * The updated comment.
      */
     200: PullrequestComment;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData = {
+type UpdatePullRequestCommentResponse = UpdatePullRequestCommentResponses[keyof UpdatePullRequestCommentResponses];
+type UnresolvePullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -12419,7 +12419,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsB
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors = {
+type UnresolvePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request,
      * or if the provided comment is not a top-level comment.
@@ -12430,15 +12430,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsB
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses = {
+type UnresolvePullRequestCommentError = UnresolvePullRequestCommentErrors[keyof UnresolvePullRequestCommentErrors];
+type UnresolvePullRequestCommentResponses = {
     /**
      * The comment is reopened.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData = {
+type UnresolvePullRequestCommentResponse = UnresolvePullRequestCommentResponses[keyof UnresolvePullRequestCommentResponses];
+type ResolvePullRequestCommentData = {
     body?: never;
     path: {
         /**
@@ -12465,7 +12465,7 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByC
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/comments/{comment_id}/resolve';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors = {
+type ResolvePullRequestCommentErrors = {
     /**
      * If the authenticated user does not have access to the pull request,
      * if the provided comment is not a top-level comment,
@@ -12481,15 +12481,15 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByC
      */
     409: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses = {
+type ResolvePullRequestCommentError = ResolvePullRequestCommentErrors[keyof ResolvePullRequestCommentErrors];
+type ResolvePullRequestCommentResponses = {
     /**
      * The comment resolution details.
      */
     200: CommentResolution;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsData = {
+type ResolvePullRequestCommentResponse = ResolvePullRequestCommentResponses[keyof ResolvePullRequestCommentResponses];
+type ListPullRequestCommitsData = {
     body?: never;
     path: {
         /**
@@ -12512,7 +12512,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsData 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/commits';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors = {
+type ListPullRequestCommitsErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -12522,14 +12522,14 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsError
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsResponses = {
+type ListPullRequestCommitsError = ListPullRequestCommitsErrors[keyof ListPullRequestCommitsErrors];
+type ListPullRequestCommitsResponses = {
     /**
      * A paginated list of commits made on the given pull request, in chronological order. This list will be empty if the source branch no longer exists.
      */
     200: unknown;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineData = {
+type DeclinePullRequestData = {
     body?: never;
     path: {
         /**
@@ -12552,22 +12552,22 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineData
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/decline';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors = {
+type DeclinePullRequestErrors = {
     /**
      * If the decline took too long and timed out.
      * In this case the caller should retry the request later.
      */
     555: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses = {
+type DeclinePullRequestError = DeclinePullRequestErrors[keyof DeclinePullRequestErrors];
+type DeclinePullRequestResponses = {
     /**
      * The pull request was successfully declined.
      */
     200: Pullrequest;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffData = {
+type DeclinePullRequestResponse = DeclinePullRequestResponses[keyof DeclinePullRequestResponses];
+type GetPullRequestDiffData = {
     body?: never;
     path: {
         /**
@@ -12590,7 +12590,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diff';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstatData = {
+type GetPullRequestDiffstatData = {
     body?: never;
     path: {
         /**
@@ -12613,7 +12613,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstatData
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/diffstat';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeData = {
+type MergePullRequestData = {
     body?: PullrequestMergeParameters;
     path: {
         /**
@@ -12653,7 +12653,7 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeData =
     };
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors = {
+type MergePullRequestErrors = {
     /**
      * Unable to merge because one of the refs involved changed while attempting to merge
      */
@@ -12664,8 +12664,8 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors
      */
     555: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses = {
+type MergePullRequestError = MergePullRequestErrors[keyof MergePullRequestErrors];
+type MergePullRequestResponses = {
     /**
      * The pull request object.
      */
@@ -12675,8 +12675,8 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeRespon
      */
     202: unknown;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdData = {
+type MergePullRequestResponse = MergePullRequestResponses[keyof MergePullRequestResponses];
+type GetPullRequestMergeTaskStatusData = {
     body?: never;
     path: {
         /**
@@ -12703,7 +12703,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskSta
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/merge/task-status/{task_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdErrors = {
+type GetPullRequestMergeTaskStatusErrors = {
     /**
      * If the provided task ID does not relate to this pull request, or if something went wrong during the merge operation
      */
@@ -12717,13 +12717,13 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskSta
      */
     409: unknown;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdResponses = {
+type GetPullRequestMergeTaskStatusResponses = {
     /**
      * Returns a task status if the merge is either pending or successful, and if it is successful, a pull request
      */
     200: unknown;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatchData = {
+type GetPullRequestPatchData = {
     body?: never;
     path: {
         /**
@@ -12746,7 +12746,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatchData = 
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/patch';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData = {
+type DeletePullRequestChangeRequestData = {
     body?: never;
     path: {
         /**
@@ -12769,7 +12769,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestCh
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors = {
+type DeletePullRequestChangeRequestErrors = {
     /**
      * Pull request requested changes cannot be removed because the pull request has already been merged.
      */
@@ -12783,15 +12783,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestCh
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses = {
+type DeletePullRequestChangeRequestError = DeletePullRequestChangeRequestErrors[keyof DeletePullRequestChangeRequestErrors];
+type DeletePullRequestChangeRequestResponses = {
     /**
      * An empty response indicating the authenticated user's request for change has been withdrawn.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData = {
+type DeletePullRequestChangeRequestResponse = DeletePullRequestChangeRequestResponses[keyof DeletePullRequestChangeRequestResponses];
+type RequestPullRequestChangesData = {
     body?: never;
     path: {
         /**
@@ -12814,7 +12814,7 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChan
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/request-changes';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors = {
+type RequestPullRequestChangesErrors = {
     /**
      * Pull request changes cannot be requested because the pull request has already been merged.
      */
@@ -12828,15 +12828,15 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChan
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses = {
+type RequestPullRequestChangesError = RequestPullRequestChangesErrors[keyof RequestPullRequestChangesErrors];
+type RequestPullRequestChangesResponses = {
     /**
      * The `participant` object recording that the authenticated user requested changes on the pull request.
      */
     200: Participant;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesData = {
+type RequestPullRequestChangesResponse = RequestPullRequestChangesResponses[keyof RequestPullRequestChangesResponses];
+type ListPullRequestStatusesData = {
     body?: never;
     path: {
         /**
@@ -12873,7 +12873,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesData
     };
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/statuses';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors = {
+type ListPullRequestStatusesErrors = {
     /**
      * If the repository is private and the request was not authenticated.
      */
@@ -12883,15 +12883,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErro
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses = {
+type ListPullRequestStatusesError = ListPullRequestStatusesErrors[keyof ListPullRequestStatusesErrors];
+type ListPullRequestStatusesResponses = {
     /**
      * A paginated list of all commit statuses for this pull request.
      */
     200: PaginatedCommitstatuses;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData = {
+type ListPullRequestStatusesResponse = ListPullRequestStatusesResponses[keyof ListPullRequestStatusesResponses];
+type ListPullRequestTasksData = {
     body?: never;
     path: {
         /**
@@ -12937,7 +12937,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData = 
     };
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors = {
+type ListPullRequestTasksErrors = {
     /**
      * If the user provides an invalid filter, sort, or fields query parameter.
      */
@@ -12951,15 +12951,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors 
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses = {
+type ListPullRequestTasksError = ListPullRequestTasksErrors[keyof ListPullRequestTasksErrors];
+type ListPullRequestTasksResponses = {
     /**
      * A paginated list of pull request tasks for the given pull request.
      */
     200: PaginatedTasks;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData = {
+type ListPullRequestTasksResponse = ListPullRequestTasksResponses[keyof ListPullRequestTasksResponses];
+type CreatePullRequestTaskData = {
     /**
      * The contents of the task
      */
@@ -12985,7 +12985,7 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData =
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks';
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors = {
+type CreatePullRequestTaskErrors = {
     /**
      * There is a missing required field in the request or the task content is blank.
      */
@@ -12999,15 +12999,15 @@ type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors];
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses = {
+type CreatePullRequestTaskError = CreatePullRequestTaskErrors[keyof CreatePullRequestTaskErrors];
+type CreatePullRequestTaskResponses = {
     /**
      * The newly created task.
      */
     201: PullrequestCommentTask;
 };
-type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponse = PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses[keyof PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData = {
+type CreatePullRequestTaskResponse = CreatePullRequestTaskResponses[keyof CreatePullRequestTaskResponses];
+type DeletePullRequestTaskData = {
     body?: never;
     path: {
         /**
@@ -13034,7 +13034,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTa
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors = {
+type DeletePullRequestTaskErrors = {
     /**
      * If the authenticated user does not have access to delete the task.
      */
@@ -13044,15 +13044,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTa
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses = {
+type DeletePullRequestTaskError = DeletePullRequestTaskErrors[keyof DeletePullRequestTaskErrors];
+type DeletePullRequestTaskResponses = {
     /**
      * Successful deletion.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse = DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData = {
+type DeletePullRequestTaskResponse = DeletePullRequestTaskResponses[keyof DeletePullRequestTaskResponses];
+type GetPullRequestTaskData = {
     body?: never;
     path: {
         /**
@@ -13079,7 +13079,7 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskI
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors = {
+type GetPullRequestTaskErrors = {
     /**
      * If the authenticated user does not have access to the pull request.
      */
@@ -13089,15 +13089,15 @@ type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskI
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses = {
+type GetPullRequestTaskError = GetPullRequestTaskErrors[keyof GetPullRequestTaskErrors];
+type GetPullRequestTaskResponses = {
     /**
      * The task.
      */
     200: PullrequestCommentTask;
 };
-type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse = GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses];
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData = {
+type GetPullRequestTaskResponse = GetPullRequestTaskResponses[keyof GetPullRequestTaskResponses];
+type UpdatePullRequestTaskData = {
     /**
      * The updated state and content of the task.
      */
@@ -13127,7 +13127,7 @@ type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskI
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/pullrequests/{pull_request_id}/tasks/{task_id}';
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors = {
+type UpdatePullRequestTaskErrors = {
     /**
      * There is a missing required field in the request or the task content is blank.
      */
@@ -13141,14 +13141,14 @@ type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskI
      */
     404: Error;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors];
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses = {
+type UpdatePullRequestTaskError = UpdatePullRequestTaskErrors[keyof UpdatePullRequestTaskErrors];
+type UpdatePullRequestTaskResponses = {
     /**
      * The updated task.
      */
     200: PullrequestCommentTask;
 };
-type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse = PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses[keyof PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses];
+type UpdatePullRequestTaskResponse = UpdatePullRequestTaskResponses[keyof UpdatePullRequestTaskResponses];
 type DeletePullRequestHostedPropertyValueData = {
     body?: never;
     path: {
@@ -13254,7 +13254,7 @@ type UpdatePullRequestHostedPropertyValueResponses = {
     204: void;
 };
 type UpdatePullRequestHostedPropertyValueResponse = UpdatePullRequestHostedPropertyValueResponses[keyof UpdatePullRequestHostedPropertyValueResponses];
-type GetRepositoriesByWorkspaceByRepoSlugRefsData = {
+type ListRefsData = {
     body?: never;
     path: {
         /**
@@ -13289,7 +13289,7 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/refs';
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsErrors = {
+type ListRefsErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13301,15 +13301,15 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsError = GetRepositoriesByWorkspaceByRepoSlugRefsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugRefsResponses = {
+type ListRefsError = ListRefsErrors[keyof ListRefsErrors];
+type ListRefsResponses = {
     /**
      * A paginated list of refs matching any filter criteria that were provided.
      */
     200: PaginatedRefs;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsResponse = GetRepositoriesByWorkspaceByRepoSlugRefsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsResponses];
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
+type ListRefsResponse = ListRefsResponses[keyof ListRefsResponses];
+type ListBranchesData = {
     body?: never;
     path: {
         /**
@@ -13344,7 +13344,7 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/refs/branches';
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
+type ListBranchesErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13356,15 +13356,15 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesError = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors];
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses = {
+type ListBranchesError = ListBranchesErrors[keyof ListBranchesErrors];
+type ListBranchesResponses = {
     /**
      * A paginated list of branches matching any filter criteria that were provided.
      */
     200: PaginatedBranches;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponse = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses];
-type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
+type ListBranchesResponse = ListBranchesResponses[keyof ListBranchesResponses];
+type CreateBranchData = {
     body?: never;
     path: {
         /**
@@ -13383,7 +13383,7 @@ type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/refs/branches';
 };
-type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
+type CreateBranchErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13395,15 +13395,15 @@ type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesError = PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors[keyof PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors];
-type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses = {
+type CreateBranchError = CreateBranchErrors[keyof CreateBranchErrors];
+type CreateBranchResponses = {
     /**
      * The newly created branch object.
      */
     201: Branch;
 };
-type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponse = PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses[keyof PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
+type CreateBranchResponse = CreateBranchResponses[keyof CreateBranchResponses];
+type DeleteBranchData = {
     body?: never;
     path: {
         /**
@@ -13426,7 +13426,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/refs/branches/{name}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
+type DeleteBranchErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13438,15 +13438,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError = DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses = {
+type DeleteBranchError = DeleteBranchErrors[keyof DeleteBranchErrors];
+type DeleteBranchResponses = {
     /**
      * Indicates that the specified branch was successfully deleted.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponse = DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses];
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
+type DeleteBranchResponse = DeleteBranchResponses[keyof DeleteBranchResponses];
+type GetBranchData = {
     body?: never;
     path: {
         /**
@@ -13469,7 +13469,7 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/refs/branches/{name}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
+type GetBranchErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13481,15 +13481,15 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors];
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses = {
+type GetBranchError = GetBranchErrors[keyof GetBranchErrors];
+type GetBranchResponses = {
     /**
      * The branch object.
      */
     200: Branch;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponse = GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses];
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
+type GetBranchResponse = GetBranchResponses[keyof GetBranchResponses];
+type ListTagsData = {
     body?: never;
     path: {
         /**
@@ -13524,7 +13524,7 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/refs/tags';
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
+type ListTagsErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13536,15 +13536,15 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsError = GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses = {
+type ListTagsError = ListTagsErrors[keyof ListTagsErrors];
+type ListTagsResponses = {
     /**
      * A paginated list of tags matching any filter criteria that were provided.
      */
     200: PaginatedTags;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponse = GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses];
-type PostRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
+type ListTagsResponse = ListTagsResponses[keyof ListTagsResponses];
+type CreateTagData = {
     body: Tag;
     path: {
         /**
@@ -13563,21 +13563,21 @@ type PostRepositoriesByWorkspaceByRepoSlugRefsTagsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/refs/tags';
 };
-type PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors = {
+type CreateTagErrors = {
     /**
      * If the target hash is missing, ambiguous, or invalid, or if the name is not provided.
      */
     400: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugRefsTagsError = PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors[keyof PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors];
-type PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses = {
+type CreateTagError = CreateTagErrors[keyof CreateTagErrors];
+type CreateTagResponses = {
     /**
      * The newly created tag.
      */
     201: Tag;
 };
-type PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponse = PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses[keyof PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses];
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
+type CreateTagResponse = CreateTagResponses[keyof CreateTagResponses];
+type DeleteTagData = {
     body?: never;
     path: {
         /**
@@ -13600,7 +13600,7 @@ type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/refs/tags/{name}';
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
+type DeleteTagErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13612,15 +13612,15 @@ type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
      */
     404: Error;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError = DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors];
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses = {
+type DeleteTagError = DeleteTagErrors[keyof DeleteTagErrors];
+type DeleteTagResponses = {
     /**
      * Indicates the specified tag was successfully deleted.
      */
     204: void;
 };
-type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponse = DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses[keyof DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses];
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
+type DeleteTagResponse = DeleteTagResponses[keyof DeleteTagResponses];
+type GetTagData = {
     body?: never;
     path: {
         /**
@@ -13643,7 +13643,7 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/refs/tags/{name}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
+type GetTagErrors = {
     /**
      * If the repository is private and the authenticated user does not have
      * access to it.
@@ -13655,15 +13655,15 @@ type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors = {
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError = GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors];
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses = {
+type GetTagError = GetTagErrors[keyof GetTagErrors];
+type GetTagResponses = {
     /**
      * The tag object.
      */
     200: Tag;
 };
-type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponse = GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses[keyof GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses];
-type GetRepositoriesByWorkspaceByRepoSlugSrcData = {
+type GetTagResponse = GetTagResponses[keyof GetTagResponses];
+type ListSrcRootData = {
     body?: never;
     path: {
         /**
@@ -13687,14 +13687,14 @@ type GetRepositoriesByWorkspaceByRepoSlugSrcData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/src';
 };
-type GetRepositoriesByWorkspaceByRepoSlugSrcErrors = {
+type ListSrcRootErrors = {
     /**
      * If the path or commit in the URL does not exist.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugSrcError = GetRepositoriesByWorkspaceByRepoSlugSrcErrors[keyof GetRepositoriesByWorkspaceByRepoSlugSrcErrors];
-type GetRepositoriesByWorkspaceByRepoSlugSrcResponses = {
+type ListSrcRootError = ListSrcRootErrors[keyof ListSrcRootErrors];
+type ListSrcRootResponses = {
     /**
      * If the path matches a file, then the raw contents of the file are
      * returned (unless the `format=meta` query parameter was provided,
@@ -13707,8 +13707,8 @@ type GetRepositoriesByWorkspaceByRepoSlugSrcResponses = {
      */
     200: PaginatedTreeentries;
 };
-type GetRepositoriesByWorkspaceByRepoSlugSrcResponse = GetRepositoriesByWorkspaceByRepoSlugSrcResponses[keyof GetRepositoriesByWorkspaceByRepoSlugSrcResponses];
-type PostRepositoriesByWorkspaceByRepoSlugSrcData = {
+type ListSrcRootResponse = ListSrcRootResponses[keyof ListSrcRootResponses];
+type CreateSrcFileCommitData = {
     body?: never;
     path: {
         /**
@@ -13828,7 +13828,7 @@ type PostRepositoriesByWorkspaceByRepoSlugSrcData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/src';
 };
-type PostRepositoriesByWorkspaceByRepoSlugSrcErrors = {
+type CreateSrcFileCommitErrors = {
     /**
      * If the authenticated user does not have write or admin access
      */
@@ -13838,15 +13838,15 @@ type PostRepositoriesByWorkspaceByRepoSlugSrcErrors = {
      */
     404: Error;
 };
-type PostRepositoriesByWorkspaceByRepoSlugSrcError = PostRepositoriesByWorkspaceByRepoSlugSrcErrors[keyof PostRepositoriesByWorkspaceByRepoSlugSrcErrors];
-type PostRepositoriesByWorkspaceByRepoSlugSrcResponses = {
+type CreateSrcFileCommitError = CreateSrcFileCommitErrors[keyof CreateSrcFileCommitErrors];
+type CreateSrcFileCommitResponses = {
     /**
      *
      *
      */
     201: unknown;
 };
-type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData = {
+type GetSrcFileData = {
     body?: never;
     path: {
         /**
@@ -13890,7 +13890,7 @@ type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData = {
     };
     url: '/repositories/{workspace}/{repo_slug}/src/{commit}/{path}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors = {
+type GetSrcFileErrors = {
     /**
      * If the path or commit in the URL does not exist.
      */
@@ -13900,8 +13900,8 @@ type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors = {
      */
     555: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathError = GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors[keyof GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors];
-type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses = {
+type GetSrcFileError = GetSrcFileErrors[keyof GetSrcFileErrors];
+type GetSrcFileResponses = {
     /**
      * If the path matches a file, then the raw contents of the file are
      * returned.  If the `format=meta` query parameter is provided,
@@ -13916,8 +13916,8 @@ type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses = {
      */
     200: PaginatedTreeentries;
 };
-type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponse = GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses[keyof GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses];
-type GetRepositoriesByWorkspaceByRepoSlugVersionsData = {
+type GetSrcFileResponse = GetSrcFileResponses[keyof GetSrcFileResponses];
+type ListVersionsData = {
     body?: never;
     path: {
         /**
@@ -13936,21 +13936,21 @@ type GetRepositoriesByWorkspaceByRepoSlugVersionsData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/versions';
 };
-type GetRepositoriesByWorkspaceByRepoSlugVersionsErrors = {
+type ListVersionsErrors = {
     /**
      * The specified repository does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugVersionsError = GetRepositoriesByWorkspaceByRepoSlugVersionsErrors[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsErrors];
-type GetRepositoriesByWorkspaceByRepoSlugVersionsResponses = {
+type ListVersionsError = ListVersionsErrors[keyof ListVersionsErrors];
+type ListVersionsResponses = {
     /**
      * The versions that have been defined in the issue tracker.
      */
     200: PaginatedVersions;
 };
-type GetRepositoriesByWorkspaceByRepoSlugVersionsResponse = GetRepositoriesByWorkspaceByRepoSlugVersionsResponses[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsResponses];
-type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData = {
+type ListVersionsResponse = ListVersionsResponses[keyof ListVersionsResponses];
+type GetVersionData = {
     body?: never;
     path: {
         /**
@@ -13973,21 +13973,21 @@ type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/versions/{version_id}';
 };
-type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors = {
+type GetVersionErrors = {
     /**
      * The specified repository or version does not exist or does not have the issue tracker enabled.
      */
     404: Error;
 };
-type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdError = GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors];
-type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses = {
+type GetVersionError = GetVersionErrors[keyof GetVersionErrors];
+type GetVersionResponses = {
     /**
      * The specified version object.
      */
     200: Version;
 };
-type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponse = GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses[keyof GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses];
-type GetRepositoriesByWorkspaceByRepoSlugWatchersData = {
+type GetVersionResponse = GetVersionResponses[keyof GetVersionResponses];
+type ListRepoWatchersData = {
     body?: never;
     path: {
         /**
@@ -14006,14 +14006,14 @@ type GetRepositoriesByWorkspaceByRepoSlugWatchersData = {
     query?: never;
     url: '/repositories/{workspace}/{repo_slug}/watchers';
 };
-type GetRepositoriesByWorkspaceByRepoSlugWatchersResponses = {
+type ListRepoWatchersResponses = {
     /**
      * A paginated list of all the watchers on the specified repository.
      */
     200: PaginatedAccounts;
 };
-type GetRepositoriesByWorkspaceByRepoSlugWatchersResponse = GetRepositoriesByWorkspaceByRepoSlugWatchersResponses[keyof GetRepositoriesByWorkspaceByRepoSlugWatchersResponses];
-type GetSnippetsData = {
+type ListRepoWatchersResponse = ListRepoWatchersResponses[keyof ListRepoWatchersResponses];
+type ListSnippetsData = {
     body?: never;
     path?: never;
     query?: {
@@ -14024,21 +14024,21 @@ type GetSnippetsData = {
     };
     url: '/snippets';
 };
-type GetSnippetsErrors = {
+type ListSnippetsErrors = {
     /**
      * If the snippet does not exist.
      */
     404: Error;
 };
-type GetSnippetsError = GetSnippetsErrors[keyof GetSnippetsErrors];
-type GetSnippetsResponses = {
+type ListSnippetsError = ListSnippetsErrors[keyof ListSnippetsErrors];
+type ListSnippetsResponses = {
     /**
      * A paginated list of snippets.
      */
     200: PaginatedSnippets;
 };
-type GetSnippetsResponse = GetSnippetsResponses[keyof GetSnippetsResponses];
-type PostSnippetsData = {
+type ListSnippetsResponse = ListSnippetsResponses[keyof ListSnippetsResponses];
+type CreateSnippetData = {
     /**
      * The new snippet object.
      */
@@ -14047,21 +14047,21 @@ type PostSnippetsData = {
     query?: never;
     url: '/snippets';
 };
-type PostSnippetsErrors = {
+type CreateSnippetErrors = {
     /**
      * If the request was not authenticated
      */
     401: Error;
 };
-type PostSnippetsError = PostSnippetsErrors[keyof PostSnippetsErrors];
-type PostSnippetsResponses = {
+type CreateSnippetError = CreateSnippetErrors[keyof CreateSnippetErrors];
+type CreateSnippetResponses = {
     /**
      * The newly created snippet object.
      */
     201: Snippet;
 };
-type PostSnippetsResponse = PostSnippetsResponses[keyof PostSnippetsResponses];
-type GetSnippetsByWorkspaceData = {
+type CreateSnippetResponse = CreateSnippetResponses[keyof CreateSnippetResponses];
+type ListWorkspaceSnippetsData = {
     body?: never;
     path: {
         /**
@@ -14079,21 +14079,21 @@ type GetSnippetsByWorkspaceData = {
     };
     url: '/snippets/{workspace}';
 };
-type GetSnippetsByWorkspaceErrors = {
+type ListWorkspaceSnippetsErrors = {
     /**
      * If the user does not exist.
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceError = GetSnippetsByWorkspaceErrors[keyof GetSnippetsByWorkspaceErrors];
-type GetSnippetsByWorkspaceResponses = {
+type ListWorkspaceSnippetsError = ListWorkspaceSnippetsErrors[keyof ListWorkspaceSnippetsErrors];
+type ListWorkspaceSnippetsResponses = {
     /**
      * A paginated list of snippets.
      */
     200: PaginatedSnippets;
 };
-type GetSnippetsByWorkspaceResponse = GetSnippetsByWorkspaceResponses[keyof GetSnippetsByWorkspaceResponses];
-type PostSnippetsByWorkspaceData = {
+type ListWorkspaceSnippetsResponse = ListWorkspaceSnippetsResponses[keyof ListWorkspaceSnippetsResponses];
+type CreateWorkspaceSnippetData = {
     /**
      * The new snippet object.
      */
@@ -14109,7 +14109,7 @@ type PostSnippetsByWorkspaceData = {
     query?: never;
     url: '/snippets/{workspace}';
 };
-type PostSnippetsByWorkspaceErrors = {
+type CreateWorkspaceSnippetErrors = {
     /**
      * If the request was not authenticated
      */
@@ -14119,15 +14119,15 @@ type PostSnippetsByWorkspaceErrors = {
      */
     403: Error;
 };
-type PostSnippetsByWorkspaceError = PostSnippetsByWorkspaceErrors[keyof PostSnippetsByWorkspaceErrors];
-type PostSnippetsByWorkspaceResponses = {
+type CreateWorkspaceSnippetError = CreateWorkspaceSnippetErrors[keyof CreateWorkspaceSnippetErrors];
+type CreateWorkspaceSnippetResponses = {
     /**
      * The newly created snippet object.
      */
     201: Snippet;
 };
-type PostSnippetsByWorkspaceResponse = PostSnippetsByWorkspaceResponses[keyof PostSnippetsByWorkspaceResponses];
-type DeleteSnippetsByWorkspaceByEncodedIdData = {
+type CreateWorkspaceSnippetResponse = CreateWorkspaceSnippetResponses[keyof CreateWorkspaceSnippetResponses];
+type DeleteSnippetData = {
     body?: never;
     path: {
         /**
@@ -14144,7 +14144,7 @@ type DeleteSnippetsByWorkspaceByEncodedIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}';
 };
-type DeleteSnippetsByWorkspaceByEncodedIdErrors = {
+type DeleteSnippetErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -14158,15 +14158,15 @@ type DeleteSnippetsByWorkspaceByEncodedIdErrors = {
      */
     404: Error;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdError = DeleteSnippetsByWorkspaceByEncodedIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdErrors];
-type DeleteSnippetsByWorkspaceByEncodedIdResponses = {
+type DeleteSnippetError = DeleteSnippetErrors[keyof DeleteSnippetErrors];
+type DeleteSnippetResponses = {
     /**
      * If the snippet was deleted successfully.
      */
     204: void;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdResponse = DeleteSnippetsByWorkspaceByEncodedIdResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdResponses];
-type GetSnippetsByWorkspaceByEncodedIdData = {
+type DeleteSnippetResponse = DeleteSnippetResponses[keyof DeleteSnippetResponses];
+type GetSnippetData = {
     body?: never;
     path: {
         /**
@@ -14183,7 +14183,7 @@ type GetSnippetsByWorkspaceByEncodedIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}';
 };
-type GetSnippetsByWorkspaceByEncodedIdErrors = {
+type GetSnippetErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -14201,15 +14201,15 @@ type GetSnippetsByWorkspaceByEncodedIdErrors = {
      */
     410: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdError = GetSnippetsByWorkspaceByEncodedIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdErrors];
-type GetSnippetsByWorkspaceByEncodedIdResponses = {
+type GetSnippetError = GetSnippetErrors[keyof GetSnippetErrors];
+type GetSnippetResponses = {
     /**
      * The snippet object.
      */
     200: Snippet;
 };
-type GetSnippetsByWorkspaceByEncodedIdResponse = GetSnippetsByWorkspaceByEncodedIdResponses[keyof GetSnippetsByWorkspaceByEncodedIdResponses];
-type PutSnippetsByWorkspaceByEncodedIdData = {
+type GetSnippetResponse = GetSnippetResponses[keyof GetSnippetResponses];
+type UpdateSnippetData = {
     body?: never;
     path: {
         /**
@@ -14226,7 +14226,7 @@ type PutSnippetsByWorkspaceByEncodedIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}';
 };
-type PutSnippetsByWorkspaceByEncodedIdErrors = {
+type UpdateSnippetErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -14240,15 +14240,15 @@ type PutSnippetsByWorkspaceByEncodedIdErrors = {
      */
     404: Error;
 };
-type PutSnippetsByWorkspaceByEncodedIdError = PutSnippetsByWorkspaceByEncodedIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdErrors];
-type PutSnippetsByWorkspaceByEncodedIdResponses = {
+type UpdateSnippetError = UpdateSnippetErrors[keyof UpdateSnippetErrors];
+type UpdateSnippetResponses = {
     /**
      * The updated snippet object.
      */
     200: Snippet;
 };
-type PutSnippetsByWorkspaceByEncodedIdResponse = PutSnippetsByWorkspaceByEncodedIdResponses[keyof PutSnippetsByWorkspaceByEncodedIdResponses];
-type GetSnippetsByWorkspaceByEncodedIdCommentsData = {
+type UpdateSnippetResponse = UpdateSnippetResponses[keyof UpdateSnippetResponses];
+type ListSnippetCommentsData = {
     body?: never;
     path: {
         /**
@@ -14265,7 +14265,7 @@ type GetSnippetsByWorkspaceByEncodedIdCommentsData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/comments';
 };
-type GetSnippetsByWorkspaceByEncodedIdCommentsErrors = {
+type ListSnippetCommentsErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14275,15 +14275,15 @@ type GetSnippetsByWorkspaceByEncodedIdCommentsErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommentsError = GetSnippetsByWorkspaceByEncodedIdCommentsErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommentsErrors];
-type GetSnippetsByWorkspaceByEncodedIdCommentsResponses = {
+type ListSnippetCommentsError = ListSnippetCommentsErrors[keyof ListSnippetCommentsErrors];
+type ListSnippetCommentsResponses = {
     /**
      * A paginated list of snippet comments, ordered by creation date.
      */
     200: PaginatedSnippetComments;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommentsResponse = GetSnippetsByWorkspaceByEncodedIdCommentsResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommentsResponses];
-type PostSnippetsByWorkspaceByEncodedIdCommentsData = {
+type ListSnippetCommentsResponse = ListSnippetCommentsResponses[keyof ListSnippetCommentsResponses];
+type CreateSnippetCommentData = {
     /**
      * The contents of the new comment.
      */
@@ -14303,7 +14303,7 @@ type PostSnippetsByWorkspaceByEncodedIdCommentsData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/comments';
 };
-type PostSnippetsByWorkspaceByEncodedIdCommentsErrors = {
+type CreateSnippetCommentErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14313,15 +14313,15 @@ type PostSnippetsByWorkspaceByEncodedIdCommentsErrors = {
      */
     404: Error;
 };
-type PostSnippetsByWorkspaceByEncodedIdCommentsError = PostSnippetsByWorkspaceByEncodedIdCommentsErrors[keyof PostSnippetsByWorkspaceByEncodedIdCommentsErrors];
-type PostSnippetsByWorkspaceByEncodedIdCommentsResponses = {
+type CreateSnippetCommentError = CreateSnippetCommentErrors[keyof CreateSnippetCommentErrors];
+type CreateSnippetCommentResponses = {
     /**
      * The newly created comment.
      */
     201: SnippetComment;
 };
-type PostSnippetsByWorkspaceByEncodedIdCommentsResponse = PostSnippetsByWorkspaceByEncodedIdCommentsResponses[keyof PostSnippetsByWorkspaceByEncodedIdCommentsResponses];
-type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
+type CreateSnippetCommentResponse = CreateSnippetCommentResponses[keyof CreateSnippetCommentResponses];
+type DeleteSnippetCommentData = {
     body?: never;
     path: {
         /**
@@ -14342,7 +14342,7 @@ type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/comments/{comment_id}';
 };
-type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
+type DeleteSnippetCommentErrors = {
     /**
      * If the authenticated user is not the author of the comment.
      */
@@ -14352,15 +14352,15 @@ type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
      */
     404: Error;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
-type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses = {
+type DeleteSnippetCommentError = DeleteSnippetCommentErrors[keyof DeleteSnippetCommentErrors];
+type DeleteSnippetCommentResponses = {
     /**
      * Indicates the comment was deleted successfully.
      */
     204: void;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse = DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses];
-type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
+type DeleteSnippetCommentResponse = DeleteSnippetCommentResponses[keyof DeleteSnippetCommentResponses];
+type GetSnippetCommentData = {
     body?: never;
     path: {
         /**
@@ -14381,7 +14381,7 @@ type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/comments/{comment_id}';
 };
-type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
+type GetSnippetCommentErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14391,15 +14391,15 @@ type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
-type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses = {
+type GetSnippetCommentError = GetSnippetCommentErrors[keyof GetSnippetCommentErrors];
+type GetSnippetCommentResponses = {
     /**
      * The specified comment.
      */
     200: SnippetComment;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse = GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses];
-type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
+type GetSnippetCommentResponse = GetSnippetCommentResponses[keyof GetSnippetCommentResponses];
+type UpdateSnippetCommentData = {
     /**
      * The contents to update the comment to.
      */
@@ -14423,7 +14423,7 @@ type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/comments/{comment_id}';
 };
-type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
+type UpdateSnippetCommentErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14433,15 +14433,15 @@ type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors = {
      */
     404: Error;
 };
-type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError = PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors];
-type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses = {
+type UpdateSnippetCommentError = UpdateSnippetCommentErrors[keyof UpdateSnippetCommentErrors];
+type UpdateSnippetCommentResponses = {
     /**
      * The updated comment object.
      */
     200: SnippetComment;
 };
-type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse = PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses[keyof PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses];
-type GetSnippetsByWorkspaceByEncodedIdCommitsData = {
+type UpdateSnippetCommentResponse = UpdateSnippetCommentResponses[keyof UpdateSnippetCommentResponses];
+type ListSnippetCommitsData = {
     body?: never;
     path: {
         /**
@@ -14458,7 +14458,7 @@ type GetSnippetsByWorkspaceByEncodedIdCommitsData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/commits';
 };
-type GetSnippetsByWorkspaceByEncodedIdCommitsErrors = {
+type ListSnippetCommitsErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14468,15 +14468,15 @@ type GetSnippetsByWorkspaceByEncodedIdCommitsErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommitsError = GetSnippetsByWorkspaceByEncodedIdCommitsErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommitsErrors];
-type GetSnippetsByWorkspaceByEncodedIdCommitsResponses = {
+type ListSnippetCommitsError = ListSnippetCommitsErrors[keyof ListSnippetCommitsErrors];
+type ListSnippetCommitsResponses = {
     /**
      * The paginated list of snippet commits.
      */
     200: PaginatedSnippetCommit;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommitsResponse = GetSnippetsByWorkspaceByEncodedIdCommitsResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommitsResponses];
-type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData = {
+type ListSnippetCommitsResponse = ListSnippetCommitsResponses[keyof ListSnippetCommitsResponses];
+type GetSnippetCommitData = {
     body?: never;
     path: {
         /**
@@ -14497,7 +14497,7 @@ type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/commits/{revision}';
 };
-type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors = {
+type GetSnippetCommitErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14507,15 +14507,15 @@ type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionError = GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors[keyof GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors];
-type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses = {
+type GetSnippetCommitError = GetSnippetCommitErrors[keyof GetSnippetCommitErrors];
+type GetSnippetCommitResponses = {
     /**
      * The specified snippet commit.
      */
     200: SnippetCommit;
 };
-type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponse = GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses[keyof GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses];
-type GetSnippetsByWorkspaceByEncodedIdFilesByPathData = {
+type GetSnippetCommitResponse = GetSnippetCommitResponses[keyof GetSnippetCommitResponses];
+type GetSnippetFileData = {
     body?: never;
     path: {
         /**
@@ -14536,7 +14536,7 @@ type GetSnippetsByWorkspaceByEncodedIdFilesByPathData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/files/{path}';
 };
-type GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors = {
+type GetSnippetFileErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14546,8 +14546,8 @@ type GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdFilesByPathError = GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors[keyof GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors];
-type DeleteSnippetsByWorkspaceByEncodedIdWatchData = {
+type GetSnippetFileError = GetSnippetFileErrors[keyof GetSnippetFileErrors];
+type UnwatchSnippetData = {
     body?: never;
     path: {
         /**
@@ -14564,7 +14564,7 @@ type DeleteSnippetsByWorkspaceByEncodedIdWatchData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/watch';
 };
-type DeleteSnippetsByWorkspaceByEncodedIdWatchErrors = {
+type UnwatchSnippetErrors = {
     /**
      * If the request was not authenticated.
      */
@@ -14574,15 +14574,15 @@ type DeleteSnippetsByWorkspaceByEncodedIdWatchErrors = {
      */
     404: Error;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdWatchError = DeleteSnippetsByWorkspaceByEncodedIdWatchErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdWatchErrors];
-type DeleteSnippetsByWorkspaceByEncodedIdWatchResponses = {
+type UnwatchSnippetError = UnwatchSnippetErrors[keyof UnwatchSnippetErrors];
+type UnwatchSnippetResponses = {
     /**
      * Indicates the user stopped watching the snippet successfully.
      */
     204: void;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdWatchResponse = DeleteSnippetsByWorkspaceByEncodedIdWatchResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdWatchResponses];
-type GetSnippetsByWorkspaceByEncodedIdWatchData = {
+type UnwatchSnippetResponse = UnwatchSnippetResponses[keyof UnwatchSnippetResponses];
+type GetSnippetWatchStatusData = {
     body?: never;
     path: {
         /**
@@ -14599,21 +14599,21 @@ type GetSnippetsByWorkspaceByEncodedIdWatchData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/watch';
 };
-type GetSnippetsByWorkspaceByEncodedIdWatchErrors = {
+type GetSnippetWatchStatusErrors = {
     /**
      * If the snippet does not exist, or if the authenticated user is not watching the snippet.
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdWatchError = GetSnippetsByWorkspaceByEncodedIdWatchErrors[keyof GetSnippetsByWorkspaceByEncodedIdWatchErrors];
-type GetSnippetsByWorkspaceByEncodedIdWatchResponses = {
+type GetSnippetWatchStatusError = GetSnippetWatchStatusErrors[keyof GetSnippetWatchStatusErrors];
+type GetSnippetWatchStatusResponses = {
     /**
      * If the authenticated user is watching the snippet.
      */
     204: void;
 };
-type GetSnippetsByWorkspaceByEncodedIdWatchResponse = GetSnippetsByWorkspaceByEncodedIdWatchResponses[keyof GetSnippetsByWorkspaceByEncodedIdWatchResponses];
-type PutSnippetsByWorkspaceByEncodedIdWatchData = {
+type GetSnippetWatchStatusResponse = GetSnippetWatchStatusResponses[keyof GetSnippetWatchStatusResponses];
+type WatchSnippetData = {
     body?: never;
     path: {
         /**
@@ -14630,7 +14630,7 @@ type PutSnippetsByWorkspaceByEncodedIdWatchData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/watch';
 };
-type PutSnippetsByWorkspaceByEncodedIdWatchErrors = {
+type WatchSnippetErrors = {
     /**
      * If the request was not authenticated.
      */
@@ -14640,15 +14640,15 @@ type PutSnippetsByWorkspaceByEncodedIdWatchErrors = {
      */
     404: Error;
 };
-type PutSnippetsByWorkspaceByEncodedIdWatchError = PutSnippetsByWorkspaceByEncodedIdWatchErrors[keyof PutSnippetsByWorkspaceByEncodedIdWatchErrors];
-type PutSnippetsByWorkspaceByEncodedIdWatchResponses = {
+type WatchSnippetError = WatchSnippetErrors[keyof WatchSnippetErrors];
+type WatchSnippetResponses = {
     /**
      * Indicates the authenticated user is now watching the snippet.
      */
     204: void;
 };
-type PutSnippetsByWorkspaceByEncodedIdWatchResponse = PutSnippetsByWorkspaceByEncodedIdWatchResponses[keyof PutSnippetsByWorkspaceByEncodedIdWatchResponses];
-type GetSnippetsByWorkspaceByEncodedIdWatchersData = {
+type WatchSnippetResponse = WatchSnippetResponses[keyof WatchSnippetResponses];
+type ListSnippetWatchersData = {
     body?: never;
     path: {
         /**
@@ -14665,21 +14665,21 @@ type GetSnippetsByWorkspaceByEncodedIdWatchersData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/watchers';
 };
-type GetSnippetsByWorkspaceByEncodedIdWatchersErrors = {
+type ListSnippetWatchersErrors = {
     /**
      * If the snippet does not exist.
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdWatchersError = GetSnippetsByWorkspaceByEncodedIdWatchersErrors[keyof GetSnippetsByWorkspaceByEncodedIdWatchersErrors];
-type GetSnippetsByWorkspaceByEncodedIdWatchersResponses = {
+type ListSnippetWatchersError = ListSnippetWatchersErrors[keyof ListSnippetWatchersErrors];
+type ListSnippetWatchersResponses = {
     /**
      * The paginated list of users watching this snippet
      */
     200: PaginatedAccounts;
 };
-type GetSnippetsByWorkspaceByEncodedIdWatchersResponse = GetSnippetsByWorkspaceByEncodedIdWatchersResponses[keyof GetSnippetsByWorkspaceByEncodedIdWatchersResponses];
-type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData = {
+type ListSnippetWatchersResponse = ListSnippetWatchersResponses[keyof ListSnippetWatchersResponses];
+type DeleteSnippetRevisionData = {
     body?: never;
     path: {
         /**
@@ -14700,7 +14700,7 @@ type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/{node_id}';
 };
-type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
+type DeleteSnippetRevisionErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -14718,15 +14718,15 @@ type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
      */
     405: Error;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdError = DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
-type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses = {
+type DeleteSnippetRevisionError = DeleteSnippetRevisionErrors[keyof DeleteSnippetRevisionErrors];
+type DeleteSnippetRevisionResponses = {
     /**
      * If the snippet was deleted successfully.
      */
     204: void;
 };
-type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponse = DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses[keyof DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses];
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdData = {
+type DeleteSnippetRevisionResponse = DeleteSnippetRevisionResponses[keyof DeleteSnippetRevisionResponses];
+type GetSnippetRevisionData = {
     body?: never;
     path: {
         /**
@@ -14747,7 +14747,7 @@ type GetSnippetsByWorkspaceByEncodedIdByNodeIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/{node_id}';
 };
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
+type GetSnippetRevisionErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -14761,15 +14761,15 @@ type GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdError = GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses = {
+type GetSnippetRevisionError = GetSnippetRevisionErrors[keyof GetSnippetRevisionErrors];
+type GetSnippetRevisionResponses = {
     /**
      * The snippet object.
      */
     200: Snippet;
 };
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdResponse = GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses];
-type PutSnippetsByWorkspaceByEncodedIdByNodeIdData = {
+type GetSnippetRevisionResponse = GetSnippetRevisionResponses[keyof GetSnippetRevisionResponses];
+type UpdateSnippetRevisionData = {
     body?: never;
     path: {
         /**
@@ -14790,7 +14790,7 @@ type PutSnippetsByWorkspaceByEncodedIdByNodeIdData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/{node_id}';
 };
-type PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
+type UpdateSnippetRevisionErrors = {
     /**
      * If the snippet is private and the request was not authenticated.
      */
@@ -14808,15 +14808,15 @@ type PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors = {
      */
     405: Error;
 };
-type PutSnippetsByWorkspaceByEncodedIdByNodeIdError = PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors[keyof PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors];
-type PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses = {
+type UpdateSnippetRevisionError = UpdateSnippetRevisionErrors[keyof UpdateSnippetRevisionErrors];
+type UpdateSnippetRevisionResponses = {
     /**
      * The updated snippet object.
      */
     200: Snippet;
 };
-type PutSnippetsByWorkspaceByEncodedIdByNodeIdResponse = PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses[keyof PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses];
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData = {
+type UpdateSnippetRevisionResponse = UpdateSnippetRevisionResponses[keyof UpdateSnippetRevisionResponses];
+type GetSnippetRevisionFileData = {
     body?: never;
     path: {
         /**
@@ -14841,7 +14841,7 @@ type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/{node_id}/files/{path}';
 };
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors = {
+type GetSnippetRevisionFileErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14851,14 +14851,14 @@ type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathError = GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors[keyof GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors];
-type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathResponses = {
+type GetSnippetRevisionFileError = GetSnippetRevisionFileErrors[keyof GetSnippetRevisionFileErrors];
+type GetSnippetRevisionFileResponses = {
     /**
      * Returns the contents of the specified file.
      */
     200: unknown;
 };
-type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData = {
+type GetSnippetDiffData = {
     body?: never;
     path: {
         /**
@@ -14884,7 +14884,7 @@ type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData = {
     };
     url: '/snippets/{workspace}/{encoded_id}/{revision}/diff';
 };
-type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors = {
+type GetSnippetDiffErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14894,14 +14894,14 @@ type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffError = GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors[keyof GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors];
-type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffResponses = {
+type GetSnippetDiffError = GetSnippetDiffErrors[keyof GetSnippetDiffErrors];
+type GetSnippetDiffResponses = {
     /**
      * The raw diff contents.
      */
     200: unknown;
 };
-type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData = {
+type GetSnippetPatchData = {
     body?: never;
     path: {
         /**
@@ -14922,7 +14922,7 @@ type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData = {
     query?: never;
     url: '/snippets/{workspace}/{encoded_id}/{revision}/patch';
 };
-type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors = {
+type GetSnippetPatchErrors = {
     /**
      * If the authenticated user does not have access to the snippet.
      */
@@ -14932,8 +14932,8 @@ type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors = {
      */
     404: Error;
 };
-type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchError = GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors[keyof GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors];
-type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchResponses = {
+type GetSnippetPatchError = GetSnippetPatchErrors[keyof GetSnippetPatchErrors];
+type GetSnippetPatchResponses = {
     /**
      * The raw patch contents.
      */
@@ -15175,7 +15175,7 @@ type GetUserEmailsResponses = {
     default: Error;
 };
 type GetUserEmailsResponse = GetUserEmailsResponses[keyof GetUserEmailsResponses];
-type GetUserEmailsByEmailData = {
+type GetUserEmailData = {
     body?: never;
     path: {
         /**
@@ -15186,20 +15186,20 @@ type GetUserEmailsByEmailData = {
     query?: never;
     url: '/user/emails/{email}';
 };
-type GetUserEmailsByEmailErrors = {
+type GetUserEmailErrors = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
-type GetUserEmailsByEmailError = GetUserEmailsByEmailErrors[keyof GetUserEmailsByEmailErrors];
-type GetUserEmailsByEmailResponses = {
+type GetUserEmailError = GetUserEmailErrors[keyof GetUserEmailErrors];
+type GetUserEmailResponses = {
     /**
      * Unexpected error.
      */
     default: Error;
 };
-type GetUserEmailsByEmailResponse = GetUserEmailsByEmailResponses[keyof GetUserEmailsByEmailResponses];
+type GetUserEmailResponse = GetUserEmailResponses[keyof GetUserEmailResponses];
 type GetUserPermissionsRepositoriesData = {
     body?: never;
     path?: never;
@@ -15294,7 +15294,7 @@ type GetUserWorkspacesResponses = {
     200: PaginatedWorkspaceAccess;
 };
 type GetUserWorkspacesResponse = GetUserWorkspacesResponses[keyof GetUserWorkspacesResponses];
-type GetUserWorkspacesByWorkspacePermissionData = {
+type GetUserWorkspacePermissionData = {
     body?: never;
     path: {
         /**
@@ -15307,7 +15307,7 @@ type GetUserWorkspacesByWorkspacePermissionData = {
     query?: never;
     url: '/user/workspaces/{workspace}/permission';
 };
-type GetUserWorkspacesByWorkspacePermissionErrors = {
+type GetUserWorkspacePermissionErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -15317,15 +15317,15 @@ type GetUserWorkspacesByWorkspacePermissionErrors = {
      */
     403: Error;
 };
-type GetUserWorkspacesByWorkspacePermissionError = GetUserWorkspacesByWorkspacePermissionErrors[keyof GetUserWorkspacesByWorkspacePermissionErrors];
-type GetUserWorkspacesByWorkspacePermissionResponses = {
+type GetUserWorkspacePermissionError = GetUserWorkspacePermissionErrors[keyof GetUserWorkspacePermissionErrors];
+type GetUserWorkspacePermissionResponses = {
     /**
      * The user that is part of a workspace.
      */
     200: WorkspaceMembership;
 };
-type GetUserWorkspacesByWorkspacePermissionResponse = GetUserWorkspacesByWorkspacePermissionResponses[keyof GetUserWorkspacesByWorkspacePermissionResponses];
-type GetUserWorkspacesByWorkspacePermissionsRepositoriesData = {
+type GetUserWorkspacePermissionResponse = GetUserWorkspacePermissionResponses[keyof GetUserWorkspacePermissionResponses];
+type ListUserWorkspaceRepoPermissionsData = {
     body?: never;
     path: {
         /**
@@ -15351,7 +15351,7 @@ type GetUserWorkspacesByWorkspacePermissionsRepositoriesData = {
     };
     url: '/user/workspaces/{workspace}/permissions/repositories';
 };
-type GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors = {
+type ListUserWorkspaceRepoPermissionsErrors = {
     /**
      * The request was invalid.
      */
@@ -15365,15 +15365,15 @@ type GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors = {
      */
     403: Error;
 };
-type GetUserWorkspacesByWorkspacePermissionsRepositoriesError = GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors[keyof GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors];
-type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses = {
+type ListUserWorkspaceRepoPermissionsError = ListUserWorkspaceRepoPermissionsErrors[keyof ListUserWorkspaceRepoPermissionsErrors];
+type ListUserWorkspaceRepoPermissionsResponses = {
     /**
      * The list of repository permissions for the authenticated user in the specified workspace.
      */
     200: PaginatedRepositoryPermissions;
 };
-type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponse = GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses[keyof GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses];
-type GetUsersBySelectedUserData = {
+type ListUserWorkspaceRepoPermissionsResponse = ListUserWorkspaceRepoPermissionsResponses[keyof ListUserWorkspaceRepoPermissionsResponses];
+type GetUserProfileData = {
     body?: never;
     path: {
         /**
@@ -15386,21 +15386,21 @@ type GetUsersBySelectedUserData = {
     query?: never;
     url: '/users/{selected_user}';
 };
-type GetUsersBySelectedUserErrors = {
+type GetUserProfileErrors = {
     /**
      * If no user exists for the specified UUID, or if the specified account is a team account, not a personal account.
      */
     404: Error;
 };
-type GetUsersBySelectedUserError = GetUsersBySelectedUserErrors[keyof GetUsersBySelectedUserErrors];
-type GetUsersBySelectedUserResponses = {
+type GetUserProfileError = GetUserProfileErrors[keyof GetUserProfileErrors];
+type GetUserProfileResponses = {
     /**
      * The user object
      */
     200: Account;
 };
-type GetUsersBySelectedUserResponse = GetUsersBySelectedUserResponses[keyof GetUsersBySelectedUserResponses];
-type GetUsersBySelectedUserGpgKeysData = {
+type GetUserProfileResponse = GetUserProfileResponses[keyof GetUserProfileResponses];
+type ListUserGpgKeysData = {
     body?: never;
     path: {
         /**
@@ -15413,7 +15413,7 @@ type GetUsersBySelectedUserGpgKeysData = {
     query?: never;
     url: '/users/{selected_user}/gpg-keys';
 };
-type GetUsersBySelectedUserGpgKeysErrors = {
+type ListUserGpgKeysErrors = {
     /**
      * If the specified user's keys are not accessible to the current user
      */
@@ -15423,15 +15423,15 @@ type GetUsersBySelectedUserGpgKeysErrors = {
      */
     404: Error;
 };
-type GetUsersBySelectedUserGpgKeysError = GetUsersBySelectedUserGpgKeysErrors[keyof GetUsersBySelectedUserGpgKeysErrors];
-type GetUsersBySelectedUserGpgKeysResponses = {
+type ListUserGpgKeysError = ListUserGpgKeysErrors[keyof ListUserGpgKeysErrors];
+type ListUserGpgKeysResponses = {
     /**
      * A list of the GPG keys associated with the account.
      */
     200: PaginatedGpgUserKeys;
 };
-type GetUsersBySelectedUserGpgKeysResponse = GetUsersBySelectedUserGpgKeysResponses[keyof GetUsersBySelectedUserGpgKeysResponses];
-type PostUsersBySelectedUserGpgKeysData = {
+type ListUserGpgKeysResponse = ListUserGpgKeysResponses[keyof ListUserGpgKeysResponses];
+type CreateUserGpgKeyData = {
     /**
      * The new GPG key object.
      */
@@ -15447,7 +15447,7 @@ type PostUsersBySelectedUserGpgKeysData = {
     query?: never;
     url: '/users/{selected_user}/gpg-keys';
 };
-type PostUsersBySelectedUserGpgKeysErrors = {
+type CreateUserGpgKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -15461,15 +15461,15 @@ type PostUsersBySelectedUserGpgKeysErrors = {
      */
     404: Error;
 };
-type PostUsersBySelectedUserGpgKeysError = PostUsersBySelectedUserGpgKeysErrors[keyof PostUsersBySelectedUserGpgKeysErrors];
-type PostUsersBySelectedUserGpgKeysResponses = {
+type CreateUserGpgKeyError = CreateUserGpgKeyErrors[keyof CreateUserGpgKeyErrors];
+type CreateUserGpgKeyResponses = {
     /**
      * The newly created GPG key.
      */
     201: GpgAccountKey;
 };
-type PostUsersBySelectedUserGpgKeysResponse = PostUsersBySelectedUserGpgKeysResponses[keyof PostUsersBySelectedUserGpgKeysResponses];
-type DeleteUsersBySelectedUserGpgKeysByFingerprintData = {
+type CreateUserGpgKeyResponse = CreateUserGpgKeyResponses[keyof CreateUserGpgKeyResponses];
+type DeleteUserGpgKeyData = {
     body?: never;
     path: {
         /**
@@ -15487,7 +15487,7 @@ type DeleteUsersBySelectedUserGpgKeysByFingerprintData = {
     query?: never;
     url: '/users/{selected_user}/gpg-keys/{fingerprint}';
 };
-type DeleteUsersBySelectedUserGpgKeysByFingerprintErrors = {
+type DeleteUserGpgKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -15501,15 +15501,15 @@ type DeleteUsersBySelectedUserGpgKeysByFingerprintErrors = {
      */
     404: Error;
 };
-type DeleteUsersBySelectedUserGpgKeysByFingerprintError = DeleteUsersBySelectedUserGpgKeysByFingerprintErrors[keyof DeleteUsersBySelectedUserGpgKeysByFingerprintErrors];
-type DeleteUsersBySelectedUserGpgKeysByFingerprintResponses = {
+type DeleteUserGpgKeyError = DeleteUserGpgKeyErrors[keyof DeleteUserGpgKeyErrors];
+type DeleteUserGpgKeyResponses = {
     /**
      * The key has been deleted
      */
     204: void;
 };
-type DeleteUsersBySelectedUserGpgKeysByFingerprintResponse = DeleteUsersBySelectedUserGpgKeysByFingerprintResponses[keyof DeleteUsersBySelectedUserGpgKeysByFingerprintResponses];
-type GetUsersBySelectedUserGpgKeysByFingerprintData = {
+type DeleteUserGpgKeyResponse = DeleteUserGpgKeyResponses[keyof DeleteUserGpgKeyResponses];
+type GetUserGpgKeyData = {
     body?: never;
     path: {
         /**
@@ -15527,7 +15527,7 @@ type GetUsersBySelectedUserGpgKeysByFingerprintData = {
     query?: never;
     url: '/users/{selected_user}/gpg-keys/{fingerprint}';
 };
-type GetUsersBySelectedUserGpgKeysByFingerprintErrors = {
+type GetUserGpgKeyErrors = {
     /**
      * If the specified user's keys are not accessible to the current user
      */
@@ -15537,14 +15537,14 @@ type GetUsersBySelectedUserGpgKeysByFingerprintErrors = {
      */
     404: Error;
 };
-type GetUsersBySelectedUserGpgKeysByFingerprintError = GetUsersBySelectedUserGpgKeysByFingerprintErrors[keyof GetUsersBySelectedUserGpgKeysByFingerprintErrors];
-type GetUsersBySelectedUserGpgKeysByFingerprintResponses = {
+type GetUserGpgKeyError = GetUserGpgKeyErrors[keyof GetUserGpgKeyErrors];
+type GetUserGpgKeyResponses = {
     /**
      * The specific GPG key matching the user and fingerprint.
      */
     200: GpgAccountKey;
 };
-type GetUsersBySelectedUserGpgKeysByFingerprintResponse = GetUsersBySelectedUserGpgKeysByFingerprintResponses[keyof GetUsersBySelectedUserGpgKeysByFingerprintResponses];
+type GetUserGpgKeyResponse = GetUserGpgKeyResponses[keyof GetUserGpgKeyResponses];
 type GetPipelineVariablesForUserData = {
     body?: never;
     path: {
@@ -15822,7 +15822,7 @@ type SearchAccountResponses = {
     200: SearchResultPage;
 };
 type SearchAccountResponse = SearchAccountResponses[keyof SearchAccountResponses];
-type GetUsersBySelectedUserSshKeysData = {
+type ListUserSshKeysData = {
     body?: never;
     path: {
         /**
@@ -15835,7 +15835,7 @@ type GetUsersBySelectedUserSshKeysData = {
     query?: never;
     url: '/users/{selected_user}/ssh-keys';
 };
-type GetUsersBySelectedUserSshKeysErrors = {
+type ListUserSshKeysErrors = {
     /**
      * If the specified user's keys are not accessible to the current user
      */
@@ -15845,15 +15845,15 @@ type GetUsersBySelectedUserSshKeysErrors = {
      */
     404: Error;
 };
-type GetUsersBySelectedUserSshKeysError = GetUsersBySelectedUserSshKeysErrors[keyof GetUsersBySelectedUserSshKeysErrors];
-type GetUsersBySelectedUserSshKeysResponses = {
+type ListUserSshKeysError = ListUserSshKeysErrors[keyof ListUserSshKeysErrors];
+type ListUserSshKeysResponses = {
     /**
      * A list of the SSH keys associated with the account.
      */
     200: PaginatedSshUserKeys;
 };
-type GetUsersBySelectedUserSshKeysResponse = GetUsersBySelectedUserSshKeysResponses[keyof GetUsersBySelectedUserSshKeysResponses];
-type PostUsersBySelectedUserSshKeysData = {
+type ListUserSshKeysResponse = ListUserSshKeysResponses[keyof ListUserSshKeysResponses];
+type CreateUserSshKeyData = {
     /**
      * The new SSH key object. Note that the username property has been deprecated due to [privacy changes](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#removal-of-usernames-from-user-referencing-apis).
      */
@@ -15876,7 +15876,7 @@ type PostUsersBySelectedUserSshKeysData = {
     };
     url: '/users/{selected_user}/ssh-keys';
 };
-type PostUsersBySelectedUserSshKeysErrors = {
+type CreateUserSshKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -15890,15 +15890,15 @@ type PostUsersBySelectedUserSshKeysErrors = {
      */
     404: Error;
 };
-type PostUsersBySelectedUserSshKeysError = PostUsersBySelectedUserSshKeysErrors[keyof PostUsersBySelectedUserSshKeysErrors];
-type PostUsersBySelectedUserSshKeysResponses = {
+type CreateUserSshKeyError = CreateUserSshKeyErrors[keyof CreateUserSshKeyErrors];
+type CreateUserSshKeyResponses = {
     /**
      * The newly created SSH key.
      */
     201: SshAccountKey;
 };
-type PostUsersBySelectedUserSshKeysResponse = PostUsersBySelectedUserSshKeysResponses[keyof PostUsersBySelectedUserSshKeysResponses];
-type DeleteUsersBySelectedUserSshKeysByKeyIdData = {
+type CreateUserSshKeyResponse = CreateUserSshKeyResponses[keyof CreateUserSshKeyResponses];
+type DeleteUserSshKeyData = {
     body?: never;
     path: {
         /**
@@ -15915,7 +15915,7 @@ type DeleteUsersBySelectedUserSshKeysByKeyIdData = {
     query?: never;
     url: '/users/{selected_user}/ssh-keys/{key_id}';
 };
-type DeleteUsersBySelectedUserSshKeysByKeyIdErrors = {
+type DeleteUserSshKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -15929,15 +15929,15 @@ type DeleteUsersBySelectedUserSshKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type DeleteUsersBySelectedUserSshKeysByKeyIdError = DeleteUsersBySelectedUserSshKeysByKeyIdErrors[keyof DeleteUsersBySelectedUserSshKeysByKeyIdErrors];
-type DeleteUsersBySelectedUserSshKeysByKeyIdResponses = {
+type DeleteUserSshKeyError = DeleteUserSshKeyErrors[keyof DeleteUserSshKeyErrors];
+type DeleteUserSshKeyResponses = {
     /**
      * The key has been deleted
      */
     204: void;
 };
-type DeleteUsersBySelectedUserSshKeysByKeyIdResponse = DeleteUsersBySelectedUserSshKeysByKeyIdResponses[keyof DeleteUsersBySelectedUserSshKeysByKeyIdResponses];
-type GetUsersBySelectedUserSshKeysByKeyIdData = {
+type DeleteUserSshKeyResponse = DeleteUserSshKeyResponses[keyof DeleteUserSshKeyResponses];
+type GetUserSshKeyData = {
     body?: never;
     path: {
         /**
@@ -15954,7 +15954,7 @@ type GetUsersBySelectedUserSshKeysByKeyIdData = {
     query?: never;
     url: '/users/{selected_user}/ssh-keys/{key_id}';
 };
-type GetUsersBySelectedUserSshKeysByKeyIdErrors = {
+type GetUserSshKeyErrors = {
     /**
      * If the specified user or key is not accessible to the current user
      */
@@ -15964,15 +15964,15 @@ type GetUsersBySelectedUserSshKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type GetUsersBySelectedUserSshKeysByKeyIdError = GetUsersBySelectedUserSshKeysByKeyIdErrors[keyof GetUsersBySelectedUserSshKeysByKeyIdErrors];
-type GetUsersBySelectedUserSshKeysByKeyIdResponses = {
+type GetUserSshKeyError = GetUserSshKeyErrors[keyof GetUserSshKeyErrors];
+type GetUserSshKeyResponses = {
     /**
      * The specific SSH key matching the user and UUID
      */
     200: SshAccountKey;
 };
-type GetUsersBySelectedUserSshKeysByKeyIdResponse = GetUsersBySelectedUserSshKeysByKeyIdResponses[keyof GetUsersBySelectedUserSshKeysByKeyIdResponses];
-type PutUsersBySelectedUserSshKeysByKeyIdData = {
+type GetUserSshKeyResponse = GetUserSshKeyResponses[keyof GetUserSshKeyResponses];
+type UpdateUserSshKeyData = {
     /**
      * The updated SSH key object
      */
@@ -15992,7 +15992,7 @@ type PutUsersBySelectedUserSshKeysByKeyIdData = {
     query?: never;
     url: '/users/{selected_user}/ssh-keys/{key_id}';
 };
-type PutUsersBySelectedUserSshKeysByKeyIdErrors = {
+type UpdateUserSshKeyErrors = {
     /**
      * If the submitted key or related value is invalid
      */
@@ -16006,15 +16006,15 @@ type PutUsersBySelectedUserSshKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type PutUsersBySelectedUserSshKeysByKeyIdError = PutUsersBySelectedUserSshKeysByKeyIdErrors[keyof PutUsersBySelectedUserSshKeysByKeyIdErrors];
-type PutUsersBySelectedUserSshKeysByKeyIdResponses = {
+type UpdateUserSshKeyError = UpdateUserSshKeyErrors[keyof UpdateUserSshKeyErrors];
+type UpdateUserSshKeyResponses = {
     /**
      * The newly updated SSH key.
      */
     200: SshAccountKey;
 };
-type PutUsersBySelectedUserSshKeysByKeyIdResponse = PutUsersBySelectedUserSshKeysByKeyIdResponses[keyof PutUsersBySelectedUserSshKeysByKeyIdResponses];
-type GetWorkspacesData = {
+type UpdateUserSshKeyResponse = UpdateUserSshKeyResponses[keyof UpdateUserSshKeyResponses];
+type ListWorkspacesData = {
     body?: never;
     path?: never;
     query?: {
@@ -16047,21 +16047,21 @@ type GetWorkspacesData = {
     };
     url: '/workspaces';
 };
-type GetWorkspacesErrors = {
+type ListWorkspacesErrors = {
     /**
      * The request wasn't authenticated.
      */
     401: Error;
 };
-type GetWorkspacesError = GetWorkspacesErrors[keyof GetWorkspacesErrors];
-type GetWorkspacesResponses = {
+type ListWorkspacesError = ListWorkspacesErrors[keyof ListWorkspacesErrors];
+type ListWorkspacesResponses = {
     /**
      * The list of workspaces accessible by the authenticated user.
      */
     200: PaginatedWorkspaces;
 };
-type GetWorkspacesResponse = GetWorkspacesResponses[keyof GetWorkspacesResponses];
-type GetWorkspacesByWorkspaceData = {
+type ListWorkspacesResponse = ListWorkspacesResponses[keyof ListWorkspacesResponses];
+type GetWorkspaceData = {
     body?: never;
     path: {
         /**
@@ -16074,21 +16074,21 @@ type GetWorkspacesByWorkspaceData = {
     query?: never;
     url: '/workspaces/{workspace}';
 };
-type GetWorkspacesByWorkspaceErrors = {
+type GetWorkspaceErrors = {
     /**
      * If no workspace exists for the specified name or UUID.
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceError = GetWorkspacesByWorkspaceErrors[keyof GetWorkspacesByWorkspaceErrors];
-type GetWorkspacesByWorkspaceResponses = {
+type GetWorkspaceError = GetWorkspaceErrors[keyof GetWorkspaceErrors];
+type GetWorkspaceResponses = {
     /**
      * The workspace.
      */
     200: Workspace;
 };
-type GetWorkspacesByWorkspaceResponse = GetWorkspacesByWorkspaceResponses[keyof GetWorkspacesByWorkspaceResponses];
-type GetWorkspacesByWorkspaceHooksData = {
+type GetWorkspaceResponse = GetWorkspaceResponses[keyof GetWorkspaceResponses];
+type ListWorkspaceHooksData = {
     body?: never;
     path: {
         /**
@@ -16101,7 +16101,7 @@ type GetWorkspacesByWorkspaceHooksData = {
     query?: never;
     url: '/workspaces/{workspace}/hooks';
 };
-type GetWorkspacesByWorkspaceHooksErrors = {
+type ListWorkspaceHooksErrors = {
     /**
      * If the authenticated user is not an owner on the specified workspace.
      */
@@ -16111,15 +16111,15 @@ type GetWorkspacesByWorkspaceHooksErrors = {
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceHooksError = GetWorkspacesByWorkspaceHooksErrors[keyof GetWorkspacesByWorkspaceHooksErrors];
-type GetWorkspacesByWorkspaceHooksResponses = {
+type ListWorkspaceHooksError = ListWorkspaceHooksErrors[keyof ListWorkspaceHooksErrors];
+type ListWorkspaceHooksResponses = {
     /**
      * The paginated list of installed webhooks.
      */
     200: PaginatedWebhookSubscriptions;
 };
-type GetWorkspacesByWorkspaceHooksResponse = GetWorkspacesByWorkspaceHooksResponses[keyof GetWorkspacesByWorkspaceHooksResponses];
-type PostWorkspacesByWorkspaceHooksData = {
+type ListWorkspaceHooksResponse = ListWorkspaceHooksResponses[keyof ListWorkspaceHooksResponses];
+type CreateWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -16132,7 +16132,7 @@ type PostWorkspacesByWorkspaceHooksData = {
     query?: never;
     url: '/workspaces/{workspace}/hooks';
 };
-type PostWorkspacesByWorkspaceHooksErrors = {
+type CreateWorkspaceHookErrors = {
     /**
      * If the authenticated user does not have permission to install webhooks on the specified workspace.
      */
@@ -16142,15 +16142,15 @@ type PostWorkspacesByWorkspaceHooksErrors = {
      */
     404: Error;
 };
-type PostWorkspacesByWorkspaceHooksError = PostWorkspacesByWorkspaceHooksErrors[keyof PostWorkspacesByWorkspaceHooksErrors];
-type PostWorkspacesByWorkspaceHooksResponses = {
+type CreateWorkspaceHookError = CreateWorkspaceHookErrors[keyof CreateWorkspaceHookErrors];
+type CreateWorkspaceHookResponses = {
     /**
      * If the webhook was registered successfully.
      */
     201: WebhookSubscription;
 };
-type PostWorkspacesByWorkspaceHooksResponse = PostWorkspacesByWorkspaceHooksResponses[keyof PostWorkspacesByWorkspaceHooksResponses];
-type DeleteWorkspacesByWorkspaceHooksByUidData = {
+type CreateWorkspaceHookResponse = CreateWorkspaceHookResponses[keyof CreateWorkspaceHookResponses];
+type DeleteWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -16167,7 +16167,7 @@ type DeleteWorkspacesByWorkspaceHooksByUidData = {
     query?: never;
     url: '/workspaces/{workspace}/hooks/{uid}';
 };
-type DeleteWorkspacesByWorkspaceHooksByUidErrors = {
+type DeleteWorkspaceHookErrors = {
     /**
      * If the authenticated user does not have permission to delete the webhook.
      */
@@ -16177,15 +16177,15 @@ type DeleteWorkspacesByWorkspaceHooksByUidErrors = {
      */
     404: Error;
 };
-type DeleteWorkspacesByWorkspaceHooksByUidError = DeleteWorkspacesByWorkspaceHooksByUidErrors[keyof DeleteWorkspacesByWorkspaceHooksByUidErrors];
-type DeleteWorkspacesByWorkspaceHooksByUidResponses = {
+type DeleteWorkspaceHookError = DeleteWorkspaceHookErrors[keyof DeleteWorkspaceHookErrors];
+type DeleteWorkspaceHookResponses = {
     /**
      * When the webhook was deleted successfully
      */
     204: void;
 };
-type DeleteWorkspacesByWorkspaceHooksByUidResponse = DeleteWorkspacesByWorkspaceHooksByUidResponses[keyof DeleteWorkspacesByWorkspaceHooksByUidResponses];
-type GetWorkspacesByWorkspaceHooksByUidData = {
+type DeleteWorkspaceHookResponse = DeleteWorkspaceHookResponses[keyof DeleteWorkspaceHookResponses];
+type GetWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -16202,21 +16202,21 @@ type GetWorkspacesByWorkspaceHooksByUidData = {
     query?: never;
     url: '/workspaces/{workspace}/hooks/{uid}';
 };
-type GetWorkspacesByWorkspaceHooksByUidErrors = {
+type GetWorkspaceHookErrors = {
     /**
      * If the webhook or workspace does not exist.
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceHooksByUidError = GetWorkspacesByWorkspaceHooksByUidErrors[keyof GetWorkspacesByWorkspaceHooksByUidErrors];
-type GetWorkspacesByWorkspaceHooksByUidResponses = {
+type GetWorkspaceHookError = GetWorkspaceHookErrors[keyof GetWorkspaceHookErrors];
+type GetWorkspaceHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
-type GetWorkspacesByWorkspaceHooksByUidResponse = GetWorkspacesByWorkspaceHooksByUidResponses[keyof GetWorkspacesByWorkspaceHooksByUidResponses];
-type PutWorkspacesByWorkspaceHooksByUidData = {
+type GetWorkspaceHookResponse = GetWorkspaceHookResponses[keyof GetWorkspaceHookResponses];
+type UpdateWorkspaceHookData = {
     body?: never;
     path: {
         /**
@@ -16233,7 +16233,7 @@ type PutWorkspacesByWorkspaceHooksByUidData = {
     query?: never;
     url: '/workspaces/{workspace}/hooks/{uid}';
 };
-type PutWorkspacesByWorkspaceHooksByUidErrors = {
+type UpdateWorkspaceHookErrors = {
     /**
      * If the authenticated user does not have permission to update the webhook.
      */
@@ -16243,15 +16243,15 @@ type PutWorkspacesByWorkspaceHooksByUidErrors = {
      */
     404: Error;
 };
-type PutWorkspacesByWorkspaceHooksByUidError = PutWorkspacesByWorkspaceHooksByUidErrors[keyof PutWorkspacesByWorkspaceHooksByUidErrors];
-type PutWorkspacesByWorkspaceHooksByUidResponses = {
+type UpdateWorkspaceHookError = UpdateWorkspaceHookErrors[keyof UpdateWorkspaceHookErrors];
+type UpdateWorkspaceHookResponses = {
     /**
      * The webhook subscription object.
      */
     200: WebhookSubscription;
 };
-type PutWorkspacesByWorkspaceHooksByUidResponse = PutWorkspacesByWorkspaceHooksByUidResponses[keyof PutWorkspacesByWorkspaceHooksByUidResponses];
-type GetWorkspacesByWorkspaceMembersData = {
+type UpdateWorkspaceHookResponse = UpdateWorkspaceHookResponses[keyof UpdateWorkspaceHookResponses];
+type ListWorkspaceMembersData = {
     body?: never;
     path: {
         /**
@@ -16264,7 +16264,7 @@ type GetWorkspacesByWorkspaceMembersData = {
     query?: never;
     url: '/workspaces/{workspace}/members';
 };
-type GetWorkspacesByWorkspaceMembersErrors = {
+type ListWorkspaceMembersErrors = {
     /**
      * When more than 90 emails were provided when querying by email.
      */
@@ -16274,15 +16274,15 @@ type GetWorkspacesByWorkspaceMembersErrors = {
      */
     401: Error;
 };
-type GetWorkspacesByWorkspaceMembersError = GetWorkspacesByWorkspaceMembersErrors[keyof GetWorkspacesByWorkspaceMembersErrors];
-type GetWorkspacesByWorkspaceMembersResponses = {
+type ListWorkspaceMembersError = ListWorkspaceMembersErrors[keyof ListWorkspaceMembersErrors];
+type ListWorkspaceMembersResponses = {
     /**
      * The list of users that are part of a workspace.
      */
     200: PaginatedWorkspaceMemberships;
 };
-type GetWorkspacesByWorkspaceMembersResponse = GetWorkspacesByWorkspaceMembersResponses[keyof GetWorkspacesByWorkspaceMembersResponses];
-type GetWorkspacesByWorkspaceMembersByMemberData = {
+type ListWorkspaceMembersResponse = ListWorkspaceMembersResponses[keyof ListWorkspaceMembersResponses];
+type GetWorkspaceMemberData = {
     body?: never;
     path: {
         /**
@@ -16299,7 +16299,7 @@ type GetWorkspacesByWorkspaceMembersByMemberData = {
     query?: never;
     url: '/workspaces/{workspace}/members/{member}';
 };
-type GetWorkspacesByWorkspaceMembersByMemberErrors = {
+type GetWorkspaceMemberErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -16309,15 +16309,15 @@ type GetWorkspacesByWorkspaceMembersByMemberErrors = {
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceMembersByMemberError = GetWorkspacesByWorkspaceMembersByMemberErrors[keyof GetWorkspacesByWorkspaceMembersByMemberErrors];
-type GetWorkspacesByWorkspaceMembersByMemberResponses = {
+type GetWorkspaceMemberError = GetWorkspaceMemberErrors[keyof GetWorkspaceMemberErrors];
+type GetWorkspaceMemberResponses = {
     /**
      * The user that is part of a workspace.
      */
     200: WorkspaceMembership;
 };
-type GetWorkspacesByWorkspaceMembersByMemberResponse = GetWorkspacesByWorkspaceMembersByMemberResponses[keyof GetWorkspacesByWorkspaceMembersByMemberResponses];
-type GetWorkspacesByWorkspacePermissionsData = {
+type GetWorkspaceMemberResponse = GetWorkspaceMemberResponses[keyof GetWorkspaceMemberResponses];
+type ListWorkspacePermissionsData = {
     body?: never;
     path: {
         /**
@@ -16337,21 +16337,21 @@ type GetWorkspacesByWorkspacePermissionsData = {
     };
     url: '/workspaces/{workspace}/permissions';
 };
-type GetWorkspacesByWorkspacePermissionsErrors = {
+type ListWorkspacePermissionsErrors = {
     /**
      * The request wasn't authenticated.
      */
     401: Error;
 };
-type GetWorkspacesByWorkspacePermissionsError = GetWorkspacesByWorkspacePermissionsErrors[keyof GetWorkspacesByWorkspacePermissionsErrors];
-type GetWorkspacesByWorkspacePermissionsResponses = {
+type ListWorkspacePermissionsError = ListWorkspacePermissionsErrors[keyof ListWorkspacePermissionsErrors];
+type ListWorkspacePermissionsResponses = {
     /**
      * The list of users that are part of a workspace, along with their permission.
      */
     200: PaginatedWorkspaceMemberships;
 };
-type GetWorkspacesByWorkspacePermissionsResponse = GetWorkspacesByWorkspacePermissionsResponses[keyof GetWorkspacesByWorkspacePermissionsResponses];
-type GetWorkspacesByWorkspacePermissionsRepositoriesData = {
+type ListWorkspacePermissionsResponse = ListWorkspacePermissionsResponses[keyof ListWorkspacePermissionsResponses];
+type ListWorkspaceRepoPermissionsData = {
     body?: never;
     path: {
         /**
@@ -16378,21 +16378,21 @@ type GetWorkspacesByWorkspacePermissionsRepositoriesData = {
     };
     url: '/workspaces/{workspace}/permissions/repositories';
 };
-type GetWorkspacesByWorkspacePermissionsRepositoriesErrors = {
+type ListWorkspaceRepoPermissionsErrors = {
     /**
      * The requesting user isn't an admin of the workspace.
      */
     403: Error;
 };
-type GetWorkspacesByWorkspacePermissionsRepositoriesError = GetWorkspacesByWorkspacePermissionsRepositoriesErrors[keyof GetWorkspacesByWorkspacePermissionsRepositoriesErrors];
-type GetWorkspacesByWorkspacePermissionsRepositoriesResponses = {
+type ListWorkspaceRepoPermissionsError = ListWorkspaceRepoPermissionsErrors[keyof ListWorkspaceRepoPermissionsErrors];
+type ListWorkspaceRepoPermissionsResponses = {
     /**
      * List of workspace's repository permissions.
      */
     200: PaginatedRepositoryPermissions;
 };
-type GetWorkspacesByWorkspacePermissionsRepositoriesResponse = GetWorkspacesByWorkspacePermissionsRepositoriesResponses[keyof GetWorkspacesByWorkspacePermissionsRepositoriesResponses];
-type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData = {
+type ListWorkspaceRepoPermissionsResponse = ListWorkspaceRepoPermissionsResponses[keyof ListWorkspaceRepoPermissionsResponses];
+type GetWorkspaceRepoPermissionData = {
     body?: never;
     path: {
         /**
@@ -16425,20 +16425,20 @@ type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData = {
     };
     url: '/workspaces/{workspace}/permissions/repositories/{repo_slug}';
 };
-type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors = {
+type GetWorkspaceRepoPermissionErrors = {
     /**
      * The requesting user isn't an admin of the repository.
      */
     403: Error;
 };
-type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugError = GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors[keyof GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors];
-type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses = {
+type GetWorkspaceRepoPermissionError = GetWorkspaceRepoPermissionErrors[keyof GetWorkspaceRepoPermissionErrors];
+type GetWorkspaceRepoPermissionResponses = {
     /**
      * The repository permission for all users in this repository.
      */
     200: PaginatedRepositoryPermissions;
 };
-type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponse = GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses[keyof GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses];
+type GetWorkspaceRepoPermissionResponse = GetWorkspaceRepoPermissionResponses[keyof GetWorkspaceRepoPermissionResponses];
 type GetOidcConfigurationData = {
     body?: never;
     path: {
@@ -16761,7 +16761,7 @@ type UpdatePipelineVariableForWorkspaceResponses = {
     200: PipelineVariable;
 };
 type UpdatePipelineVariableForWorkspaceResponse = UpdatePipelineVariableForWorkspaceResponses[keyof UpdatePipelineVariableForWorkspaceResponses];
-type GetWorkspacesByWorkspaceProjectsData = {
+type ListProjectsData = {
     body?: never;
     path: {
         /**
@@ -16774,21 +16774,21 @@ type GetWorkspacesByWorkspaceProjectsData = {
     query?: never;
     url: '/workspaces/{workspace}/projects';
 };
-type GetWorkspacesByWorkspaceProjectsErrors = {
+type ListProjectsErrors = {
     /**
      * A workspace doesn't exist at this location.
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsError = GetWorkspacesByWorkspaceProjectsErrors[keyof GetWorkspacesByWorkspaceProjectsErrors];
-type GetWorkspacesByWorkspaceProjectsResponses = {
+type ListProjectsError = ListProjectsErrors[keyof ListProjectsErrors];
+type ListProjectsResponses = {
     /**
      * The list of projects in this workspace.
      */
     200: PaginatedProjects;
 };
-type GetWorkspacesByWorkspaceProjectsResponse = GetWorkspacesByWorkspaceProjectsResponses[keyof GetWorkspacesByWorkspaceProjectsResponses];
-type PostWorkspacesByWorkspaceProjectsData = {
+type ListProjectsResponse = ListProjectsResponses[keyof ListProjectsResponses];
+type CreateProjectData = {
     body: Project2;
     path: {
         /**
@@ -16801,7 +16801,7 @@ type PostWorkspacesByWorkspaceProjectsData = {
     query?: never;
     url: '/workspaces/{workspace}/projects';
 };
-type PostWorkspacesByWorkspaceProjectsErrors = {
+type CreateProjectErrors = {
     /**
      * The user requesting to create a project does not have the necessary permissions.
      */
@@ -16811,15 +16811,15 @@ type PostWorkspacesByWorkspaceProjectsErrors = {
      */
     404: Error;
 };
-type PostWorkspacesByWorkspaceProjectsError = PostWorkspacesByWorkspaceProjectsErrors[keyof PostWorkspacesByWorkspaceProjectsErrors];
-type PostWorkspacesByWorkspaceProjectsResponses = {
+type CreateProjectError = CreateProjectErrors[keyof CreateProjectErrors];
+type CreateProjectResponses = {
     /**
      * A new project has been created.
      */
     201: Project;
 };
-type PostWorkspacesByWorkspaceProjectsResponse = PostWorkspacesByWorkspaceProjectsResponses[keyof PostWorkspacesByWorkspaceProjectsResponses];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyData = {
+type CreateProjectResponse = CreateProjectResponses[keyof CreateProjectResponses];
+type DeleteProjectData = {
     body?: never;
     path: {
         /**
@@ -16838,7 +16838,7 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}';
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
+type DeleteProjectErrors = {
     /**
      * The requesting user isn't authorized to delete the project or the project isn't empty.
      */
@@ -16848,15 +16848,15 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
      */
     404: Error;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
+type DeleteProjectError = DeleteProjectErrors[keyof DeleteProjectErrors];
+type DeleteProjectResponses = {
     /**
      * Successful deletion.
      */
     204: void;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyData = {
+type DeleteProjectResponse = DeleteProjectResponses[keyof DeleteProjectResponses];
+type GetProjectData = {
     body?: never;
     path: {
         /**
@@ -16875,7 +16875,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
+type GetProjectErrors = {
     /**
      * The request wasn't authenticated.
      */
@@ -16889,15 +16889,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyError = GetWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
+type GetProjectError = GetProjectErrors[keyof GetProjectErrors];
+type GetProjectResponses = {
     /**
      * The project that is part of a workspace.
      */
     200: Project;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyResponses];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyData = {
+type GetProjectResponse = GetProjectResponses[keyof GetProjectResponses];
+type UpdateProjectData = {
     body: Project2;
     path: {
         /**
@@ -16916,7 +16916,7 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}';
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
+type UpdateProjectErrors = {
     /**
      * The requesting user isn't authorized to update or create the project.
      */
@@ -16926,8 +16926,8 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyErrors = {
      */
     404: Error;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyError = PutWorkspacesByWorkspaceProjectsByProjectKeyErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyErrors];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
+type UpdateProjectError = UpdateProjectErrors[keyof UpdateProjectErrors];
+type UpdateProjectResponses = {
     /**
      * The existing project is has been updated.
      */
@@ -16937,8 +16937,8 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyResponses = {
      */
     201: Project;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData = {
+type UpdateProjectResponse = UpdateProjectResponses[keyof UpdateProjectResponses];
+type GetProjectBranchingModelData = {
     body?: never;
     path: {
         /**
@@ -16957,7 +16957,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/branching-model';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors = {
+type GetProjectBranchingModelErrors = {
     /**
      * If the request was not authenticated
      */
@@ -16971,15 +16971,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors = {
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelError = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses = {
+type GetProjectBranchingModelError = GetProjectBranchingModelErrors[keyof GetProjectBranchingModelErrors];
+type GetProjectBranchingModelResponses = {
     /**
      * The branching model object
      */
     200: ProjectBranchingModel;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData = {
+type GetProjectBranchingModelResponse = GetProjectBranchingModelResponses[keyof GetProjectBranchingModelResponses];
+type GetProjectBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -16998,7 +16998,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/branching-model/settings';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors = {
+type GetProjectBranchingModelSettingsErrors = {
     /**
      * If the request was not authenticated
      */
@@ -17012,15 +17012,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors = 
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses = {
+type GetProjectBranchingModelSettingsError = GetProjectBranchingModelSettingsErrors[keyof GetProjectBranchingModelSettingsErrors];
+type GetProjectBranchingModelSettingsResponses = {
     /**
      * The branching model configuration
      */
     200: BranchingModelSettings;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData = {
+type GetProjectBranchingModelSettingsResponse = GetProjectBranchingModelSettingsResponses[keyof GetProjectBranchingModelSettingsResponses];
+type UpdateProjectBranchingModelSettingsData = {
     body?: never;
     path: {
         /**
@@ -17039,7 +17039,7 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/branching-model/settings';
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors = {
+type UpdateProjectBranchingModelSettingsErrors = {
     /**
      * If the request contains an invalid branching model configuration
      */
@@ -17057,15 +17057,15 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors = 
      */
     404: Error;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError = PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses = {
+type UpdateProjectBranchingModelSettingsError = UpdateProjectBranchingModelSettingsErrors[keyof UpdateProjectBranchingModelSettingsErrors];
+type UpdateProjectBranchingModelSettingsResponses = {
     /**
      * The updated branching model configuration
      */
     200: BranchingModelSettings;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData = {
+type UpdateProjectBranchingModelSettingsResponse = UpdateProjectBranchingModelSettingsResponses[keyof UpdateProjectBranchingModelSettingsResponses];
+type ListProjectDefaultReviewersData = {
     body?: never;
     path: {
         /**
@@ -17084,7 +17084,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors = {
+type ListProjectDefaultReviewersErrors = {
     /**
      * If the authenticated user does not have admin access to the project
      */
@@ -17094,15 +17094,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors = {
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersError = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses = {
+type ListProjectDefaultReviewersError = ListProjectDefaultReviewersErrors[keyof ListProjectDefaultReviewersErrors];
+type ListProjectDefaultReviewersResponses = {
     /**
      * The list of project default reviewers
      */
     200: PaginatedDefaultReviewerAndType;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData = {
+type ListProjectDefaultReviewersResponse = ListProjectDefaultReviewersResponses[keyof ListProjectDefaultReviewersResponses];
+type DeleteProjectDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -17127,7 +17127,7 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUs
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}';
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors = {
+type DeleteProjectDefaultReviewerErrors = {
     /**
      * If the specified user is not a default reviewer for the project
      */
@@ -17141,15 +17141,15 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUs
      */
     404: Error;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses = {
+type DeleteProjectDefaultReviewerError = DeleteProjectDefaultReviewerErrors[keyof DeleteProjectDefaultReviewerErrors];
+type DeleteProjectDefaultReviewerResponses = {
     /**
      * The specified user was removed from the list of project default reviewers
      */
     204: void;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData = {
+type DeleteProjectDefaultReviewerResponse = DeleteProjectDefaultReviewerResponses[keyof DeleteProjectDefaultReviewerResponses];
+type GetProjectDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -17174,7 +17174,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserD
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors = {
+type GetProjectDefaultReviewerErrors = {
     /**
      * If the specified user is not a default reviewer for the project
      */
@@ -17188,15 +17188,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserE
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses = {
+type GetProjectDefaultReviewerError = GetProjectDefaultReviewerErrors[keyof GetProjectDefaultReviewerErrors];
+type GetProjectDefaultReviewerResponses = {
     /**
      * The specified user that is a default reviewer
      */
     200: User;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData = {
+type GetProjectDefaultReviewerResponse = GetProjectDefaultReviewerResponses[keyof GetProjectDefaultReviewerResponses];
+type AddProjectDefaultReviewerData = {
     body?: never;
     path: {
         /**
@@ -17221,7 +17221,7 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserD
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/default-reviewers/{selected_user}';
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors = {
+type AddProjectDefaultReviewerErrors = {
     /**
      * If the specified user cannot be added as a default reviewer for the project
      */
@@ -17235,15 +17235,15 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserE
      */
     404: Error;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError = PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses = {
+type AddProjectDefaultReviewerError = AddProjectDefaultReviewerErrors[keyof AddProjectDefaultReviewerErrors];
+type AddProjectDefaultReviewerResponses = {
     /**
      * The specified user was added as a project default reviewer
      */
     200: User;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
+type AddProjectDefaultReviewerResponse = AddProjectDefaultReviewerResponses[keyof AddProjectDefaultReviewerResponses];
+type ListProjectDeployKeysData = {
     body?: never;
     path: {
         /**
@@ -17262,7 +17262,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
+type ListProjectDeployKeysErrors = {
     /**
      * If the specified workspace or project is not accessible to the current user
      */
@@ -17272,15 +17272,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses = {
+type ListProjectDeployKeysError = ListProjectDeployKeysErrors[keyof ListProjectDeployKeysErrors];
+type ListProjectDeployKeysResponses = {
     /**
      * Deploy keys matching the project
      */
     200: PaginatedProjectDeployKeys;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses];
-type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
+type ListProjectDeployKeysResponse = ListProjectDeployKeysResponses[keyof ListProjectDeployKeysResponses];
+type CreateProjectDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -17299,7 +17299,7 @@ type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys';
 };
-type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
+type CreateProjectDeployKeyErrors = {
     /**
      * Invalid deploy key inputs
      */
@@ -17313,15 +17313,15 @@ type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors = {
      */
     404: Error;
 };
-type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError = PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors[keyof PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors];
-type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses = {
+type CreateProjectDeployKeyError = CreateProjectDeployKeyErrors[keyof CreateProjectDeployKeyErrors];
+type CreateProjectDeployKeyResponses = {
     /**
      * The project deploy key that was created
      */
     200: ProjectDeployKey;
 };
-type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponse = PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses[keyof PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData = {
+type CreateProjectDeployKeyResponse = CreateProjectDeployKeyResponses[keyof CreateProjectDeployKeyResponses];
+type DeleteProjectDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -17344,7 +17344,7 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}';
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors = {
+type DeleteProjectDeployKeyErrors = {
     /**
      * If the current user does not have permission to delete a key for the specified project
      */
@@ -17354,15 +17354,15 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses = {
+type DeleteProjectDeployKeyError = DeleteProjectDeployKeyErrors[keyof DeleteProjectDeployKeyErrors];
+type DeleteProjectDeployKeyResponses = {
     /**
      * The project deploy key has been deleted
      */
     204: void;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData = {
+type DeleteProjectDeployKeyResponse = DeleteProjectDeployKeyResponses[keyof DeleteProjectDeployKeyResponses];
+type GetProjectDeployKeyData = {
     body?: never;
     path: {
         /**
@@ -17385,7 +17385,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/deploy-keys/{key_id}';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors = {
+type GetProjectDeployKeyErrors = {
     /**
      * If the specified workspace or project is not accessible to the current user
      */
@@ -17395,15 +17395,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors = {
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses = {
+type GetProjectDeployKeyError = GetProjectDeployKeyErrors[keyof GetProjectDeployKeyErrors];
+type GetProjectDeployKeyResponses = {
     /**
      * Project deploy key matching the key ID
      */
     200: ProjectDeployKey;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsData = {
+type GetProjectDeployKeyResponse = GetProjectDeployKeyResponses[keyof GetProjectDeployKeyResponses];
+type ListProjectPermissionGroupsData = {
     body?: never;
     path: {
         /**
@@ -17421,7 +17421,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors = {
+type ListProjectPermissionGroupsErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -17435,15 +17435,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors =
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses = {
+type ListProjectPermissionGroupsError = ListProjectPermissionGroupsErrors[keyof ListProjectPermissionGroupsErrors];
+type ListProjectPermissionGroupsResponses = {
     /**
      * Paginated list of project group permissions
      */
     200: PaginatedProjectGroupPermissions;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData = {
+type ListProjectPermissionGroupsResponse = ListProjectPermissionGroupsResponses[keyof ListProjectPermissionGroupsResponses];
+type DeleteProjectPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -17465,7 +17465,7 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGro
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}';
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors = {
+type DeleteProjectPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -17479,15 +17479,15 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGro
      */
     404: Error;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses = {
+type DeleteProjectPermissionGroupError = DeleteProjectPermissionGroupErrors[keyof DeleteProjectPermissionGroupErrors];
+type DeleteProjectPermissionGroupResponses = {
     /**
      * The project group permission was deleted and no content returned.
      */
     204: void;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData = {
+type DeleteProjectPermissionGroupResponse = DeleteProjectPermissionGroupResponses[keyof DeleteProjectPermissionGroupResponses];
+type GetProjectPermissionGroupData = {
     body?: never;
     path: {
         /**
@@ -17509,7 +17509,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupS
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors = {
+type GetProjectPermissionGroupErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -17523,15 +17523,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupS
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses = {
+type GetProjectPermissionGroupError = GetProjectPermissionGroupErrors[keyof GetProjectPermissionGroupErrors];
+type GetProjectPermissionGroupResponses = {
     /**
      * Project group permission
      */
     200: ProjectGroupPermission;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData = {
+type GetProjectPermissionGroupResponse = GetProjectPermissionGroupResponses[keyof GetProjectPermissionGroupResponses];
+type UpdateProjectPermissionGroupData = {
     /**
      * The permission to grant
      */
@@ -17556,7 +17556,7 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupS
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/groups/{group_slug}';
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors = {
+type UpdateProjectPermissionGroupErrors = {
     /**
      * No permission value was provided or the value is invalid(not one of read, write, create-repo, or admin).
      */
@@ -17578,15 +17578,15 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupS
      */
     404: Error;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses = {
+type UpdateProjectPermissionGroupError = UpdateProjectPermissionGroupErrors[keyof UpdateProjectPermissionGroupErrors];
+type UpdateProjectPermissionGroupResponses = {
     /**
      * Project group permission updated.
      */
     200: ProjectGroupPermission;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersData = {
+type UpdateProjectPermissionGroupResponse = UpdateProjectPermissionGroupResponses[keyof UpdateProjectPermissionGroupResponses];
+type ListProjectPermissionUsersData = {
     body?: never;
     path: {
         /**
@@ -17604,7 +17604,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersData = {
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors = {
+type ListProjectPermissionUsersErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -17618,15 +17618,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors = 
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses = {
+type ListProjectPermissionUsersError = ListProjectPermissionUsersErrors[keyof ListProjectPermissionUsersErrors];
+type ListProjectPermissionUsersResponses = {
     /**
      * Paginated list of explicit user permissions.
      */
     200: PaginatedProjectUserPermissions;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData = {
+type ListProjectPermissionUsersResponse = ListProjectPermissionUsersResponses[keyof ListProjectPermissionUsersResponses];
+type DeleteProjectPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -17650,7 +17650,7 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySele
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}';
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors = {
+type DeleteProjectPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -17664,15 +17664,15 @@ type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySele
      */
     404: Error;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses = {
+type DeleteProjectPermissionUserError = DeleteProjectPermissionUserErrors[keyof DeleteProjectPermissionUserErrors];
+type DeleteProjectPermissionUserResponses = {
     /**
      * The project user permission was deleted and no content returned.
      */
     204: void;
 };
-type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse = DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses[keyof DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData = {
+type DeleteProjectPermissionUserResponse = DeleteProjectPermissionUserResponses[keyof DeleteProjectPermissionUserResponses];
+type GetProjectPermissionUserData = {
     body?: never;
     path: {
         /**
@@ -17696,7 +17696,7 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelecte
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}';
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors = {
+type GetProjectPermissionUserErrors = {
     /**
      * The user couldn't be authenticated.
      */
@@ -17710,15 +17710,15 @@ type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelecte
      */
     404: Error;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses = {
+type GetProjectPermissionUserError = GetProjectPermissionUserErrors[keyof GetProjectPermissionUserErrors];
+type GetProjectPermissionUserResponses = {
     /**
      * Explicit user permission for user and project
      */
     200: ProjectUserPermission;
 };
-type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse = GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses[keyof GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData = {
+type GetProjectPermissionUserResponse = GetProjectPermissionUserResponses[keyof GetProjectPermissionUserResponses];
+type UpdateProjectPermissionUserData = {
     /**
      * The permission to grant
      */
@@ -17745,7 +17745,7 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelecte
     query?: never;
     url: '/workspaces/{workspace}/projects/{project_key}/permissions-config/users/{selected_user_id}';
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors = {
+type UpdateProjectPermissionUserErrors = {
     /**
      * No permission value was provided or the value is invalid (not one of read, write, create-repo, or admin)
      */
@@ -17767,15 +17767,15 @@ type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelecte
      */
     404: Error;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors];
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses = {
+type UpdateProjectPermissionUserError = UpdateProjectPermissionUserErrors[keyof UpdateProjectPermissionUserErrors];
+type UpdateProjectPermissionUserResponses = {
     /**
      * Explicit user permission updated
      */
     200: ProjectUserPermission;
 };
-type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse = PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses[keyof PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses];
-type GetWorkspacesByWorkspacePullrequestsBySelectedUserData = {
+type UpdateProjectPermissionUserResponse = UpdateProjectPermissionUserResponses[keyof UpdateProjectPermissionUserResponses];
+type ListWorkspaceUserPullRequestsData = {
     body?: never;
     path: {
         /**
@@ -17799,20 +17799,20 @@ type GetWorkspacesByWorkspacePullrequestsBySelectedUserData = {
     };
     url: '/workspaces/{workspace}/pullrequests/{selected_user}';
 };
-type GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors = {
+type ListWorkspaceUserPullRequestsErrors = {
     /**
      * If the specified user does not exist.
      */
     404: Error;
 };
-type GetWorkspacesByWorkspacePullrequestsBySelectedUserError = GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors[keyof GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors];
-type GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses = {
+type ListWorkspaceUserPullRequestsError = ListWorkspaceUserPullRequestsErrors[keyof ListWorkspaceUserPullRequestsErrors];
+type ListWorkspaceUserPullRequestsResponses = {
     /**
      * All pull requests authored by the specified user.
      */
     200: PaginatedPullrequests;
 };
-type GetWorkspacesByWorkspacePullrequestsBySelectedUserResponse = GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses[keyof GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses];
+type ListWorkspaceUserPullRequestsResponse = ListWorkspaceUserPullRequestsResponses[keyof ListWorkspaceUserPullRequestsResponses];
 type SearchWorkspaceData = {
     body?: never;
     path: {
@@ -17869,6 +17869,17 @@ type SearchWorkspaceResponses = {
     200: SearchResultPage;
 };
 type SearchWorkspaceResponse = SearchWorkspaceResponses[keyof SearchWorkspaceResponses];
+
+/**
+ * The `createClientConfig()` function will be called on client initialization
+ * and the returned object will become the client's initial configuration.
+ *
+ * You may want to initialize your client this way instead of calling
+ * `setConfig()`. This is useful for example if you're using Next.js
+ * to ensure your client always has the correct values.
+ */
+type CreateClientConfig<T extends ClientOptions$1 = ClientOptions> = (override?: Config<ClientOptions$1 & T>) => Config<Required<ClientOptions$1> & T> | Promise<Config<Required<ClientOptions$1> & T>>;
+declare const client: Client;
 
 type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options$1<TData, ThrowOnError> & {
     /**
@@ -17971,7 +17982,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that the scopes of the application cannot be increased
      * in the new descriptor nor reduced to none.
      */
-    updateAddon<ThrowOnError extends boolean = false>(options?: Options<PutAddonData, ThrowOnError>): RequestResult<PutAddonResponses, PutAddonErrors, ThrowOnError, "fields">;
+    updateAddon<ThrowOnError extends boolean = false>(options?: Options<UpdateAddonData, ThrowOnError>): RequestResult<UpdateAddonResponses, UpdateAddonErrors, ThrowOnError, "fields">;
     /**
      * List linkers for an app
      *
@@ -17993,7 +18004,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getAddonLinker<ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyData, ThrowOnError>): RequestResult<GetAddonLinkersByLinkerKeyResponses, GetAddonLinkersByLinkerKeyErrors, ThrowOnError, "fields">;
+    getAddonLinker<ThrowOnError extends boolean = false>(options: Options<GetAddonLinkerData, ThrowOnError>): RequestResult<GetAddonLinkerResponses, GetAddonLinkerErrors, ThrowOnError, "fields">;
     /**
      * Delete all linker values
      *
@@ -18004,7 +18015,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    deleteAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkersByLinkerKeyValuesData, ThrowOnError>): RequestResult<DeleteAddonLinkersByLinkerKeyValuesResponses, DeleteAddonLinkersByLinkerKeyValuesErrors, ThrowOnError, "fields">;
+    deleteAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkerValuesData, ThrowOnError>): RequestResult<DeleteAddonLinkerValuesResponses, DeleteAddonLinkerValuesErrors, ThrowOnError, "fields">;
     /**
      * List linker values for a linker
      *
@@ -18022,7 +18033,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyValuesData, ThrowOnError>): RequestResult<GetAddonLinkersByLinkerKeyValuesResponses, GetAddonLinkersByLinkerKeyValuesErrors, ThrowOnError, "fields">;
+    getAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<GetAddonLinkerValuesData, ThrowOnError>): RequestResult<GetAddonLinkerValuesResponses, GetAddonLinkerValuesErrors, ThrowOnError, "fields">;
     /**
      * Create a linker value
      *
@@ -18040,7 +18051,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    createAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<PostAddonLinkersByLinkerKeyValuesData, ThrowOnError>): RequestResult<PostAddonLinkersByLinkerKeyValuesResponses, PostAddonLinkersByLinkerKeyValuesErrors, ThrowOnError, "fields">;
+    createAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<CreateAddonLinkerValuesData, ThrowOnError>): RequestResult<CreateAddonLinkerValuesResponses, CreateAddonLinkerValuesErrors, ThrowOnError, "fields">;
     /**
      * Update a linker value
      *
@@ -18058,7 +18069,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    updateAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<PutAddonLinkersByLinkerKeyValuesData, ThrowOnError>): RequestResult<PutAddonLinkersByLinkerKeyValuesResponses, PutAddonLinkersByLinkerKeyValuesErrors, ThrowOnError, "fields">;
+    updateAddonLinkerValues<ThrowOnError extends boolean = false>(options: Options<UpdateAddonLinkerValuesData, ThrowOnError>): RequestResult<UpdateAddonLinkerValuesResponses, UpdateAddonLinkerValuesErrors, ThrowOnError, "fields">;
     /**
      * Delete a linker value
      *
@@ -18069,7 +18080,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    deleteAddonLinkerValue<ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkersByLinkerKeyValuesByValueIdData, ThrowOnError>): RequestResult<DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses, DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors, ThrowOnError, "fields">;
+    deleteAddonLinkerValue<ThrowOnError extends boolean = false>(options: Options<DeleteAddonLinkerValueData, ThrowOnError>): RequestResult<DeleteAddonLinkerValueResponses, DeleteAddonLinkerValueErrors, ThrowOnError, "fields">;
     /**
      * Get a linker value
      *
@@ -18080,7 +18091,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getAddonLinkerValue<ThrowOnError extends boolean = false>(options: Options<GetAddonLinkersByLinkerKeyValuesByValueIdData, ThrowOnError>): RequestResult<GetAddonLinkersByLinkerKeyValuesByValueIdResponses, GetAddonLinkersByLinkerKeyValuesByValueIdErrors, ThrowOnError, "fields">;
+    getAddonLinkerValue<ThrowOnError extends boolean = false>(options: Options<GetAddonLinkerValueData, ThrowOnError>): RequestResult<GetAddonLinkerValueResponses, GetAddonLinkerValueErrors, ThrowOnError, "fields">;
     /**
      * Get a webhook resource
      *
@@ -18122,7 +18133,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listRepositories<ThrowOnError extends boolean = false>(options?: Options<GetRepositoriesData, ThrowOnError>): RequestResult<GetRepositoriesResponses, unknown, ThrowOnError, "fields">;
+    listRepositories<ThrowOnError extends boolean = false>(options?: Options<ListRepositoriesData, ThrowOnError>): RequestResult<ListRepositoriesResponses, unknown, ThrowOnError, "fields">;
     /**
      * List repositories in a workspace
      *
@@ -18138,7 +18149,7 @@ declare class BitbucketClient extends HeyApiClient {
      * This endpoint also supports filtering and sorting of the results. See
      * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
      */
-    listWorkspaceRepositories<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceResponses, GetRepositoriesByWorkspaceErrors, ThrowOnError, "fields">;
+    listWorkspaceRepositories<ThrowOnError extends boolean = false>(options: Options<ListWorkspaceRepositoriesData, ThrowOnError>): RequestResult<ListWorkspaceRepositoriesResponses, ListWorkspaceRepositoriesErrors, ThrowOnError, "fields">;
     /**
      * Delete a repository
      *
@@ -18146,13 +18157,13 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * This does not affect its forks.
      */
-    deleteRepository<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugResponses, DeleteRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError, "fields">;
+    deleteRepository<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoryData, ThrowOnError>): RequestResult<DeleteRepositoryResponses, DeleteRepositoryErrors, ThrowOnError, "fields">;
     /**
      * Get a repository
      *
      * Returns the object describing this repository.
      */
-    getRepository<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugResponses, GetRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError, "fields">;
+    getRepository<ThrowOnError extends boolean = false>(options: Options<GetRepositoryData, ThrowOnError>): RequestResult<GetRepositoryResponses, GetRepositoryErrors, ThrowOnError, "fields">;
     /**
      * Create a repository
      *
@@ -18188,7 +18199,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note: In the examples above, the workspace ID `teamsinspace`,
      * and/or the repository name `hablanding` can be replaced by UUIDs.
      */
-    createRepository<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugResponses, PostRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError, "fields">;
+    createRepository<ThrowOnError extends boolean = false>(options: Options<CreateRepositoryData, ThrowOnError>): RequestResult<CreateRepositoryResponses, CreateRepositoryErrors, ThrowOnError, "fields">;
     /**
      * Update a repository
      *
@@ -18210,14 +18221,14 @@ declare class BitbucketClient extends HeyApiClient {
      * the new location will be returned in the `Location` header of the
      * response.
      */
-    updateRepository<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugResponses, PutRepositoriesByWorkspaceByRepoSlugErrors, ThrowOnError, "fields">;
+    updateRepository<ThrowOnError extends boolean = false>(options: Options<UpdateRepositoryData, ThrowOnError>): RequestResult<UpdateRepositoryResponses, UpdateRepositoryErrors, ThrowOnError, "fields">;
     /**
      * List branch restrictions
      *
      * Returns a paginated list of all branch restrictions on the
      * repository.
      */
-    listBranchRestrictions<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses, GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors, ThrowOnError, "fields">;
+    listBranchRestrictions<ThrowOnError extends boolean = false>(options: Options<ListBranchRestrictionsData, ThrowOnError>): RequestResult<ListBranchRestrictionsResponses, ListBranchRestrictionsErrors, ThrowOnError, "fields">;
     /**
      * Create a branch restriction rule
      *
@@ -18267,19 +18278,19 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that branch restrictions with overlapping matchers is allowed,
      * but the resulting behavior may be surprising.
      */
-    createBranchRestriction<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses, PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors, ThrowOnError, "fields">;
+    createBranchRestriction<ThrowOnError extends boolean = false>(options: Options<CreateBranchRestrictionData, ThrowOnError>): RequestResult<CreateBranchRestrictionResponses, CreateBranchRestrictionErrors, ThrowOnError, "fields">;
     /**
      * Delete a branch restriction rule
      *
      * Deletes an existing branch restriction rule.
      */
-    deleteBranchRestriction<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, ThrowOnError, "fields">;
+    deleteBranchRestriction<ThrowOnError extends boolean = false>(options: Options<DeleteBranchRestrictionData, ThrowOnError>): RequestResult<DeleteBranchRestrictionResponses, DeleteBranchRestrictionErrors, ThrowOnError, "fields">;
     /**
      * Get a branch restriction rule
      *
      * Returns a specific branch restriction rule.
      */
-    getBranchRestriction<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, ThrowOnError, "fields">;
+    getBranchRestriction<ThrowOnError extends boolean = false>(options: Options<GetBranchRestrictionData, ThrowOnError>): RequestResult<GetBranchRestrictionResponses, GetBranchRestrictionErrors, ThrowOnError, "fields">;
     /**
      * Update a branch restriction rule
      *
@@ -18289,7 +18300,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * See [`POST`](/cloud/bitbucket/rest/api-group-branch-restrictions/#api-repositories-workspace-repo-slug-branch-restrictions-post) for details.
      */
-    updateBranchRestriction<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, ThrowOnError, "fields">;
+    updateBranchRestriction<ThrowOnError extends boolean = false>(options: Options<UpdateBranchRestrictionData, ThrowOnError>): RequestResult<UpdateBranchRestrictionResponses, UpdateBranchRestrictionErrors, ThrowOnError, "fields">;
     /**
      * Get the branching model for a repository
      *
@@ -18311,7 +18322,7 @@ declare class BitbucketClient extends HeyApiClient {
      * 3. Always has a `branch_types` array which contains all enabled branch
      * types.
      */
-    getBranchingModel<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchingModelData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses, GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors, ThrowOnError, "fields">;
+    getBranchingModel<ThrowOnError extends boolean = false>(options: Options<GetBranchingModelData, ThrowOnError>): RequestResult<GetBranchingModelResponses, GetBranchingModelErrors, ThrowOnError, "fields">;
     /**
      * Get the branching model config for a repository
      *
@@ -18329,7 +18340,7 @@ declare class BitbucketClient extends HeyApiClient {
      * wishing to see the branching model with its actual current branches may
      * find the [active model API](/cloud/bitbucket/rest/api-group-branching-model/#api-repositories-workspace-repo-slug-branching-model-get) more useful.
      */
-    getBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses, GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors, ThrowOnError, "fields">;
+    getBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<GetBranchingModelSettingsData, ThrowOnError>): RequestResult<GetBranchingModelSettingsResponses, GetBranchingModelSettingsErrors, ThrowOnError, "fields">;
     /**
      * Update the branching model config for a repository
      *
@@ -18392,13 +18403,13 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * We have deprecated this side effect and will remove it on 1 August 2022.
      */
-    updateBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses, PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors, ThrowOnError, "fields">;
+    updateBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<UpdateBranchingModelSettingsData, ThrowOnError>): RequestResult<UpdateBranchingModelSettingsResponses, UpdateBranchingModelSettingsErrors, ThrowOnError, "fields">;
     /**
      * Get a commit
      *
      * Returns the specified commit.
      */
-    getCommit<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses, GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors, ThrowOnError, "fields">;
+    getCommit<ThrowOnError extends boolean = false>(options: Options<GetCommitData, ThrowOnError>): RequestResult<GetCommitResponses, GetCommitErrors, ThrowOnError, "fields">;
     /**
      * Unapprove a commit
      *
@@ -18409,7 +18420,7 @@ declare class BitbucketClient extends HeyApiClient {
      * publicly accessible to users does not give them the ability to approve
      * commits.
      */
-    deleteCommitApproval<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses, DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors, ThrowOnError, "fields">;
+    deleteCommitApproval<ThrowOnError extends boolean = false>(options: Options<DeleteCommitApprovalData, ThrowOnError>): RequestResult<DeleteCommitApprovalResponses, DeleteCommitApprovalErrors, ThrowOnError, "fields">;
     /**
      * Approve a commit
      *
@@ -18420,7 +18431,7 @@ declare class BitbucketClient extends HeyApiClient {
      * publicly accessible to users does not give them the ability to approve
      * commits.
      */
-    approveCommit<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses, PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors, ThrowOnError, "fields">;
+    approveCommit<ThrowOnError extends boolean = false>(options: Options<ApproveCommitData, ThrowOnError>): RequestResult<ApproveCommitResponses, ApproveCommitErrors, ThrowOnError, "fields">;
     /**
      * List a commit's comments
      *
@@ -18431,7 +18442,7 @@ declare class BitbucketClient extends HeyApiClient {
      * The default sorting is oldest to newest and can be overridden with
      * the `sort` query parameter.
      */
-    listCommitComments<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses, unknown, ThrowOnError, "fields">;
+    listCommitComments<ThrowOnError extends boolean = false>(options: Options<ListCommitCommentsData, ThrowOnError>): RequestResult<ListCommitCommentsResponses, unknown, ThrowOnError, "fields">;
     /**
      * Create comment for a commit
      *
@@ -18447,7 +18458,7 @@ declare class BitbucketClient extends HeyApiClient {
      * "parent": {"id": 5728901}}'
      * ```
      */
-    createCommitComment<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses, PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsErrors, ThrowOnError, "fields">;
+    createCommitComment<ThrowOnError extends boolean = false>(options: Options<CreateCommitCommentData, ThrowOnError>): RequestResult<CreateCommitCommentResponses, CreateCommitCommentErrors, ThrowOnError, "fields">;
     /**
      * Delete a commit comment
      *
@@ -18459,13 +18470,13 @@ declare class BitbucketClient extends HeyApiClient {
      * `true` and the content is blanked out. The comment will continue to be
      * returned by the collections and self endpoints.
      */
-    deleteCommitComment<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    deleteCommitComment<ThrowOnError extends boolean = false>(options: Options<DeleteCommitCommentData, ThrowOnError>): RequestResult<DeleteCommitCommentResponses, DeleteCommitCommentErrors, ThrowOnError, "fields">;
     /**
      * Get a commit comment
      *
      * Returns the specified commit comment.
      */
-    getCommitComment<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, unknown, ThrowOnError, "fields">;
+    getCommitComment<ThrowOnError extends boolean = false>(options: Options<GetCommitCommentData, ThrowOnError>): RequestResult<GetCommitCommentResponses, unknown, ThrowOnError, "fields">;
     /**
      * Update a commit comment
      *
@@ -18478,7 +18489,7 @@ declare class BitbucketClient extends HeyApiClient {
      * -d '{"content": {"raw": "One more thing!"}'
      * ```
      */
-    updateCommitComment<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    updateCommitComment<ThrowOnError extends boolean = false>(options: Options<UpdateCommitCommentData, ThrowOnError>): RequestResult<UpdateCommitCommentResponses, UpdateCommitCommentErrors, ThrowOnError, "fields">;
     /**
      * Delete a commit application property
      *
@@ -18672,7 +18683,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Returns all statuses (e.g. build results) for a specific commit.
      */
-    listCommitStatuses<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses, GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors, ThrowOnError, "fields">;
+    listCommitStatuses<ThrowOnError extends boolean = false>(options: Options<ListCommitStatusesData, ThrowOnError>): RequestResult<ListCommitStatusesResponses, ListCommitStatusesErrors, ThrowOnError, "fields">;
     /**
      * Create a build status for a commit
      *
@@ -18715,13 +18726,13 @@ declare class BitbucketClient extends HeyApiClient {
      * }'
      * ```
      */
-    createCommitBuildStatus<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses, PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors, ThrowOnError, "fields">;
+    createCommitBuildStatus<ThrowOnError extends boolean = false>(options: Options<CreateCommitBuildStatusData, ThrowOnError>): RequestResult<CreateCommitBuildStatusResponses, CreateCommitBuildStatusErrors, ThrowOnError, "fields">;
     /**
      * Get a build status for a commit
      *
      * Returns the specified build status for a commit.
      */
-    getCommitBuildStatus<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses, GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors, ThrowOnError, "fields">;
+    getCommitBuildStatus<ThrowOnError extends boolean = false>(options: Options<GetCommitBuildStatusData, ThrowOnError>): RequestResult<GetCommitBuildStatusResponses, GetCommitBuildStatusErrors, ThrowOnError, "fields">;
     /**
      * Update a build status for a commit
      *
@@ -18739,7 +18750,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * The `key` cannot be changed.
      */
-    updateCommitBuildStatus<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses, PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors, ThrowOnError, "fields">;
+    updateCommitBuildStatus<ThrowOnError extends boolean = false>(options: Options<UpdateCommitBuildStatusData, ThrowOnError>): RequestResult<UpdateCommitBuildStatusResponses, UpdateCommitBuildStatusErrors, ThrowOnError, "fields">;
     /**
      * List commits
      *
@@ -18789,7 +18800,7 @@ declare class BitbucketClient extends HeyApiClient {
      * When the include and exclude parameters are more than can fit in a
      * query string, clients can use a `x-www-form-urlencoded` POST instead.
      */
-    listCommits<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugCommitsResponses, GetRepositoriesByWorkspaceByRepoSlugCommitsErrors, ThrowOnError, "fields">;
+    listCommits<ThrowOnError extends boolean = false>(options: Options<ListCommitsData, ThrowOnError>): RequestResult<ListCommitsResponses, ListCommitsErrors, ThrowOnError, "fields">;
     /**
      * List commits with include/exclude
      *
@@ -18799,7 +18810,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * **Note that this resource does NOT support new commit creation.**
      */
-    filterCommits<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugCommitsResponses, PostRepositoriesByWorkspaceByRepoSlugCommitsErrors, ThrowOnError, "fields">;
+    filterCommits<ThrowOnError extends boolean = false>(options: Options<FilterCommitsData, ThrowOnError>): RequestResult<FilterCommitsResponses, FilterCommitsErrors, ThrowOnError, "fields">;
     /**
      * List commits for revision
      *
@@ -18842,7 +18853,7 @@ declare class BitbucketClient extends HeyApiClient {
      * When the include and exclude parameters are more than can fit in a
      * query string, clients can use a `x-www-form-urlencoded` POST instead.
      */
-    listCommitsByRevision<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses, GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors, ThrowOnError, "fields">;
+    listCommitsByRevision<ThrowOnError extends boolean = false>(options: Options<ListCommitsByRevisionData, ThrowOnError>): RequestResult<ListCommitsByRevisionResponses, ListCommitsByRevisionErrors, ThrowOnError, "fields">;
     /**
      * List commits for revision using include/exclude
      *
@@ -18852,7 +18863,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * **Note that this resource does NOT support new commit creation.**
      */
-    filterCommitsByRevision<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses, PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors, ThrowOnError, "fields">;
+    filterCommitsByRevision<ThrowOnError extends boolean = false>(options: Options<FilterCommitsByRevisionData, ThrowOnError>): RequestResult<FilterCommitsByRevisionResponses, FilterCommitsByRevisionErrors, ThrowOnError, "fields">;
     /**
      * List components
      *
@@ -18863,7 +18874,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listComponents<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugComponentsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugComponentsResponses, GetRepositoriesByWorkspaceByRepoSlugComponentsErrors, ThrowOnError, "fields">;
+    listComponents<ThrowOnError extends boolean = false>(options: Options<ListComponentsData, ThrowOnError>): RequestResult<ListComponentsResponses, ListComponentsErrors, ThrowOnError, "fields">;
     /**
      * Get a component for issues
      *
@@ -18871,7 +18882,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getComponent<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses, GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors, ThrowOnError, "fields">;
+    getComponent<ThrowOnError extends boolean = false>(options: Options<GetComponentData, ThrowOnError>): RequestResult<GetComponentResponses, GetComponentErrors, ThrowOnError, "fields">;
     /**
      * List default reviewers
      *
@@ -18882,13 +18893,13 @@ declare class BitbucketClient extends HeyApiClient {
      * as well as the default reviewers inherited from the project, use the
      * [effective-default-reveiwers](#api-repositories-workspace-repo-slug-effective-default-reviewers-get) endpoint.
      */
-    listDefaultReviewers<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses, GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors, ThrowOnError, "fields">;
+    listDefaultReviewers<ThrowOnError extends boolean = false>(options: Options<ListDefaultReviewersData, ThrowOnError>): RequestResult<ListDefaultReviewersResponses, ListDefaultReviewersErrors, ThrowOnError, "fields">;
     /**
      * Remove a user from the default reviewers
      *
      * Removes a default reviewer from the repository.
      */
-    deleteDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, ThrowOnError, "fields">;
+    deleteDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<DeleteDefaultReviewerData, ThrowOnError>): RequestResult<DeleteDefaultReviewerResponses, DeleteDefaultReviewerErrors, ThrowOnError, "fields">;
     /**
      * Get a default reviewer
      *
@@ -18898,7 +18909,7 @@ declare class BitbucketClient extends HeyApiClient {
      * default reviewers list. A 404 indicates that that specified user is not
      * a default reviewer.
      */
-    getDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, ThrowOnError, "fields">;
+    getDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<GetDefaultReviewerData, ThrowOnError>): RequestResult<GetDefaultReviewerResponses, GetDefaultReviewerErrors, ThrowOnError, "fields">;
     /**
      * Add a user to the default reviewers
      *
@@ -18907,13 +18918,13 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * This method is idempotent. Adding a user a second time has no effect.
      */
-    addDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, ThrowOnError, "fields">;
+    addDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<AddDefaultReviewerData, ThrowOnError>): RequestResult<AddDefaultReviewerResponses, AddDefaultReviewerErrors, ThrowOnError, "fields">;
     /**
      * List repository deploy keys
      *
      * Returns all deploy-keys belonging to a repository.
      */
-    listDeployKeys<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDeployKeysData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses, GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors, ThrowOnError, "fields">;
+    listDeployKeys<ThrowOnError extends boolean = false>(options: Options<ListDeployKeysData, ThrowOnError>): RequestResult<ListDeployKeysResponses, ListDeployKeysErrors, ThrowOnError, "fields">;
     /**
      * Add a repository deploy key
      *
@@ -18934,19 +18945,19 @@ declare class BitbucketClient extends HeyApiClient {
      * }'
      * ```
      */
-    createDeployKey<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugDeployKeysData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses, PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors, ThrowOnError, "fields">;
+    createDeployKey<ThrowOnError extends boolean = false>(options: Options<CreateDeployKeyData, ThrowOnError>): RequestResult<CreateDeployKeyResponses, CreateDeployKeyErrors, ThrowOnError, "fields">;
     /**
      * Delete a repository deploy key
      *
      * This deletes a deploy key from a repository.
      */
-    deleteDeployKey<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, ThrowOnError, "fields">;
+    deleteDeployKey<ThrowOnError extends boolean = false>(options: Options<DeleteDeployKeyData, ThrowOnError>): RequestResult<DeleteDeployKeyResponses, DeleteDeployKeyErrors, ThrowOnError, "fields">;
     /**
      * Get a repository deploy key
      *
      * Returns the deploy key belonging to a specific key.
      */
-    getDeployKey<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, ThrowOnError, "fields">;
+    getDeployKey<ThrowOnError extends boolean = false>(options: Options<GetDeployKeyData, ThrowOnError>): RequestResult<GetDeployKeyResponses, GetDeployKeyErrors, ThrowOnError, "fields">;
     /**
      * Update a repository deploy key
      *
@@ -18966,7 +18977,7 @@ declare class BitbucketClient extends HeyApiClient {
      * }'
      * ```
      */
-    updateDeployKey<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, ThrowOnError, "fields">;
+    updateDeployKey<ThrowOnError extends boolean = false>(options: Options<UpdateDeployKeyData, ThrowOnError>): RequestResult<UpdateDeployKeyResponses, UpdateDeployKeyErrors, ThrowOnError, "fields">;
     /**
      * List deployments
      *
@@ -19043,7 +19054,7 @@ declare class BitbucketClient extends HeyApiClient {
      * repository use. It is not decoded into unicode. As such, the
      * content-type is `text/plain`.
      */
-    getDiff<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugDiffBySpecResponses, GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors, ThrowOnError, "fields">;
+    getDiff<ThrowOnError extends boolean = false>(options: Options<GetDiffData, ThrowOnError>): RequestResult<GetDiffResponses, GetDiffErrors, ThrowOnError, "fields">;
     /**
      * Compare two commit diff stats
      *
@@ -19072,13 +19083,13 @@ declare class BitbucketClient extends HeyApiClient {
      * compare the first commit
      * * **Note**: This is the opposite of the order used in `git diff`.
      */
-    getDiffstat<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses, GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors, ThrowOnError, "fields">;
+    getDiffstat<ThrowOnError extends boolean = false>(options: Options<GetDiffstatData, ThrowOnError>): RequestResult<GetDiffstatResponses, GetDiffstatErrors, ThrowOnError, "fields">;
     /**
      * List download artifacts
      *
      * Returns a list of download links associated with the repository.
      */
-    listDownloads<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDownloadsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugDownloadsResponses, GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors, ThrowOnError, "fields">;
+    listDownloads<ThrowOnError extends boolean = false>(options: Options<ListDownloadsData, ThrowOnError>): RequestResult<ListDownloadsResponses, ListDownloadsErrors, ThrowOnError, "fields">;
     /**
      * Upload a download artifact
      *
@@ -19093,13 +19104,13 @@ declare class BitbucketClient extends HeyApiClient {
      * When a file is uploaded with the same name as an existing artifact,
      * then the existing file will be replaced.
      */
-    createDownload<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugDownloadsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugDownloadsResponses, PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors, ThrowOnError, "fields">;
+    createDownload<ThrowOnError extends boolean = false>(options: Options<CreateDownloadData, ThrowOnError>): RequestResult<CreateDownloadResponses, CreateDownloadErrors, ThrowOnError, "fields">;
     /**
      * Delete a download artifact
      *
      * Deletes the specified download artifact from the repository.
      */
-    deleteDownload<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses, DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors, ThrowOnError, "fields">;
+    deleteDownload<ThrowOnError extends boolean = false>(options: Options<DeleteDownloadData, ThrowOnError>): RequestResult<DeleteDownloadResponses, DeleteDownloadErrors, ThrowOnError, "fields">;
     /**
      * Get a download artifact link
      *
@@ -19111,11 +19122,11 @@ declare class BitbucketClient extends HeyApiClient {
      * $ curl -s -L https://api.bitbucket.org/2.0/repositories/evzijst/git-tests/downloads/hello.txt
      * Hello World
      */
-    getDownload<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, ThrowOnError>): RequestResult<unknown, GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors, ThrowOnError, "fields">;
+    getDownload<ThrowOnError extends boolean = false>(options: Options<GetDownloadData, ThrowOnError>): RequestResult<unknown, GetDownloadErrors, ThrowOnError, "fields">;
     /**
      * Get the effective, or currently applied, branching model for a repository
      */
-    getEffectiveBranchingModel<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses, GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors, ThrowOnError, "fields">;
+    getEffectiveBranchingModel<ThrowOnError extends boolean = false>(options: Options<GetEffectiveBranchingModelData, ThrowOnError>): RequestResult<GetEffectiveBranchingModelResponses, GetEffectiveBranchingModelErrors, ThrowOnError, "fields">;
     /**
      * List effective default reviewers
      *
@@ -19125,7 +19136,7 @@ declare class BitbucketClient extends HeyApiClient {
      * These are the users that are automatically added as reviewers on every
      * new pull request that is created.
      */
-    listEffectiveDefaultReviewers<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses, GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors, ThrowOnError, "fields">;
+    listEffectiveDefaultReviewers<ThrowOnError extends boolean = false>(options: Options<ListEffectiveDefaultReviewersData, ThrowOnError>): RequestResult<ListEffectiveDefaultReviewersResponses, ListEffectiveDefaultReviewersErrors, ThrowOnError, "fields">;
     /**
      * List environments
      *
@@ -19187,14 +19198,14 @@ declare class BitbucketClient extends HeyApiClient {
      * In the response you can see that the file was renamed to `README.rst`
      * by the commit made on 2011-05-16, and was previously named `README.txt`.
      */
-    getFileHistory<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses, GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors, ThrowOnError, "fields">;
+    getFileHistory<ThrowOnError extends boolean = false>(options: Options<GetFileHistoryData, ThrowOnError>): RequestResult<GetFileHistoryResponses, GetFileHistoryErrors, ThrowOnError, "fields">;
     /**
      * List repository forks
      *
      * Returns a paginated list of all the forks of the specified
      * repository.
      */
-    listForks<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugForksData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugForksResponses, unknown, ThrowOnError, "fields">;
+    listForks<ThrowOnError extends boolean = false>(options: Options<ListForksData, ThrowOnError>): RequestResult<ListForksResponses, unknown, ThrowOnError, "fields">;
     /**
      * Fork a repository
      *
@@ -19256,13 +19267,13 @@ declare class BitbucketClient extends HeyApiClient {
      * * parent
      * * full_name
      */
-    createFork<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugForksData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugForksResponses, unknown, ThrowOnError, "fields">;
+    createFork<ThrowOnError extends boolean = false>(options: Options<CreateForkData, ThrowOnError>): RequestResult<CreateForkResponses, unknown, ThrowOnError, "fields">;
     /**
      * List webhooks for a repository
      *
      * Returns a paginated list of webhooks installed on this repository.
      */
-    listRepoHooks<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugHooksData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugHooksResponses, GetRepositoriesByWorkspaceByRepoSlugHooksErrors, ThrowOnError, "fields">;
+    listRepoHooks<ThrowOnError extends boolean = false>(options: Options<ListRepoHooksData, ThrowOnError>): RequestResult<ListRepoHooksResponses, ListRepoHooksErrors, ThrowOnError, "fields">;
     /**
      * Create a webhook for a repository
      *
@@ -19300,21 +19311,21 @@ declare class BitbucketClient extends HeyApiClient {
      * Also note that the `url` must properly resolve and cannot be an
      * internal, non-routed address.
      */
-    createRepoHook<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugHooksData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugHooksResponses, PostRepositoriesByWorkspaceByRepoSlugHooksErrors, ThrowOnError, "fields">;
+    createRepoHook<ThrowOnError extends boolean = false>(options: Options<CreateRepoHookData, ThrowOnError>): RequestResult<CreateRepoHookResponses, CreateRepoHookErrors, ThrowOnError, "fields">;
     /**
      * Delete a webhook for a repository
      *
      * Deletes the specified webhook subscription from the given
      * repository.
      */
-    deleteRepoHook<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, ThrowOnError, "fields">;
+    deleteRepoHook<ThrowOnError extends boolean = false>(options: Options<DeleteRepoHookData, ThrowOnError>): RequestResult<DeleteRepoHookResponses, DeleteRepoHookErrors, ThrowOnError, "fields">;
     /**
      * Get a webhook for a repository
      *
      * Returns the webhook with the specified id installed on the specified
      * repository.
      */
-    getRepoHook<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, ThrowOnError, "fields">;
+    getRepoHook<ThrowOnError extends boolean = false>(options: Options<GetRepoHookData, ThrowOnError>): RequestResult<GetRepoHookResponses, GetRepoHookErrors, ThrowOnError, "fields">;
     /**
      * Update a webhook for a repository
      *
@@ -19337,7 +19348,7 @@ declare class BitbucketClient extends HeyApiClient {
      * hook's secret can be left unchanged by not passing the `secret` field in the
      * request.
      */
-    updateRepoHook<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugHooksByUidData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, ThrowOnError, "fields">;
+    updateRepoHook<ThrowOnError extends boolean = false>(options: Options<UpdateRepoHookData, ThrowOnError>): RequestResult<UpdateRepoHookResponses, UpdateRepoHookErrors, ThrowOnError, "fields">;
     /**
      * List issues
      *
@@ -19345,7 +19356,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listIssues<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesErrors, ThrowOnError, "fields">;
+    listIssues<ThrowOnError extends boolean = false>(options: Options<ListIssuesData, ThrowOnError>): RequestResult<ListIssuesResponses, ListIssuesErrors, ThrowOnError, "fields">;
     /**
      * Create an issue
      *
@@ -19359,7 +19370,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    createIssue<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugIssuesResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesErrors, ThrowOnError, "fields">;
+    createIssue<ThrowOnError extends boolean = false>(options: Options<CreateIssueData, ThrowOnError>): RequestResult<CreateIssueResponses, CreateIssueErrors, ThrowOnError, "fields">;
     /**
      * Export issues
      *
@@ -19370,7 +19381,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    exportIssues<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesExportData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugIssuesExportResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors, ThrowOnError, "fields">;
+    exportIssues<ThrowOnError extends boolean = false>(options: Options<ExportIssuesData, ThrowOnError>): RequestResult<ExportIssuesResponses, ExportIssuesErrors, ThrowOnError, "fields">;
     /**
      * Check issue export status
      *
@@ -19388,7 +19399,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssueExportZip<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipErrors, ThrowOnError, "fields">;
+    getRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZip<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipErrors, ThrowOnError, "fields">;
     /**
      * Check issue import status
      *
@@ -19403,7 +19414,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssueImportStatus<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesImportData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors, ThrowOnError, "fields">;
+    getIssueImportStatus<ThrowOnError extends boolean = false>(options: Options<GetIssueImportStatusData, ThrowOnError>): RequestResult<GetIssueImportStatusResponses, GetIssueImportStatusErrors, ThrowOnError, "fields">;
     /**
      * Import issues
      *
@@ -19419,7 +19430,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    importIssues<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesImportData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors, ThrowOnError, "fields">;
+    importIssues<ThrowOnError extends boolean = false>(options: Options<ImportIssuesData, ThrowOnError>): RequestResult<ImportIssuesResponses, ImportIssuesErrors, ThrowOnError, "fields">;
     /**
      * Delete an issue
      *
@@ -19428,7 +19439,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    deleteIssue<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, ThrowOnError, "fields">;
+    deleteIssue<ThrowOnError extends boolean = false>(options: Options<DeleteIssueData, ThrowOnError>): RequestResult<DeleteIssueResponses, DeleteIssueErrors, ThrowOnError, "fields">;
     /**
      * Get an issue
      *
@@ -19436,7 +19447,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssue<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, ThrowOnError, "fields">;
+    getIssue<ThrowOnError extends boolean = false>(options: Options<GetIssueData, ThrowOnError>): RequestResult<GetIssueResponses, GetIssueErrors, ThrowOnError, "fields">;
     /**
      * Update an issue
      *
@@ -19469,7 +19480,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    updateIssue<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, ThrowOnError, "fields">;
+    updateIssue<ThrowOnError extends boolean = false>(options: Options<UpdateIssueData, ThrowOnError>): RequestResult<UpdateIssueResponses, UpdateIssueErrors, ThrowOnError, "fields">;
     /**
      * List attachments for an issue
      *
@@ -19482,7 +19493,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listIssueAttachments<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors, ThrowOnError, "fields">;
+    listIssueAttachments<ThrowOnError extends boolean = false>(options: Options<ListIssueAttachmentsData, ThrowOnError>): RequestResult<ListIssueAttachmentsResponses, ListIssueAttachmentsErrors, ThrowOnError, "fields">;
     /**
      * Upload an attachment to an issue
      *
@@ -19496,7 +19507,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    createIssueAttachment<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors, ThrowOnError, "fields">;
+    createIssueAttachment<ThrowOnError extends boolean = false>(options: Options<CreateIssueAttachmentData, ThrowOnError>): RequestResult<CreateIssueAttachmentResponses, CreateIssueAttachmentErrors, ThrowOnError, "fields">;
     /**
      * Delete an attachment for an issue
      *
@@ -19504,7 +19515,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    deleteIssueAttachment<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors, ThrowOnError, "fields">;
+    deleteIssueAttachment<ThrowOnError extends boolean = false>(options: Options<DeleteIssueAttachmentData, ThrowOnError>): RequestResult<DeleteIssueAttachmentResponses, DeleteIssueAttachmentErrors, ThrowOnError, "fields">;
     /**
      * Get attachment for an issue
      *
@@ -19519,7 +19530,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssueAttachment<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, ThrowOnError>): RequestResult<unknown, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors, ThrowOnError, "fields">;
+    getIssueAttachment<ThrowOnError extends boolean = false>(options: Options<GetIssueAttachmentData, ThrowOnError>): RequestResult<unknown, GetIssueAttachmentErrors, ThrowOnError, "fields">;
     /**
      * List changes on an issue
      *
@@ -19559,7 +19570,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listIssueChanges<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors, ThrowOnError, "fields">;
+    listIssueChanges<ThrowOnError extends boolean = false>(options: Options<ListIssueChangesData, ThrowOnError>): RequestResult<ListIssueChangesResponses, ListIssueChangesErrors, ThrowOnError, "fields">;
     /**
      * Modify the state of an issue
      *
@@ -19604,7 +19615,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    createIssueChange<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors, ThrowOnError, "fields">;
+    createIssueChange<ThrowOnError extends boolean = false>(options: Options<CreateIssueChangeData, ThrowOnError>): RequestResult<CreateIssueChangeResponses, CreateIssueChangeErrors, ThrowOnError, "fields">;
     /**
      * Get issue change object
      *
@@ -19615,7 +19626,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssueChange<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors, ThrowOnError, "fields">;
+    getIssueChange<ThrowOnError extends boolean = false>(options: Options<GetIssueChangeData, ThrowOnError>): RequestResult<GetIssueChangeResponses, GetIssueChangeErrors, ThrowOnError, "fields">;
     /**
      * List comments on an issue
      *
@@ -19630,7 +19641,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listIssueComments<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses, unknown, ThrowOnError, "fields">;
+    listIssueComments<ThrowOnError extends boolean = false>(options: Options<ListIssueCommentsData, ThrowOnError>): RequestResult<ListIssueCommentsResponses, unknown, ThrowOnError, "fields">;
     /**
      * Create a comment on an issue
      *
@@ -19645,7 +19656,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    createIssueComment<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses, PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors, ThrowOnError, "fields">;
+    createIssueComment<ThrowOnError extends boolean = false>(options: Options<CreateIssueCommentData, ThrowOnError>): RequestResult<CreateIssueCommentResponses, CreateIssueCommentErrors, ThrowOnError, "fields">;
     /**
      * Delete a comment on an issue
      *
@@ -19653,7 +19664,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    deleteIssueComment<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, unknown, ThrowOnError, "fields">;
+    deleteIssueComment<ThrowOnError extends boolean = false>(options: Options<DeleteIssueCommentData, ThrowOnError>): RequestResult<DeleteIssueCommentResponses, unknown, ThrowOnError, "fields">;
     /**
      * Get a comment on an issue
      *
@@ -19661,7 +19672,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssueComment<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, unknown, ThrowOnError, "fields">;
+    getIssueComment<ThrowOnError extends boolean = false>(options: Options<GetIssueCommentData, ThrowOnError>): RequestResult<GetIssueCommentResponses, unknown, ThrowOnError, "fields">;
     /**
      * Update a comment on an issue
      *
@@ -19677,7 +19688,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    updateIssueComment<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    updateIssueComment<ThrowOnError extends boolean = false>(options: Options<UpdateIssueCommentData, ThrowOnError>): RequestResult<UpdateIssueCommentResponses, UpdateIssueCommentErrors, ThrowOnError, "fields">;
     /**
      * Remove vote for an issue
      *
@@ -19685,7 +19696,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    deleteIssueVote<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, ThrowOnError, "fields">;
+    deleteIssueVote<ThrowOnError extends boolean = false>(options: Options<DeleteIssueVoteData, ThrowOnError>): RequestResult<DeleteIssueVoteResponses, DeleteIssueVoteErrors, ThrowOnError, "fields">;
     /**
      * Check if current user voted for an issue
      *
@@ -19695,7 +19706,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssueVote<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, ThrowOnError, "fields">;
+    getIssueVote<ThrowOnError extends boolean = false>(options: Options<GetIssueVoteData, ThrowOnError>): RequestResult<GetIssueVoteResponses, GetIssueVoteErrors, ThrowOnError, "fields">;
     /**
      * Vote for an issue
      *
@@ -19706,7 +19717,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    addIssueVote<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, ThrowOnError, "fields">;
+    addIssueVote<ThrowOnError extends boolean = false>(options: Options<AddIssueVoteData, ThrowOnError>): RequestResult<AddIssueVoteResponses, AddIssueVoteErrors, ThrowOnError, "fields">;
     /**
      * Stop watching an issue
      *
@@ -19714,7 +19725,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    unwatchIssue<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, ThrowOnError, "fields">;
+    unwatchIssue<ThrowOnError extends boolean = false>(options: Options<UnwatchIssueData, ThrowOnError>): RequestResult<UnwatchIssueResponses, UnwatchIssueErrors, ThrowOnError, "fields">;
     /**
      * Check if current user is watching a issue
      *
@@ -19723,7 +19734,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getIssueWatchStatus<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, ThrowOnError, "fields">;
+    getIssueWatchStatus<ThrowOnError extends boolean = false>(options: Options<GetIssueWatchStatusData, ThrowOnError>): RequestResult<GetIssueWatchStatusResponses, GetIssueWatchStatusErrors, ThrowOnError, "fields">;
     /**
      * Watch an issue
      *
@@ -19734,7 +19745,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    watchIssue<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, ThrowOnError, "fields">;
+    watchIssue<ThrowOnError extends boolean = false>(options: Options<WatchIssueData, ThrowOnError>): RequestResult<WatchIssueResponses, WatchIssueErrors, ThrowOnError, "fields">;
     /**
      * Get the common ancestor between two commits
      *
@@ -19744,7 +19755,7 @@ declare class BitbucketClient extends HeyApiClient {
      * If more than one best common ancestor exists, only one will be returned. It is
      * unspecified which will be returned.
      */
-    getMergeBase<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses, GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors, ThrowOnError, "fields">;
+    getMergeBase<ThrowOnError extends boolean = false>(options: Options<GetMergeBaseData, ThrowOnError>): RequestResult<GetMergeBaseResponses, GetMergeBaseErrors, ThrowOnError, "fields">;
     /**
      * List milestones
      *
@@ -19755,7 +19766,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listMilestones<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMilestonesData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses, GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors, ThrowOnError, "fields">;
+    listMilestones<ThrowOnError extends boolean = false>(options: Options<ListMilestonesData, ThrowOnError>): RequestResult<ListMilestonesResponses, ListMilestonesErrors, ThrowOnError, "fields">;
     /**
      * Get a milestone
      *
@@ -19763,16 +19774,16 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getMilestone<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses, GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors, ThrowOnError, "fields">;
+    getMilestone<ThrowOnError extends boolean = false>(options: Options<GetMilestoneData, ThrowOnError>): RequestResult<GetMilestoneResponses, GetMilestoneErrors, ThrowOnError, "fields">;
     /**
      * Retrieve the inheritance state for repository settings
      */
-    getOverrideSettings<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses, GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors, ThrowOnError, "fields">;
+    getOverrideSettings<ThrowOnError extends boolean = false>(options: Options<GetOverrideSettingsData, ThrowOnError>): RequestResult<GetOverrideSettingsResponses, GetOverrideSettingsErrors, ThrowOnError, "fields">;
     /**
      * Set the inheritance state for repository settings
      *
      */
-    updateOverrideSettings<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses, PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors, ThrowOnError, "fields">;
+    updateOverrideSettings<ThrowOnError extends boolean = false>(options: Options<UpdateOverrideSettingsData, ThrowOnError>): RequestResult<UpdateOverrideSettingsResponses, UpdateOverrideSettingsErrors, ThrowOnError, "fields">;
     /**
      * Get a patch for two commits
      *
@@ -19794,14 +19805,14 @@ declare class BitbucketClient extends HeyApiClient {
      * repository use. It is not decoded into unicode. As such, the
      * content-type is `text/plain`.
      */
-    getPatch<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPatchBySpecResponses, GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors, ThrowOnError, "fields">;
+    getPatch<ThrowOnError extends boolean = false>(options: Options<GetPatchData, ThrowOnError>): RequestResult<GetPatchResponses, GetPatchErrors, ThrowOnError, "fields">;
     /**
      * List explicit group permissions for a repository
      *
      * Returns a paginated list of explicit group permissions for the given repository.
      * This endpoint does not support BBQL features.
      */
-    listRepoPermissionGroups<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors, ThrowOnError, "fields">;
+    listRepoPermissionGroups<ThrowOnError extends boolean = false>(options: Options<ListRepoPermissionGroupsData, ThrowOnError>): RequestResult<ListRepoPermissionGroupsResponses, ListRepoPermissionGroupsErrors, ThrowOnError, "fields">;
     /**
      * Delete an explicit group permission for a repository
      *
@@ -19811,7 +19822,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * The only authentication method supported for this endpoint is via app passwords.
      */
-    deleteRepoPermissionGroup<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError, "fields">;
+    deleteRepoPermissionGroup<ThrowOnError extends boolean = false>(options: Options<DeleteRepoPermissionGroupData, ThrowOnError>): RequestResult<DeleteRepoPermissionGroupResponses, DeleteRepoPermissionGroupErrors, ThrowOnError, "fields">;
     /**
      * Get an explicit group permission for a repository
      *
@@ -19826,7 +19837,7 @@ declare class BitbucketClient extends HeyApiClient {
      * * `read`
      * * `none`
      */
-    getRepoPermissionGroup<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError, "fields">;
+    getRepoPermissionGroup<ThrowOnError extends boolean = false>(options: Options<GetRepoPermissionGroupData, ThrowOnError>): RequestResult<GetRepoPermissionGroupResponses, GetRepoPermissionGroupErrors, ThrowOnError, "fields">;
     /**
      * Update an explicit group permission for a repository
      *
@@ -19842,14 +19853,14 @@ declare class BitbucketClient extends HeyApiClient {
      * * `write`
      * * `read`
      */
-    updateRepoPermissionGroup<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError, "fields">;
+    updateRepoPermissionGroup<ThrowOnError extends boolean = false>(options: Options<UpdateRepoPermissionGroupData, ThrowOnError>): RequestResult<UpdateRepoPermissionGroupResponses, UpdateRepoPermissionGroupErrors, ThrowOnError, "fields">;
     /**
      * List explicit user permissions for a repository
      *
      * Returns a paginated list of explicit user permissions for the given repository.
      * This endpoint does not support BBQL features.
      */
-    listRepoPermissionUsers<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors, ThrowOnError, "fields">;
+    listRepoPermissionUsers<ThrowOnError extends boolean = false>(options: Options<ListRepoPermissionUsersData, ThrowOnError>): RequestResult<ListRepoPermissionUsersResponses, ListRepoPermissionUsersErrors, ThrowOnError, "fields">;
     /**
      * Delete an explicit user permission for a repository
      *
@@ -19859,7 +19870,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * The only authentication method for this endpoint is via app passwords.
      */
-    deleteRepoPermissionUser<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError, "fields">;
+    deleteRepoPermissionUser<ThrowOnError extends boolean = false>(options: Options<DeleteRepoPermissionUserData, ThrowOnError>): RequestResult<DeleteRepoPermissionUserResponses, DeleteRepoPermissionUserErrors, ThrowOnError, "fields">;
     /**
      * Get an explicit user permission for a repository
      *
@@ -19874,7 +19885,7 @@ declare class BitbucketClient extends HeyApiClient {
      * * `read`
      * * `none`
      */
-    getRepoPermissionUser<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError, "fields">;
+    getRepoPermissionUser<ThrowOnError extends boolean = false>(options: Options<GetRepoPermissionUserData, ThrowOnError>): RequestResult<GetRepoPermissionUserResponses, GetRepoPermissionUserErrors, ThrowOnError, "fields">;
     /**
      * Update an explicit user permission for a repository
      *
@@ -19890,7 +19901,7 @@ declare class BitbucketClient extends HeyApiClient {
      * * `write`
      * * `read`
      */
-    updateRepoPermissionUser<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError, "fields">;
+    updateRepoPermissionUser<ThrowOnError extends boolean = false>(options: Options<UpdateRepoPermissionUserData, ThrowOnError>): RequestResult<UpdateRepoPermissionUserResponses, UpdateRepoPermissionUserErrors, ThrowOnError, "fields">;
     /**
      * List pipelines
      *
@@ -20348,7 +20359,7 @@ declare class BitbucketClient extends HeyApiClient {
      * This endpoint also supports filtering and sorting of the results. See
      * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
      */
-    listPullRequests<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors, ThrowOnError, "fields">;
+    listPullRequests<ThrowOnError extends boolean = false>(options: Options<ListPullRequestsData, ThrowOnError>): RequestResult<ListPullRequestsResponses, ListPullRequestsErrors, ThrowOnError, "fields">;
     /**
      * Create a pull request
      *
@@ -20419,7 +20430,7 @@ declare class BitbucketClient extends HeyApiClient {
      * * `close_source_branch` - boolean that specifies if the source branch should be closed upon merging
      * * `draft` - boolean that specifies whether the pull request is a draft
      */
-    createPullRequest<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors, ThrowOnError, "fields">;
+    createPullRequest<ThrowOnError extends boolean = false>(options: Options<CreatePullRequestData, ThrowOnError>): RequestResult<CreatePullRequestResponses, CreatePullRequestErrors, ThrowOnError, "fields">;
     /**
      * List a pull request activity log
      *
@@ -20710,13 +20721,13 @@ declare class BitbucketClient extends HeyApiClient {
      * }
      * ```
      */
-    listPullRequestsActivity<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors, ThrowOnError, "fields">;
+    listPullRequestsActivity<ThrowOnError extends boolean = false>(options: Options<ListPullRequestsActivityData, ThrowOnError>): RequestResult<ListPullRequestsActivityResponses, ListPullRequestsActivityErrors, ThrowOnError, "fields">;
     /**
      * Get a pull request
      *
      * Returns the specified pull request.
      */
-    getPullRequest<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors, ThrowOnError, "fields">;
+    getPullRequest<ThrowOnError extends boolean = false>(options: Options<GetPullRequestData, ThrowOnError>): RequestResult<GetPullRequestResponses, GetPullRequestErrors, ThrowOnError, "fields">;
     /**
      * Update a pull request
      *
@@ -20726,7 +20737,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Only open pull requests can be mutated.
      */
-    updatePullRequest<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses, PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors, ThrowOnError, "fields">;
+    updatePullRequest<ThrowOnError extends boolean = false>(options: Options<UpdatePullRequestData, ThrowOnError>): RequestResult<UpdatePullRequestResponses, UpdatePullRequestErrors, ThrowOnError, "fields">;
     /**
      * List a pull request activity log
      *
@@ -21017,20 +21028,20 @@ declare class BitbucketClient extends HeyApiClient {
      * }
      * ```
      */
-    getPullRequestActivity<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors, ThrowOnError, "fields">;
+    getPullRequestActivity<ThrowOnError extends boolean = false>(options: Options<GetPullRequestActivityData, ThrowOnError>): RequestResult<GetPullRequestActivityResponses, GetPullRequestActivityErrors, ThrowOnError, "fields">;
     /**
      * Unapprove a pull request
      *
      * Redact the authenticated user's approval of the specified pull
      * request.
      */
-    deletePullRequestApproval<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors, ThrowOnError, "fields">;
+    deletePullRequestApproval<ThrowOnError extends boolean = false>(options: Options<DeletePullRequestApprovalData, ThrowOnError>): RequestResult<DeletePullRequestApprovalResponses, DeletePullRequestApprovalErrors, ThrowOnError, "fields">;
     /**
      * Approve a pull request
      *
      * Approve the specified pull request as the authenticated user.
      */
-    approvePullRequest<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors, ThrowOnError, "fields">;
+    approvePullRequest<ThrowOnError extends boolean = false>(options: Options<ApprovePullRequestData, ThrowOnError>): RequestResult<ApprovePullRequestResponses, ApprovePullRequestErrors, ThrowOnError, "fields">;
     /**
      * List comments on a pull request
      *
@@ -21045,7 +21056,7 @@ declare class BitbucketClient extends HeyApiClient {
      * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more
      * details.
      */
-    listPullRequestComments<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors, ThrowOnError, "fields">;
+    listPullRequestComments<ThrowOnError extends boolean = false>(options: Options<ListPullRequestCommentsData, ThrowOnError>): RequestResult<ListPullRequestCommentsResponses, ListPullRequestCommentsErrors, ThrowOnError, "fields">;
     /**
      * Create a comment on a pull request
      *
@@ -21053,33 +21064,33 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Returns the newly created pull request comment.
      */
-    createPullRequestComment<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors, ThrowOnError, "fields">;
+    createPullRequestComment<ThrowOnError extends boolean = false>(options: Options<CreatePullRequestCommentData, ThrowOnError>): RequestResult<CreatePullRequestCommentResponses, CreatePullRequestCommentErrors, ThrowOnError, "fields">;
     /**
      * Delete a comment on a pull request
      *
      * Deletes a specific pull request comment.
      */
-    deletePullRequestComment<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    deletePullRequestComment<ThrowOnError extends boolean = false>(options: Options<DeletePullRequestCommentData, ThrowOnError>): RequestResult<DeletePullRequestCommentResponses, DeletePullRequestCommentErrors, ThrowOnError, "fields">;
     /**
      * Get a comment on a pull request
      *
      * Returns a specific pull request comment.
      */
-    getPullRequestComment<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    getPullRequestComment<ThrowOnError extends boolean = false>(options: Options<GetPullRequestCommentData, ThrowOnError>): RequestResult<GetPullRequestCommentResponses, GetPullRequestCommentErrors, ThrowOnError, "fields">;
     /**
      * Update a comment on a pull request
      *
      * Updates a specific pull request comment.
      */
-    updatePullRequestComment<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    updatePullRequestComment<ThrowOnError extends boolean = false>(options: Options<UpdatePullRequestCommentData, ThrowOnError>): RequestResult<UpdatePullRequestCommentResponses, UpdatePullRequestCommentErrors, ThrowOnError, "fields">;
     /**
      * Reopen a comment thread
      */
-    unresolvePullRequestComment<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors, ThrowOnError, "fields">;
+    unresolvePullRequestComment<ThrowOnError extends boolean = false>(options: Options<UnresolvePullRequestCommentData, ThrowOnError>): RequestResult<UnresolvePullRequestCommentResponses, UnresolvePullRequestCommentErrors, ThrowOnError, "fields">;
     /**
      * Resolve a comment thread
      */
-    resolvePullRequestComment<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors, ThrowOnError, "fields">;
+    resolvePullRequestComment<ThrowOnError extends boolean = false>(options: Options<ResolvePullRequestCommentData, ThrowOnError>): RequestResult<ResolvePullRequestCommentResponses, ResolvePullRequestCommentErrors, ThrowOnError, "fields">;
     /**
      * List commits on a pull request
      *
@@ -21088,33 +21099,33 @@ declare class BitbucketClient extends HeyApiClient {
      * These are the commits that are being merged into the destination
      * branch when the pull requests gets accepted.
      */
-    listPullRequestCommits<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors, ThrowOnError, "fields">;
+    listPullRequestCommits<ThrowOnError extends boolean = false>(options: Options<ListPullRequestCommitsData, ThrowOnError>): RequestResult<ListPullRequestCommitsResponses, ListPullRequestCommitsErrors, ThrowOnError, "fields">;
     /**
      * Decline a pull request
      *
      * Declines the pull request.
      */
-    declinePullRequest<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors, ThrowOnError, "fields">;
+    declinePullRequest<ThrowOnError extends boolean = false>(options: Options<DeclinePullRequestData, ThrowOnError>): RequestResult<DeclinePullRequestResponses, DeclinePullRequestErrors, ThrowOnError, "fields">;
     /**
      * List changes in a pull request
      *
      * Redirects to the [repository diff](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diff-spec-get)
      * with the revspec that corresponds to the pull request.
      */
-    getPullRequestDiff<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffData, ThrowOnError>): RequestResult<unknown, unknown, ThrowOnError, "fields">;
+    getPullRequestDiff<ThrowOnError extends boolean = false>(options: Options<GetPullRequestDiffData, ThrowOnError>): RequestResult<unknown, unknown, ThrowOnError, "fields">;
     /**
      * Get the diff stat for a pull request
      *
      * Redirects to the [repository diffstat](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-diffstat-spec-get)
      * with the revspec that corresponds to the pull request.
      */
-    getPullRequestDiffstat<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstatData, ThrowOnError>): RequestResult<unknown, unknown, ThrowOnError, "fields">;
+    getPullRequestDiffstat<ThrowOnError extends boolean = false>(options: Options<GetPullRequestDiffstatData, ThrowOnError>): RequestResult<unknown, unknown, ThrowOnError, "fields">;
     /**
      * Merge a pull request
      *
      * Merges the pull request.
      */
-    mergePullRequest<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors, ThrowOnError, "fields">;
+    mergePullRequest<ThrowOnError extends boolean = false>(options: Options<MergePullRequestData, ThrowOnError>): RequestResult<MergePullRequestResponses, MergePullRequestErrors, ThrowOnError, "fields">;
     /**
      * Get the merge task status for a pull request
      *
@@ -21166,29 +21177,29 @@ declare class BitbucketClient extends HeyApiClient {
      * }
      * ```
      */
-    getPullRequestMergeTaskStatus<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdErrors, ThrowOnError, "fields">;
+    getPullRequestMergeTaskStatus<ThrowOnError extends boolean = false>(options: Options<GetPullRequestMergeTaskStatusData, ThrowOnError>): RequestResult<GetPullRequestMergeTaskStatusResponses, GetPullRequestMergeTaskStatusErrors, ThrowOnError, "fields">;
     /**
      * Get the patch for a pull request
      *
      * Redirects to the [repository patch](/cloud/bitbucket/rest/api-group-commits/#api-repositories-workspace-repo-slug-patch-spec-get)
      * with the revspec that corresponds to pull request.
      */
-    getPullRequestPatch<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatchData, ThrowOnError>): RequestResult<unknown, unknown, ThrowOnError, "fields">;
+    getPullRequestPatch<ThrowOnError extends boolean = false>(options: Options<GetPullRequestPatchData, ThrowOnError>): RequestResult<unknown, unknown, ThrowOnError, "fields">;
     /**
      * Remove change request for a pull request
      */
-    deletePullRequestChangeRequest<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors, ThrowOnError, "fields">;
+    deletePullRequestChangeRequest<ThrowOnError extends boolean = false>(options: Options<DeletePullRequestChangeRequestData, ThrowOnError>): RequestResult<DeletePullRequestChangeRequestResponses, DeletePullRequestChangeRequestErrors, ThrowOnError, "fields">;
     /**
      * Request changes for a pull request
      */
-    requestPullRequestChanges<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors, ThrowOnError, "fields">;
+    requestPullRequestChanges<ThrowOnError extends boolean = false>(options: Options<RequestPullRequestChangesData, ThrowOnError>): RequestResult<RequestPullRequestChangesResponses, RequestPullRequestChangesErrors, ThrowOnError, "fields">;
     /**
      * List commit statuses for a pull request
      *
      * Returns all statuses (e.g. build results) for the given pull
      * request.
      */
-    listPullRequestStatuses<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors, ThrowOnError, "fields">;
+    listPullRequestStatuses<ThrowOnError extends boolean = false>(options: Options<ListPullRequestStatusesData, ThrowOnError>): RequestResult<ListPullRequestStatusesResponses, ListPullRequestStatusesErrors, ThrowOnError, "fields">;
     /**
      * List tasks on a pull request
      *
@@ -21197,7 +21208,7 @@ declare class BitbucketClient extends HeyApiClient {
      * This endpoint supports filtering and sorting of the results by the 'task' field.
      * See [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
      */
-    listPullRequestTasks<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors, ThrowOnError, "fields">;
+    listPullRequestTasks<ThrowOnError extends boolean = false>(options: Options<ListPullRequestTasksData, ThrowOnError>): RequestResult<ListPullRequestTasksResponses, ListPullRequestTasksErrors, ThrowOnError, "fields">;
     /**
      * Create a task on a pull request
      *
@@ -21208,25 +21219,25 @@ declare class BitbucketClient extends HeyApiClient {
      * Tasks can optionally be created in relation to a comment specified by the comment's ID which
      * will cause the task to appear below the comment on a pull request when viewed in Bitbucket.
      */
-    createPullRequestTask<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses, PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors, ThrowOnError, "fields">;
+    createPullRequestTask<ThrowOnError extends boolean = false>(options: Options<CreatePullRequestTaskData, ThrowOnError>): RequestResult<CreatePullRequestTaskResponses, CreatePullRequestTaskErrors, ThrowOnError, "fields">;
     /**
      * Delete a task on a pull request
      *
      * Deletes a specific pull request task.
      */
-    deletePullRequestTask<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, ThrowOnError, "fields">;
+    deletePullRequestTask<ThrowOnError extends boolean = false>(options: Options<DeletePullRequestTaskData, ThrowOnError>): RequestResult<DeletePullRequestTaskResponses, DeletePullRequestTaskErrors, ThrowOnError, "fields">;
     /**
      * Get a task on a pull request
      *
      * Returns a specific pull request task.
      */
-    getPullRequestTask<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, ThrowOnError, "fields">;
+    getPullRequestTask<ThrowOnError extends boolean = false>(options: Options<GetPullRequestTaskData, ThrowOnError>): RequestResult<GetPullRequestTaskResponses, GetPullRequestTaskErrors, ThrowOnError, "fields">;
     /**
      * Update a task on a pull request
      *
      * Updates a specific pull request task.
      */
-    updatePullRequestTask<ThrowOnError extends boolean = false>(options: Options<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, ThrowOnError>): RequestResult<PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, ThrowOnError, "fields">;
+    updatePullRequestTask<ThrowOnError extends boolean = false>(options: Options<UpdatePullRequestTaskData, ThrowOnError>): RequestResult<UpdatePullRequestTaskResponses, UpdatePullRequestTaskErrors, ThrowOnError, "fields">;
     /**
      * Delete a pull request application property
      *
@@ -21261,7 +21272,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Sorting can be changed using the ?sort= query parameter. When using ?sort=name to explicitly sort on ref name,
      * Bitbucket will apply natural sorting and interpret numerical values as numbers instead of strings.
      */
-    listRefs<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugRefsResponses, GetRepositoriesByWorkspaceByRepoSlugRefsErrors, ThrowOnError, "fields">;
+    listRefs<ThrowOnError extends boolean = false>(options: Options<ListRefsData, ThrowOnError>): RequestResult<ListRefsResponses, ListRefsErrors, ThrowOnError, "fields">;
     /**
      * List open branches
      *
@@ -21286,7 +21297,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Sorting can be changed using the ?q= query parameter. When using ?q=name to explicitly sort on ref name,
      * Bitbucket will apply natural sorting and interpret numerical values as numbers instead of strings.
      */
-    listBranches<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses, GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors, ThrowOnError, "fields">;
+    listBranches<ThrowOnError extends boolean = false>(options: Options<ListBranchesData, ThrowOnError>): RequestResult<ListBranchesResponses, ListBranchesErrors, ThrowOnError, "fields">;
     /**
      * Create a branch
      *
@@ -21316,7 +21327,7 @@ declare class BitbucketClient extends HeyApiClient {
      * prefix is ambiguous. Using a full commit hash is the preferred
      * approach.
      */
-    createBranch<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses, PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors, ThrowOnError, "fields">;
+    createBranch<ThrowOnError extends boolean = false>(options: Options<CreateBranchData, ThrowOnError>): RequestResult<CreateBranchResponses, CreateBranchErrors, ThrowOnError, "fields">;
     /**
      * Delete a branch
      *
@@ -21328,7 +21339,7 @@ declare class BitbucketClient extends HeyApiClient {
      * The branch name should not include any prefixes (e.g.
      * refs/heads).
      */
-    deleteBranch<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses, DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors, ThrowOnError, "fields">;
+    deleteBranch<ThrowOnError extends boolean = false>(options: Options<DeleteBranchData, ThrowOnError>): RequestResult<DeleteBranchResponses, DeleteBranchErrors, ThrowOnError, "fields">;
     /**
      * Get a branch
      *
@@ -21341,7 +21352,7 @@ declare class BitbucketClient extends HeyApiClient {
      * For Git, the branch name should not include any prefixes (e.g.
      * refs/heads).
      */
-    getBranch<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses, GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors, ThrowOnError, "fields">;
+    getBranch<ThrowOnError extends boolean = false>(options: Options<GetBranchData, ThrowOnError>): RequestResult<GetBranchResponses, GetBranchErrors, ThrowOnError, "fields">;
     /**
      * List tags
      *
@@ -21357,7 +21368,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Sorting can be changed using the ?sort= query parameter. When using ?sort=name to explicitly sort on ref name,
      * Bitbucket will apply natural sorting and interpret numerical values as numbers instead of strings.
      */
-    listTags<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsTagsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses, GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors, ThrowOnError, "fields">;
+    listTags<ThrowOnError extends boolean = false>(options: Options<ListTagsData, ThrowOnError>): RequestResult<ListTagsResponses, ListTagsErrors, ThrowOnError, "fields">;
     /**
      * Create a tag
      *
@@ -21381,7 +21392,7 @@ declare class BitbucketClient extends HeyApiClient {
      * hash, but it may return a 400 response if the provided prefix is
      * ambiguous. Using a full commit hash is the preferred approach.
      */
-    createTag<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugRefsTagsData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses, PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors, ThrowOnError, "fields">;
+    createTag<ThrowOnError extends boolean = false>(options: Options<CreateTagData, ThrowOnError>): RequestResult<CreateTagResponses, CreateTagErrors, ThrowOnError, "fields">;
     /**
      * Delete a tag
      *
@@ -21389,7 +21400,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * The tag name should not include any prefixes (e.g. refs/tags).
      */
-    deleteTag<ThrowOnError extends boolean = false>(options: Options<DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, ThrowOnError>): RequestResult<DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses, DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors, ThrowOnError, "fields">;
+    deleteTag<ThrowOnError extends boolean = false>(options: Options<DeleteTagData, ThrowOnError>): RequestResult<DeleteTagResponses, DeleteTagErrors, ThrowOnError, "fields">;
     /**
      * Get a tag
      *
@@ -21520,7 +21531,7 @@ declare class BitbucketClient extends HeyApiClient {
      * }
      * ```
      */
-    getTag<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses, GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors, ThrowOnError, "fields">;
+    getTag<ThrowOnError extends boolean = false>(options: Options<GetTagData, ThrowOnError>): RequestResult<GetTagResponses, GetTagErrors, ThrowOnError, "fields">;
     /**
      * Get the root directory of the main branch
      *
@@ -21533,7 +21544,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * To create new commits, [POST to this endpoint](#post)
      */
-    listSrcRoot<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugSrcData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugSrcResponses, GetRepositoriesByWorkspaceByRepoSlugSrcErrors, ThrowOnError, "fields">;
+    listSrcRoot<ThrowOnError extends boolean = false>(options: Options<ListSrcRootData, ThrowOnError>): RequestResult<ListSrcRootResponses, ListSrcRootErrors, ThrowOnError, "fields">;
     /**
      * Create a commit by uploading a file
      *
@@ -21662,7 +21673,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that this API does not support the creation or manipulation of
      * subrepos / submodules.
      */
-    createSrcFileCommit<ThrowOnError extends boolean = false>(options: Options<PostRepositoriesByWorkspaceByRepoSlugSrcData, ThrowOnError>): RequestResult<PostRepositoriesByWorkspaceByRepoSlugSrcResponses, PostRepositoriesByWorkspaceByRepoSlugSrcErrors, ThrowOnError, "fields">;
+    createSrcFileCommit<ThrowOnError extends boolean = false>(options: Options<CreateSrcFileCommitData, ThrowOnError>): RequestResult<CreateSrcFileCommitResponses, CreateSrcFileCommitErrors, ThrowOnError, "fields">;
     /**
      * Get file or directory contents
      *
@@ -21870,7 +21881,7 @@ declare class BitbucketClient extends HeyApiClient {
      * See [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more
      * details.
      */
-    getSrcFile<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses, GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors, ThrowOnError, "fields">;
+    getSrcFile<ThrowOnError extends boolean = false>(options: Options<GetSrcFileData, ThrowOnError>): RequestResult<GetSrcFileResponses, GetSrcFileErrors, ThrowOnError, "fields">;
     /**
      * List defined versions for issues
      *
@@ -21881,7 +21892,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listVersions<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugVersionsData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugVersionsResponses, GetRepositoriesByWorkspaceByRepoSlugVersionsErrors, ThrowOnError, "fields">;
+    listVersions<ThrowOnError extends boolean = false>(options: Options<ListVersionsData, ThrowOnError>): RequestResult<ListVersionsResponses, ListVersionsErrors, ThrowOnError, "fields">;
     /**
      * Get a defined version for issues
      *
@@ -21889,14 +21900,14 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    getVersion<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses, GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors, ThrowOnError, "fields">;
+    getVersion<ThrowOnError extends boolean = false>(options: Options<GetVersionData, ThrowOnError>): RequestResult<GetVersionResponses, GetVersionErrors, ThrowOnError, "fields">;
     /**
      * List repositories watchers
      *
      * Returns a paginated list of all the watchers on the specified
      * repository.
      */
-    listRepoWatchers<ThrowOnError extends boolean = false>(options: Options<GetRepositoriesByWorkspaceByRepoSlugWatchersData, ThrowOnError>): RequestResult<GetRepositoriesByWorkspaceByRepoSlugWatchersResponses, unknown, ThrowOnError, "fields">;
+    listRepoWatchers<ThrowOnError extends boolean = false>(options: Options<ListRepoWatchersData, ThrowOnError>): RequestResult<ListRepoWatchersResponses, unknown, ThrowOnError, "fields">;
     /**
      * List snippets
      *
@@ -21928,7 +21939,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listSnippets<ThrowOnError extends boolean = false>(options?: Options<GetSnippetsData, ThrowOnError>): RequestResult<GetSnippetsResponses, GetSnippetsErrors, ThrowOnError, "fields">;
+    listSnippets<ThrowOnError extends boolean = false>(options?: Options<ListSnippetsData, ThrowOnError>): RequestResult<ListSnippetsResponses, ListSnippetsErrors, ThrowOnError, "fields">;
     /**
      * Create a snippet
      *
@@ -22081,7 +22092,7 @@ declare class BitbucketClient extends HeyApiClient {
      * To create the snippet under a workspace, just append the workspace ID
      * to the URL. See [`/2.0/snippets/{workspace}`](/cloud/bitbucket/rest/api-group-snippets/#api-snippets-workspace-post).
      */
-    createSnippet<ThrowOnError extends boolean = false>(options: Options<PostSnippetsData, ThrowOnError>): RequestResult<PostSnippetsResponses, PostSnippetsErrors, ThrowOnError, "fields">;
+    createSnippet<ThrowOnError extends boolean = false>(options: Options<CreateSnippetData, ThrowOnError>): RequestResult<CreateSnippetResponses, CreateSnippetErrors, ThrowOnError, "fields">;
     /**
      * List snippets in a workspace
      *
@@ -22089,7 +22100,7 @@ declare class BitbucketClient extends HeyApiClient {
      * by the snippet owner and only those that are owned by `{workspace}` are
      * returned.
      */
-    listWorkspaceSnippets<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceResponses, GetSnippetsByWorkspaceErrors, ThrowOnError, "fields">;
+    listWorkspaceSnippets<ThrowOnError extends boolean = false>(options: Options<ListWorkspaceSnippetsData, ThrowOnError>): RequestResult<ListWorkspaceSnippetsResponses, ListWorkspaceSnippetsErrors, ThrowOnError, "fields">;
     /**
      * Create a snippet for a workspace
      *
@@ -22097,13 +22108,13 @@ declare class BitbucketClient extends HeyApiClient {
      * created under the workspace specified in the path parameter
      * `{workspace}`.
      */
-    createWorkspaceSnippet<ThrowOnError extends boolean = false>(options: Options<PostSnippetsByWorkspaceData, ThrowOnError>): RequestResult<PostSnippetsByWorkspaceResponses, PostSnippetsByWorkspaceErrors, ThrowOnError, "fields">;
+    createWorkspaceSnippet<ThrowOnError extends boolean = false>(options: Options<CreateWorkspaceSnippetData, ThrowOnError>): RequestResult<CreateWorkspaceSnippetResponses, CreateWorkspaceSnippetErrors, ThrowOnError, "fields">;
     /**
      * Delete a snippet
      *
      * Deletes a snippet and returns an empty response.
      */
-    deleteSnippet<ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdData, ThrowOnError>): RequestResult<DeleteSnippetsByWorkspaceByEncodedIdResponses, DeleteSnippetsByWorkspaceByEncodedIdErrors, ThrowOnError, "fields">;
+    deleteSnippet<ThrowOnError extends boolean = false>(options: Options<DeleteSnippetData, ThrowOnError>): RequestResult<DeleteSnippetResponses, DeleteSnippetErrors, ThrowOnError, "fields">;
     /**
      * Get a snippet
      *
@@ -22294,7 +22305,7 @@ declare class BitbucketClient extends HeyApiClient {
      * AqxFUD6OMxcvkO+UfKfkOyXfKdsv/AYCHMLVkHAFWgAAAABJRU5ErkJggg==
      * ------------------------------5957323a6b76--
      */
-    getSnippet<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdResponses, GetSnippetsByWorkspaceByEncodedIdErrors, ThrowOnError, "fields">;
+    getSnippet<ThrowOnError extends boolean = false>(options: Options<GetSnippetData, ThrowOnError>): RequestResult<GetSnippetResponses, GetSnippetErrors, ThrowOnError, "fields">;
     /**
      * Update a snippet
      *
@@ -22497,7 +22508,7 @@ declare class BitbucketClient extends HeyApiClient {
      * regardless of whether or not they are listed in `files`, as a
      * convenience to the client.
      */
-    updateSnippet<ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdData, ThrowOnError>): RequestResult<PutSnippetsByWorkspaceByEncodedIdResponses, PutSnippetsByWorkspaceByEncodedIdErrors, ThrowOnError, "fields">;
+    updateSnippet<ThrowOnError extends boolean = false>(options: Options<UpdateSnippetData, ThrowOnError>): RequestResult<UpdateSnippetResponses, UpdateSnippetErrors, ThrowOnError, "fields">;
     /**
      * List comments on a snippet
      *
@@ -22509,7 +22520,7 @@ declare class BitbucketClient extends HeyApiClient {
      * The default sorting is oldest to newest and can be overridden with
      * the `sort` query parameter.
      */
-    listSnippetComments<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommentsData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdCommentsResponses, GetSnippetsByWorkspaceByEncodedIdCommentsErrors, ThrowOnError, "fields">;
+    listSnippetComments<ThrowOnError extends boolean = false>(options: Options<ListSnippetCommentsData, ThrowOnError>): RequestResult<ListSnippetCommentsResponses, ListSnippetCommentsErrors, ThrowOnError, "fields">;
     /**
      * Create a comment on a snippet
      *
@@ -22519,7 +22530,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * To create a threaded reply to an existing comment, include `parent.id`.
      */
-    createSnippetComment<ThrowOnError extends boolean = false>(options: Options<PostSnippetsByWorkspaceByEncodedIdCommentsData, ThrowOnError>): RequestResult<PostSnippetsByWorkspaceByEncodedIdCommentsResponses, PostSnippetsByWorkspaceByEncodedIdCommentsErrors, ThrowOnError, "fields">;
+    createSnippetComment<ThrowOnError extends boolean = false>(options: Options<CreateSnippetCommentData, ThrowOnError>): RequestResult<CreateSnippetCommentResponses, CreateSnippetCommentErrors, ThrowOnError, "fields">;
     /**
      * Delete a comment on a snippet
      *
@@ -22527,13 +22538,13 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Comments can only be removed by the comment author, snippet creator, or workspace admin.
      */
-    deleteSnippetComment<ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>): RequestResult<DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    deleteSnippetComment<ThrowOnError extends boolean = false>(options: Options<DeleteSnippetCommentData, ThrowOnError>): RequestResult<DeleteSnippetCommentResponses, DeleteSnippetCommentErrors, ThrowOnError, "fields">;
     /**
      * Get a comment on a snippet
      *
      * Returns the specific snippet comment.
      */
-    getSnippetComment<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    getSnippetComment<ThrowOnError extends boolean = false>(options: Options<GetSnippetCommentData, ThrowOnError>): RequestResult<GetSnippetCommentResponses, GetSnippetCommentErrors, ThrowOnError, "fields">;
     /**
      * Update a comment on a snippet
      *
@@ -22543,19 +22554,19 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Comments can only be updated by their author.
      */
-    updateSnippetComment<ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, ThrowOnError>): RequestResult<PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, ThrowOnError, "fields">;
+    updateSnippetComment<ThrowOnError extends boolean = false>(options: Options<UpdateSnippetCommentData, ThrowOnError>): RequestResult<UpdateSnippetCommentResponses, UpdateSnippetCommentErrors, ThrowOnError, "fields">;
     /**
      * List snippet changes
      *
      * Returns the changes (commits) made on this snippet.
      */
-    listSnippetCommits<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommitsData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdCommitsResponses, GetSnippetsByWorkspaceByEncodedIdCommitsErrors, ThrowOnError, "fields">;
+    listSnippetCommits<ThrowOnError extends boolean = false>(options: Options<ListSnippetCommitsData, ThrowOnError>): RequestResult<ListSnippetCommitsResponses, ListSnippetCommitsErrors, ThrowOnError, "fields">;
     /**
      * Get a previous snippet change
      *
      * Returns the changes made on this snippet in this commit.
      */
-    getSnippetCommit<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses, GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors, ThrowOnError, "fields">;
+    getSnippetCommit<ThrowOnError extends boolean = false>(options: Options<GetSnippetCommitData, ThrowOnError>): RequestResult<GetSnippetCommitResponses, GetSnippetCommitErrors, ThrowOnError, "fields">;
     /**
      * Get a snippet's raw file at HEAD
      *
@@ -22563,14 +22574,14 @@ declare class BitbucketClient extends HeyApiClient {
      * need for first having to retrieve the snippet itself and having to pull
      * out the versioned file links.
      */
-    getSnippetFile<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdFilesByPathData, ThrowOnError>): RequestResult<unknown, GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors, ThrowOnError, "fields">;
+    getSnippetFile<ThrowOnError extends boolean = false>(options: Options<GetSnippetFileData, ThrowOnError>): RequestResult<unknown, GetSnippetFileErrors, ThrowOnError, "fields">;
     /**
      * Stop watching a snippet
      *
      * Used to stop watching a specific snippet. Returns 204 (No Content)
      * to indicate success.
      */
-    unwatchSnippet<ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>): RequestResult<DeleteSnippetsByWorkspaceByEncodedIdWatchResponses, DeleteSnippetsByWorkspaceByEncodedIdWatchErrors, ThrowOnError, "fields">;
+    unwatchSnippet<ThrowOnError extends boolean = false>(options: Options<UnwatchSnippetData, ThrowOnError>): RequestResult<UnwatchSnippetResponses, UnwatchSnippetErrors, ThrowOnError, "fields">;
     /**
      * Check if the current user is watching a snippet
      *
@@ -22581,13 +22592,13 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Hitting this endpoint anonymously always returns a 404.
      */
-    getSnippetWatchStatus<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdWatchResponses, GetSnippetsByWorkspaceByEncodedIdWatchErrors, ThrowOnError, "fields">;
+    getSnippetWatchStatus<ThrowOnError extends boolean = false>(options: Options<GetSnippetWatchStatusData, ThrowOnError>): RequestResult<GetSnippetWatchStatusResponses, GetSnippetWatchStatusErrors, ThrowOnError, "fields">;
     /**
      * Watch a snippet
      *
      * Used to start watching a specific snippet. Returns 204 (No Content).
      */
-    watchSnippet<ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdWatchData, ThrowOnError>): RequestResult<PutSnippetsByWorkspaceByEncodedIdWatchResponses, PutSnippetsByWorkspaceByEncodedIdWatchErrors, ThrowOnError, "fields">;
+    watchSnippet<ThrowOnError extends boolean = false>(options: Options<WatchSnippetData, ThrowOnError>): RequestResult<WatchSnippetResponses, WatchSnippetErrors, ThrowOnError, "fields">;
     /**
      * List users watching a snippet
      *
@@ -22595,7 +22606,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listSnippetWatchers<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdWatchersData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdWatchersResponses, GetSnippetsByWorkspaceByEncodedIdWatchersErrors, ThrowOnError, "fields">;
+    listSnippetWatchers<ThrowOnError extends boolean = false>(options: Options<ListSnippetWatchersData, ThrowOnError>): RequestResult<ListSnippetWatchersResponses, ListSnippetWatchersErrors, ThrowOnError, "fields">;
     /**
      * Delete a previous revision of a snippet
      *
@@ -22608,7 +22619,7 @@ declare class BitbucketClient extends HeyApiClient {
      * To delete a snippet, regardless of whether or not concurrent changes
      * are being made to it, use `DELETE /snippets/{encoded_id}` instead.
      */
-    deleteSnippetRevision<ThrowOnError extends boolean = false>(options: Options<DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>): RequestResult<DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses, DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors, ThrowOnError, "fields">;
+    deleteSnippetRevision<ThrowOnError extends boolean = false>(options: Options<DeleteSnippetRevisionData, ThrowOnError>): RequestResult<DeleteSnippetRevisionResponses, DeleteSnippetRevisionErrors, ThrowOnError, "fields">;
     /**
      * Get a previous revision of a snippet
      *
@@ -22622,7 +22633,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Other than that, the two endpoints are identical in behavior.
      */
-    getSnippetRevision<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses, GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors, ThrowOnError, "fields">;
+    getSnippetRevision<ThrowOnError extends boolean = false>(options: Options<GetSnippetRevisionData, ThrowOnError>): RequestResult<GetSnippetRevisionResponses, GetSnippetRevisionErrors, ThrowOnError, "fields">;
     /**
      * Update a previous revision of a snippet
      *
@@ -22641,7 +22652,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Other than that, the two endpoints are identical in behavior.
      */
-    updateSnippetRevision<ThrowOnError extends boolean = false>(options: Options<PutSnippetsByWorkspaceByEncodedIdByNodeIdData, ThrowOnError>): RequestResult<PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses, PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors, ThrowOnError, "fields">;
+    updateSnippetRevision<ThrowOnError extends boolean = false>(options: Options<UpdateSnippetRevisionData, ThrowOnError>): RequestResult<UpdateSnippetRevisionResponses, UpdateSnippetRevisionErrors, ThrowOnError, "fields">;
     /**
      * Get a snippet's raw file
      *
@@ -22655,7 +22666,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that for text files, no character encoding is included as part of
      * the content type.
      */
-    getSnippetRevisionFile<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathResponses, GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors, ThrowOnError, "fields">;
+    getSnippetRevisionFile<ThrowOnError extends boolean = false>(options: Options<GetSnippetRevisionFileData, ThrowOnError>): RequestResult<GetSnippetRevisionFileResponses, GetSnippetRevisionFileErrors, ThrowOnError, "fields">;
     /**
      * Get snippet changes between versions
      *
@@ -22679,7 +22690,7 @@ declare class BitbucketClient extends HeyApiClient {
      * unspecified as Git does not track this, making it hard for
      * Bitbucket to reliably determine this.
      */
-    getSnippetDiff<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdByRevisionDiffResponses, GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors, ThrowOnError, "fields">;
+    getSnippetDiff<ThrowOnError extends boolean = false>(options: Options<GetSnippetDiffData, ThrowOnError>): RequestResult<GetSnippetDiffResponses, GetSnippetDiffErrors, ThrowOnError, "fields">;
     /**
      * Get snippet patch between versions
      *
@@ -22704,7 +22715,7 @@ declare class BitbucketClient extends HeyApiClient {
      * unspecified as Git does not track this, making it hard for
      * Bitbucket to reliably determine this.
      */
-    getSnippetPatch<ThrowOnError extends boolean = false>(options: Options<GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData, ThrowOnError>): RequestResult<GetSnippetsByWorkspaceByEncodedIdByRevisionPatchResponses, GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors, ThrowOnError, "fields">;
+    getSnippetPatch<ThrowOnError extends boolean = false>(options: Options<GetSnippetPatchData, ThrowOnError>): RequestResult<GetSnippetPatchResponses, GetSnippetPatchErrors, ThrowOnError, "fields">;
     /**
      * List variables for an account
      *
@@ -22794,7 +22805,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Details describe whether the address has been confirmed by the user and
      * whether it is the user's primary address or not.
      */
-    getUserEmail<ThrowOnError extends boolean = false>(options: Options<GetUserEmailsByEmailData, ThrowOnError>): RequestResult<GetUserEmailsByEmailResponses, GetUserEmailsByEmailErrors, ThrowOnError, "fields">;
+    getUserEmail<ThrowOnError extends boolean = false>(options: Options<GetUserEmailData, ThrowOnError>): RequestResult<GetUserEmailResponses, GetUserEmailErrors, ThrowOnError, "fields">;
     /**
      * List repository permissions for a user
      *
@@ -22892,7 +22903,7 @@ declare class BitbucketClient extends HeyApiClient {
      * [deprecation announcement](/cloud/bitbucket/deprecation-notice-collaborator-role/) for more details)
      * * `member`
      */
-    getUserWorkspacePermission<ThrowOnError extends boolean = false>(options: Options<GetUserWorkspacesByWorkspacePermissionData, ThrowOnError>): RequestResult<GetUserWorkspacesByWorkspacePermissionResponses, GetUserWorkspacesByWorkspacePermissionErrors, ThrowOnError, "fields">;
+    getUserWorkspacePermission<ThrowOnError extends boolean = false>(options: Options<GetUserWorkspacePermissionData, ThrowOnError>): RequestResult<GetUserWorkspacePermissionResponses, GetUserWorkspacePermissionErrors, ThrowOnError, "fields">;
     /**
      * List repository permissions in a workspace for a user
      *
@@ -22918,7 +22929,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that the query parameter values need to be URL escaped so that `=`
      * would become `%3D`.
      */
-    listUserWorkspaceRepoPermissions<ThrowOnError extends boolean = false>(options: Options<GetUserWorkspacesByWorkspacePermissionsRepositoriesData, ThrowOnError>): RequestResult<GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses, GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors, ThrowOnError, "fields">;
+    listUserWorkspaceRepoPermissions<ThrowOnError extends boolean = false>(options: Options<ListUserWorkspaceRepoPermissionsData, ThrowOnError>): RequestResult<ListUserWorkspaceRepoPermissionsResponses, ListUserWorkspaceRepoPermissionsErrors, ThrowOnError, "fields">;
     /**
      * Get a user
      *
@@ -22930,7 +22941,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that the user object returned by this operation is changing significantly, due to privacy changes.
      * See the [announcement](https://developer.atlassian.com/cloud/bitbucket/bitbucket-api-changes-gdpr/#changes-to-bitbucket-user-objects) for details.
      */
-    getUserProfile<ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserData, ThrowOnError>): RequestResult<GetUsersBySelectedUserResponses, GetUsersBySelectedUserErrors, ThrowOnError, "fields">;
+    getUserProfile<ThrowOnError extends boolean = false>(options: Options<GetUserProfileData, ThrowOnError>): RequestResult<GetUserProfileResponses, GetUserProfileErrors, ThrowOnError, "fields">;
     /**
      * List GPG keys
      *
@@ -22938,7 +22949,7 @@ declare class BitbucketClient extends HeyApiClient {
      * The `key` and `subkeys` fields can also be requested from the endpoint.
      * See [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.
      */
-    listUserGpgKeys<ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserGpgKeysData, ThrowOnError>): RequestResult<GetUsersBySelectedUserGpgKeysResponses, GetUsersBySelectedUserGpgKeysErrors, ThrowOnError, "fields">;
+    listUserGpgKeys<ThrowOnError extends boolean = false>(options: Options<ListUserGpgKeysData, ThrowOnError>): RequestResult<ListUserGpgKeysResponses, ListUserGpgKeysErrors, ThrowOnError, "fields">;
     /**
      * Add a new GPG key
      *
@@ -22952,13 +22963,13 @@ declare class BitbucketClient extends HeyApiClient {
      * https://api.bitbucket.org/2.0/users/{d7dd0e2d-3994-4a50-a9ee-d260b6cefdab}/gpg-keys
      * ```
      */
-    createUserGpgKey<ThrowOnError extends boolean = false>(options: Options<PostUsersBySelectedUserGpgKeysData, ThrowOnError>): RequestResult<PostUsersBySelectedUserGpgKeysResponses, PostUsersBySelectedUserGpgKeysErrors, ThrowOnError, "fields">;
+    createUserGpgKey<ThrowOnError extends boolean = false>(options: Options<CreateUserGpgKeyData, ThrowOnError>): RequestResult<CreateUserGpgKeyResponses, CreateUserGpgKeyErrors, ThrowOnError, "fields">;
     /**
      * Delete a GPG key
      *
      * Deletes a specific GPG public key from a user's account.
      */
-    deleteUserGpgKey<ThrowOnError extends boolean = false>(options: Options<DeleteUsersBySelectedUserGpgKeysByFingerprintData, ThrowOnError>): RequestResult<DeleteUsersBySelectedUserGpgKeysByFingerprintResponses, DeleteUsersBySelectedUserGpgKeysByFingerprintErrors, ThrowOnError, "fields">;
+    deleteUserGpgKey<ThrowOnError extends boolean = false>(options: Options<DeleteUserGpgKeyData, ThrowOnError>): RequestResult<DeleteUserGpgKeyResponses, DeleteUserGpgKeyErrors, ThrowOnError, "fields">;
     /**
      * Get a GPG key
      *
@@ -22966,7 +22977,7 @@ declare class BitbucketClient extends HeyApiClient {
      * The `key` and `subkeys` fields can also be requested from the endpoint.
      * See [Partial Responses](/cloud/bitbucket/rest/intro/#partial-response) for more details.
      */
-    getUserGpgKey<ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserGpgKeysByFingerprintData, ThrowOnError>): RequestResult<GetUsersBySelectedUserGpgKeysByFingerprintResponses, GetUsersBySelectedUserGpgKeysByFingerprintErrors, ThrowOnError, "fields">;
+    getUserGpgKey<ThrowOnError extends boolean = false>(options: Options<GetUserGpgKeyData, ThrowOnError>): RequestResult<GetUserGpgKeyResponses, GetUserGpgKeyErrors, ThrowOnError, "fields">;
     /**
      * List variables for a user
      *
@@ -23055,7 +23066,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Returns a paginated list of the user's SSH public keys.
      */
-    listUserSshKeys<ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserSshKeysData, ThrowOnError>): RequestResult<GetUsersBySelectedUserSshKeysResponses, GetUsersBySelectedUserSshKeysErrors, ThrowOnError, "fields">;
+    listUserSshKeys<ThrowOnError extends boolean = false>(options: Options<ListUserSshKeysData, ThrowOnError>): RequestResult<ListUserSshKeysResponses, ListUserSshKeysErrors, ThrowOnError, "fields">;
     /**
      * Add a new SSH key
      *
@@ -23067,19 +23078,19 @@ declare class BitbucketClient extends HeyApiClient {
      * $ curl -X POST -H "Content-Type: application/json" -d '{"key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKqP3Cr632C2dNhhgKVcon4ldUSAeKiku2yP9O9/bDtY user@myhost"}' https://api.bitbucket.org/2.0/users/{ed08f5e1-605b-4f4a-aee4-6c97628a673e}/ssh-keys
      * ```
      */
-    createUserSshKey<ThrowOnError extends boolean = false>(options: Options<PostUsersBySelectedUserSshKeysData, ThrowOnError>): RequestResult<PostUsersBySelectedUserSshKeysResponses, PostUsersBySelectedUserSshKeysErrors, ThrowOnError, "fields">;
+    createUserSshKey<ThrowOnError extends boolean = false>(options: Options<CreateUserSshKeyData, ThrowOnError>): RequestResult<CreateUserSshKeyResponses, CreateUserSshKeyErrors, ThrowOnError, "fields">;
     /**
      * Delete a SSH key
      *
      * Deletes a specific SSH public key from a user's account.
      */
-    deleteUserSshKey<ThrowOnError extends boolean = false>(options: Options<DeleteUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>): RequestResult<DeleteUsersBySelectedUserSshKeysByKeyIdResponses, DeleteUsersBySelectedUserSshKeysByKeyIdErrors, ThrowOnError, "fields">;
+    deleteUserSshKey<ThrowOnError extends boolean = false>(options: Options<DeleteUserSshKeyData, ThrowOnError>): RequestResult<DeleteUserSshKeyResponses, DeleteUserSshKeyErrors, ThrowOnError, "fields">;
     /**
      * Get a SSH key
      *
      * Returns a specific SSH public key belonging to a user.
      */
-    getUserSshKey<ThrowOnError extends boolean = false>(options: Options<GetUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>): RequestResult<GetUsersBySelectedUserSshKeysByKeyIdResponses, GetUsersBySelectedUserSshKeysByKeyIdErrors, ThrowOnError, "fields">;
+    getUserSshKey<ThrowOnError extends boolean = false>(options: Options<GetUserSshKeyData, ThrowOnError>): RequestResult<GetUserSshKeyResponses, GetUserSshKeyErrors, ThrowOnError, "fields">;
     /**
      * Update a SSH key
      *
@@ -23093,7 +23104,7 @@ declare class BitbucketClient extends HeyApiClient {
      * $ curl -X PUT -H "Content-Type: application/json" -d '{"label": "Work key"}' https://api.bitbucket.org/2.0/users/{ed08f5e1-605b-4f4a-aee4-6c97628a673e}/ssh-keys/{b15b6026-9c02-4626-b4ad-b905f99f763a}
      * ```
      */
-    updateUserSshKey<ThrowOnError extends boolean = false>(options: Options<PutUsersBySelectedUserSshKeysByKeyIdData, ThrowOnError>): RequestResult<PutUsersBySelectedUserSshKeysByKeyIdResponses, PutUsersBySelectedUserSshKeysByKeyIdErrors, ThrowOnError, "fields">;
+    updateUserSshKey<ThrowOnError extends boolean = false>(options: Options<UpdateUserSshKeyData, ThrowOnError>): RequestResult<UpdateUserSshKeyResponses, UpdateUserSshKeyErrors, ThrowOnError, "fields">;
     /**
      * List workspaces for user
      *
@@ -23116,19 +23127,19 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * @deprecated
      */
-    listWorkspaces<ThrowOnError extends boolean = false>(options?: Options<GetWorkspacesData, ThrowOnError>): RequestResult<GetWorkspacesResponses, GetWorkspacesErrors, ThrowOnError, "fields">;
+    listWorkspaces<ThrowOnError extends boolean = false>(options?: Options<ListWorkspacesData, ThrowOnError>): RequestResult<ListWorkspacesResponses, ListWorkspacesErrors, ThrowOnError, "fields">;
     /**
      * Get a workspace
      *
      * Returns the requested workspace.
      */
-    getWorkspace<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceResponses, GetWorkspacesByWorkspaceErrors, ThrowOnError, "fields">;
+    getWorkspace<ThrowOnError extends boolean = false>(options: Options<GetWorkspaceData, ThrowOnError>): RequestResult<GetWorkspaceResponses, GetWorkspaceErrors, ThrowOnError, "fields">;
     /**
      * List webhooks for a workspace
      *
      * Returns a paginated list of webhooks installed on this workspace.
      */
-    listWorkspaceHooks<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceHooksData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceHooksResponses, GetWorkspacesByWorkspaceHooksErrors, ThrowOnError, "fields">;
+    listWorkspaceHooks<ThrowOnError extends boolean = false>(options: Options<ListWorkspaceHooksData, ThrowOnError>): RequestResult<ListWorkspaceHooksResponses, ListWorkspaceHooksErrors, ThrowOnError, "fields">;
     /**
      * Create a webhook for a workspace
      *
@@ -23170,20 +23181,20 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Only workspace owners can install webhooks on workspaces.
      */
-    createWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceHooksData, ThrowOnError>): RequestResult<PostWorkspacesByWorkspaceHooksResponses, PostWorkspacesByWorkspaceHooksErrors, ThrowOnError, "fields">;
+    createWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<CreateWorkspaceHookData, ThrowOnError>): RequestResult<CreateWorkspaceHookResponses, CreateWorkspaceHookErrors, ThrowOnError, "fields">;
     /**
      * Delete a webhook for a workspace
      *
      * Deletes the specified webhook subscription from the given workspace.
      */
-    deleteWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceHooksByUidData, ThrowOnError>): RequestResult<DeleteWorkspacesByWorkspaceHooksByUidResponses, DeleteWorkspacesByWorkspaceHooksByUidErrors, ThrowOnError, "fields">;
+    deleteWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<DeleteWorkspaceHookData, ThrowOnError>): RequestResult<DeleteWorkspaceHookResponses, DeleteWorkspaceHookErrors, ThrowOnError, "fields">;
     /**
      * Get a webhook for a workspace
      *
      * Returns the webhook with the specified id installed on the given
      * workspace.
      */
-    getWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceHooksByUidData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceHooksByUidResponses, GetWorkspacesByWorkspaceHooksByUidErrors, ThrowOnError, "fields">;
+    getWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<GetWorkspaceHookData, ThrowOnError>): RequestResult<GetWorkspaceHookResponses, GetWorkspaceHookErrors, ThrowOnError, "fields">;
     /**
      * Update a webhook for a workspace
      *
@@ -23206,7 +23217,7 @@ declare class BitbucketClient extends HeyApiClient {
      * hook's secret can be left unchanged by not passing the `secret` field in the
      * request.
      */
-    updateWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceHooksByUidData, ThrowOnError>): RequestResult<PutWorkspacesByWorkspaceHooksByUidResponses, PutWorkspacesByWorkspaceHooksByUidErrors, ThrowOnError, "fields">;
+    updateWorkspaceHook<ThrowOnError extends boolean = false>(options: Options<UpdateWorkspaceHookData, ThrowOnError>): RequestResult<UpdateWorkspaceHookResponses, UpdateWorkspaceHookErrors, ThrowOnError, "fields">;
     /**
      * List users in a workspace
      *
@@ -23233,7 +23244,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Once again, all query parameter values must be URL escaped.
      */
-    listWorkspaceMembers<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceMembersData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceMembersResponses, GetWorkspacesByWorkspaceMembersErrors, ThrowOnError, "fields">;
+    listWorkspaceMembers<ThrowOnError extends boolean = false>(options: Options<ListWorkspaceMembersData, ThrowOnError>): RequestResult<ListWorkspaceMembersResponses, ListWorkspaceMembersErrors, ThrowOnError, "fields">;
     /**
      * Get user membership for a workspace
      *
@@ -23241,7 +23252,7 @@ declare class BitbucketClient extends HeyApiClient {
      * a `User` object for the member and a `Workspace` object
      * for the requested workspace.
      */
-    getWorkspaceMember<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceMembersByMemberData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceMembersByMemberResponses, GetWorkspacesByWorkspaceMembersByMemberErrors, ThrowOnError, "fields">;
+    getWorkspaceMember<ThrowOnError extends boolean = false>(options: Options<GetWorkspaceMemberData, ThrowOnError>): RequestResult<GetWorkspaceMemberResponses, GetWorkspaceMemberErrors, ThrowOnError, "fields">;
     /**
      * List user permissions in a workspace
      *
@@ -23264,7 +23275,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * * `q=permission="owner"`
      */
-    listWorkspacePermissions<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspacePermissionsResponses, GetWorkspacesByWorkspacePermissionsErrors, ThrowOnError, "fields">;
+    listWorkspacePermissions<ThrowOnError extends boolean = false>(options: Options<ListWorkspacePermissionsData, ThrowOnError>): RequestResult<ListWorkspacePermissionsResponses, ListWorkspacePermissionsErrors, ThrowOnError, "fields">;
     /**
      * List all repository permissions for a workspace
      *
@@ -23293,7 +23304,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that the query parameter values need to be URL escaped so that `=`
      * would become `%3D`.
      */
-    listWorkspaceRepoPermissions<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsRepositoriesData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspacePermissionsRepositoriesResponses, GetWorkspacesByWorkspacePermissionsRepositoriesErrors, ThrowOnError, "fields">;
+    listWorkspaceRepoPermissions<ThrowOnError extends boolean = false>(options: Options<ListWorkspaceRepoPermissionsData, ThrowOnError>): RequestResult<ListWorkspaceRepoPermissionsResponses, ListWorkspaceRepoPermissionsErrors, ThrowOnError, "fields">;
     /**
      * List a repository permissions for a workspace
      *
@@ -23321,7 +23332,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Note that the query parameter values need to be URL escaped so that `=`
      * would become `%3D`.
      */
-    getWorkspaceRepoPermission<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses, GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors, ThrowOnError, "fields">;
+    getWorkspaceRepoPermission<ThrowOnError extends boolean = false>(options: Options<GetWorkspaceRepoPermissionData, ThrowOnError>): RequestResult<GetWorkspaceRepoPermissionResponses, GetWorkspaceRepoPermissionErrors, ThrowOnError, "fields">;
     /**
      * Get OpenID configuration for OIDC in Pipelines
      *
@@ -23399,7 +23410,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Returns the list of projects in this workspace.
      */
-    listProjects<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsResponses, GetWorkspacesByWorkspaceProjectsErrors, ThrowOnError, "fields">;
+    listProjects<ThrowOnError extends boolean = false>(options: Options<ListProjectsData, ThrowOnError>): RequestResult<ListProjectsResponses, ListProjectsErrors, ThrowOnError, "fields">;
     /**
      * Create a project in a workspace
      *
@@ -23458,7 +23469,7 @@ declare class BitbucketClient extends HeyApiClient {
      * }
      * ```
      */
-    createProject<ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceProjectsData, ThrowOnError>): RequestResult<PostWorkspacesByWorkspaceProjectsResponses, PostWorkspacesByWorkspaceProjectsErrors, ThrowOnError, "fields">;
+    createProject<ThrowOnError extends boolean = false>(options: Options<CreateProjectData, ThrowOnError>): RequestResult<CreateProjectResponses, CreateProjectErrors, ThrowOnError, "fields">;
     /**
      * Delete a project for a workspace
      *
@@ -23473,13 +23484,13 @@ declare class BitbucketClient extends HeyApiClient {
      * $ curl -X DELETE https://api.bitbucket.org/2.0/workspaces/bbworkspace1/projects/PROJ
      * ```
      */
-    deleteProject<ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>): RequestResult<DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors, ThrowOnError, "fields">;
+    deleteProject<ThrowOnError extends boolean = false>(options: Options<DeleteProjectData, ThrowOnError>): RequestResult<DeleteProjectResponses, DeleteProjectErrors, ThrowOnError, "fields">;
     /**
      * Get a project for a workspace
      *
      * Returns the requested project.
      */
-    getProject<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyErrors, ThrowOnError, "fields">;
+    getProject<ThrowOnError extends boolean = false>(options: Options<GetProjectData, ThrowOnError>): RequestResult<GetProjectResponses, GetProjectErrors, ThrowOnError, "fields">;
     /**
      * Update a project for a workspace
      *
@@ -23506,7 +23517,7 @@ declare class BitbucketClient extends HeyApiClient {
      * project is changed and is returned in the `Location` header of the
      * response.
      */
-    updateProject<ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyData, ThrowOnError>): RequestResult<PutWorkspacesByWorkspaceProjectsByProjectKeyResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyErrors, ThrowOnError, "fields">;
+    updateProject<ThrowOnError extends boolean = false>(options: Options<UpdateProjectData, ThrowOnError>): RequestResult<UpdateProjectResponses, UpdateProjectErrors, ThrowOnError, "fields">;
     /**
      * Get the branching model for a project
      *
@@ -23527,7 +23538,7 @@ declare class BitbucketClient extends HeyApiClient {
      * 3. Always has a `branch_types` array which contains all enabled branch
      * types.
      */
-    getProjectBranchingModel<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors, ThrowOnError, "fields">;
+    getProjectBranchingModel<ThrowOnError extends boolean = false>(options: Options<GetProjectBranchingModelData, ThrowOnError>): RequestResult<GetProjectBranchingModelResponses, GetProjectBranchingModelErrors, ThrowOnError, "fields">;
     /**
      * Get the branching model config for a project
      *
@@ -23547,7 +23558,7 @@ declare class BitbucketClient extends HeyApiClient {
      * [active model API](#api-workspaces-workspace-projects-project-key-branching-model-get)
      * more useful.
      */
-    getProjectBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors, ThrowOnError, "fields">;
+    getProjectBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<GetProjectBranchingModelSettingsData, ThrowOnError>): RequestResult<GetProjectBranchingModelSettingsResponses, GetProjectBranchingModelSettingsErrors, ThrowOnError, "fields">;
     /**
      * Update the branching model config for a project
      *
@@ -23590,14 +23601,14 @@ declare class BitbucketClient extends HeyApiClient {
      * `default_branch_deletion` property will leave it unchanged. Other values
      * would be ignored.
      */
-    updateProjectBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, ThrowOnError>): RequestResult<PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors, ThrowOnError, "fields">;
+    updateProjectBranchingModelSettings<ThrowOnError extends boolean = false>(options: Options<UpdateProjectBranchingModelSettingsData, ThrowOnError>): RequestResult<UpdateProjectBranchingModelSettingsResponses, UpdateProjectBranchingModelSettingsErrors, ThrowOnError, "fields">;
     /**
      * List the default reviewers in a project
      *
      * Return a list of all default reviewers for a project. This is a list of users that will be added as default
      * reviewers to pull requests for any repository within the project.
      */
-    listProjectDefaultReviewers<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors, ThrowOnError, "fields">;
+    listProjectDefaultReviewers<ThrowOnError extends boolean = false>(options: Options<ListProjectDefaultReviewersData, ThrowOnError>): RequestResult<ListProjectDefaultReviewersResponses, ListProjectDefaultReviewersErrors, ThrowOnError, "fields">;
     /**
      * Remove the specific user from the project's default reviewers
      *
@@ -23610,26 +23621,26 @@ declare class BitbucketClient extends HeyApiClient {
      * HTTP/1.1 204
      * ```
      */
-    deleteProjectDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>): RequestResult<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, ThrowOnError, "fields">;
+    deleteProjectDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<DeleteProjectDefaultReviewerData, ThrowOnError>): RequestResult<DeleteProjectDefaultReviewerResponses, DeleteProjectDefaultReviewerErrors, ThrowOnError, "fields">;
     /**
      * Get a default reviewer
      *
      * Returns the specified default reviewer.
      */
-    getProjectDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, ThrowOnError, "fields">;
+    getProjectDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<GetProjectDefaultReviewerData, ThrowOnError>): RequestResult<GetProjectDefaultReviewerResponses, GetProjectDefaultReviewerErrors, ThrowOnError, "fields">;
     /**
      * Add the specific user as a default reviewer for the project
      *
      * Adds the specified user to the project's list of default reviewers. The method is
      * idempotent. Accepts an optional body containing the `uuid` of the user to be added.
      */
-    addProjectDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, ThrowOnError>): RequestResult<PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, ThrowOnError, "fields">;
+    addProjectDefaultReviewer<ThrowOnError extends boolean = false>(options: Options<AddProjectDefaultReviewerData, ThrowOnError>): RequestResult<AddProjectDefaultReviewerResponses, AddProjectDefaultReviewerErrors, ThrowOnError, "fields">;
     /**
      * List project deploy keys
      *
      * Returns all deploy keys belonging to a project.
      */
-    listProjectDeployKeys<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors, ThrowOnError, "fields">;
+    listProjectDeployKeys<ThrowOnError extends boolean = false>(options: Options<ListProjectDeployKeysData, ThrowOnError>): RequestResult<ListProjectDeployKeysResponses, ListProjectDeployKeysErrors, ThrowOnError, "fields">;
     /**
      * Create a project deploy key
      *
@@ -23647,26 +23658,26 @@ declare class BitbucketClient extends HeyApiClient {
      * }'
      * ```
      */
-    createProjectDeployKey<ThrowOnError extends boolean = false>(options: Options<PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, ThrowOnError>): RequestResult<PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses, PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors, ThrowOnError, "fields">;
+    createProjectDeployKey<ThrowOnError extends boolean = false>(options: Options<CreateProjectDeployKeyData, ThrowOnError>): RequestResult<CreateProjectDeployKeyResponses, CreateProjectDeployKeyErrors, ThrowOnError, "fields">;
     /**
      * Delete a deploy key from a project
      *
      * This deletes a deploy key from a project.
      */
-    deleteProjectDeployKey<ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, ThrowOnError>): RequestResult<DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors, ThrowOnError, "fields">;
+    deleteProjectDeployKey<ThrowOnError extends boolean = false>(options: Options<DeleteProjectDeployKeyData, ThrowOnError>): RequestResult<DeleteProjectDeployKeyResponses, DeleteProjectDeployKeyErrors, ThrowOnError, "fields">;
     /**
      * Get a project deploy key
      *
      * Returns the deploy key belonging to a specific key ID.
      */
-    getProjectDeployKey<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors, ThrowOnError, "fields">;
+    getProjectDeployKey<ThrowOnError extends boolean = false>(options: Options<GetProjectDeployKeyData, ThrowOnError>): RequestResult<GetProjectDeployKeyResponses, GetProjectDeployKeyErrors, ThrowOnError, "fields">;
     /**
      * List explicit group permissions for a project
      *
      * Returns a paginated list of explicit group permissions for the given project.
      * This endpoint does not support BBQL features.
      */
-    listProjectPermissionGroups<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors, ThrowOnError, "fields">;
+    listProjectPermissionGroups<ThrowOnError extends boolean = false>(options: Options<ListProjectPermissionGroupsData, ThrowOnError>): RequestResult<ListProjectPermissionGroupsResponses, ListProjectPermissionGroupsErrors, ThrowOnError, "fields">;
     /**
      * Delete an explicit group permission for a project
      *
@@ -23674,7 +23685,7 @@ declare class BitbucketClient extends HeyApiClient {
      *
      * Only users with admin permission for the project may access this resource.
      */
-    deleteProjectPermissionGroup<ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>): RequestResult<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError, "fields">;
+    deleteProjectPermissionGroup<ThrowOnError extends boolean = false>(options: Options<DeleteProjectPermissionGroupData, ThrowOnError>): RequestResult<DeleteProjectPermissionGroupResponses, DeleteProjectPermissionGroupErrors, ThrowOnError, "fields">;
     /**
      * Get an explicit group permission for a project
      *
@@ -23690,7 +23701,7 @@ declare class BitbucketClient extends HeyApiClient {
      * * `read`
      * * `none`
      */
-    getProjectPermissionGroup<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError, "fields">;
+    getProjectPermissionGroup<ThrowOnError extends boolean = false>(options: Options<GetProjectPermissionGroupData, ThrowOnError>): RequestResult<GetProjectPermissionGroupResponses, GetProjectPermissionGroupErrors, ThrowOnError, "fields">;
     /**
      * Update an explicit group permission for a project
      *
@@ -23708,14 +23719,14 @@ declare class BitbucketClient extends HeyApiClient {
      * * `write`
      * * `read`
      */
-    updateProjectPermissionGroup<ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, ThrowOnError>): RequestResult<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, ThrowOnError, "fields">;
+    updateProjectPermissionGroup<ThrowOnError extends boolean = false>(options: Options<UpdateProjectPermissionGroupData, ThrowOnError>): RequestResult<UpdateProjectPermissionGroupResponses, UpdateProjectPermissionGroupErrors, ThrowOnError, "fields">;
     /**
      * List explicit user permissions for a project
      *
      * Returns a paginated list of explicit user permissions for the given project.
      * This endpoint does not support BBQL features.
      */
-    listProjectPermissionUsers<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors, ThrowOnError, "fields">;
+    listProjectPermissionUsers<ThrowOnError extends boolean = false>(options: Options<ListProjectPermissionUsersData, ThrowOnError>): RequestResult<ListProjectPermissionUsersResponses, ListProjectPermissionUsersErrors, ThrowOnError, "fields">;
     /**
      * Delete an explicit user permission for a project
      *
@@ -23726,7 +23737,7 @@ declare class BitbucketClient extends HeyApiClient {
      * Due to security concerns, the JWT and OAuth authentication methods are unsupported.
      * This is to ensure integrations and add-ons are not allowed to change permissions.
      */
-    deleteProjectPermissionUser<ThrowOnError extends boolean = false>(options: Options<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>): RequestResult<DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError, "fields">;
+    deleteProjectPermissionUser<ThrowOnError extends boolean = false>(options: Options<DeleteProjectPermissionUserData, ThrowOnError>): RequestResult<DeleteProjectPermissionUserResponses, DeleteProjectPermissionUserErrors, ThrowOnError, "fields">;
     /**
      * Get an explicit user permission for a project
      *
@@ -23742,7 +23753,7 @@ declare class BitbucketClient extends HeyApiClient {
      * * `read`
      * * `none`
      */
-    getProjectPermissionUser<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError, "fields">;
+    getProjectPermissionUser<ThrowOnError extends boolean = false>(options: Options<GetProjectPermissionUserData, ThrowOnError>): RequestResult<GetProjectPermissionUserResponses, GetProjectPermissionUserErrors, ThrowOnError, "fields">;
     /**
      * Update an explicit user permission for a project
      *
@@ -23761,7 +23772,7 @@ declare class BitbucketClient extends HeyApiClient {
      * * `write`
      * * `read`
      */
-    updateProjectPermissionUser<ThrowOnError extends boolean = false>(options: Options<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, ThrowOnError>): RequestResult<PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, ThrowOnError, "fields">;
+    updateProjectPermissionUser<ThrowOnError extends boolean = false>(options: Options<UpdateProjectPermissionUserData, ThrowOnError>): RequestResult<UpdateProjectPermissionUserResponses, UpdateProjectPermissionUserErrors, ThrowOnError, "fields">;
     /**
      * List workspace pull requests for a user
      *
@@ -23775,7 +23786,7 @@ declare class BitbucketClient extends HeyApiClient {
      * This endpoint also supports filtering and sorting of the results. See
      * [filtering and sorting](/cloud/bitbucket/rest/intro/#filtering) for more details.
      */
-    listWorkspaceUserPullRequests<ThrowOnError extends boolean = false>(options: Options<GetWorkspacesByWorkspacePullrequestsBySelectedUserData, ThrowOnError>): RequestResult<GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses, GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors, ThrowOnError, "fields">;
+    listWorkspaceUserPullRequests<ThrowOnError extends boolean = false>(options: Options<ListWorkspaceUserPullRequestsData, ThrowOnError>): RequestResult<ListWorkspaceUserPullRequestsResponses, ListWorkspaceUserPullRequestsErrors, ThrowOnError, "fields">;
     /**
      * Search for code in a workspace
      *
@@ -23800,6 +23811,4 @@ declare class BitbucketClient extends HeyApiClient {
     searchWorkspace<ThrowOnError extends boolean = false>(options: Options<SearchWorkspaceData, ThrowOnError>): RequestResult<SearchWorkspaceResponses, SearchWorkspaceErrors, ThrowOnError, "fields">;
 }
 
-declare const client: Client;
-
-export { type Account, type AccountLinks, type AppUser, type ApplicationProperty, type ApplicationProperty2, type Author, type BaseCommit, type BitbucketAppsPermissionsSerializersProjectPermissionUpdateSchema, type BitbucketAppsPermissionsSerializersProjectPermissionUpdateSchema2, type BitbucketAppsPermissionsSerializersRepoPermissionUpdateSchema, type BitbucketAppsPermissionsSerializersRepoPermissionUpdateSchema2, BitbucketClient, type Branch, type BranchingModel, type BranchingModelSettings, type Branchrestriction, type BulkCreateOrUpdateAnnotationsData, type BulkCreateOrUpdateAnnotationsResponse, type BulkCreateOrUpdateAnnotationsResponses, type ClientOptions, type Comment, type CommentResolution, type Commit, type CommitComment, type CommitFile, type Commitstatus, type Committer, type Component, type CreateDeploymentVariableData, type CreateDeploymentVariableError, type CreateDeploymentVariableErrors, type CreateDeploymentVariableResponse, type CreateDeploymentVariableResponses, type CreateEnvironmentData, type CreateEnvironmentError, type CreateEnvironmentErrors, type CreateEnvironmentResponse, type CreateEnvironmentResponses, type CreateOrUpdateAnnotationData, type CreateOrUpdateAnnotationError, type CreateOrUpdateAnnotationErrors, type CreateOrUpdateAnnotationResponse, type CreateOrUpdateAnnotationResponses, type CreateOrUpdateReportData, type CreateOrUpdateReportError, type CreateOrUpdateReportErrors, type CreateOrUpdateReportResponse, type CreateOrUpdateReportResponses, type CreatePipelineForRepositoryData, type CreatePipelineForRepositoryError, type CreatePipelineForRepositoryErrors, type CreatePipelineForRepositoryResponse, type CreatePipelineForRepositoryResponses, type CreatePipelineVariableForTeamData, type CreatePipelineVariableForTeamError, type CreatePipelineVariableForTeamErrors, type CreatePipelineVariableForTeamResponse, type CreatePipelineVariableForTeamResponses, type CreatePipelineVariableForUserData, type CreatePipelineVariableForUserError, type CreatePipelineVariableForUserErrors, type CreatePipelineVariableForUserResponse, type CreatePipelineVariableForUserResponses, type CreatePipelineVariableForWorkspaceData, type CreatePipelineVariableForWorkspaceError, type CreatePipelineVariableForWorkspaceErrors, type CreatePipelineVariableForWorkspaceResponse, type CreatePipelineVariableForWorkspaceResponses, type CreateRepositoryPipelineKnownHostData, type CreateRepositoryPipelineKnownHostError, type CreateRepositoryPipelineKnownHostErrors, type CreateRepositoryPipelineKnownHostResponse, type CreateRepositoryPipelineKnownHostResponses, type CreateRepositoryPipelineScheduleData, type CreateRepositoryPipelineScheduleError, type CreateRepositoryPipelineScheduleErrors, type CreateRepositoryPipelineScheduleResponse, type CreateRepositoryPipelineScheduleResponses, type CreateRepositoryPipelineVariableData, type CreateRepositoryPipelineVariableError, type CreateRepositoryPipelineVariableErrors, type CreateRepositoryPipelineVariableResponse, type CreateRepositoryPipelineVariableResponses, type CreateRepositoryRunnerData, type CreateRepositoryRunnerError, type CreateRepositoryRunnerErrors, type CreateRepositoryRunnerResponse, type CreateRepositoryRunnerResponses, type CreateWorkspaceRunnerData, type CreateWorkspaceRunnerError, type CreateWorkspaceRunnerErrors, type CreateWorkspaceRunnerResponse, type CreateWorkspaceRunnerResponses, type DefaultReviewerAndType, type DeleteAddonData, type DeleteAddonError, type DeleteAddonErrors, type DeleteAddonLinkersByLinkerKeyValuesByValueIdData, type DeleteAddonLinkersByLinkerKeyValuesByValueIdError, type DeleteAddonLinkersByLinkerKeyValuesByValueIdErrors, type DeleteAddonLinkersByLinkerKeyValuesByValueIdResponse, type DeleteAddonLinkersByLinkerKeyValuesByValueIdResponses, type DeleteAddonLinkersByLinkerKeyValuesData, type DeleteAddonLinkersByLinkerKeyValuesError, type DeleteAddonLinkersByLinkerKeyValuesErrors, type DeleteAddonLinkersByLinkerKeyValuesResponse, type DeleteAddonLinkersByLinkerKeyValuesResponses, type DeleteAddonResponse, type DeleteAddonResponses, type DeleteAnnotationData, type DeleteAnnotationResponse, type DeleteAnnotationResponses, type DeleteCommitHostedPropertyValueData, type DeleteCommitHostedPropertyValueResponse, type DeleteCommitHostedPropertyValueResponses, type DeleteDeploymentVariableData, type DeleteDeploymentVariableError, type DeleteDeploymentVariableErrors, type DeleteDeploymentVariableResponse, type DeleteDeploymentVariableResponses, type DeleteEnvironmentForRepositoryData, type DeleteEnvironmentForRepositoryError, type DeleteEnvironmentForRepositoryErrors, type DeleteEnvironmentForRepositoryResponse, type DeleteEnvironmentForRepositoryResponses, type DeletePipelineVariableForTeamData, type DeletePipelineVariableForTeamError, type DeletePipelineVariableForTeamErrors, type DeletePipelineVariableForTeamResponse, type DeletePipelineVariableForTeamResponses, type DeletePipelineVariableForUserData, type DeletePipelineVariableForUserError, type DeletePipelineVariableForUserErrors, type DeletePipelineVariableForUserResponse, type DeletePipelineVariableForUserResponses, type DeletePipelineVariableForWorkspaceData, type DeletePipelineVariableForWorkspaceError, type DeletePipelineVariableForWorkspaceErrors, type DeletePipelineVariableForWorkspaceResponse, type DeletePipelineVariableForWorkspaceResponses, type DeletePullRequestHostedPropertyValueData, type DeletePullRequestHostedPropertyValueResponse, type DeletePullRequestHostedPropertyValueResponses, type DeleteReportData, type DeleteReportResponse, type DeleteReportResponses, type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError, type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponse, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugData, type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError, type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse, type DeleteRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError, type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError, type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors, type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponse, type DeleteRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameResponses, type DeleteRepositoriesByWorkspaceByRepoSlugError, type DeleteRepositoriesByWorkspaceByRepoSlugErrors, type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidData, type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidError, type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponse, type DeleteRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponse, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathResponses, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse, type DeleteRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponse, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponse, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponse, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse, type DeleteRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError, type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors, type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponse, type DeleteRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses, type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError, type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors, type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponse, type DeleteRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses, type DeleteRepositoriesByWorkspaceByRepoSlugResponse, type DeleteRepositoriesByWorkspaceByRepoSlugResponses, type DeleteRepositoryHostedPropertyValueData, type DeleteRepositoryHostedPropertyValueResponse, type DeleteRepositoryHostedPropertyValueResponses, type DeleteRepositoryPipelineCacheData, type DeleteRepositoryPipelineCacheError, type DeleteRepositoryPipelineCacheErrors, type DeleteRepositoryPipelineCacheResponse, type DeleteRepositoryPipelineCacheResponses, type DeleteRepositoryPipelineCachesData, type DeleteRepositoryPipelineCachesError, type DeleteRepositoryPipelineCachesErrors, type DeleteRepositoryPipelineCachesResponse, type DeleteRepositoryPipelineCachesResponses, type DeleteRepositoryPipelineKeyPairData, type DeleteRepositoryPipelineKeyPairError, type DeleteRepositoryPipelineKeyPairErrors, type DeleteRepositoryPipelineKeyPairResponse, type DeleteRepositoryPipelineKeyPairResponses, type DeleteRepositoryPipelineKnownHostData, type DeleteRepositoryPipelineKnownHostError, type DeleteRepositoryPipelineKnownHostErrors, type DeleteRepositoryPipelineKnownHostResponse, type DeleteRepositoryPipelineKnownHostResponses, type DeleteRepositoryPipelineScheduleData, type DeleteRepositoryPipelineScheduleError, type DeleteRepositoryPipelineScheduleErrors, type DeleteRepositoryPipelineScheduleResponse, type DeleteRepositoryPipelineScheduleResponses, type DeleteRepositoryPipelineVariableData, type DeleteRepositoryPipelineVariableError, type DeleteRepositoryPipelineVariableErrors, type DeleteRepositoryPipelineVariableResponse, type DeleteRepositoryPipelineVariableResponses, type DeleteRepositoryRunnerData, type DeleteRepositoryRunnerError, type DeleteRepositoryRunnerErrors, type DeleteRepositoryRunnerResponse, type DeleteRepositoryRunnerResponses, type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdData, type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdError, type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdErrors, type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponse, type DeleteSnippetsByWorkspaceByEncodedIdByNodeIdResponses, type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError, type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse, type DeleteSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, type DeleteSnippetsByWorkspaceByEncodedIdData, type DeleteSnippetsByWorkspaceByEncodedIdError, type DeleteSnippetsByWorkspaceByEncodedIdErrors, type DeleteSnippetsByWorkspaceByEncodedIdResponse, type DeleteSnippetsByWorkspaceByEncodedIdResponses, type DeleteSnippetsByWorkspaceByEncodedIdWatchData, type DeleteSnippetsByWorkspaceByEncodedIdWatchError, type DeleteSnippetsByWorkspaceByEncodedIdWatchErrors, type DeleteSnippetsByWorkspaceByEncodedIdWatchResponse, type DeleteSnippetsByWorkspaceByEncodedIdWatchResponses, type DeleteUserHostedPropertyValueData, type DeleteUserHostedPropertyValueResponse, type DeleteUserHostedPropertyValueResponses, type DeleteUsersBySelectedUserGpgKeysByFingerprintData, type DeleteUsersBySelectedUserGpgKeysByFingerprintError, type DeleteUsersBySelectedUserGpgKeysByFingerprintErrors, type DeleteUsersBySelectedUserGpgKeysByFingerprintResponse, type DeleteUsersBySelectedUserGpgKeysByFingerprintResponses, type DeleteUsersBySelectedUserSshKeysByKeyIdData, type DeleteUsersBySelectedUserSshKeysByKeyIdError, type DeleteUsersBySelectedUserSshKeysByKeyIdErrors, type DeleteUsersBySelectedUserSshKeysByKeyIdResponse, type DeleteUsersBySelectedUserSshKeysByKeyIdResponses, type DeleteWorkspaceRunnerData, type DeleteWorkspaceRunnerError, type DeleteWorkspaceRunnerErrors, type DeleteWorkspaceRunnerResponse, type DeleteWorkspaceRunnerResponses, type DeleteWorkspacesByWorkspaceHooksByUidData, type DeleteWorkspacesByWorkspaceHooksByUidError, type DeleteWorkspacesByWorkspaceHooksByUidErrors, type DeleteWorkspacesByWorkspaceHooksByUidResponse, type DeleteWorkspacesByWorkspaceHooksByUidResponses, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyData, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponse, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyError, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyErrors, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponse, type DeleteWorkspacesByWorkspaceProjectsByProjectKeyResponses, type DeployKey, type Deployment, type DeploymentEnvironment, type DeploymentRelease, type DeploymentState, type DeploymentStateCompleted, type DeploymentStateCompletedStatus, type DeploymentStateCompletedStatusFailed, type DeploymentStateCompletedStatusStopped, type DeploymentStateCompletedStatusSuccessful, type DeploymentStateInProgress, type DeploymentStateUndeployed, type DeploymentVariable, type Diffstat, type EffectiveRepoBranchingModel, type Error, type ExportOptions, type GetAddonLinkersByLinkerKeyData, type GetAddonLinkersByLinkerKeyError, type GetAddonLinkersByLinkerKeyErrors, type GetAddonLinkersByLinkerKeyResponses, type GetAddonLinkersByLinkerKeyValuesByValueIdData, type GetAddonLinkersByLinkerKeyValuesByValueIdError, type GetAddonLinkersByLinkerKeyValuesByValueIdErrors, type GetAddonLinkersByLinkerKeyValuesByValueIdResponses, type GetAddonLinkersByLinkerKeyValuesData, type GetAddonLinkersByLinkerKeyValuesError, type GetAddonLinkersByLinkerKeyValuesErrors, type GetAddonLinkersByLinkerKeyValuesResponses, type GetAddonLinkersData, type GetAddonLinkersError, type GetAddonLinkersErrors, type GetAddonLinkersResponses, type GetAnnotationData, type GetAnnotationError, type GetAnnotationErrors, type GetAnnotationResponse, type GetAnnotationResponses, type GetAnnotationsForReportData, type GetAnnotationsForReportResponse, type GetAnnotationsForReportResponses, type GetCommitHostedPropertyValueData, type GetCommitHostedPropertyValueResponse, type GetCommitHostedPropertyValueResponses, type GetDeploymentForRepositoryData, type GetDeploymentForRepositoryError, type GetDeploymentForRepositoryErrors, type GetDeploymentForRepositoryResponse, type GetDeploymentForRepositoryResponses, type GetDeploymentVariablesData, type GetDeploymentVariablesResponse, type GetDeploymentVariablesResponses, type GetDeploymentsForRepositoryData, type GetDeploymentsForRepositoryResponse, type GetDeploymentsForRepositoryResponses, type GetEnvironmentForRepositoryData, type GetEnvironmentForRepositoryError, type GetEnvironmentForRepositoryErrors, type GetEnvironmentForRepositoryResponse, type GetEnvironmentForRepositoryResponses, type GetEnvironmentsForRepositoryData, type GetEnvironmentsForRepositoryResponse, type GetEnvironmentsForRepositoryResponses, type GetHookEventsBySubjectTypeData, type GetHookEventsBySubjectTypeError, type GetHookEventsBySubjectTypeErrors, type GetHookEventsBySubjectTypeResponse, type GetHookEventsBySubjectTypeResponses, type GetHookEventsData, type GetHookEventsResponse, type GetHookEventsResponses, type GetOidcConfigurationData, type GetOidcConfigurationError, type GetOidcConfigurationErrors, type GetOidcConfigurationResponses, type GetOidcKeysData, type GetOidcKeysError, type GetOidcKeysErrors, type GetOidcKeysResponses, type GetPipelineContainerLogData, type GetPipelineContainerLogError, type GetPipelineContainerLogErrors, type GetPipelineContainerLogResponses, type GetPipelineForRepositoryData, type GetPipelineForRepositoryError, type GetPipelineForRepositoryErrors, type GetPipelineForRepositoryResponse, type GetPipelineForRepositoryResponses, type GetPipelineStepForRepositoryData, type GetPipelineStepForRepositoryError, type GetPipelineStepForRepositoryErrors, type GetPipelineStepForRepositoryResponse, type GetPipelineStepForRepositoryResponses, type GetPipelineStepLogForRepositoryData, type GetPipelineStepLogForRepositoryError, type GetPipelineStepLogForRepositoryErrors, type GetPipelineStepLogForRepositoryResponses, type GetPipelineStepsForRepositoryData, type GetPipelineStepsForRepositoryResponse, type GetPipelineStepsForRepositoryResponses, type GetPipelineTestReportTestCaseReasonsData, type GetPipelineTestReportTestCaseReasonsError, type GetPipelineTestReportTestCaseReasonsErrors, type GetPipelineTestReportTestCaseReasonsResponses, type GetPipelineTestReportTestCasesData, type GetPipelineTestReportTestCasesError, type GetPipelineTestReportTestCasesErrors, type GetPipelineTestReportTestCasesResponses, type GetPipelineTestReportsData, type GetPipelineTestReportsError, type GetPipelineTestReportsErrors, type GetPipelineTestReportsResponses, type GetPipelineVariableForTeamData, type GetPipelineVariableForTeamError, type GetPipelineVariableForTeamErrors, type GetPipelineVariableForTeamResponse, type GetPipelineVariableForTeamResponses, type GetPipelineVariableForUserData, type GetPipelineVariableForUserError, type GetPipelineVariableForUserErrors, type GetPipelineVariableForUserResponse, type GetPipelineVariableForUserResponses, type GetPipelineVariableForWorkspaceData, type GetPipelineVariableForWorkspaceError, type GetPipelineVariableForWorkspaceErrors, type GetPipelineVariableForWorkspaceResponse, type GetPipelineVariableForWorkspaceResponses, type GetPipelineVariablesForTeamData, type GetPipelineVariablesForTeamResponse, type GetPipelineVariablesForTeamResponses, type GetPipelineVariablesForUserData, type GetPipelineVariablesForUserResponse, type GetPipelineVariablesForUserResponses, type GetPipelineVariablesForWorkspaceData, type GetPipelineVariablesForWorkspaceResponse, type GetPipelineVariablesForWorkspaceResponses, type GetPipelinesForRepositoryData, type GetPipelinesForRepositoryResponse, type GetPipelinesForRepositoryResponses, type GetPullRequestHostedPropertyValueData, type GetPullRequestHostedPropertyValueResponse, type GetPullRequestHostedPropertyValueResponses, type GetPullrequestsForCommitData, type GetPullrequestsForCommitError, type GetPullrequestsForCommitErrors, type GetPullrequestsForCommitResponse, type GetPullrequestsForCommitResponses, type GetReportData, type GetReportError, type GetReportErrors, type GetReportResponse, type GetReportResponses, type GetReportsForCommitData, type GetReportsForCommitResponse, type GetReportsForCommitResponses, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponse, type GetRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelData, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelError, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelErrors, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponse, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelResponses, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponse, type GetRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponse, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponse, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitData, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitError, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitErrors, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponse, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitResponses, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponse, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesData, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesError, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesErrors, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponse, type GetRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesResponses, type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError, type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors, type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponse, type GetRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses, type GetRepositoriesByWorkspaceByRepoSlugCommitsData, type GetRepositoriesByWorkspaceByRepoSlugCommitsError, type GetRepositoriesByWorkspaceByRepoSlugCommitsErrors, type GetRepositoriesByWorkspaceByRepoSlugCommitsResponse, type GetRepositoriesByWorkspaceByRepoSlugCommitsResponses, type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdData, type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdError, type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdErrors, type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponse, type GetRepositoriesByWorkspaceByRepoSlugComponentsByComponentIdResponses, type GetRepositoriesByWorkspaceByRepoSlugComponentsData, type GetRepositoriesByWorkspaceByRepoSlugComponentsError, type GetRepositoriesByWorkspaceByRepoSlugComponentsErrors, type GetRepositoriesByWorkspaceByRepoSlugComponentsResponse, type GetRepositoriesByWorkspaceByRepoSlugComponentsResponses, type GetRepositoriesByWorkspaceByRepoSlugData, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersData, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersError, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersErrors, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponse, type GetRepositoriesByWorkspaceByRepoSlugDefaultReviewersResponses, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysData, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysError, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysErrors, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponse, type GetRepositoriesByWorkspaceByRepoSlugDeployKeysResponses, type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecData, type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecError, type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecErrors, type GetRepositoriesByWorkspaceByRepoSlugDiffBySpecResponses, type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecData, type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecError, type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecErrors, type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponse, type GetRepositoriesByWorkspaceByRepoSlugDiffstatBySpecResponses, type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameData, type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameError, type GetRepositoriesByWorkspaceByRepoSlugDownloadsByFilenameErrors, type GetRepositoriesByWorkspaceByRepoSlugDownloadsData, type GetRepositoriesByWorkspaceByRepoSlugDownloadsError, type GetRepositoriesByWorkspaceByRepoSlugDownloadsErrors, type GetRepositoriesByWorkspaceByRepoSlugDownloadsResponses, type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelData, type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelError, type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelErrors, type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponse, type GetRepositoriesByWorkspaceByRepoSlugEffectiveBranchingModelResponses, type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersData, type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersError, type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersErrors, type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponse, type GetRepositoriesByWorkspaceByRepoSlugEffectiveDefaultReviewersResponses, type GetRepositoriesByWorkspaceByRepoSlugError, type GetRepositoriesByWorkspaceByRepoSlugErrors, type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathData, type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathError, type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathErrors, type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponse, type GetRepositoriesByWorkspaceByRepoSlugFilehistoryByCommitByPathResponses, type GetRepositoriesByWorkspaceByRepoSlugForksData, type GetRepositoriesByWorkspaceByRepoSlugForksResponse, type GetRepositoriesByWorkspaceByRepoSlugForksResponses, type GetRepositoriesByWorkspaceByRepoSlugHooksByUidData, type GetRepositoriesByWorkspaceByRepoSlugHooksByUidError, type GetRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, type GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponse, type GetRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, type GetRepositoriesByWorkspaceByRepoSlugHooksData, type GetRepositoriesByWorkspaceByRepoSlugHooksError, type GetRepositoriesByWorkspaceByRepoSlugHooksErrors, type GetRepositoriesByWorkspaceByRepoSlugHooksResponse, type GetRepositoriesByWorkspaceByRepoSlugHooksResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathError, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsByPathErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdError, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesByChangeIdResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesData, type GetRepositoriesByWorkspaceByRepoSlugIssuesError, type GetRepositoriesByWorkspaceByRepoSlugIssuesErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipData, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipError, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesImportData, type GetRepositoriesByWorkspaceByRepoSlugIssuesImportError, type GetRepositoriesByWorkspaceByRepoSlugIssuesImportErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesImportResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesResponses, type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecData, type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecError, type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecErrors, type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponse, type GetRepositoriesByWorkspaceByRepoSlugMergeBaseByRevspecResponses, type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdData, type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdError, type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdErrors, type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponse, type GetRepositoriesByWorkspaceByRepoSlugMilestonesByMilestoneIdResponses, type GetRepositoriesByWorkspaceByRepoSlugMilestonesData, type GetRepositoriesByWorkspaceByRepoSlugMilestonesError, type GetRepositoriesByWorkspaceByRepoSlugMilestonesErrors, type GetRepositoriesByWorkspaceByRepoSlugMilestonesResponse, type GetRepositoriesByWorkspaceByRepoSlugMilestonesResponses, type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsError, type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors, type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponse, type GetRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses, type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecData, type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecError, type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecErrors, type GetRepositoriesByWorkspaceByRepoSlugPatchBySpecResponses, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsData, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsError, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsErrors, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponse, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsResponses, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersData, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersError, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersErrors, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponse, type GetRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsActivityResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdActivityResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponse, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommitsResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDiffstatData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeTaskStatusByTaskIdResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdPatchData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponse, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponse, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdStatusesResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponse, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsData, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsError, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsErrors, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponse, type GetRepositoriesByWorkspaceByRepoSlugPullrequestsResponses, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameData, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameError, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameErrors, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponse, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesByNameResponses, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesData, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesError, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponse, type GetRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses, type GetRepositoriesByWorkspaceByRepoSlugRefsData, type GetRepositoriesByWorkspaceByRepoSlugRefsError, type GetRepositoriesByWorkspaceByRepoSlugRefsErrors, type GetRepositoriesByWorkspaceByRepoSlugRefsResponse, type GetRepositoriesByWorkspaceByRepoSlugRefsResponses, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameData, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameError, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameErrors, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponse, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsByNameResponses, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsData, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsError, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsErrors, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponse, type GetRepositoriesByWorkspaceByRepoSlugRefsTagsResponses, type GetRepositoriesByWorkspaceByRepoSlugResponse, type GetRepositoriesByWorkspaceByRepoSlugResponses, type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathData, type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathError, type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathErrors, type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponse, type GetRepositoriesByWorkspaceByRepoSlugSrcByCommitByPathResponses, type GetRepositoriesByWorkspaceByRepoSlugSrcData, type GetRepositoriesByWorkspaceByRepoSlugSrcError, type GetRepositoriesByWorkspaceByRepoSlugSrcErrors, type GetRepositoriesByWorkspaceByRepoSlugSrcResponse, type GetRepositoriesByWorkspaceByRepoSlugSrcResponses, type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdData, type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdError, type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdErrors, type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponse, type GetRepositoriesByWorkspaceByRepoSlugVersionsByVersionIdResponses, type GetRepositoriesByWorkspaceByRepoSlugVersionsData, type GetRepositoriesByWorkspaceByRepoSlugVersionsError, type GetRepositoriesByWorkspaceByRepoSlugVersionsErrors, type GetRepositoriesByWorkspaceByRepoSlugVersionsResponse, type GetRepositoriesByWorkspaceByRepoSlugVersionsResponses, type GetRepositoriesByWorkspaceByRepoSlugWatchersData, type GetRepositoriesByWorkspaceByRepoSlugWatchersResponse, type GetRepositoriesByWorkspaceByRepoSlugWatchersResponses, type GetRepositoriesByWorkspaceData, type GetRepositoriesByWorkspaceError, type GetRepositoriesByWorkspaceErrors, type GetRepositoriesByWorkspaceResponse, type GetRepositoriesByWorkspaceResponses, type GetRepositoriesData, type GetRepositoriesResponse, type GetRepositoriesResponses, type GetRepositoryHostedPropertyValueData, type GetRepositoryHostedPropertyValueResponse, type GetRepositoryHostedPropertyValueResponses, type GetRepositoryPipelineCacheContentUriData, type GetRepositoryPipelineCacheContentUriError, type GetRepositoryPipelineCacheContentUriErrors, type GetRepositoryPipelineCacheContentUriResponse, type GetRepositoryPipelineCacheContentUriResponses, type GetRepositoryPipelineCachesData, type GetRepositoryPipelineCachesError, type GetRepositoryPipelineCachesErrors, type GetRepositoryPipelineCachesResponse, type GetRepositoryPipelineCachesResponses, type GetRepositoryPipelineConfigData, type GetRepositoryPipelineConfigResponse, type GetRepositoryPipelineConfigResponses, type GetRepositoryPipelineKnownHostData, type GetRepositoryPipelineKnownHostError, type GetRepositoryPipelineKnownHostErrors, type GetRepositoryPipelineKnownHostResponse, type GetRepositoryPipelineKnownHostResponses, type GetRepositoryPipelineKnownHostsData, type GetRepositoryPipelineKnownHostsResponse, type GetRepositoryPipelineKnownHostsResponses, type GetRepositoryPipelineScheduleData, type GetRepositoryPipelineScheduleError, type GetRepositoryPipelineScheduleErrors, type GetRepositoryPipelineScheduleExecutionsData, type GetRepositoryPipelineScheduleExecutionsError, type GetRepositoryPipelineScheduleExecutionsErrors, type GetRepositoryPipelineScheduleExecutionsResponse, type GetRepositoryPipelineScheduleExecutionsResponses, type GetRepositoryPipelineScheduleResponse, type GetRepositoryPipelineScheduleResponses, type GetRepositoryPipelineSchedulesData, type GetRepositoryPipelineSchedulesError, type GetRepositoryPipelineSchedulesErrors, type GetRepositoryPipelineSchedulesResponse, type GetRepositoryPipelineSchedulesResponses, type GetRepositoryPipelineSshKeyPairData, type GetRepositoryPipelineSshKeyPairError, type GetRepositoryPipelineSshKeyPairErrors, type GetRepositoryPipelineSshKeyPairResponse, type GetRepositoryPipelineSshKeyPairResponses, type GetRepositoryPipelineVariableData, type GetRepositoryPipelineVariableError, type GetRepositoryPipelineVariableErrors, type GetRepositoryPipelineVariableResponse, type GetRepositoryPipelineVariableResponses, type GetRepositoryPipelineVariablesData, type GetRepositoryPipelineVariablesResponse, type GetRepositoryPipelineVariablesResponses, type GetRepositoryRunnerData, type GetRepositoryRunnerError, type GetRepositoryRunnerErrors, type GetRepositoryRunnerResponse, type GetRepositoryRunnerResponses, type GetRepositoryRunnersData, type GetRepositoryRunnersResponse, type GetRepositoryRunnersResponses, type GetSnippetsByWorkspaceByEncodedIdByNodeIdData, type GetSnippetsByWorkspaceByEncodedIdByNodeIdError, type GetSnippetsByWorkspaceByEncodedIdByNodeIdErrors, type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathData, type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathError, type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathErrors, type GetSnippetsByWorkspaceByEncodedIdByNodeIdFilesByPathResponses, type GetSnippetsByWorkspaceByEncodedIdByNodeIdResponse, type GetSnippetsByWorkspaceByEncodedIdByNodeIdResponses, type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffData, type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffError, type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffErrors, type GetSnippetsByWorkspaceByEncodedIdByRevisionDiffResponses, type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchData, type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchError, type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchErrors, type GetSnippetsByWorkspaceByEncodedIdByRevisionPatchResponses, type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError, type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse, type GetSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, type GetSnippetsByWorkspaceByEncodedIdCommentsData, type GetSnippetsByWorkspaceByEncodedIdCommentsError, type GetSnippetsByWorkspaceByEncodedIdCommentsErrors, type GetSnippetsByWorkspaceByEncodedIdCommentsResponse, type GetSnippetsByWorkspaceByEncodedIdCommentsResponses, type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionData, type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionError, type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionErrors, type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponse, type GetSnippetsByWorkspaceByEncodedIdCommitsByRevisionResponses, type GetSnippetsByWorkspaceByEncodedIdCommitsData, type GetSnippetsByWorkspaceByEncodedIdCommitsError, type GetSnippetsByWorkspaceByEncodedIdCommitsErrors, type GetSnippetsByWorkspaceByEncodedIdCommitsResponse, type GetSnippetsByWorkspaceByEncodedIdCommitsResponses, type GetSnippetsByWorkspaceByEncodedIdData, type GetSnippetsByWorkspaceByEncodedIdError, type GetSnippetsByWorkspaceByEncodedIdErrors, type GetSnippetsByWorkspaceByEncodedIdFilesByPathData, type GetSnippetsByWorkspaceByEncodedIdFilesByPathError, type GetSnippetsByWorkspaceByEncodedIdFilesByPathErrors, type GetSnippetsByWorkspaceByEncodedIdResponse, type GetSnippetsByWorkspaceByEncodedIdResponses, type GetSnippetsByWorkspaceByEncodedIdWatchData, type GetSnippetsByWorkspaceByEncodedIdWatchError, type GetSnippetsByWorkspaceByEncodedIdWatchErrors, type GetSnippetsByWorkspaceByEncodedIdWatchResponse, type GetSnippetsByWorkspaceByEncodedIdWatchResponses, type GetSnippetsByWorkspaceByEncodedIdWatchersData, type GetSnippetsByWorkspaceByEncodedIdWatchersError, type GetSnippetsByWorkspaceByEncodedIdWatchersErrors, type GetSnippetsByWorkspaceByEncodedIdWatchersResponse, type GetSnippetsByWorkspaceByEncodedIdWatchersResponses, type GetSnippetsByWorkspaceData, type GetSnippetsByWorkspaceError, type GetSnippetsByWorkspaceErrors, type GetSnippetsByWorkspaceResponse, type GetSnippetsByWorkspaceResponses, type GetSnippetsData, type GetSnippetsError, type GetSnippetsErrors, type GetSnippetsResponse, type GetSnippetsResponses, type GetUserData, type GetUserEmailsByEmailData, type GetUserEmailsByEmailError, type GetUserEmailsByEmailErrors, type GetUserEmailsByEmailResponse, type GetUserEmailsByEmailResponses, type GetUserEmailsData, type GetUserEmailsError, type GetUserEmailsErrors, type GetUserEmailsResponse, type GetUserEmailsResponses, type GetUserError, type GetUserErrors, type GetUserPermissionsRepositoriesData, type GetUserPermissionsRepositoriesResponse, type GetUserPermissionsRepositoriesResponses, type GetUserPermissionsWorkspacesData, type GetUserPermissionsWorkspacesError, type GetUserPermissionsWorkspacesErrors, type GetUserPermissionsWorkspacesResponse, type GetUserPermissionsWorkspacesResponses, type GetUserResponse, type GetUserResponses, type GetUserWorkspacesByWorkspacePermissionData, type GetUserWorkspacesByWorkspacePermissionError, type GetUserWorkspacesByWorkspacePermissionErrors, type GetUserWorkspacesByWorkspacePermissionResponse, type GetUserWorkspacesByWorkspacePermissionResponses, type GetUserWorkspacesByWorkspacePermissionsRepositoriesData, type GetUserWorkspacesByWorkspacePermissionsRepositoriesError, type GetUserWorkspacesByWorkspacePermissionsRepositoriesErrors, type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponse, type GetUserWorkspacesByWorkspacePermissionsRepositoriesResponses, type GetUserWorkspacesData, type GetUserWorkspacesError, type GetUserWorkspacesErrors, type GetUserWorkspacesResponse, type GetUserWorkspacesResponses, type GetUsersBySelectedUserData, type GetUsersBySelectedUserError, type GetUsersBySelectedUserErrors, type GetUsersBySelectedUserGpgKeysByFingerprintData, type GetUsersBySelectedUserGpgKeysByFingerprintError, type GetUsersBySelectedUserGpgKeysByFingerprintErrors, type GetUsersBySelectedUserGpgKeysByFingerprintResponse, type GetUsersBySelectedUserGpgKeysByFingerprintResponses, type GetUsersBySelectedUserGpgKeysData, type GetUsersBySelectedUserGpgKeysError, type GetUsersBySelectedUserGpgKeysErrors, type GetUsersBySelectedUserGpgKeysResponse, type GetUsersBySelectedUserGpgKeysResponses, type GetUsersBySelectedUserResponse, type GetUsersBySelectedUserResponses, type GetUsersBySelectedUserSshKeysByKeyIdData, type GetUsersBySelectedUserSshKeysByKeyIdError, type GetUsersBySelectedUserSshKeysByKeyIdErrors, type GetUsersBySelectedUserSshKeysByKeyIdResponse, type GetUsersBySelectedUserSshKeysByKeyIdResponses, type GetUsersBySelectedUserSshKeysData, type GetUsersBySelectedUserSshKeysError, type GetUsersBySelectedUserSshKeysErrors, type GetUsersBySelectedUserSshKeysResponse, type GetUsersBySelectedUserSshKeysResponses, type GetWorkspaceRunnerData, type GetWorkspaceRunnerError, type GetWorkspaceRunnerErrors, type GetWorkspaceRunnerResponse, type GetWorkspaceRunnerResponses, type GetWorkspaceRunnersData, type GetWorkspaceRunnersResponse, type GetWorkspaceRunnersResponses, type GetWorkspacesByWorkspaceData, type GetWorkspacesByWorkspaceError, type GetWorkspacesByWorkspaceErrors, type GetWorkspacesByWorkspaceHooksByUidData, type GetWorkspacesByWorkspaceHooksByUidError, type GetWorkspacesByWorkspaceHooksByUidErrors, type GetWorkspacesByWorkspaceHooksByUidResponse, type GetWorkspacesByWorkspaceHooksByUidResponses, type GetWorkspacesByWorkspaceHooksData, type GetWorkspacesByWorkspaceHooksError, type GetWorkspacesByWorkspaceHooksErrors, type GetWorkspacesByWorkspaceHooksResponse, type GetWorkspacesByWorkspaceHooksResponses, type GetWorkspacesByWorkspaceMembersByMemberData, type GetWorkspacesByWorkspaceMembersByMemberError, type GetWorkspacesByWorkspaceMembersByMemberErrors, type GetWorkspacesByWorkspaceMembersByMemberResponse, type GetWorkspacesByWorkspaceMembersByMemberResponses, type GetWorkspacesByWorkspaceMembersData, type GetWorkspacesByWorkspaceMembersError, type GetWorkspacesByWorkspaceMembersErrors, type GetWorkspacesByWorkspaceMembersResponse, type GetWorkspacesByWorkspaceMembersResponses, type GetWorkspacesByWorkspacePermissionsData, type GetWorkspacesByWorkspacePermissionsError, type GetWorkspacesByWorkspacePermissionsErrors, type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugData, type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugError, type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugErrors, type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponse, type GetWorkspacesByWorkspacePermissionsRepositoriesByRepoSlugResponses, type GetWorkspacesByWorkspacePermissionsRepositoriesData, type GetWorkspacesByWorkspacePermissionsRepositoriesError, type GetWorkspacesByWorkspacePermissionsRepositoriesErrors, type GetWorkspacesByWorkspacePermissionsRepositoriesResponse, type GetWorkspacesByWorkspacePermissionsRepositoriesResponses, type GetWorkspacesByWorkspacePermissionsResponse, type GetWorkspacesByWorkspacePermissionsResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelData, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelError, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyData, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersData, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersError, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdData, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdError, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysByKeyIdResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyError, type GetWorkspacesByWorkspaceProjectsByProjectKeyErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsData, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsError, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersData, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersError, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersErrors, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersResponses, type GetWorkspacesByWorkspaceProjectsByProjectKeyResponse, type GetWorkspacesByWorkspaceProjectsByProjectKeyResponses, type GetWorkspacesByWorkspaceProjectsData, type GetWorkspacesByWorkspaceProjectsError, type GetWorkspacesByWorkspaceProjectsErrors, type GetWorkspacesByWorkspaceProjectsResponse, type GetWorkspacesByWorkspaceProjectsResponses, type GetWorkspacesByWorkspacePullrequestsBySelectedUserData, type GetWorkspacesByWorkspacePullrequestsBySelectedUserError, type GetWorkspacesByWorkspacePullrequestsBySelectedUserErrors, type GetWorkspacesByWorkspacePullrequestsBySelectedUserResponse, type GetWorkspacesByWorkspacePullrequestsBySelectedUserResponses, type GetWorkspacesByWorkspaceResponse, type GetWorkspacesByWorkspaceResponses, type GetWorkspacesData, type GetWorkspacesError, type GetWorkspacesErrors, type GetWorkspacesResponse, type GetWorkspacesResponses, type GpgAccountKey, type Group, type HookEvent, type Issue, type IssueAttachment, type IssueChange, type IssueComment, type IssueJobStatus, type Link, type Milestone, type Object$1 as Object, type Options, type PaginatedAccounts, type PaginatedAnnotations, type PaginatedBranches, type PaginatedBranchrestrictions, type PaginatedChangeset, type PaginatedCommitComments, type PaginatedCommitstatuses, type PaginatedComponents, type PaginatedDefaultReviewerAndType, type PaginatedDeployKeys, type PaginatedDeploymentVariable, type PaginatedDeployments, type PaginatedDiffstats, type PaginatedEnvironments, type PaginatedFiles, type PaginatedGpgUserKeys, type PaginatedHookEvents, type PaginatedIssueAttachments, type PaginatedIssueComments, type PaginatedIssues, type PaginatedLogEntries, type PaginatedMilestones, type PaginatedPipelineCaches, type PaginatedPipelineKnownHosts, type PaginatedPipelineRunners, type PaginatedPipelineScheduleExecutions, type PaginatedPipelineSchedules, type PaginatedPipelineSteps, type PaginatedPipelineVariables, type PaginatedPipelines, type PaginatedProjectDeployKeys, type PaginatedProjectGroupPermissions, type PaginatedProjectUserPermissions, type PaginatedProjects, type PaginatedPullrequestComments, type PaginatedPullrequests, type PaginatedRefs, type PaginatedReports, type PaginatedRepositories, type PaginatedRepositoryGroupPermissions, type PaginatedRepositoryPermissions, type PaginatedRepositoryUserPermissions, type PaginatedSnippetComments, type PaginatedSnippetCommit, type PaginatedSnippets, type PaginatedSshUserKeys, type PaginatedTags, type PaginatedTasks, type PaginatedTreeentries, type PaginatedVersions, type PaginatedWebhookSubscriptions, type PaginatedWorkspaceAccess, type PaginatedWorkspaceMemberships, type PaginatedWorkspaces, type Participant, type Pipeline, type PipelineBuildNumber, type PipelineCache, type PipelineCacheContentUri, type PipelineCommand, type PipelineCommitTarget, type PipelineConfigurationSource, type PipelineError, type PipelineImage, type PipelineKnownHost, type PipelineRefTarget, type PipelineRunner, type PipelineRunnerOauthClient, type PipelineRunnerState, type PipelineRunnerVersion, type PipelineSchedule, type PipelineScheduleExecution, type PipelineScheduleExecutionErrored, type PipelineScheduleExecutionExecuted, type PipelineSchedulePostRequestBody, type PipelineSchedulePutRequestBody, type PipelineSelector, type PipelineSshKeyPair, type PipelineSshPublicKey, type PipelineState, type PipelineStateCompleted, type PipelineStateCompletedError, type PipelineStateCompletedExpired, type PipelineStateCompletedFailed, type PipelineStateCompletedResult, type PipelineStateCompletedStopped, type PipelineStateCompletedSuccessful, type PipelineStateInProgress, type PipelineStateInProgressPaused, type PipelineStateInProgressRunning, type PipelineStateInProgressStage, type PipelineStatePending, type PipelineStep, type PipelineStepError, type PipelineStepState, type PipelineStepStateCompleted, type PipelineStepStateCompletedError, type PipelineStepStateCompletedExpired, type PipelineStepStateCompletedFailed, type PipelineStepStateCompletedNotRun, type PipelineStepStateCompletedResult, type PipelineStepStateCompletedStopped, type PipelineStepStateCompletedSuccessful, type PipelineStepStateInProgress, type PipelineStepStatePending, type PipelineStepStateReady, type PipelineTarget, type PipelineTrigger, type PipelineTriggerManual, type PipelineTriggerPush, type PipelineVariable, type PipelineVariable2, type PipelineVariable22, type PipelinesConfig, type PipelinesLinksSectionHref, type PipelinesPipelineLinks, type PostAddonLinkersByLinkerKeyValuesData, type PostAddonLinkersByLinkerKeyValuesError, type PostAddonLinkersByLinkerKeyValuesErrors, type PostAddonLinkersByLinkerKeyValuesResponses, type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsData, type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsError, type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsErrors, type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponse, type PostRepositoriesByWorkspaceByRepoSlugBranchRestrictionsResponses, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveData, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveError, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveErrors, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponse, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitApproveResponses, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsData, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsErrors, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsResponses, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildData, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildError, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildErrors, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponse, type PostRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildResponses, type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionData, type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionError, type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionErrors, type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponse, type PostRepositoriesByWorkspaceByRepoSlugCommitsByRevisionResponses, type PostRepositoriesByWorkspaceByRepoSlugCommitsData, type PostRepositoriesByWorkspaceByRepoSlugCommitsError, type PostRepositoriesByWorkspaceByRepoSlugCommitsErrors, type PostRepositoriesByWorkspaceByRepoSlugCommitsResponse, type PostRepositoriesByWorkspaceByRepoSlugCommitsResponses, type PostRepositoriesByWorkspaceByRepoSlugData, type PostRepositoriesByWorkspaceByRepoSlugDeployKeysData, type PostRepositoriesByWorkspaceByRepoSlugDeployKeysError, type PostRepositoriesByWorkspaceByRepoSlugDeployKeysErrors, type PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponse, type PostRepositoriesByWorkspaceByRepoSlugDeployKeysResponses, type PostRepositoriesByWorkspaceByRepoSlugDownloadsData, type PostRepositoriesByWorkspaceByRepoSlugDownloadsError, type PostRepositoriesByWorkspaceByRepoSlugDownloadsErrors, type PostRepositoriesByWorkspaceByRepoSlugDownloadsResponses, type PostRepositoriesByWorkspaceByRepoSlugError, type PostRepositoriesByWorkspaceByRepoSlugErrors, type PostRepositoriesByWorkspaceByRepoSlugForksData, type PostRepositoriesByWorkspaceByRepoSlugForksResponse, type PostRepositoriesByWorkspaceByRepoSlugForksResponses, type PostRepositoriesByWorkspaceByRepoSlugHooksData, type PostRepositoriesByWorkspaceByRepoSlugHooksError, type PostRepositoriesByWorkspaceByRepoSlugHooksErrors, type PostRepositoriesByWorkspaceByRepoSlugHooksResponse, type PostRepositoriesByWorkspaceByRepoSlugHooksResponses, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsData, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsError, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsErrors, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdAttachmentsResponses, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesData, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesError, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesErrors, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponse, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdChangesResponses, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsData, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsError, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsErrors, type PostRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsResponses, type PostRepositoriesByWorkspaceByRepoSlugIssuesData, type PostRepositoriesByWorkspaceByRepoSlugIssuesError, type PostRepositoriesByWorkspaceByRepoSlugIssuesErrors, type PostRepositoriesByWorkspaceByRepoSlugIssuesExportData, type PostRepositoriesByWorkspaceByRepoSlugIssuesExportError, type PostRepositoriesByWorkspaceByRepoSlugIssuesExportErrors, type PostRepositoriesByWorkspaceByRepoSlugIssuesExportResponses, type PostRepositoriesByWorkspaceByRepoSlugIssuesImportData, type PostRepositoriesByWorkspaceByRepoSlugIssuesImportError, type PostRepositoriesByWorkspaceByRepoSlugIssuesImportErrors, type PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponse, type PostRepositoriesByWorkspaceByRepoSlugIssuesImportResponses, type PostRepositoriesByWorkspaceByRepoSlugIssuesResponse, type PostRepositoriesByWorkspaceByRepoSlugIssuesResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdApproveResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResolveResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdDeclineResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdMergeResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdRequestChangesResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksResponses, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsData, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsError, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsErrors, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponse, type PostRepositoriesByWorkspaceByRepoSlugPullrequestsResponses, type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesData, type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesError, type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesErrors, type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponse, type PostRepositoriesByWorkspaceByRepoSlugRefsBranchesResponses, type PostRepositoriesByWorkspaceByRepoSlugRefsTagsData, type PostRepositoriesByWorkspaceByRepoSlugRefsTagsError, type PostRepositoriesByWorkspaceByRepoSlugRefsTagsErrors, type PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponse, type PostRepositoriesByWorkspaceByRepoSlugRefsTagsResponses, type PostRepositoriesByWorkspaceByRepoSlugResponse, type PostRepositoriesByWorkspaceByRepoSlugResponses, type PostRepositoriesByWorkspaceByRepoSlugSrcData, type PostRepositoriesByWorkspaceByRepoSlugSrcError, type PostRepositoriesByWorkspaceByRepoSlugSrcErrors, type PostRepositoriesByWorkspaceByRepoSlugSrcResponses, type PostSnippetsByWorkspaceByEncodedIdCommentsData, type PostSnippetsByWorkspaceByEncodedIdCommentsError, type PostSnippetsByWorkspaceByEncodedIdCommentsErrors, type PostSnippetsByWorkspaceByEncodedIdCommentsResponse, type PostSnippetsByWorkspaceByEncodedIdCommentsResponses, type PostSnippetsByWorkspaceData, type PostSnippetsByWorkspaceError, type PostSnippetsByWorkspaceErrors, type PostSnippetsByWorkspaceResponse, type PostSnippetsByWorkspaceResponses, type PostSnippetsData, type PostSnippetsError, type PostSnippetsErrors, type PostSnippetsResponse, type PostSnippetsResponses, type PostUsersBySelectedUserGpgKeysData, type PostUsersBySelectedUserGpgKeysError, type PostUsersBySelectedUserGpgKeysErrors, type PostUsersBySelectedUserGpgKeysResponse, type PostUsersBySelectedUserGpgKeysResponses, type PostUsersBySelectedUserSshKeysData, type PostUsersBySelectedUserSshKeysError, type PostUsersBySelectedUserSshKeysErrors, type PostUsersBySelectedUserSshKeysResponse, type PostUsersBySelectedUserSshKeysResponses, type PostWorkspacesByWorkspaceHooksData, type PostWorkspacesByWorkspaceHooksError, type PostWorkspacesByWorkspaceHooksErrors, type PostWorkspacesByWorkspaceHooksResponse, type PostWorkspacesByWorkspaceHooksResponses, type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysData, type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysError, type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysErrors, type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponse, type PostWorkspacesByWorkspaceProjectsByProjectKeyDeployKeysResponses, type PostWorkspacesByWorkspaceProjectsData, type PostWorkspacesByWorkspaceProjectsError, type PostWorkspacesByWorkspaceProjectsErrors, type PostWorkspacesByWorkspaceProjectsResponse, type PostWorkspacesByWorkspaceProjectsResponses, type Project, type Project2, type ProjectBranchingModel, type ProjectDeployKey, type ProjectGroupPermission, type ProjectUserPermission, type Pullrequest, type PullrequestComment, type PullrequestCommentTask, type PullrequestEndpoint, type PullrequestMergeParameters, type PullrequestTask, type PullrequestTaskCreate, type PullrequestTaskUpdate, type PutAddonData, type PutAddonError, type PutAddonErrors, type PutAddonLinkersByLinkerKeyValuesData, type PutAddonLinkersByLinkerKeyValuesError, type PutAddonLinkersByLinkerKeyValuesErrors, type PutAddonLinkersByLinkerKeyValuesResponse, type PutAddonLinkersByLinkerKeyValuesResponses, type PutAddonResponse, type PutAddonResponses, type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdData, type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdError, type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdErrors, type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponse, type PutRepositoriesByWorkspaceByRepoSlugBranchRestrictionsByIdResponses, type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsData, type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsError, type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsErrors, type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponse, type PutRepositoriesByWorkspaceByRepoSlugBranchingModelSettingsResponses, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdData, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdErrors, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitCommentsByCommentIdResponses, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyData, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyError, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyErrors, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponse, type PutRepositoriesByWorkspaceByRepoSlugCommitByCommitStatusesBuildByKeyResponses, type PutRepositoriesByWorkspaceByRepoSlugData, type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameData, type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameError, type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameErrors, type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponse, type PutRepositoriesByWorkspaceByRepoSlugDefaultReviewersByTargetUsernameResponses, type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdData, type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdError, type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdErrors, type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponse, type PutRepositoriesByWorkspaceByRepoSlugDeployKeysByKeyIdResponses, type PutRepositoriesByWorkspaceByRepoSlugError, type PutRepositoriesByWorkspaceByRepoSlugErrors, type PutRepositoriesByWorkspaceByRepoSlugHooksByUidData, type PutRepositoriesByWorkspaceByRepoSlugHooksByUidError, type PutRepositoriesByWorkspaceByRepoSlugHooksByUidErrors, type PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponse, type PutRepositoriesByWorkspaceByRepoSlugHooksByUidResponses, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdData, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdError, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdErrors, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponse, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdCommentsByCommentIdResponses, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdData, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdError, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdErrors, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponse, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdResponses, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteData, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteError, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteErrors, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponse, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdVoteResponses, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchData, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchError, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchErrors, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponse, type PutRepositoriesByWorkspaceByRepoSlugIssuesByIssueIdWatchResponses, type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsData, type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsError, type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsErrors, type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponse, type PutRepositoriesByWorkspaceByRepoSlugOverrideSettingsResponses, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugData, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugError, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugErrors, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponse, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigGroupsByGroupSlugResponses, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdData, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdError, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdErrors, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponse, type PutRepositoriesByWorkspaceByRepoSlugPermissionsConfigUsersBySelectedUserIdResponses, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdData, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdError, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdErrors, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponse, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdCommentsByCommentIdResponses, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdData, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdError, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdErrors, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponse, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdResponses, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdData, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdError, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdErrors, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponse, type PutRepositoriesByWorkspaceByRepoSlugPullrequestsByPullRequestIdTasksByTaskIdResponses, type PutRepositoriesByWorkspaceByRepoSlugResponse, type PutRepositoriesByWorkspaceByRepoSlugResponses, type PutSnippetsByWorkspaceByEncodedIdByNodeIdData, type PutSnippetsByWorkspaceByEncodedIdByNodeIdError, type PutSnippetsByWorkspaceByEncodedIdByNodeIdErrors, type PutSnippetsByWorkspaceByEncodedIdByNodeIdResponse, type PutSnippetsByWorkspaceByEncodedIdByNodeIdResponses, type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdData, type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdError, type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdErrors, type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponse, type PutSnippetsByWorkspaceByEncodedIdCommentsByCommentIdResponses, type PutSnippetsByWorkspaceByEncodedIdData, type PutSnippetsByWorkspaceByEncodedIdError, type PutSnippetsByWorkspaceByEncodedIdErrors, type PutSnippetsByWorkspaceByEncodedIdResponse, type PutSnippetsByWorkspaceByEncodedIdResponses, type PutSnippetsByWorkspaceByEncodedIdWatchData, type PutSnippetsByWorkspaceByEncodedIdWatchError, type PutSnippetsByWorkspaceByEncodedIdWatchErrors, type PutSnippetsByWorkspaceByEncodedIdWatchResponse, type PutSnippetsByWorkspaceByEncodedIdWatchResponses, type PutUsersBySelectedUserSshKeysByKeyIdData, type PutUsersBySelectedUserSshKeysByKeyIdError, type PutUsersBySelectedUserSshKeysByKeyIdErrors, type PutUsersBySelectedUserSshKeysByKeyIdResponse, type PutUsersBySelectedUserSshKeysByKeyIdResponses, type PutWorkspacesByWorkspaceHooksByUidData, type PutWorkspacesByWorkspaceHooksByUidError, type PutWorkspacesByWorkspaceHooksByUidErrors, type PutWorkspacesByWorkspaceHooksByUidResponse, type PutWorkspacesByWorkspaceHooksByUidResponses, type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsData, type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsError, type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsErrors, type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponse, type PutWorkspacesByWorkspaceProjectsByProjectKeyBranchingModelSettingsResponses, type PutWorkspacesByWorkspaceProjectsByProjectKeyData, type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserData, type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserError, type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserErrors, type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponse, type PutWorkspacesByWorkspaceProjectsByProjectKeyDefaultReviewersBySelectedUserResponses, type PutWorkspacesByWorkspaceProjectsByProjectKeyError, type PutWorkspacesByWorkspaceProjectsByProjectKeyErrors, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugData, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugError, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugErrors, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponse, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigGroupsByGroupSlugResponses, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdData, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdError, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdErrors, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponse, type PutWorkspacesByWorkspaceProjectsByProjectKeyPermissionsConfigUsersBySelectedUserIdResponses, type PutWorkspacesByWorkspaceProjectsByProjectKeyResponse, type PutWorkspacesByWorkspaceProjectsByProjectKeyResponses, type Ref, type Report, type ReportAnnotation, type ReportData, type Repository, type RepositoryGroupPermission, type RepositoryInheritanceState, type RepositoryPermission, type RepositoryUserPermission, type RetrieveUserHostedPropertyValueData, type RetrieveUserHostedPropertyValueResponse, type RetrieveUserHostedPropertyValueResponses, type SearchAccountData, type SearchAccountError, type SearchAccountErrors, type SearchAccountResponse, type SearchAccountResponses, type SearchCodeSearchResult, type SearchCodeSearchResultWritable, type SearchContentMatch, type SearchLine, type SearchResultPage, type SearchResultPageWritable, type SearchSegment, type SearchTeamData, type SearchTeamError, type SearchTeamErrors, type SearchTeamResponse, type SearchTeamResponses, type SearchWorkspaceData, type SearchWorkspaceError, type SearchWorkspaceErrors, type SearchWorkspaceResponse, type SearchWorkspaceResponses, type Snippet, type Snippet2, type SnippetComment, type SnippetCommit, type SshAccountKey, type SshKey, type StopPipelineData, type StopPipelineError, type StopPipelineErrors, type StopPipelineResponse, type StopPipelineResponses, type SubjectTypes, type Tag, type Task, type Team, type TeamLinks, type Treeentry, type UpdateCommitHostedPropertyValueData, type UpdateCommitHostedPropertyValueResponse, type UpdateCommitHostedPropertyValueResponses, type UpdateDeploymentVariableData, type UpdateDeploymentVariableError, type UpdateDeploymentVariableErrors, type UpdateDeploymentVariableResponse, type UpdateDeploymentVariableResponses, type UpdateEnvironmentForRepositoryData, type UpdateEnvironmentForRepositoryError, type UpdateEnvironmentForRepositoryErrors, type UpdateEnvironmentForRepositoryResponses, type UpdatePipelineVariableForTeamData, type UpdatePipelineVariableForTeamError, type UpdatePipelineVariableForTeamErrors, type UpdatePipelineVariableForTeamResponse, type UpdatePipelineVariableForTeamResponses, type UpdatePipelineVariableForUserData, type UpdatePipelineVariableForUserError, type UpdatePipelineVariableForUserErrors, type UpdatePipelineVariableForUserResponse, type UpdatePipelineVariableForUserResponses, type UpdatePipelineVariableForWorkspaceData, type UpdatePipelineVariableForWorkspaceError, type UpdatePipelineVariableForWorkspaceErrors, type UpdatePipelineVariableForWorkspaceResponse, type UpdatePipelineVariableForWorkspaceResponses, type UpdatePullRequestHostedPropertyValueData, type UpdatePullRequestHostedPropertyValueResponse, type UpdatePullRequestHostedPropertyValueResponses, type UpdateRepositoryBuildNumberData, type UpdateRepositoryBuildNumberError, type UpdateRepositoryBuildNumberErrors, type UpdateRepositoryBuildNumberResponse, type UpdateRepositoryBuildNumberResponses, type UpdateRepositoryHostedPropertyValueData, type UpdateRepositoryHostedPropertyValueResponse, type UpdateRepositoryHostedPropertyValueResponses, type UpdateRepositoryPipelineConfigData, type UpdateRepositoryPipelineConfigResponse, type UpdateRepositoryPipelineConfigResponses, type UpdateRepositoryPipelineKeyPairData, type UpdateRepositoryPipelineKeyPairError, type UpdateRepositoryPipelineKeyPairErrors, type UpdateRepositoryPipelineKeyPairResponse, type UpdateRepositoryPipelineKeyPairResponses, type UpdateRepositoryPipelineKnownHostData, type UpdateRepositoryPipelineKnownHostError, type UpdateRepositoryPipelineKnownHostErrors, type UpdateRepositoryPipelineKnownHostResponse, type UpdateRepositoryPipelineKnownHostResponses, type UpdateRepositoryPipelineScheduleData, type UpdateRepositoryPipelineScheduleError, type UpdateRepositoryPipelineScheduleErrors, type UpdateRepositoryPipelineScheduleResponse, type UpdateRepositoryPipelineScheduleResponses, type UpdateRepositoryPipelineVariableData, type UpdateRepositoryPipelineVariableError, type UpdateRepositoryPipelineVariableErrors, type UpdateRepositoryPipelineVariableResponse, type UpdateRepositoryPipelineVariableResponses, type UpdateRepositoryRunnerData, type UpdateRepositoryRunnerError, type UpdateRepositoryRunnerErrors, type UpdateRepositoryRunnerResponse, type UpdateRepositoryRunnerResponses, type UpdateUserHostedPropertyValueData, type UpdateUserHostedPropertyValueResponse, type UpdateUserHostedPropertyValueResponses, type UpdateWorkspaceRunnerData, type UpdateWorkspaceRunnerError, type UpdateWorkspaceRunnerErrors, type UpdateWorkspaceRunnerResponse, type UpdateWorkspaceRunnerResponses, type User, type UserLinks, type Version, type WebhookSubscription, type Workspace, type WorkspaceAccess, type WorkspaceBase, type WorkspaceMembership, client, createClient, createConfig, mergeHeaders };
+export { type Account, type AccountLinks, type AddDefaultReviewerData, type AddDefaultReviewerError, type AddDefaultReviewerErrors, type AddDefaultReviewerResponse, type AddDefaultReviewerResponses, type AddIssueVoteData, type AddIssueVoteError, type AddIssueVoteErrors, type AddIssueVoteResponse, type AddIssueVoteResponses, type AddProjectDefaultReviewerData, type AddProjectDefaultReviewerError, type AddProjectDefaultReviewerErrors, type AddProjectDefaultReviewerResponse, type AddProjectDefaultReviewerResponses, type AppUser, type ApplicationProperty, type ApplicationProperty2, type ApproveCommitData, type ApproveCommitError, type ApproveCommitErrors, type ApproveCommitResponse, type ApproveCommitResponses, type ApprovePullRequestData, type ApprovePullRequestError, type ApprovePullRequestErrors, type ApprovePullRequestResponse, type ApprovePullRequestResponses, type Author, type BaseCommit, type BitbucketAppsPermissionsSerializersProjectPermissionUpdateSchema, type BitbucketAppsPermissionsSerializersProjectPermissionUpdateSchema2, type BitbucketAppsPermissionsSerializersRepoPermissionUpdateSchema, type BitbucketAppsPermissionsSerializersRepoPermissionUpdateSchema2, BitbucketClient, type Branch, type BranchingModel, type BranchingModelSettings, type Branchrestriction, type BulkCreateOrUpdateAnnotationsData, type BulkCreateOrUpdateAnnotationsResponse, type BulkCreateOrUpdateAnnotationsResponses, type ClientOptions, type Comment, type CommentResolution, type Commit, type CommitComment, type CommitFile, type Commitstatus, type Committer, type Component, type CreateAddonLinkerValuesData, type CreateAddonLinkerValuesError, type CreateAddonLinkerValuesErrors, type CreateAddonLinkerValuesResponses, type CreateBranchData, type CreateBranchError, type CreateBranchErrors, type CreateBranchResponse, type CreateBranchResponses, type CreateBranchRestrictionData, type CreateBranchRestrictionError, type CreateBranchRestrictionErrors, type CreateBranchRestrictionResponse, type CreateBranchRestrictionResponses, type CreateClientConfig, type CreateCommitBuildStatusData, type CreateCommitBuildStatusError, type CreateCommitBuildStatusErrors, type CreateCommitBuildStatusResponse, type CreateCommitBuildStatusResponses, type CreateCommitCommentData, type CreateCommitCommentErrors, type CreateCommitCommentResponses, type CreateDeployKeyData, type CreateDeployKeyError, type CreateDeployKeyErrors, type CreateDeployKeyResponse, type CreateDeployKeyResponses, type CreateDeploymentVariableData, type CreateDeploymentVariableError, type CreateDeploymentVariableErrors, type CreateDeploymentVariableResponse, type CreateDeploymentVariableResponses, type CreateDownloadData, type CreateDownloadError, type CreateDownloadErrors, type CreateDownloadResponses, type CreateEnvironmentData, type CreateEnvironmentError, type CreateEnvironmentErrors, type CreateEnvironmentResponse, type CreateEnvironmentResponses, type CreateForkData, type CreateForkResponse, type CreateForkResponses, type CreateIssueAttachmentData, type CreateIssueAttachmentError, type CreateIssueAttachmentErrors, type CreateIssueAttachmentResponses, type CreateIssueChangeData, type CreateIssueChangeError, type CreateIssueChangeErrors, type CreateIssueChangeResponse, type CreateIssueChangeResponses, type CreateIssueCommentData, type CreateIssueCommentError, type CreateIssueCommentErrors, type CreateIssueCommentResponses, type CreateIssueData, type CreateIssueError, type CreateIssueErrors, type CreateIssueResponse, type CreateIssueResponses, type CreateOrUpdateAnnotationData, type CreateOrUpdateAnnotationError, type CreateOrUpdateAnnotationErrors, type CreateOrUpdateAnnotationResponse, type CreateOrUpdateAnnotationResponses, type CreateOrUpdateReportData, type CreateOrUpdateReportError, type CreateOrUpdateReportErrors, type CreateOrUpdateReportResponse, type CreateOrUpdateReportResponses, type CreatePipelineForRepositoryData, type CreatePipelineForRepositoryError, type CreatePipelineForRepositoryErrors, type CreatePipelineForRepositoryResponse, type CreatePipelineForRepositoryResponses, type CreatePipelineVariableForTeamData, type CreatePipelineVariableForTeamError, type CreatePipelineVariableForTeamErrors, type CreatePipelineVariableForTeamResponse, type CreatePipelineVariableForTeamResponses, type CreatePipelineVariableForUserData, type CreatePipelineVariableForUserError, type CreatePipelineVariableForUserErrors, type CreatePipelineVariableForUserResponse, type CreatePipelineVariableForUserResponses, type CreatePipelineVariableForWorkspaceData, type CreatePipelineVariableForWorkspaceError, type CreatePipelineVariableForWorkspaceErrors, type CreatePipelineVariableForWorkspaceResponse, type CreatePipelineVariableForWorkspaceResponses, type CreateProjectData, type CreateProjectDeployKeyData, type CreateProjectDeployKeyError, type CreateProjectDeployKeyErrors, type CreateProjectDeployKeyResponse, type CreateProjectDeployKeyResponses, type CreateProjectError, type CreateProjectErrors, type CreateProjectResponse, type CreateProjectResponses, type CreatePullRequestCommentData, type CreatePullRequestCommentError, type CreatePullRequestCommentErrors, type CreatePullRequestCommentResponse, type CreatePullRequestCommentResponses, type CreatePullRequestData, type CreatePullRequestError, type CreatePullRequestErrors, type CreatePullRequestResponse, type CreatePullRequestResponses, type CreatePullRequestTaskData, type CreatePullRequestTaskError, type CreatePullRequestTaskErrors, type CreatePullRequestTaskResponse, type CreatePullRequestTaskResponses, type CreateRepoHookData, type CreateRepoHookError, type CreateRepoHookErrors, type CreateRepoHookResponse, type CreateRepoHookResponses, type CreateRepositoryData, type CreateRepositoryError, type CreateRepositoryErrors, type CreateRepositoryPipelineKnownHostData, type CreateRepositoryPipelineKnownHostError, type CreateRepositoryPipelineKnownHostErrors, type CreateRepositoryPipelineKnownHostResponse, type CreateRepositoryPipelineKnownHostResponses, type CreateRepositoryPipelineScheduleData, type CreateRepositoryPipelineScheduleError, type CreateRepositoryPipelineScheduleErrors, type CreateRepositoryPipelineScheduleResponse, type CreateRepositoryPipelineScheduleResponses, type CreateRepositoryPipelineVariableData, type CreateRepositoryPipelineVariableError, type CreateRepositoryPipelineVariableErrors, type CreateRepositoryPipelineVariableResponse, type CreateRepositoryPipelineVariableResponses, type CreateRepositoryResponse, type CreateRepositoryResponses, type CreateRepositoryRunnerData, type CreateRepositoryRunnerError, type CreateRepositoryRunnerErrors, type CreateRepositoryRunnerResponse, type CreateRepositoryRunnerResponses, type CreateSnippetCommentData, type CreateSnippetCommentError, type CreateSnippetCommentErrors, type CreateSnippetCommentResponse, type CreateSnippetCommentResponses, type CreateSnippetData, type CreateSnippetError, type CreateSnippetErrors, type CreateSnippetResponse, type CreateSnippetResponses, type CreateSrcFileCommitData, type CreateSrcFileCommitError, type CreateSrcFileCommitErrors, type CreateSrcFileCommitResponses, type CreateTagData, type CreateTagError, type CreateTagErrors, type CreateTagResponse, type CreateTagResponses, type CreateUserGpgKeyData, type CreateUserGpgKeyError, type CreateUserGpgKeyErrors, type CreateUserGpgKeyResponse, type CreateUserGpgKeyResponses, type CreateUserSshKeyData, type CreateUserSshKeyError, type CreateUserSshKeyErrors, type CreateUserSshKeyResponse, type CreateUserSshKeyResponses, type CreateWorkspaceHookData, type CreateWorkspaceHookError, type CreateWorkspaceHookErrors, type CreateWorkspaceHookResponse, type CreateWorkspaceHookResponses, type CreateWorkspaceRunnerData, type CreateWorkspaceRunnerError, type CreateWorkspaceRunnerErrors, type CreateWorkspaceRunnerResponse, type CreateWorkspaceRunnerResponses, type CreateWorkspaceSnippetData, type CreateWorkspaceSnippetError, type CreateWorkspaceSnippetErrors, type CreateWorkspaceSnippetResponse, type CreateWorkspaceSnippetResponses, type DeclinePullRequestData, type DeclinePullRequestError, type DeclinePullRequestErrors, type DeclinePullRequestResponse, type DeclinePullRequestResponses, type DefaultReviewerAndType, type DeleteAddonData, type DeleteAddonError, type DeleteAddonErrors, type DeleteAddonLinkerValueData, type DeleteAddonLinkerValueError, type DeleteAddonLinkerValueErrors, type DeleteAddonLinkerValueResponse, type DeleteAddonLinkerValueResponses, type DeleteAddonLinkerValuesData, type DeleteAddonLinkerValuesError, type DeleteAddonLinkerValuesErrors, type DeleteAddonLinkerValuesResponse, type DeleteAddonLinkerValuesResponses, type DeleteAddonResponse, type DeleteAddonResponses, type DeleteAnnotationData, type DeleteAnnotationResponse, type DeleteAnnotationResponses, type DeleteBranchData, type DeleteBranchError, type DeleteBranchErrors, type DeleteBranchResponse, type DeleteBranchResponses, type DeleteBranchRestrictionData, type DeleteBranchRestrictionError, type DeleteBranchRestrictionErrors, type DeleteBranchRestrictionResponse, type DeleteBranchRestrictionResponses, type DeleteCommitApprovalData, type DeleteCommitApprovalError, type DeleteCommitApprovalErrors, type DeleteCommitApprovalResponse, type DeleteCommitApprovalResponses, type DeleteCommitCommentData, type DeleteCommitCommentErrors, type DeleteCommitCommentResponse, type DeleteCommitCommentResponses, type DeleteCommitHostedPropertyValueData, type DeleteCommitHostedPropertyValueResponse, type DeleteCommitHostedPropertyValueResponses, type DeleteDefaultReviewerData, type DeleteDefaultReviewerError, type DeleteDefaultReviewerErrors, type DeleteDefaultReviewerResponse, type DeleteDefaultReviewerResponses, type DeleteDeployKeyData, type DeleteDeployKeyError, type DeleteDeployKeyErrors, type DeleteDeployKeyResponse, type DeleteDeployKeyResponses, type DeleteDeploymentVariableData, type DeleteDeploymentVariableError, type DeleteDeploymentVariableErrors, type DeleteDeploymentVariableResponse, type DeleteDeploymentVariableResponses, type DeleteDownloadData, type DeleteDownloadError, type DeleteDownloadErrors, type DeleteDownloadResponse, type DeleteDownloadResponses, type DeleteEnvironmentForRepositoryData, type DeleteEnvironmentForRepositoryError, type DeleteEnvironmentForRepositoryErrors, type DeleteEnvironmentForRepositoryResponse, type DeleteEnvironmentForRepositoryResponses, type DeleteIssueAttachmentData, type DeleteIssueAttachmentError, type DeleteIssueAttachmentErrors, type DeleteIssueAttachmentResponse, type DeleteIssueAttachmentResponses, type DeleteIssueCommentData, type DeleteIssueCommentResponse, type DeleteIssueCommentResponses, type DeleteIssueData, type DeleteIssueError, type DeleteIssueErrors, type DeleteIssueResponse, type DeleteIssueResponses, type DeleteIssueVoteData, type DeleteIssueVoteError, type DeleteIssueVoteErrors, type DeleteIssueVoteResponse, type DeleteIssueVoteResponses, type DeletePipelineVariableForTeamData, type DeletePipelineVariableForTeamError, type DeletePipelineVariableForTeamErrors, type DeletePipelineVariableForTeamResponse, type DeletePipelineVariableForTeamResponses, type DeletePipelineVariableForUserData, type DeletePipelineVariableForUserError, type DeletePipelineVariableForUserErrors, type DeletePipelineVariableForUserResponse, type DeletePipelineVariableForUserResponses, type DeletePipelineVariableForWorkspaceData, type DeletePipelineVariableForWorkspaceError, type DeletePipelineVariableForWorkspaceErrors, type DeletePipelineVariableForWorkspaceResponse, type DeletePipelineVariableForWorkspaceResponses, type DeleteProjectData, type DeleteProjectDefaultReviewerData, type DeleteProjectDefaultReviewerError, type DeleteProjectDefaultReviewerErrors, type DeleteProjectDefaultReviewerResponse, type DeleteProjectDefaultReviewerResponses, type DeleteProjectDeployKeyData, type DeleteProjectDeployKeyError, type DeleteProjectDeployKeyErrors, type DeleteProjectDeployKeyResponse, type DeleteProjectDeployKeyResponses, type DeleteProjectError, type DeleteProjectErrors, type DeleteProjectPermissionGroupData, type DeleteProjectPermissionGroupError, type DeleteProjectPermissionGroupErrors, type DeleteProjectPermissionGroupResponse, type DeleteProjectPermissionGroupResponses, type DeleteProjectPermissionUserData, type DeleteProjectPermissionUserError, type DeleteProjectPermissionUserErrors, type DeleteProjectPermissionUserResponse, type DeleteProjectPermissionUserResponses, type DeleteProjectResponse, type DeleteProjectResponses, type DeletePullRequestApprovalData, type DeletePullRequestApprovalError, type DeletePullRequestApprovalErrors, type DeletePullRequestApprovalResponse, type DeletePullRequestApprovalResponses, type DeletePullRequestChangeRequestData, type DeletePullRequestChangeRequestError, type DeletePullRequestChangeRequestErrors, type DeletePullRequestChangeRequestResponse, type DeletePullRequestChangeRequestResponses, type DeletePullRequestCommentData, type DeletePullRequestCommentError, type DeletePullRequestCommentErrors, type DeletePullRequestCommentResponse, type DeletePullRequestCommentResponses, type DeletePullRequestHostedPropertyValueData, type DeletePullRequestHostedPropertyValueResponse, type DeletePullRequestHostedPropertyValueResponses, type DeletePullRequestTaskData, type DeletePullRequestTaskError, type DeletePullRequestTaskErrors, type DeletePullRequestTaskResponse, type DeletePullRequestTaskResponses, type DeleteRepoHookData, type DeleteRepoHookError, type DeleteRepoHookErrors, type DeleteRepoHookResponse, type DeleteRepoHookResponses, type DeleteRepoPermissionGroupData, type DeleteRepoPermissionGroupError, type DeleteRepoPermissionGroupErrors, type DeleteRepoPermissionGroupResponse, type DeleteRepoPermissionGroupResponses, type DeleteRepoPermissionUserData, type DeleteRepoPermissionUserError, type DeleteRepoPermissionUserErrors, type DeleteRepoPermissionUserResponse, type DeleteRepoPermissionUserResponses, type DeleteReportData, type DeleteReportResponse, type DeleteReportResponses, type DeleteRepositoryData, type DeleteRepositoryError, type DeleteRepositoryErrors, type DeleteRepositoryHostedPropertyValueData, type DeleteRepositoryHostedPropertyValueResponse, type DeleteRepositoryHostedPropertyValueResponses, type DeleteRepositoryPipelineCacheData, type DeleteRepositoryPipelineCacheError, type DeleteRepositoryPipelineCacheErrors, type DeleteRepositoryPipelineCacheResponse, type DeleteRepositoryPipelineCacheResponses, type DeleteRepositoryPipelineCachesData, type DeleteRepositoryPipelineCachesError, type DeleteRepositoryPipelineCachesErrors, type DeleteRepositoryPipelineCachesResponse, type DeleteRepositoryPipelineCachesResponses, type DeleteRepositoryPipelineKeyPairData, type DeleteRepositoryPipelineKeyPairError, type DeleteRepositoryPipelineKeyPairErrors, type DeleteRepositoryPipelineKeyPairResponse, type DeleteRepositoryPipelineKeyPairResponses, type DeleteRepositoryPipelineKnownHostData, type DeleteRepositoryPipelineKnownHostError, type DeleteRepositoryPipelineKnownHostErrors, type DeleteRepositoryPipelineKnownHostResponse, type DeleteRepositoryPipelineKnownHostResponses, type DeleteRepositoryPipelineScheduleData, type DeleteRepositoryPipelineScheduleError, type DeleteRepositoryPipelineScheduleErrors, type DeleteRepositoryPipelineScheduleResponse, type DeleteRepositoryPipelineScheduleResponses, type DeleteRepositoryPipelineVariableData, type DeleteRepositoryPipelineVariableError, type DeleteRepositoryPipelineVariableErrors, type DeleteRepositoryPipelineVariableResponse, type DeleteRepositoryPipelineVariableResponses, type DeleteRepositoryResponse, type DeleteRepositoryResponses, type DeleteRepositoryRunnerData, type DeleteRepositoryRunnerError, type DeleteRepositoryRunnerErrors, type DeleteRepositoryRunnerResponse, type DeleteRepositoryRunnerResponses, type DeleteSnippetCommentData, type DeleteSnippetCommentError, type DeleteSnippetCommentErrors, type DeleteSnippetCommentResponse, type DeleteSnippetCommentResponses, type DeleteSnippetData, type DeleteSnippetError, type DeleteSnippetErrors, type DeleteSnippetResponse, type DeleteSnippetResponses, type DeleteSnippetRevisionData, type DeleteSnippetRevisionError, type DeleteSnippetRevisionErrors, type DeleteSnippetRevisionResponse, type DeleteSnippetRevisionResponses, type DeleteTagData, type DeleteTagError, type DeleteTagErrors, type DeleteTagResponse, type DeleteTagResponses, type DeleteUserGpgKeyData, type DeleteUserGpgKeyError, type DeleteUserGpgKeyErrors, type DeleteUserGpgKeyResponse, type DeleteUserGpgKeyResponses, type DeleteUserHostedPropertyValueData, type DeleteUserHostedPropertyValueResponse, type DeleteUserHostedPropertyValueResponses, type DeleteUserSshKeyData, type DeleteUserSshKeyError, type DeleteUserSshKeyErrors, type DeleteUserSshKeyResponse, type DeleteUserSshKeyResponses, type DeleteWorkspaceHookData, type DeleteWorkspaceHookError, type DeleteWorkspaceHookErrors, type DeleteWorkspaceHookResponse, type DeleteWorkspaceHookResponses, type DeleteWorkspaceRunnerData, type DeleteWorkspaceRunnerError, type DeleteWorkspaceRunnerErrors, type DeleteWorkspaceRunnerResponse, type DeleteWorkspaceRunnerResponses, type DeployKey, type Deployment, type DeploymentEnvironment, type DeploymentRelease, type DeploymentState, type DeploymentStateCompleted, type DeploymentStateCompletedStatus, type DeploymentStateCompletedStatusFailed, type DeploymentStateCompletedStatusStopped, type DeploymentStateCompletedStatusSuccessful, type DeploymentStateInProgress, type DeploymentStateUndeployed, type DeploymentVariable, type Diffstat, type EffectiveRepoBranchingModel, type Error, type ExportIssuesData, type ExportIssuesError, type ExportIssuesErrors, type ExportIssuesResponses, type ExportOptions, type FilterCommitsByRevisionData, type FilterCommitsByRevisionError, type FilterCommitsByRevisionErrors, type FilterCommitsByRevisionResponse, type FilterCommitsByRevisionResponses, type FilterCommitsData, type FilterCommitsError, type FilterCommitsErrors, type FilterCommitsResponse, type FilterCommitsResponses, type GetAddonLinkerData, type GetAddonLinkerError, type GetAddonLinkerErrors, type GetAddonLinkerResponses, type GetAddonLinkerValueData, type GetAddonLinkerValueError, type GetAddonLinkerValueErrors, type GetAddonLinkerValueResponses, type GetAddonLinkerValuesData, type GetAddonLinkerValuesError, type GetAddonLinkerValuesErrors, type GetAddonLinkerValuesResponses, type GetAddonLinkersData, type GetAddonLinkersError, type GetAddonLinkersErrors, type GetAddonLinkersResponses, type GetAnnotationData, type GetAnnotationError, type GetAnnotationErrors, type GetAnnotationResponse, type GetAnnotationResponses, type GetAnnotationsForReportData, type GetAnnotationsForReportResponse, type GetAnnotationsForReportResponses, type GetBranchData, type GetBranchError, type GetBranchErrors, type GetBranchResponse, type GetBranchResponses, type GetBranchRestrictionData, type GetBranchRestrictionError, type GetBranchRestrictionErrors, type GetBranchRestrictionResponse, type GetBranchRestrictionResponses, type GetBranchingModelData, type GetBranchingModelError, type GetBranchingModelErrors, type GetBranchingModelResponse, type GetBranchingModelResponses, type GetBranchingModelSettingsData, type GetBranchingModelSettingsError, type GetBranchingModelSettingsErrors, type GetBranchingModelSettingsResponse, type GetBranchingModelSettingsResponses, type GetCommitBuildStatusData, type GetCommitBuildStatusError, type GetCommitBuildStatusErrors, type GetCommitBuildStatusResponse, type GetCommitBuildStatusResponses, type GetCommitCommentData, type GetCommitCommentResponse, type GetCommitCommentResponses, type GetCommitData, type GetCommitError, type GetCommitErrors, type GetCommitHostedPropertyValueData, type GetCommitHostedPropertyValueResponse, type GetCommitHostedPropertyValueResponses, type GetCommitResponse, type GetCommitResponses, type GetComponentData, type GetComponentError, type GetComponentErrors, type GetComponentResponse, type GetComponentResponses, type GetDefaultReviewerData, type GetDefaultReviewerError, type GetDefaultReviewerErrors, type GetDefaultReviewerResponse, type GetDefaultReviewerResponses, type GetDeployKeyData, type GetDeployKeyError, type GetDeployKeyErrors, type GetDeployKeyResponse, type GetDeployKeyResponses, type GetDeploymentForRepositoryData, type GetDeploymentForRepositoryError, type GetDeploymentForRepositoryErrors, type GetDeploymentForRepositoryResponse, type GetDeploymentForRepositoryResponses, type GetDeploymentVariablesData, type GetDeploymentVariablesResponse, type GetDeploymentVariablesResponses, type GetDeploymentsForRepositoryData, type GetDeploymentsForRepositoryResponse, type GetDeploymentsForRepositoryResponses, type GetDiffData, type GetDiffError, type GetDiffErrors, type GetDiffResponses, type GetDiffstatData, type GetDiffstatError, type GetDiffstatErrors, type GetDiffstatResponse, type GetDiffstatResponses, type GetDownloadData, type GetDownloadError, type GetDownloadErrors, type GetEffectiveBranchingModelData, type GetEffectiveBranchingModelError, type GetEffectiveBranchingModelErrors, type GetEffectiveBranchingModelResponse, type GetEffectiveBranchingModelResponses, type GetEnvironmentForRepositoryData, type GetEnvironmentForRepositoryError, type GetEnvironmentForRepositoryErrors, type GetEnvironmentForRepositoryResponse, type GetEnvironmentForRepositoryResponses, type GetEnvironmentsForRepositoryData, type GetEnvironmentsForRepositoryResponse, type GetEnvironmentsForRepositoryResponses, type GetFileHistoryData, type GetFileHistoryError, type GetFileHistoryErrors, type GetFileHistoryResponse, type GetFileHistoryResponses, type GetHookEventsBySubjectTypeData, type GetHookEventsBySubjectTypeError, type GetHookEventsBySubjectTypeErrors, type GetHookEventsBySubjectTypeResponse, type GetHookEventsBySubjectTypeResponses, type GetHookEventsData, type GetHookEventsResponse, type GetHookEventsResponses, type GetIssueAttachmentData, type GetIssueAttachmentError, type GetIssueAttachmentErrors, type GetIssueChangeData, type GetIssueChangeError, type GetIssueChangeErrors, type GetIssueChangeResponse, type GetIssueChangeResponses, type GetIssueCommentData, type GetIssueCommentResponse, type GetIssueCommentResponses, type GetIssueData, type GetIssueError, type GetIssueErrors, type GetIssueImportStatusData, type GetIssueImportStatusError, type GetIssueImportStatusErrors, type GetIssueImportStatusResponse, type GetIssueImportStatusResponses, type GetIssueResponse, type GetIssueResponses, type GetIssueVoteData, type GetIssueVoteError, type GetIssueVoteErrors, type GetIssueVoteResponse, type GetIssueVoteResponses, type GetIssueWatchStatusData, type GetIssueWatchStatusError, type GetIssueWatchStatusErrors, type GetIssueWatchStatusResponse, type GetIssueWatchStatusResponses, type GetMergeBaseData, type GetMergeBaseError, type GetMergeBaseErrors, type GetMergeBaseResponse, type GetMergeBaseResponses, type GetMilestoneData, type GetMilestoneError, type GetMilestoneErrors, type GetMilestoneResponse, type GetMilestoneResponses, type GetOidcConfigurationData, type GetOidcConfigurationError, type GetOidcConfigurationErrors, type GetOidcConfigurationResponses, type GetOidcKeysData, type GetOidcKeysError, type GetOidcKeysErrors, type GetOidcKeysResponses, type GetOverrideSettingsData, type GetOverrideSettingsError, type GetOverrideSettingsErrors, type GetOverrideSettingsResponse, type GetOverrideSettingsResponses, type GetPatchData, type GetPatchError, type GetPatchErrors, type GetPatchResponses, type GetPipelineContainerLogData, type GetPipelineContainerLogError, type GetPipelineContainerLogErrors, type GetPipelineContainerLogResponses, type GetPipelineForRepositoryData, type GetPipelineForRepositoryError, type GetPipelineForRepositoryErrors, type GetPipelineForRepositoryResponse, type GetPipelineForRepositoryResponses, type GetPipelineStepForRepositoryData, type GetPipelineStepForRepositoryError, type GetPipelineStepForRepositoryErrors, type GetPipelineStepForRepositoryResponse, type GetPipelineStepForRepositoryResponses, type GetPipelineStepLogForRepositoryData, type GetPipelineStepLogForRepositoryError, type GetPipelineStepLogForRepositoryErrors, type GetPipelineStepLogForRepositoryResponses, type GetPipelineStepsForRepositoryData, type GetPipelineStepsForRepositoryResponse, type GetPipelineStepsForRepositoryResponses, type GetPipelineTestReportTestCaseReasonsData, type GetPipelineTestReportTestCaseReasonsError, type GetPipelineTestReportTestCaseReasonsErrors, type GetPipelineTestReportTestCaseReasonsResponses, type GetPipelineTestReportTestCasesData, type GetPipelineTestReportTestCasesError, type GetPipelineTestReportTestCasesErrors, type GetPipelineTestReportTestCasesResponses, type GetPipelineTestReportsData, type GetPipelineTestReportsError, type GetPipelineTestReportsErrors, type GetPipelineTestReportsResponses, type GetPipelineVariableForTeamData, type GetPipelineVariableForTeamError, type GetPipelineVariableForTeamErrors, type GetPipelineVariableForTeamResponse, type GetPipelineVariableForTeamResponses, type GetPipelineVariableForUserData, type GetPipelineVariableForUserError, type GetPipelineVariableForUserErrors, type GetPipelineVariableForUserResponse, type GetPipelineVariableForUserResponses, type GetPipelineVariableForWorkspaceData, type GetPipelineVariableForWorkspaceError, type GetPipelineVariableForWorkspaceErrors, type GetPipelineVariableForWorkspaceResponse, type GetPipelineVariableForWorkspaceResponses, type GetPipelineVariablesForTeamData, type GetPipelineVariablesForTeamResponse, type GetPipelineVariablesForTeamResponses, type GetPipelineVariablesForUserData, type GetPipelineVariablesForUserResponse, type GetPipelineVariablesForUserResponses, type GetPipelineVariablesForWorkspaceData, type GetPipelineVariablesForWorkspaceResponse, type GetPipelineVariablesForWorkspaceResponses, type GetPipelinesForRepositoryData, type GetPipelinesForRepositoryResponse, type GetPipelinesForRepositoryResponses, type GetProjectBranchingModelData, type GetProjectBranchingModelError, type GetProjectBranchingModelErrors, type GetProjectBranchingModelResponse, type GetProjectBranchingModelResponses, type GetProjectBranchingModelSettingsData, type GetProjectBranchingModelSettingsError, type GetProjectBranchingModelSettingsErrors, type GetProjectBranchingModelSettingsResponse, type GetProjectBranchingModelSettingsResponses, type GetProjectData, type GetProjectDefaultReviewerData, type GetProjectDefaultReviewerError, type GetProjectDefaultReviewerErrors, type GetProjectDefaultReviewerResponse, type GetProjectDefaultReviewerResponses, type GetProjectDeployKeyData, type GetProjectDeployKeyError, type GetProjectDeployKeyErrors, type GetProjectDeployKeyResponse, type GetProjectDeployKeyResponses, type GetProjectError, type GetProjectErrors, type GetProjectPermissionGroupData, type GetProjectPermissionGroupError, type GetProjectPermissionGroupErrors, type GetProjectPermissionGroupResponse, type GetProjectPermissionGroupResponses, type GetProjectPermissionUserData, type GetProjectPermissionUserError, type GetProjectPermissionUserErrors, type GetProjectPermissionUserResponse, type GetProjectPermissionUserResponses, type GetProjectResponse, type GetProjectResponses, type GetPullRequestActivityData, type GetPullRequestActivityError, type GetPullRequestActivityErrors, type GetPullRequestActivityResponses, type GetPullRequestCommentData, type GetPullRequestCommentError, type GetPullRequestCommentErrors, type GetPullRequestCommentResponse, type GetPullRequestCommentResponses, type GetPullRequestData, type GetPullRequestDiffData, type GetPullRequestDiffstatData, type GetPullRequestError, type GetPullRequestErrors, type GetPullRequestHostedPropertyValueData, type GetPullRequestHostedPropertyValueResponse, type GetPullRequestHostedPropertyValueResponses, type GetPullRequestMergeTaskStatusData, type GetPullRequestMergeTaskStatusErrors, type GetPullRequestMergeTaskStatusResponses, type GetPullRequestPatchData, type GetPullRequestResponse, type GetPullRequestResponses, type GetPullRequestTaskData, type GetPullRequestTaskError, type GetPullRequestTaskErrors, type GetPullRequestTaskResponse, type GetPullRequestTaskResponses, type GetPullrequestsForCommitData, type GetPullrequestsForCommitError, type GetPullrequestsForCommitErrors, type GetPullrequestsForCommitResponse, type GetPullrequestsForCommitResponses, type GetRepoHookData, type GetRepoHookError, type GetRepoHookErrors, type GetRepoHookResponse, type GetRepoHookResponses, type GetRepoPermissionGroupData, type GetRepoPermissionGroupError, type GetRepoPermissionGroupErrors, type GetRepoPermissionGroupResponse, type GetRepoPermissionGroupResponses, type GetRepoPermissionUserData, type GetRepoPermissionUserError, type GetRepoPermissionUserErrors, type GetRepoPermissionUserResponse, type GetRepoPermissionUserResponses, type GetReportData, type GetReportError, type GetReportErrors, type GetReportResponse, type GetReportResponses, type GetReportsForCommitData, type GetReportsForCommitResponse, type GetReportsForCommitResponses, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipData, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipError, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipErrors, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponse, type GetRepositoriesByWorkspaceByRepoSlugIssuesExportByRepoNameIssuesByTaskIdZipResponses, type GetRepositoryData, type GetRepositoryError, type GetRepositoryErrors, type GetRepositoryHostedPropertyValueData, type GetRepositoryHostedPropertyValueResponse, type GetRepositoryHostedPropertyValueResponses, type GetRepositoryPipelineCacheContentUriData, type GetRepositoryPipelineCacheContentUriError, type GetRepositoryPipelineCacheContentUriErrors, type GetRepositoryPipelineCacheContentUriResponse, type GetRepositoryPipelineCacheContentUriResponses, type GetRepositoryPipelineCachesData, type GetRepositoryPipelineCachesError, type GetRepositoryPipelineCachesErrors, type GetRepositoryPipelineCachesResponse, type GetRepositoryPipelineCachesResponses, type GetRepositoryPipelineConfigData, type GetRepositoryPipelineConfigResponse, type GetRepositoryPipelineConfigResponses, type GetRepositoryPipelineKnownHostData, type GetRepositoryPipelineKnownHostError, type GetRepositoryPipelineKnownHostErrors, type GetRepositoryPipelineKnownHostResponse, type GetRepositoryPipelineKnownHostResponses, type GetRepositoryPipelineKnownHostsData, type GetRepositoryPipelineKnownHostsResponse, type GetRepositoryPipelineKnownHostsResponses, type GetRepositoryPipelineScheduleData, type GetRepositoryPipelineScheduleError, type GetRepositoryPipelineScheduleErrors, type GetRepositoryPipelineScheduleExecutionsData, type GetRepositoryPipelineScheduleExecutionsError, type GetRepositoryPipelineScheduleExecutionsErrors, type GetRepositoryPipelineScheduleExecutionsResponse, type GetRepositoryPipelineScheduleExecutionsResponses, type GetRepositoryPipelineScheduleResponse, type GetRepositoryPipelineScheduleResponses, type GetRepositoryPipelineSchedulesData, type GetRepositoryPipelineSchedulesError, type GetRepositoryPipelineSchedulesErrors, type GetRepositoryPipelineSchedulesResponse, type GetRepositoryPipelineSchedulesResponses, type GetRepositoryPipelineSshKeyPairData, type GetRepositoryPipelineSshKeyPairError, type GetRepositoryPipelineSshKeyPairErrors, type GetRepositoryPipelineSshKeyPairResponse, type GetRepositoryPipelineSshKeyPairResponses, type GetRepositoryPipelineVariableData, type GetRepositoryPipelineVariableError, type GetRepositoryPipelineVariableErrors, type GetRepositoryPipelineVariableResponse, type GetRepositoryPipelineVariableResponses, type GetRepositoryPipelineVariablesData, type GetRepositoryPipelineVariablesResponse, type GetRepositoryPipelineVariablesResponses, type GetRepositoryResponse, type GetRepositoryResponses, type GetRepositoryRunnerData, type GetRepositoryRunnerError, type GetRepositoryRunnerErrors, type GetRepositoryRunnerResponse, type GetRepositoryRunnerResponses, type GetRepositoryRunnersData, type GetRepositoryRunnersResponse, type GetRepositoryRunnersResponses, type GetSnippetCommentData, type GetSnippetCommentError, type GetSnippetCommentErrors, type GetSnippetCommentResponse, type GetSnippetCommentResponses, type GetSnippetCommitData, type GetSnippetCommitError, type GetSnippetCommitErrors, type GetSnippetCommitResponse, type GetSnippetCommitResponses, type GetSnippetData, type GetSnippetDiffData, type GetSnippetDiffError, type GetSnippetDiffErrors, type GetSnippetDiffResponses, type GetSnippetError, type GetSnippetErrors, type GetSnippetFileData, type GetSnippetFileError, type GetSnippetFileErrors, type GetSnippetPatchData, type GetSnippetPatchError, type GetSnippetPatchErrors, type GetSnippetPatchResponses, type GetSnippetResponse, type GetSnippetResponses, type GetSnippetRevisionData, type GetSnippetRevisionError, type GetSnippetRevisionErrors, type GetSnippetRevisionFileData, type GetSnippetRevisionFileError, type GetSnippetRevisionFileErrors, type GetSnippetRevisionFileResponses, type GetSnippetRevisionResponse, type GetSnippetRevisionResponses, type GetSnippetWatchStatusData, type GetSnippetWatchStatusError, type GetSnippetWatchStatusErrors, type GetSnippetWatchStatusResponse, type GetSnippetWatchStatusResponses, type GetSrcFileData, type GetSrcFileError, type GetSrcFileErrors, type GetSrcFileResponse, type GetSrcFileResponses, type GetTagData, type GetTagError, type GetTagErrors, type GetTagResponse, type GetTagResponses, type GetUserData, type GetUserEmailData, type GetUserEmailError, type GetUserEmailErrors, type GetUserEmailResponse, type GetUserEmailResponses, type GetUserEmailsData, type GetUserEmailsError, type GetUserEmailsErrors, type GetUserEmailsResponse, type GetUserEmailsResponses, type GetUserError, type GetUserErrors, type GetUserGpgKeyData, type GetUserGpgKeyError, type GetUserGpgKeyErrors, type GetUserGpgKeyResponse, type GetUserGpgKeyResponses, type GetUserPermissionsRepositoriesData, type GetUserPermissionsRepositoriesResponse, type GetUserPermissionsRepositoriesResponses, type GetUserPermissionsWorkspacesData, type GetUserPermissionsWorkspacesError, type GetUserPermissionsWorkspacesErrors, type GetUserPermissionsWorkspacesResponse, type GetUserPermissionsWorkspacesResponses, type GetUserProfileData, type GetUserProfileError, type GetUserProfileErrors, type GetUserProfileResponse, type GetUserProfileResponses, type GetUserResponse, type GetUserResponses, type GetUserSshKeyData, type GetUserSshKeyError, type GetUserSshKeyErrors, type GetUserSshKeyResponse, type GetUserSshKeyResponses, type GetUserWorkspacePermissionData, type GetUserWorkspacePermissionError, type GetUserWorkspacePermissionErrors, type GetUserWorkspacePermissionResponse, type GetUserWorkspacePermissionResponses, type GetUserWorkspacesData, type GetUserWorkspacesError, type GetUserWorkspacesErrors, type GetUserWorkspacesResponse, type GetUserWorkspacesResponses, type GetVersionData, type GetVersionError, type GetVersionErrors, type GetVersionResponse, type GetVersionResponses, type GetWorkspaceData, type GetWorkspaceError, type GetWorkspaceErrors, type GetWorkspaceHookData, type GetWorkspaceHookError, type GetWorkspaceHookErrors, type GetWorkspaceHookResponse, type GetWorkspaceHookResponses, type GetWorkspaceMemberData, type GetWorkspaceMemberError, type GetWorkspaceMemberErrors, type GetWorkspaceMemberResponse, type GetWorkspaceMemberResponses, type GetWorkspaceRepoPermissionData, type GetWorkspaceRepoPermissionError, type GetWorkspaceRepoPermissionErrors, type GetWorkspaceRepoPermissionResponse, type GetWorkspaceRepoPermissionResponses, type GetWorkspaceResponse, type GetWorkspaceResponses, type GetWorkspaceRunnerData, type GetWorkspaceRunnerError, type GetWorkspaceRunnerErrors, type GetWorkspaceRunnerResponse, type GetWorkspaceRunnerResponses, type GetWorkspaceRunnersData, type GetWorkspaceRunnersResponse, type GetWorkspaceRunnersResponses, type GpgAccountKey, type Group, type HookEvent, type ImportIssuesData, type ImportIssuesError, type ImportIssuesErrors, type ImportIssuesResponse, type ImportIssuesResponses, type Issue, type IssueAttachment, type IssueChange, type IssueComment, type IssueJobStatus, type Link, type ListBranchRestrictionsData, type ListBranchRestrictionsError, type ListBranchRestrictionsErrors, type ListBranchRestrictionsResponse, type ListBranchRestrictionsResponses, type ListBranchesData, type ListBranchesError, type ListBranchesErrors, type ListBranchesResponse, type ListBranchesResponses, type ListCommitCommentsData, type ListCommitCommentsResponse, type ListCommitCommentsResponses, type ListCommitStatusesData, type ListCommitStatusesError, type ListCommitStatusesErrors, type ListCommitStatusesResponse, type ListCommitStatusesResponses, type ListCommitsByRevisionData, type ListCommitsByRevisionError, type ListCommitsByRevisionErrors, type ListCommitsByRevisionResponse, type ListCommitsByRevisionResponses, type ListCommitsData, type ListCommitsError, type ListCommitsErrors, type ListCommitsResponse, type ListCommitsResponses, type ListComponentsData, type ListComponentsError, type ListComponentsErrors, type ListComponentsResponse, type ListComponentsResponses, type ListDefaultReviewersData, type ListDefaultReviewersError, type ListDefaultReviewersErrors, type ListDefaultReviewersResponse, type ListDefaultReviewersResponses, type ListDeployKeysData, type ListDeployKeysError, type ListDeployKeysErrors, type ListDeployKeysResponse, type ListDeployKeysResponses, type ListDownloadsData, type ListDownloadsError, type ListDownloadsErrors, type ListDownloadsResponses, type ListEffectiveDefaultReviewersData, type ListEffectiveDefaultReviewersError, type ListEffectiveDefaultReviewersErrors, type ListEffectiveDefaultReviewersResponse, type ListEffectiveDefaultReviewersResponses, type ListForksData, type ListForksResponse, type ListForksResponses, type ListIssueAttachmentsData, type ListIssueAttachmentsError, type ListIssueAttachmentsErrors, type ListIssueAttachmentsResponse, type ListIssueAttachmentsResponses, type ListIssueChangesData, type ListIssueChangesError, type ListIssueChangesErrors, type ListIssueChangesResponse, type ListIssueChangesResponses, type ListIssueCommentsData, type ListIssueCommentsResponse, type ListIssueCommentsResponses, type ListIssuesData, type ListIssuesError, type ListIssuesErrors, type ListIssuesResponse, type ListIssuesResponses, type ListMilestonesData, type ListMilestonesError, type ListMilestonesErrors, type ListMilestonesResponse, type ListMilestonesResponses, type ListProjectDefaultReviewersData, type ListProjectDefaultReviewersError, type ListProjectDefaultReviewersErrors, type ListProjectDefaultReviewersResponse, type ListProjectDefaultReviewersResponses, type ListProjectDeployKeysData, type ListProjectDeployKeysError, type ListProjectDeployKeysErrors, type ListProjectDeployKeysResponse, type ListProjectDeployKeysResponses, type ListProjectPermissionGroupsData, type ListProjectPermissionGroupsError, type ListProjectPermissionGroupsErrors, type ListProjectPermissionGroupsResponse, type ListProjectPermissionGroupsResponses, type ListProjectPermissionUsersData, type ListProjectPermissionUsersError, type ListProjectPermissionUsersErrors, type ListProjectPermissionUsersResponse, type ListProjectPermissionUsersResponses, type ListProjectsData, type ListProjectsError, type ListProjectsErrors, type ListProjectsResponse, type ListProjectsResponses, type ListPullRequestCommentsData, type ListPullRequestCommentsError, type ListPullRequestCommentsErrors, type ListPullRequestCommentsResponse, type ListPullRequestCommentsResponses, type ListPullRequestCommitsData, type ListPullRequestCommitsError, type ListPullRequestCommitsErrors, type ListPullRequestCommitsResponses, type ListPullRequestStatusesData, type ListPullRequestStatusesError, type ListPullRequestStatusesErrors, type ListPullRequestStatusesResponse, type ListPullRequestStatusesResponses, type ListPullRequestTasksData, type ListPullRequestTasksError, type ListPullRequestTasksErrors, type ListPullRequestTasksResponse, type ListPullRequestTasksResponses, type ListPullRequestsActivityData, type ListPullRequestsActivityError, type ListPullRequestsActivityErrors, type ListPullRequestsActivityResponses, type ListPullRequestsData, type ListPullRequestsError, type ListPullRequestsErrors, type ListPullRequestsResponse, type ListPullRequestsResponses, type ListRefsData, type ListRefsError, type ListRefsErrors, type ListRefsResponse, type ListRefsResponses, type ListRepoHooksData, type ListRepoHooksError, type ListRepoHooksErrors, type ListRepoHooksResponse, type ListRepoHooksResponses, type ListRepoPermissionGroupsData, type ListRepoPermissionGroupsError, type ListRepoPermissionGroupsErrors, type ListRepoPermissionGroupsResponse, type ListRepoPermissionGroupsResponses, type ListRepoPermissionUsersData, type ListRepoPermissionUsersError, type ListRepoPermissionUsersErrors, type ListRepoPermissionUsersResponse, type ListRepoPermissionUsersResponses, type ListRepoWatchersData, type ListRepoWatchersResponse, type ListRepoWatchersResponses, type ListRepositoriesData, type ListRepositoriesResponse, type ListRepositoriesResponses, type ListSnippetCommentsData, type ListSnippetCommentsError, type ListSnippetCommentsErrors, type ListSnippetCommentsResponse, type ListSnippetCommentsResponses, type ListSnippetCommitsData, type ListSnippetCommitsError, type ListSnippetCommitsErrors, type ListSnippetCommitsResponse, type ListSnippetCommitsResponses, type ListSnippetWatchersData, type ListSnippetWatchersError, type ListSnippetWatchersErrors, type ListSnippetWatchersResponse, type ListSnippetWatchersResponses, type ListSnippetsData, type ListSnippetsError, type ListSnippetsErrors, type ListSnippetsResponse, type ListSnippetsResponses, type ListSrcRootData, type ListSrcRootError, type ListSrcRootErrors, type ListSrcRootResponse, type ListSrcRootResponses, type ListTagsData, type ListTagsError, type ListTagsErrors, type ListTagsResponse, type ListTagsResponses, type ListUserGpgKeysData, type ListUserGpgKeysError, type ListUserGpgKeysErrors, type ListUserGpgKeysResponse, type ListUserGpgKeysResponses, type ListUserSshKeysData, type ListUserSshKeysError, type ListUserSshKeysErrors, type ListUserSshKeysResponse, type ListUserSshKeysResponses, type ListUserWorkspaceRepoPermissionsData, type ListUserWorkspaceRepoPermissionsError, type ListUserWorkspaceRepoPermissionsErrors, type ListUserWorkspaceRepoPermissionsResponse, type ListUserWorkspaceRepoPermissionsResponses, type ListVersionsData, type ListVersionsError, type ListVersionsErrors, type ListVersionsResponse, type ListVersionsResponses, type ListWorkspaceHooksData, type ListWorkspaceHooksError, type ListWorkspaceHooksErrors, type ListWorkspaceHooksResponse, type ListWorkspaceHooksResponses, type ListWorkspaceMembersData, type ListWorkspaceMembersError, type ListWorkspaceMembersErrors, type ListWorkspaceMembersResponse, type ListWorkspaceMembersResponses, type ListWorkspacePermissionsData, type ListWorkspacePermissionsError, type ListWorkspacePermissionsErrors, type ListWorkspacePermissionsResponse, type ListWorkspacePermissionsResponses, type ListWorkspaceRepoPermissionsData, type ListWorkspaceRepoPermissionsError, type ListWorkspaceRepoPermissionsErrors, type ListWorkspaceRepoPermissionsResponse, type ListWorkspaceRepoPermissionsResponses, type ListWorkspaceRepositoriesData, type ListWorkspaceRepositoriesError, type ListWorkspaceRepositoriesErrors, type ListWorkspaceRepositoriesResponse, type ListWorkspaceRepositoriesResponses, type ListWorkspaceSnippetsData, type ListWorkspaceSnippetsError, type ListWorkspaceSnippetsErrors, type ListWorkspaceSnippetsResponse, type ListWorkspaceSnippetsResponses, type ListWorkspaceUserPullRequestsData, type ListWorkspaceUserPullRequestsError, type ListWorkspaceUserPullRequestsErrors, type ListWorkspaceUserPullRequestsResponse, type ListWorkspaceUserPullRequestsResponses, type ListWorkspacesData, type ListWorkspacesError, type ListWorkspacesErrors, type ListWorkspacesResponse, type ListWorkspacesResponses, type MergePullRequestData, type MergePullRequestError, type MergePullRequestErrors, type MergePullRequestResponse, type MergePullRequestResponses, type Milestone, type Object$1 as Object, type Options, type PaginatedAccounts, type PaginatedAnnotations, type PaginatedBranches, type PaginatedBranchrestrictions, type PaginatedChangeset, type PaginatedCommitComments, type PaginatedCommitstatuses, type PaginatedComponents, type PaginatedDefaultReviewerAndType, type PaginatedDeployKeys, type PaginatedDeploymentVariable, type PaginatedDeployments, type PaginatedDiffstats, type PaginatedEnvironments, type PaginatedFiles, type PaginatedGpgUserKeys, type PaginatedHookEvents, type PaginatedIssueAttachments, type PaginatedIssueComments, type PaginatedIssues, type PaginatedLogEntries, type PaginatedMilestones, type PaginatedPipelineCaches, type PaginatedPipelineKnownHosts, type PaginatedPipelineRunners, type PaginatedPipelineScheduleExecutions, type PaginatedPipelineSchedules, type PaginatedPipelineSteps, type PaginatedPipelineVariables, type PaginatedPipelines, type PaginatedProjectDeployKeys, type PaginatedProjectGroupPermissions, type PaginatedProjectUserPermissions, type PaginatedProjects, type PaginatedPullrequestComments, type PaginatedPullrequests, type PaginatedRefs, type PaginatedReports, type PaginatedRepositories, type PaginatedRepositoryGroupPermissions, type PaginatedRepositoryPermissions, type PaginatedRepositoryUserPermissions, type PaginatedSnippetComments, type PaginatedSnippetCommit, type PaginatedSnippets, type PaginatedSshUserKeys, type PaginatedTags, type PaginatedTasks, type PaginatedTreeentries, type PaginatedVersions, type PaginatedWebhookSubscriptions, type PaginatedWorkspaceAccess, type PaginatedWorkspaceMemberships, type PaginatedWorkspaces, type Participant, type Pipeline, type PipelineBuildNumber, type PipelineCache, type PipelineCacheContentUri, type PipelineCommand, type PipelineCommitTarget, type PipelineConfigurationSource, type PipelineError, type PipelineImage, type PipelineKnownHost, type PipelineRefTarget, type PipelineRunner, type PipelineRunnerOauthClient, type PipelineRunnerState, type PipelineRunnerVersion, type PipelineSchedule, type PipelineScheduleExecution, type PipelineScheduleExecutionErrored, type PipelineScheduleExecutionExecuted, type PipelineSchedulePostRequestBody, type PipelineSchedulePutRequestBody, type PipelineSelector, type PipelineSshKeyPair, type PipelineSshPublicKey, type PipelineState, type PipelineStateCompleted, type PipelineStateCompletedError, type PipelineStateCompletedExpired, type PipelineStateCompletedFailed, type PipelineStateCompletedResult, type PipelineStateCompletedStopped, type PipelineStateCompletedSuccessful, type PipelineStateInProgress, type PipelineStateInProgressPaused, type PipelineStateInProgressRunning, type PipelineStateInProgressStage, type PipelineStatePending, type PipelineStep, type PipelineStepError, type PipelineStepState, type PipelineStepStateCompleted, type PipelineStepStateCompletedError, type PipelineStepStateCompletedExpired, type PipelineStepStateCompletedFailed, type PipelineStepStateCompletedNotRun, type PipelineStepStateCompletedResult, type PipelineStepStateCompletedStopped, type PipelineStepStateCompletedSuccessful, type PipelineStepStateInProgress, type PipelineStepStatePending, type PipelineStepStateReady, type PipelineTarget, type PipelineTrigger, type PipelineTriggerManual, type PipelineTriggerPush, type PipelineVariable, type PipelineVariable2, type PipelineVariable22, type PipelinesConfig, type PipelinesLinksSectionHref, type PipelinesPipelineLinks, type Project, type Project2, type ProjectBranchingModel, type ProjectDeployKey, type ProjectGroupPermission, type ProjectUserPermission, type Pullrequest, type PullrequestComment, type PullrequestCommentTask, type PullrequestEndpoint, type PullrequestMergeParameters, type PullrequestTask, type PullrequestTaskCreate, type PullrequestTaskUpdate, type Ref, type Report, type ReportAnnotation, type ReportData, type Repository, type RepositoryGroupPermission, type RepositoryInheritanceState, type RepositoryPermission, type RepositoryUserPermission, type RequestPullRequestChangesData, type RequestPullRequestChangesError, type RequestPullRequestChangesErrors, type RequestPullRequestChangesResponse, type RequestPullRequestChangesResponses, type ResolvePullRequestCommentData, type ResolvePullRequestCommentError, type ResolvePullRequestCommentErrors, type ResolvePullRequestCommentResponse, type ResolvePullRequestCommentResponses, type RetrieveUserHostedPropertyValueData, type RetrieveUserHostedPropertyValueResponse, type RetrieveUserHostedPropertyValueResponses, type SearchAccountData, type SearchAccountError, type SearchAccountErrors, type SearchAccountResponse, type SearchAccountResponses, type SearchCodeSearchResult, type SearchCodeSearchResultWritable, type SearchContentMatch, type SearchLine, type SearchResultPage, type SearchResultPageWritable, type SearchSegment, type SearchTeamData, type SearchTeamError, type SearchTeamErrors, type SearchTeamResponse, type SearchTeamResponses, type SearchWorkspaceData, type SearchWorkspaceError, type SearchWorkspaceErrors, type SearchWorkspaceResponse, type SearchWorkspaceResponses, type Snippet, type Snippet2, type SnippetComment, type SnippetCommit, type SshAccountKey, type SshKey, type StopPipelineData, type StopPipelineError, type StopPipelineErrors, type StopPipelineResponse, type StopPipelineResponses, type SubjectTypes, type Tag, type Task, type Team, type TeamLinks, type Treeentry, type UnresolvePullRequestCommentData, type UnresolvePullRequestCommentError, type UnresolvePullRequestCommentErrors, type UnresolvePullRequestCommentResponse, type UnresolvePullRequestCommentResponses, type UnwatchIssueData, type UnwatchIssueError, type UnwatchIssueErrors, type UnwatchIssueResponse, type UnwatchIssueResponses, type UnwatchSnippetData, type UnwatchSnippetError, type UnwatchSnippetErrors, type UnwatchSnippetResponse, type UnwatchSnippetResponses, type UpdateAddonData, type UpdateAddonError, type UpdateAddonErrors, type UpdateAddonLinkerValuesData, type UpdateAddonLinkerValuesError, type UpdateAddonLinkerValuesErrors, type UpdateAddonLinkerValuesResponse, type UpdateAddonLinkerValuesResponses, type UpdateAddonResponse, type UpdateAddonResponses, type UpdateBranchRestrictionData, type UpdateBranchRestrictionError, type UpdateBranchRestrictionErrors, type UpdateBranchRestrictionResponse, type UpdateBranchRestrictionResponses, type UpdateBranchingModelSettingsData, type UpdateBranchingModelSettingsError, type UpdateBranchingModelSettingsErrors, type UpdateBranchingModelSettingsResponse, type UpdateBranchingModelSettingsResponses, type UpdateCommitBuildStatusData, type UpdateCommitBuildStatusError, type UpdateCommitBuildStatusErrors, type UpdateCommitBuildStatusResponse, type UpdateCommitBuildStatusResponses, type UpdateCommitCommentData, type UpdateCommitCommentErrors, type UpdateCommitCommentResponses, type UpdateCommitHostedPropertyValueData, type UpdateCommitHostedPropertyValueResponse, type UpdateCommitHostedPropertyValueResponses, type UpdateDeployKeyData, type UpdateDeployKeyError, type UpdateDeployKeyErrors, type UpdateDeployKeyResponse, type UpdateDeployKeyResponses, type UpdateDeploymentVariableData, type UpdateDeploymentVariableError, type UpdateDeploymentVariableErrors, type UpdateDeploymentVariableResponse, type UpdateDeploymentVariableResponses, type UpdateEnvironmentForRepositoryData, type UpdateEnvironmentForRepositoryError, type UpdateEnvironmentForRepositoryErrors, type UpdateEnvironmentForRepositoryResponses, type UpdateIssueCommentData, type UpdateIssueCommentError, type UpdateIssueCommentErrors, type UpdateIssueCommentResponse, type UpdateIssueCommentResponses, type UpdateIssueData, type UpdateIssueError, type UpdateIssueErrors, type UpdateIssueResponse, type UpdateIssueResponses, type UpdateOverrideSettingsData, type UpdateOverrideSettingsError, type UpdateOverrideSettingsErrors, type UpdateOverrideSettingsResponse, type UpdateOverrideSettingsResponses, type UpdatePipelineVariableForTeamData, type UpdatePipelineVariableForTeamError, type UpdatePipelineVariableForTeamErrors, type UpdatePipelineVariableForTeamResponse, type UpdatePipelineVariableForTeamResponses, type UpdatePipelineVariableForUserData, type UpdatePipelineVariableForUserError, type UpdatePipelineVariableForUserErrors, type UpdatePipelineVariableForUserResponse, type UpdatePipelineVariableForUserResponses, type UpdatePipelineVariableForWorkspaceData, type UpdatePipelineVariableForWorkspaceError, type UpdatePipelineVariableForWorkspaceErrors, type UpdatePipelineVariableForWorkspaceResponse, type UpdatePipelineVariableForWorkspaceResponses, type UpdateProjectBranchingModelSettingsData, type UpdateProjectBranchingModelSettingsError, type UpdateProjectBranchingModelSettingsErrors, type UpdateProjectBranchingModelSettingsResponse, type UpdateProjectBranchingModelSettingsResponses, type UpdateProjectData, type UpdateProjectError, type UpdateProjectErrors, type UpdateProjectPermissionGroupData, type UpdateProjectPermissionGroupError, type UpdateProjectPermissionGroupErrors, type UpdateProjectPermissionGroupResponse, type UpdateProjectPermissionGroupResponses, type UpdateProjectPermissionUserData, type UpdateProjectPermissionUserError, type UpdateProjectPermissionUserErrors, type UpdateProjectPermissionUserResponse, type UpdateProjectPermissionUserResponses, type UpdateProjectResponse, type UpdateProjectResponses, type UpdatePullRequestCommentData, type UpdatePullRequestCommentError, type UpdatePullRequestCommentErrors, type UpdatePullRequestCommentResponse, type UpdatePullRequestCommentResponses, type UpdatePullRequestData, type UpdatePullRequestError, type UpdatePullRequestErrors, type UpdatePullRequestHostedPropertyValueData, type UpdatePullRequestHostedPropertyValueResponse, type UpdatePullRequestHostedPropertyValueResponses, type UpdatePullRequestResponse, type UpdatePullRequestResponses, type UpdatePullRequestTaskData, type UpdatePullRequestTaskError, type UpdatePullRequestTaskErrors, type UpdatePullRequestTaskResponse, type UpdatePullRequestTaskResponses, type UpdateRepoHookData, type UpdateRepoHookError, type UpdateRepoHookErrors, type UpdateRepoHookResponse, type UpdateRepoHookResponses, type UpdateRepoPermissionGroupData, type UpdateRepoPermissionGroupError, type UpdateRepoPermissionGroupErrors, type UpdateRepoPermissionGroupResponse, type UpdateRepoPermissionGroupResponses, type UpdateRepoPermissionUserData, type UpdateRepoPermissionUserError, type UpdateRepoPermissionUserErrors, type UpdateRepoPermissionUserResponse, type UpdateRepoPermissionUserResponses, type UpdateRepositoryBuildNumberData, type UpdateRepositoryBuildNumberError, type UpdateRepositoryBuildNumberErrors, type UpdateRepositoryBuildNumberResponse, type UpdateRepositoryBuildNumberResponses, type UpdateRepositoryData, type UpdateRepositoryError, type UpdateRepositoryErrors, type UpdateRepositoryHostedPropertyValueData, type UpdateRepositoryHostedPropertyValueResponse, type UpdateRepositoryHostedPropertyValueResponses, type UpdateRepositoryPipelineConfigData, type UpdateRepositoryPipelineConfigResponse, type UpdateRepositoryPipelineConfigResponses, type UpdateRepositoryPipelineKeyPairData, type UpdateRepositoryPipelineKeyPairError, type UpdateRepositoryPipelineKeyPairErrors, type UpdateRepositoryPipelineKeyPairResponse, type UpdateRepositoryPipelineKeyPairResponses, type UpdateRepositoryPipelineKnownHostData, type UpdateRepositoryPipelineKnownHostError, type UpdateRepositoryPipelineKnownHostErrors, type UpdateRepositoryPipelineKnownHostResponse, type UpdateRepositoryPipelineKnownHostResponses, type UpdateRepositoryPipelineScheduleData, type UpdateRepositoryPipelineScheduleError, type UpdateRepositoryPipelineScheduleErrors, type UpdateRepositoryPipelineScheduleResponse, type UpdateRepositoryPipelineScheduleResponses, type UpdateRepositoryPipelineVariableData, type UpdateRepositoryPipelineVariableError, type UpdateRepositoryPipelineVariableErrors, type UpdateRepositoryPipelineVariableResponse, type UpdateRepositoryPipelineVariableResponses, type UpdateRepositoryResponse, type UpdateRepositoryResponses, type UpdateRepositoryRunnerData, type UpdateRepositoryRunnerError, type UpdateRepositoryRunnerErrors, type UpdateRepositoryRunnerResponse, type UpdateRepositoryRunnerResponses, type UpdateSnippetCommentData, type UpdateSnippetCommentError, type UpdateSnippetCommentErrors, type UpdateSnippetCommentResponse, type UpdateSnippetCommentResponses, type UpdateSnippetData, type UpdateSnippetError, type UpdateSnippetErrors, type UpdateSnippetResponse, type UpdateSnippetResponses, type UpdateSnippetRevisionData, type UpdateSnippetRevisionError, type UpdateSnippetRevisionErrors, type UpdateSnippetRevisionResponse, type UpdateSnippetRevisionResponses, type UpdateUserHostedPropertyValueData, type UpdateUserHostedPropertyValueResponse, type UpdateUserHostedPropertyValueResponses, type UpdateUserSshKeyData, type UpdateUserSshKeyError, type UpdateUserSshKeyErrors, type UpdateUserSshKeyResponse, type UpdateUserSshKeyResponses, type UpdateWorkspaceHookData, type UpdateWorkspaceHookError, type UpdateWorkspaceHookErrors, type UpdateWorkspaceHookResponse, type UpdateWorkspaceHookResponses, type UpdateWorkspaceRunnerData, type UpdateWorkspaceRunnerError, type UpdateWorkspaceRunnerErrors, type UpdateWorkspaceRunnerResponse, type UpdateWorkspaceRunnerResponses, type User, type UserLinks, type Version, type WatchIssueData, type WatchIssueError, type WatchIssueErrors, type WatchIssueResponse, type WatchIssueResponses, type WatchSnippetData, type WatchSnippetError, type WatchSnippetErrors, type WatchSnippetResponse, type WatchSnippetResponses, type WebhookSubscription, type Workspace, type WorkspaceAccess, type WorkspaceBase, type WorkspaceMembership, client, createClient, createConfig, mergeHeaders };
